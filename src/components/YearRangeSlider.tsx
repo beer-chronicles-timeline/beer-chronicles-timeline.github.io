@@ -17,9 +17,13 @@ export default function YearRangeSlider({
 }: Props) {
   return (
     <div className="w-full max-w-xl mx-auto mb-10">
+      <div className="flex justify-between text-sm text-gray-600 mb-1">
+        <span>From:</span>
+        <span>To:</span>
+      </div>
       <div className="flex justify-between text-sm text-gray-600 mb-2">
-        <span>{startYear}</span>
-        <span>{endYear}</span>
+        <span className="font-medium">{startYear}</span>
+        <span className="font-medium">{endYear}</span>
       </div>
 
       <Slider.Root
