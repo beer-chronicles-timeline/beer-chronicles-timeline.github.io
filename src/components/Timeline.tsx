@@ -112,7 +112,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
 
             return (
               <div key={event.id} className="relative flex w-full items-center">
-                <div className="w-1/2 flex justify-end pr-7">
+                <div className="w-1/2 flex justify-end pr-4 md:pr-7">
                   {isLeft && (
                     <EventCard
                       event={event}
@@ -125,7 +125,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
                   <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
                 </div>
 
-                <div className="w-1/2 flex justify-start pl-7">
+                <div className="w-1/2 flex justify-start pl-4 md:pl-7">
                   {!isLeft && (
                     <EventCard
                       event={event}
@@ -176,7 +176,7 @@ function EventCard({ event, onClick }: EventCardProps) {
   return (
     <div
       onClick={onClick}
-      className="bg-white border border-stone-200 shadow-md rounded-lg p-3.5 max-w-sm cursor-pointer transition-all duration-150 hover:bg-gray-50 hover:scale-[1.02] hover:shadow-lg"
+      className="bg-white border border-stone-200 shadow-md rounded-lg p-3.5 max-w-sm w-full cursor-pointer transition-all duration-150 hover:bg-gray-50 hover:scale-[1.02] hover:shadow-lg"
     >
       <p className="text-[13px] leading-snug text-gray-500">
         {formatEventDate(event)}
@@ -188,7 +188,7 @@ function EventCard({ event, onClick }: EventCardProps) {
 
         {event.category && (
           <span
-            className={`text-[11px] px-2 py-0.5 rounded-full font-sans ${getCategoryStyle(
+            className={`text-[11px] px-2 py-0.5 rounded-full font-sans whitespace-nowrap ${getCategoryStyle(
               event.category
             )}`}
           >
@@ -235,11 +235,11 @@ function Modal({ event, onClose }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-200"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-200 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white border border-stone-200 rounded-lg p-6 max-w-lg w-full relative transform transition-all duration-200 scale-100 opacity-100 shadow-xl"
+        className="bg-white border border-stone-200 rounded-lg p-6 max-w-lg w-full relative transform transition-all duration-200 scale-100 opacity-100 shadow-xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -270,7 +270,7 @@ function Modal({ event, onClose }: ModalProps) {
             </h3>
 
             {/* Plain bullets; if a URL exists in the line, show only the first URL as the clickable link */}
-            <ul className="list-disc pl-5 space-y-1 text-sm text-stone-700">
+            <ul className="list-disc pl-5 space-y-1 text-sm text-stone-700 break-words">
               {rawLines.map((line, i) => {
                 const match = line.match(urlRegex);
                 if (!match) {
@@ -287,7 +287,7 @@ function Modal({ event, onClose }: ModalProps) {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline"
+                      className="underline break-all"
                     >
                       {firstUrl}
                     </a>
