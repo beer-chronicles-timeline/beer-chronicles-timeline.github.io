@@ -181,14 +181,29 @@ function EventCard({ event, onClick }: EventCardProps) {
       <p className="text-[13px] leading-snug text-gray-500">
         {formatEventDate(event)}
       </p>
-      <div className="flex items-start justify-between gap-2">
+
+      {/* Category - visible on mobile only, placed between date and title */}
+      {event.category && (
+        <div className="mt-1.5 md:hidden">
+          <span
+            className={`text-[10px] px-2 py-0.5 rounded-full font-sans ${getCategoryStyle(
+              event.category
+            )}`}
+          >
+            {event.category}
+          </span>
+        </div>
+      )}
+
+      <div className="flex items-start justify-between gap-2 mt-1">
         <h2 className="text-base leading-tight font-semibold font-serif text-stone-900">
           {event.title}
         </h2>
 
+        {/* Category - hidden on mobile, visible on desktop next to title */}
         {event.category && (
           <span
-            className={`text-[11px] px-2 py-0.5 rounded-full font-sans whitespace-nowrap ${getCategoryStyle(
+            className={`hidden md:inline-block text-[11px] px-2 py-0.5 rounded-full font-sans whitespace-nowrap ${getCategoryStyle(
               event.category
             )}`}
           >
