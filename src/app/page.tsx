@@ -1,6 +1,7 @@
 // app/page.tsx
 import Timeline from "@/components/Timeline";
 import HeaderMenu from "@/components/HeaderMenu";
+import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabaseClient";
 import type { EventRow, TimelineEvent, Tag } from "@/lib/types";
 
@@ -18,18 +19,47 @@ export default async function Home() {
 
   if (eventsError) {
     return (
-      <main className="min-h-screen bg-stone-50 p-4 md:p-10">
-        <header className="flex flex-wrap items-start justify-between gap-2 mb-8">
-          <div className="w-auto order-1">
+      <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+        <header className="mb-8">
+          {/* Mobile layout: menu and BEER on same line */}
+          <div className="flex items-start justify-between gap-2 md:hidden">
+            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+              BEER
+            </h1>
             <HeaderMenu />
           </div>
-          <div className="w-full order-3 md:order-2" />
-          <div className="hidden md:block w-full md:w-1/3 order-1 md:order-1" />
+
+          {/* Desktop layout: centered title with menu on right */}
+          <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
+            <div className="w-1/3" />
+            <div className="w-1/3 text-center">
+              <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+                BEER CHRONICLES
+              </h1>
+              <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+                An Interactive Beer History Timeline
+              </h2>
+            </div>
+            <div className="w-1/3 flex justify-end">
+              <HeaderMenu />
+            </div>
+          </div>
+
+          {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
+          <div className="block md:hidden mt-2">
+            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+              CHRONICLES
+            </h1>
+            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+              An Interactive Beer History Timeline
+            </h2>
+          </div>
         </header>
 
         <div className="text-center text-red-600">
           Error loading events: {eventsError.message}
         </div>
+        <Footer />
       </main>
     );
   }
@@ -74,7 +104,7 @@ export default async function Home() {
   }));
 
   return (
-    <main className="min-h-screen bg-stone-50 p-4 md:p-10">
+    <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <header className="mb-8">
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
@@ -112,6 +142,7 @@ export default async function Home() {
       </header>
 
       <Timeline events={events} allTags={tags} />
+      <Footer />
     </main>
   );
 }

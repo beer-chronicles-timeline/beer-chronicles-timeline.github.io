@@ -1,10 +1,11 @@
 // app/about/page.tsx
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
+import Footer from "@/components/Footer";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-stone-50 p-4 md:p-10">
+    <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <header className="mb-8">
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
@@ -41,7 +42,7 @@ export default function AboutPage() {
         </div>
       </header>
 
-      <section className="max-w-2xl mx-auto space-y-4 text-gray-800">
+      <section className="max-w-2xl mx-auto space-y-4 text-gray-800 flex-grow">
         <h2 className="text-xl font-semibold mb-2">What is this about?</h2>
 
         <p>My name is Martin Schmidt. I am a homebrewer since 2020 and a certified beer sommelier since 2024. Plus: I'm a beer history geek.</p>
@@ -58,6 +59,8 @@ export default function AboutPage() {
           </Link>
         </p>
       </section>
+
+      <Footer />
     </main>
   );
 }
