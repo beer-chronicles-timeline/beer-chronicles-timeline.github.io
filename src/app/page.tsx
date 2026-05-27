@@ -19,8 +19,8 @@ export default async function Home() {
   if (eventsError) {
     return (
       <main className="min-h-screen bg-stone-50 p-4 md:p-10">
-        <header className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-          <div className="w-full md:w-1/3 order-1 md:order-1" />
+        <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+          <div className="hidden md:block w-full md:w-1/3 order-1 md:order-1" />
           <div className="w-full md:w-1/3 text-left md:text-center order-2 md:order-2">
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif md:whitespace-nowrap">
               <span className="block md:inline">BEER</span>{" "}
@@ -30,7 +30,7 @@ export default async function Home() {
               An Interactive Beer History Timeline
             </h2>
           </div>
-          <div className="w-full md:w-1/3 flex justify-end order-3 md:order-3">
+          <div className="w-full md:w-1/3 flex justify-end order-1 md:order-3">
             <HeaderMenu />
           </div>
         </header>
@@ -83,8 +83,8 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10">
-      <header className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-        <div className="w-full md:w-1/3 order-1 md:order-1" />
+      <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <div className="hidden md:block w-full md:w-1/3 order-1 md:order-1" />
         <div className="w-full md:w-1/3 text-left md:text-center order-2 md:order-2">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif md:whitespace-nowrap">
             <span className="block md:inline">BEER</span>{" "}
@@ -94,7 +94,7 @@ export default async function Home() {
             An Interactive Beer History Timeline
           </h2>
         </div>
-        <div className="w-full md:w-1/3 flex justify-end order-3 md:order-3">
+        <div className="w-full md:w-1/3 flex justify-end order-1 md:order-3">
           <HeaderMenu />
         </div>
       </header>
