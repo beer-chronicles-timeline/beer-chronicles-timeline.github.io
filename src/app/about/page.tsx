@@ -7,7 +7,7 @@ export default function AboutPage() {
     <main className="p-6 md:p-10">
       <header className="flex items-center justify-between mb-8">
         <div className="flex-1" />
-<div className="flex flex-col items-center mb-12">
+<div className="flex flex-col items-center mb-2">
   <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
     BEER CHRONICLES
   </h1>
