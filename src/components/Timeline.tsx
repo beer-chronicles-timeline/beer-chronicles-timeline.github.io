@@ -196,7 +196,7 @@ function EventCard({ event, onClick }: EventCardProps) {
       )}
 
       <div className="flex items-start justify-between gap-2 mt-1">
-        <h2 className="text-base leading-tight font-semibold font-serif text-stone-900">
+        <h2 className="text-base leading-tight font-semibold font-serif text-stone-900 break-words">
           {event.title}
         </h2>
 
