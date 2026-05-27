@@ -18,6 +18,9 @@ type TimelineFiltersProps = {
   allTags: Tag[];
   selectedTagIds: string[];
   setSelectedTagIds: (ids: string[]) => void;
+
+  // New prop for tag counts
+  tagCounts?: Map<string, number>;
 };
 
 export function TimelineFilters({
@@ -30,6 +33,7 @@ export function TimelineFilters({
   allTags,
   selectedTagIds,
   setSelectedTagIds,
+  tagCounts,
 }: TimelineFiltersProps) {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -114,18 +118,23 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
 
                 {allTags.map((tag) => {
                   const checked = selectedTagIds.includes(tag.id);
+                  const count = tagCounts?.get(tag.id) || 0;
+
                   return (
                     <label
                       key={tag.id}
-                      className="flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-gray-50 cursor-pointer"
+                      className="flex items-center justify-between gap-2 px-3 py-1.5 text-sm hover:bg-gray-50 cursor-pointer"
                     >
-                      <input
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300"
-                        checked={checked}
-                        onChange={() => toggleTag(tag.id)}
-                      />
-                      <span>{tag.name}</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 rounded border-gray-300"
+                          checked={checked}
+                          onChange={() => toggleTag(tag.id)}
+                        />
+                        <span>{tag.name}</span>
+                      </div>
+                      <span className="text-xs text-gray-400">{count}</span>
                     </label>
                   );
                 })}

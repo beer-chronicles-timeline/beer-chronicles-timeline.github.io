@@ -66,6 +66,20 @@ export default function Timeline({ events, allTags }: TimelineProps) {
   const [endYear, setEndYear] = useState(2026);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
+  // Calculate tag counts (how many events have each tag)
+  const tagCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    allTags.forEach(tag => counts.set(tag.id, 0));
+
+    events.forEach(event => {
+      event.tags?.forEach(tag => {
+        counts.set(tag.id, (counts.get(tag.id) || 0) + 1);
+      });
+    });
+
+    return counts;
+  }, [events, allTags]);
+
   const filteredEvents = useMemo(
     () =>
       events.filter((event) => {
@@ -100,6 +114,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
         allTags={allTags}
         selectedTagIds={selectedTagIds}
         setSelectedTagIds={setSelectedTagIds}
+        tagCounts={tagCounts}
       />
 
       {/* TIMELINE */}
