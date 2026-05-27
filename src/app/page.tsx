@@ -18,7 +18,7 @@ export default async function Home() {
 
   if (eventsError) {
     return (
-      <main className="p-6 md:p-10">
+      <main className="min-h-screen bg-stone-50 p-6 md:p-10">
         <header className="flex items-center justify-between mb-8">
           <div className="flex-1" />
           <div className="flex flex-col items-center mb-12">
@@ -81,10 +81,10 @@ export default async function Home() {
   }));
 
   return (
-    <main className="p-10 min-h-screen bg-stone-50">
+    <main className="min-h-screen bg-stone-50 p-4 md:p-10">
       <header className="flex items-center justify-between mb-8">
         <div className="flex-1" />
-        <div className="flex flex-col items-center mb-2">
+        <div className="flex flex-col items-center mb-4">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             BEER CHRONICLES
           </h1>
