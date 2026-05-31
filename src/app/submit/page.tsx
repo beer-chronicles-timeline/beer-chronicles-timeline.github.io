@@ -95,7 +95,7 @@ export default function SubmitPage() {
             CHRONICLES
           </h1>
           <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
-            Submit New Entry
+            An Interactive Beer History Timeline
           </h2>
         </div>
       </header>
