@@ -51,7 +51,7 @@ export default function AboutPage() {
 
         <p>Since then I had the idea to move these notes to a beer history timeline that can be filtered by tags or categories. In 2026, I finally found the time to do it and - here it is!</p>
 
-        <p>Disclamer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included - again - <a href="mailto:schmaidt@web.de?subject=New%20entry%20suggestion%20for%20the%20beer%20history%20timeline" className="underline">just let me know</a>!</p>
+<p>Disclamer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included, please use <Link href="/submit" className="underline">this submission form to suggest a new entry</Link>!</p>
 
         <p className="pt-4 text-sm text-gray-600">
           <Link href="/" className="underline hover:no-underline">
