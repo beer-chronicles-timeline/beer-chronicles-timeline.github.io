@@ -101,12 +101,20 @@ export default function HeaderMenu() {
               Timeline
             </Link>
             <Link
+              href="/submit"
+              role="menuitem"
+              onClick={close}
+              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+            >
+              Submit New Entry
+            </Link>
+            <Link
               href="/about"
               role="menuitem"
               onClick={close}
               className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
             >
-              About this page
+              About This Page
             </Link>
           </nav>
         </div>
