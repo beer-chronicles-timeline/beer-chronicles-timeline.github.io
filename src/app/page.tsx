@@ -2,6 +2,7 @@
 import Timeline from "@/components/Timeline";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 import { supabase } from "@/lib/supabaseClient";
 import type { EventRow, TimelineEvent, Tag } from "@/lib/types";
 
@@ -60,6 +61,7 @@ export default async function Home() {
           Error loading events: {eventsError.message}
         </div>
         <Footer />
+        <ScrollToTop />
       </main>
     );
   }
@@ -143,6 +145,7 @@ export default async function Home() {
 
       <Timeline events={events} allTags={tags} />
       <Footer />
+      <ScrollToTop />
     </main>
   );
 }
