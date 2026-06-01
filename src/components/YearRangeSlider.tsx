@@ -28,7 +28,7 @@ export default function YearRangeSlider({
 
       <Slider.Root
         className="relative flex items-center select-none touch-none w-full h-5"
-        min={1300}
+        min={1070}
         max={2026}
         step={1}
         value={[startYear, endYear]}

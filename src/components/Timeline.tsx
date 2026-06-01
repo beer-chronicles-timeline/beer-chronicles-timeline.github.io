@@ -62,7 +62,7 @@ function normalizeUrl(url: string): string {
 export default function Timeline({ events, allTags }: TimelineProps) {
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [startYear, setStartYear] = useState(1300);
+  const [startYear, setStartYear] = useState(1070);
   const [endYear, setEndYear] = useState(2026);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
