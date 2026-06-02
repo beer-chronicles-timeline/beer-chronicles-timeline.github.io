@@ -108,7 +108,7 @@ export default function SubmitPage() {
           {/* Title Field */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Title <span className="text-red-500">*</span>
+              Title
             </label>
             <input
               type="text"
@@ -125,7 +125,7 @@ export default function SubmitPage() {
           {/* Description Field */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-              Description <span className="text-red-500">*</span>
+              Description
             </label>
             <textarea
               id="description"
@@ -142,7 +142,7 @@ export default function SubmitPage() {
           {/* Event Date Field */}
           <div>
             <label htmlFor="eventDate" className="block text-sm font-medium text-gray-700 mb-1">
-              Event Date <span className="text-red-500">*</span>
+              Event Date
             </label>
             <input
               type="date"
@@ -158,7 +158,7 @@ export default function SubmitPage() {
           {/* Date Precision Field */}
           <div>
             <label htmlFor="datePrecision" className="block text-sm font-medium text-gray-700 mb-1">
-              Date Precision <span className="text-red-500">*</span>
+              Date Precision
             </label>
             <select
               id="datePrecision"
@@ -176,7 +176,7 @@ export default function SubmitPage() {
           {/* Sources Field */}
           <div>
             <label htmlFor="sources" className="block text-sm font-medium text-gray-700 mb-1">
-              Sources <span className="text-red-500">*</span>
+              Sources
             </label>
             <textarea
               id="sources"
