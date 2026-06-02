@@ -12,10 +12,11 @@ type EventTagRow = {
 };
 
 export default async function Home() {
-  // 1) Fetch events (no short_description column needed)
+  // 1) Fetch events - only those NOT soft-deleted
   const { data: eventData, error: eventsError } = await supabase
     .from("events")
     .select("*")
+    .is("deleted_at", null)
     .order("event_date", { ascending: false });
 
   if (eventsError) {
