@@ -60,7 +60,7 @@ function normalizeUrl(url: string): string {
 }
 
 export default function Timeline({ events, allTags }: TimelineProps) {
-  const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+  const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [startYear, setStartYear] = useState(1000);
   const [endYear, setEndYear] = useState(2026);
@@ -106,6 +106,46 @@ export default function Timeline({ events, allTags }: TimelineProps) {
   const showingCount = filteredEvents.length;
   const hasActiveFilters = activeCategory !== null || startYear !== 1000 || endYear !== 2026 || selectedTagIds.length > 0;
 
+  const selectedEvent = selectedEventIndex !== null ? filteredEvents[selectedEventIndex] : null;
+
+  const handleOpenModal = (index: number) => {
+    setSelectedEventIndex(index);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedEventIndex(null);
+  };
+
+  const handleNextEvent = () => {
+    if (selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1) {
+      setSelectedEventIndex(selectedEventIndex + 1);
+    }
+  };
+
+  const handlePrevEvent = () => {
+    if (selectedEventIndex !== null && selectedEventIndex > 0) {
+      setSelectedEventIndex(selectedEventIndex - 1);
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedEventIndex === null) return;
+
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNextEvent();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrevEvent();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedEventIndex, filteredEvents.length]);
+
   return (
     <>
       <TimelineFilters
@@ -150,7 +190,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
                     {isLeft && (
                       <EventCard
                         event={event}
-                        onClick={() => setSelectedEvent(event)}
+                        onClick={() => handleOpenModal(index)}
                       />
                     )}
                   </div>
@@ -163,7 +203,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
                     {!isLeft && (
                       <EventCard
                         event={event}
-                        onClick={() => setSelectedEvent(event)}
+                        onClick={() => handleOpenModal(index)}
                       />
                     )}
                   </div>
@@ -175,7 +215,14 @@ export default function Timeline({ events, allTags }: TimelineProps) {
       )}
 
       {selectedEvent && (
-        <Modal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+        <Modal
+          event={selectedEvent}
+          onClose={handleCloseModal}
+          onNext={handleNextEvent}
+          onPrev={handlePrevEvent}
+          hasNext={selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1}
+          hasPrev={selectedEventIndex !== null && selectedEventIndex > 0}
+        />
       )}
     </>
   );
@@ -257,9 +304,13 @@ function EventCard({ event, onClick }: EventCardProps) {
 type ModalProps = {
   event: TimelineEvent;
   onClose: () => void;
+  onNext: () => void;
+  onPrev: () => void;
+  hasNext: boolean;
+  hasPrev: boolean;
 };
 
-function Modal({ event, onClose }: ModalProps) {
+function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps) {
   useEffect(() => {
     // Get the current scroll position
     const scrollY = window.scrollY;
@@ -288,11 +339,19 @@ function Modal({ event, onClose }: ModalProps) {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+      } else if (e.key === "ArrowRight" && hasNext) {
+        e.preventDefault();
+        onNext();
+      } else if (e.key === "ArrowLeft" && hasPrev) {
+        e.preventDefault();
+        onPrev();
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [onClose, onNext, onPrev, hasNext, hasPrev]);
 
   // Parse sources into lines
   const rawLines =
@@ -313,58 +372,79 @@ function Modal({ event, onClose }: ModalProps) {
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-3 text-xl"
+          className="absolute top-3 right-3 text-xl hover:text-gray-700 z-10 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm"
           aria-label="Close"
         >
           ✕
         </button>
 
-        <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
+        <div className="pr-8">
+          <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
 
-        <h2 className="text-lg font-semibold font-serif text-stone-900">
-          {event.title}
-        </h2>
+          <h2 className="text-lg font-semibold font-serif text-stone-900">
+            {event.title}
+          </h2>
 
-        {event.description && (
-          <p className="text-gray-700 font-sans whitespace-pre-line mt-2">
-            {event.description}
-          </p>
-        )}
-
-        {rawLines.length > 0 && (
-          <div className="mt-4 pt-3 border-t">
-            <h3 className="text-sm font-semibold text-stone-800 mb-2">
-              Sources
-            </h3>
-
-            {/* Plain bullets; if a URL exists in the line, show only the first URL as the clickable link */}
-            <ul className="list-disc pl-5 space-y-1 text-sm text-stone-700 break-words">
-              {rawLines.map((line, i) => {
-                const match = line.match(urlRegex);
-                if (!match) {
-                  // No URL -> render the whole line as-is
-                  return <li key={i}>{line}</li>;
+          {event.category && (
+            <div className="mt-2">
+              <span className={`text-xs px-2 py-0.5 rounded-full font-sans ${(() => {
+                switch (event.category) {
+                  case "Laws": return "bg-red-100 text-red-800";
+                  case "Breweries": return "bg-yellow-100 text-yellow-800";
+                  case "Events": return "bg-blue-100 text-blue-800";
+                  case "People": return "bg-purple-100 text-purple-800";
+                  case "Science": return "bg-green-100 text-green-800";
+                  case "Styles": return "bg-orange-100 text-orange-800";
+                  default: return "bg-gray-100 text-gray-700";
                 }
+              })()}`}>
+                {event.category}
+              </span>
+            </div>
+          )}
 
-                // Has URL -> render only the first URL as a clickable link
-                const firstUrl = match[0];
-                const href = normalizeUrl(firstUrl);
-                return (
-                  <li key={i}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline break-all"
-                    >
-                      {firstUrl}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+          {event.description && (
+            <p className="text-gray-700 font-sans whitespace-pre-line mt-3">
+              {event.description}
+            </p>
+          )}
+
+          {rawLines.length > 0 && (
+            <div className="mt-4 pt-3 border-t">
+              <h3 className="text-sm font-semibold text-stone-800 mb-2">
+                Sources
+              </h3>
+
+              <ul className="list-disc pl-5 space-y-1 text-sm text-stone-700 break-words">
+                {rawLines.map((line, i) => {
+                  const match = line.match(urlRegex);
+                  if (!match) {
+                    return <li key={i}>{line}</li>;
+                  }
+                  const firstUrl = match[0];
+                  const href = normalizeUrl(firstUrl);
+                  return (
+                    <li key={i}>
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline break-all"
+                      >
+                        {firstUrl}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+
+          {/* Navigation hint */}
+          <div className="mt-4 pt-3 border-t text-xs text-center text-gray-400">
+            ← →  arrow keys to navigate
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
