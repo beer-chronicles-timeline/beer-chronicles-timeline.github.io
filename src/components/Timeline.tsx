@@ -440,8 +440,8 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
             </div>
           )}
 
-          {/* Navigation hint */}
-          <div className="mt-4 pt-3 border-t text-xs text-center text-gray-400">
+          {/* Navigation hint - hidden on mobile, visible on desktop */}
+          <div className="hidden md:block mt-4 pt-3 border-t text-xs text-center text-gray-400">
             ← →  arrow keys to navigate
           </div>
         </div>
