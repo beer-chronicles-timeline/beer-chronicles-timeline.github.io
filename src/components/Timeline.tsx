@@ -378,8 +378,8 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
           ✕
         </button>
 
-        <div className="pr-8 break-words">
-          <p className="text-sm text-gray-500 mb-2 break-words">{formatEventDate(event)}</p>
+        <div className="pr-8">
+          <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
 
           <h2 className="text-lg font-semibold font-serif text-stone-900 break-words">
             {event.title}
@@ -404,7 +404,7 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
           )}
 
           {event.description && (
-            <p className="text-gray-700 font-sans whitespace-pre-line mt-3 break-words break-all">
+            <p className="text-gray-700 font-sans whitespace-pre-line mt-3" style={{ wordBreak: 'break-all', overflowWrap: 'break-word', whiteSpace: 'normal' }}>
               {event.description}
             </p>
           )}
