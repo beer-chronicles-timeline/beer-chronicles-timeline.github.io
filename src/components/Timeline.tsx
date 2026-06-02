@@ -62,7 +62,7 @@ function normalizeUrl(url: string): string {
 export default function Timeline({ events, allTags }: TimelineProps) {
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [startYear, setStartYear] = useState(1070);
+  const [startYear, setStartYear] = useState(1000);
   const [endYear, setEndYear] = useState(2026);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
@@ -102,6 +102,10 @@ export default function Timeline({ events, allTags }: TimelineProps) {
     [events, activeCategory, startYear, endYear, selectedTagIds]
   );
 
+  const totalEvents = events.length;
+  const showingCount = filteredEvents.length;
+  const hasActiveFilters = activeCategory !== null || startYear !== 1000 || endYear !== 2026 || selectedTagIds.length > 0;
+
   return (
     <>
       <TimelineFilters
@@ -116,6 +120,15 @@ export default function Timeline({ events, allTags }: TimelineProps) {
         setSelectedTagIds={setSelectedTagIds}
         tagCounts={tagCounts}
       />
+
+      {/* Event Count Indicator */}
+      <div className="text-center mb-6 text-sm text-gray-500">
+        {hasActiveFilters ? (
+          <span>Showing <span className="font-semibold text-stone-700">{showingCount}</span> of <span className="font-semibold text-stone-700">{totalEvents}</span> events</span>
+        ) : (
+          <span><span className="font-semibold text-stone-700">{totalEvents}</span> events in total</span>
+        )}
+      </div>
 
       {/* TIMELINE */}
       {filteredEvents.length === 0 ? (

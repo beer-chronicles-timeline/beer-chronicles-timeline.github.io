@@ -16,7 +16,7 @@ export default function YearRangeSlider({
   setEndYear,
 }: Props) {
   return (
-    <div className="w-full max-w-xl mx-auto mb-10">
+    <div className="w-full max-w-xl mx-auto mb-4">
       <div className="flex justify-between text-sm text-gray-600 mb-1">
         <span>From:</span>
         <span>To:</span>
@@ -28,7 +28,7 @@ export default function YearRangeSlider({
 
       <Slider.Root
         className="relative flex items-center select-none touch-none w-full h-5"
-        min={1070}
+        min={1000}
         max={2026}
         step={1}
         value={[startYear, endYear]}
