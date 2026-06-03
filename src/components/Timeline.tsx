@@ -278,7 +278,7 @@ function EventCard({ event, onClick }: EventCardProps) {
       )}
 
       <div className="flex items-start justify-between gap-2 mt-1">
-        <h2 className="text-base leading-tight font-semibold font-serif text-stone-900 break-words hyphens-auto" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+        <h2 className="text-base leading-tight font-semibold font-serif text-stone-900 break-words hyphens-auto">
           {event.title}
         </h2>
 
@@ -295,7 +295,9 @@ function EventCard({ event, onClick }: EventCardProps) {
       </div>
 
       {preview && (
-        <p className="text-[13px] leading-snug text-gray-600 mt-1">{preview}</p>
+        <p className="text-[13px] leading-snug text-gray-600 mt-1 break-words hyphens-auto">
+          {preview}
+        </p>
       )}
     </div>
   );
@@ -381,7 +383,7 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
         <div className="pr-8">
           <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
 
-          <h2 className="text-lg font-semibold font-serif text-stone-900 break-words">
+          <h2 className="text-lg font-semibold font-serif text-stone-900">
             {event.title}
           </h2>
 
@@ -404,7 +406,7 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
           )}
 
           {event.description && (
-            <p className="text-gray-700 font-sans whitespace-pre-line mt-3" style={{ wordBreak: 'break-all', overflowWrap: 'break-word', whiteSpace: 'normal' }}>
+            <p className="text-gray-700 font-sans whitespace-pre-line mt-3">
               {event.description}
             </p>
           )}

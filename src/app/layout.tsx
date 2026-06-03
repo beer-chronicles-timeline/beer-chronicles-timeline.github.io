@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="de"
       className={`${manrope.variable} ${playfair.variable} h-full antialiased`}
     >
       <head>
