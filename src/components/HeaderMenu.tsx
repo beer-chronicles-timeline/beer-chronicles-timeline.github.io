@@ -109,6 +109,14 @@ export default function HeaderMenu() {
               Submit New Entry
             </Link>
             <Link
+              href="/sources"
+              role="menuitem"
+              onClick={close}
+              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+            >
+              Main Sources
+            </Link>
+            <Link
               href="/about"
               role="menuitem"
               onClick={close}
