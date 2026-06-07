@@ -170,7 +170,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
         )}
       </div>
 
-      {/* TIMELINE */}
+      {/* TIMELINE - separate overlap: mobile very tight, desktop slightly compact */}
       {filteredEvents.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-gray-500 text-lg">No events match your filters.</p>
@@ -180,12 +180,13 @@ export default function Timeline({ events, allTags }: TimelineProps) {
         <div className="relative">
           <div className="absolute left-1/2 top-0 w-1.5 h-full bg-gray-300 -translate-x-1/2"></div>
 
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-0">
             {filteredEvents.map((event, index) => {
               const isLeft = index % 2 === 0;
 
               return (
-                <div key={event.id} className="relative flex w-full items-center">
+                <div key={event.id} className="relative flex w-full items-center -mt-20 first:mt-0 md:-mt-8">
+                  {/* Left side */}
                   <div className="w-1/2 flex justify-end pr-4 md:pr-7">
                     {isLeft && (
                       <EventCard
@@ -199,6 +200,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
                     <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
                   </div>
 
+                  {/* Right side */}
                   <div className="w-1/2 flex justify-start pl-4 md:pl-7">
                     {!isLeft && (
                       <EventCard
