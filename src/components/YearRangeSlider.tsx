@@ -7,6 +7,8 @@ type Props = {
   endYear: number;
   setStartYear: (value: number) => void;
   setEndYear: (value: number) => void;
+  minYear: number;
+  maxYear: number;
 };
 
 export default function YearRangeSlider({
@@ -14,6 +16,8 @@ export default function YearRangeSlider({
   endYear,
   setStartYear,
   setEndYear,
+  minYear,
+  maxYear,
 }: Props) {
   return (
     <div className="w-full max-w-xl mx-auto mb-2 px-4 md:px-0">
@@ -28,8 +32,8 @@ export default function YearRangeSlider({
 
       <Slider.Root
         className="relative flex items-center select-none touch-none w-full h-5"
-        min={1000}
-        max={2026}
+        min={minYear}
+        max={maxYear}
         step={1}
         value={[startYear, endYear]}
         onValueChange={(value) => {

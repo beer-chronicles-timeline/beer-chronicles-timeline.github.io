@@ -8,6 +8,8 @@ import type { TimelineEvent, Tag } from "@/lib/types";
 type TimelineProps = {
   events: TimelineEvent[];
   allTags: Tag[];
+  minYear: number;
+  maxYear: number;
 };
 
 // Safari-safe date formatter
@@ -59,11 +61,11 @@ function normalizeUrl(url: string): string {
   return url;
 }
 
-export default function Timeline({ events, allTags }: TimelineProps) {
+export default function Timeline({ events, allTags, minYear, maxYear }: TimelineProps) {
   const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [startYear, setStartYear] = useState(1000);
-  const [endYear, setEndYear] = useState(2026);
+  const [startYear, setStartYear] = useState(minYear);
+  const [endYear, setEndYear] = useState(maxYear);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
   // Calculate tag counts (how many events have each tag)
@@ -104,7 +106,7 @@ export default function Timeline({ events, allTags }: TimelineProps) {
 
   const totalEvents = events.length;
   const showingCount = filteredEvents.length;
-  const hasActiveFilters = activeCategory !== null || startYear !== 1000 || endYear !== 2026 || selectedTagIds.length > 0;
+  const hasActiveFilters = activeCategory !== null || startYear !== minYear || endYear !== maxYear || selectedTagIds.length > 0;
 
   const selectedEvent = selectedEventIndex !== null ? filteredEvents[selectedEventIndex] : null;
 
@@ -159,6 +161,8 @@ export default function Timeline({ events, allTags }: TimelineProps) {
         selectedTagIds={selectedTagIds}
         setSelectedTagIds={setSelectedTagIds}
         tagCounts={tagCounts}
+        minYear={minYear}
+        maxYear={maxYear}
       />
 
       {/* Event Count Indicator */}

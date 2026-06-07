@@ -106,6 +106,14 @@ export default async function Home() {
     tags: tagsForEvent.get(row.id) ?? [],
   }));
 
+  // 7) Calculate min and max years from events
+  const years = events
+    .map((event) => parseInt(event.event_date.slice(0, 4), 10))
+    .filter((year) => !isNaN(year));
+
+  const minYear = years.length > 0 ? Math.min(...years) : 1000;
+  const maxYear = years.length > 0 ? Math.max(...years) : 2026;
+
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <header className="mb-8">
@@ -144,7 +152,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <Timeline events={events} allTags={tags} />
+      <Timeline events={events} allTags={tags} minYear={minYear} maxYear={maxYear} />
       <Footer />
       <ScrollToTop />
     </main>

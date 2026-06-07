@@ -19,8 +19,12 @@ type TimelineFiltersProps = {
   selectedTagIds: string[];
   setSelectedTagIds: (ids: string[]) => void;
 
-  // New prop for tag counts
+  // New props for tag counts
   tagCounts?: Map<string, number>;
+
+  // Dynamic min/max years
+  minYear: number;
+  maxYear: number;
 };
 
 export function TimelineFilters({
@@ -34,6 +38,8 @@ export function TimelineFilters({
   selectedTagIds,
   setSelectedTagIds,
   tagCounts,
+  minYear,
+  maxYear,
 }: TimelineFiltersProps) {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -163,12 +169,14 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
         </div>
       </div>
 
-      {/* YEAR RANGE SLIDER */}
+      {/* YEAR RANGE SLIDER - with dynamic min/max */}
       <YearRangeSlider
         startYear={startYear}
         endYear={endYear}
         setStartYear={setStartYear}
         setEndYear={setEndYear}
+        minYear={minYear}
+        maxYear={maxYear}
       />
     </div>
   );
