@@ -12,12 +12,24 @@ type TimelineProps = {
   maxYear: number;
 };
 
-// Safari-safe date formatter
+// Safari-safe date formatter with decade support
 function formatEventDate(event: TimelineEvent): string {
   const raw = event.event_date;
   if (!raw) return "";
-  if (event.date_precision === "year") return raw.slice(0, 4);
 
+  // Handle decade precision
+  if (event.date_precision === "decade") {
+    const year = raw.slice(0, 4);
+    const decadeStart = Math.floor(parseInt(year, 10) / 10) * 10;
+    return `${decadeStart}s`;
+  }
+
+  // Handle year precision
+  if (event.date_precision === "year") {
+    return raw.slice(0, 4);
+  }
+
+  // Handle full date
   const parts = raw.split("-");
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
