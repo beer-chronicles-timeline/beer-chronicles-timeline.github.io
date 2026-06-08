@@ -186,7 +186,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         )}
       </div>
 
-      {/* TIMELINE - separate overlap: mobile very tight, desktop slightly compact */}
+      {/* TIMELINE - separate overlap for portrait, landscape, and desktop */}
       {filteredEvents.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-gray-500 text-lg">No events match your filters.</p>
@@ -201,7 +201,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
               const isLeft = index % 2 === 0;
 
               return (
-                <div key={event.id} className="relative flex w-full items-center -mt-20 first:mt-0 md:-mt-8">
+                <div key={event.id} className="relative flex w-full items-center -mt-20 landscape:-mt-8 first:mt-0 md:-mt-8">
                   {/* Left side */}
                   <div className="w-1/2 flex justify-end pr-4 md:pr-7">
                     {isLeft && (
