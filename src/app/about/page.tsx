@@ -71,11 +71,7 @@ export default function AboutPage() {
           </p>
 
           <p>
-            Disclaimer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included - again - <a href="mailto:schmaidt@web.de?subject=New%20entry%20suggestion%20for%20the%20beer%20history%20timeline" className="underline">just let me know</a>!
-          </p>
-
-          <p>
-            <Link href="/submit" className="underline">Submit a new entry →</Link>
+Disclaimer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included, please <Link href="/submit" className="underline">submit a new entry here</Link>!
           </p>
 
           <p className="pt-4 text-sm text-gray-600">
