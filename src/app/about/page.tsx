@@ -23,7 +23,7 @@ export default function AboutPage() {
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
               BEER CHRONICLES
             </h1>
-            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
             </h2>
           </div>
@@ -44,7 +44,7 @@ export default function AboutPage() {
       </header>
 
       <section className="max-w-2xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4">What Is This About?</h2>
+        <h2 className="text-xl font-semibold mb-4">What is this about?</h2>
 
         <div className="space-y-4 text-gray-800">
           {/* Image with text wrapping - float right on desktop, centered on mobile */}
@@ -71,7 +71,11 @@ export default function AboutPage() {
           </p>
 
           <p>
-Disclaimer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included, please <Link href="/submit" className="underline">submit a new entry here</Link>!
+            Disclaimer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included - again - <a href="mailto:schmaidt@web.de?subject=New%20entry%20suggestion%20for%20the%20beer%20history%20timeline" className="underline">just let me know</a>!
+          </p>
+
+          <p>
+            <Link href="/submit" className="underline">Submit a new entry →</Link>
           </p>
 
           <p className="pt-4 text-sm text-gray-600">

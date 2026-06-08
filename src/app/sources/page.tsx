@@ -8,7 +8,7 @@ export default function SourcesPage() {
   const sources = [
     {
       title: "Brautag Podcast",
-      description: "An indispensable podcast for all beer lovers and brewing enthusiasts. The well-founded episodes on beer history have inspired and verified many of my entries.",
+	description: "An indispensable podcast for all beer lovers and (home) brewing enthusiasts. The well-founded chapters on beer history have inspired and verified many of my entries.",
       imageUrl: "/images/brautag.png",
       link: "https://brautagpodcast.com",
     },
@@ -38,9 +38,9 @@ export default function SourcesPage() {
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
               BEER CHRONICLES
             </h1>
-            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
-              An Interactive Beer History Timeline
-            </h2>
+             <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+               An Interactive Beer History Timeline
+             </h2>
           </div>
           <div className="w-1/3 flex justify-end">
             <HeaderMenu />
@@ -62,7 +62,7 @@ export default function SourcesPage() {
         <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-4">Main Sources & Acknowledgments</h2>
 
         <p className="text-gray-700 mb-8 leading-relaxed">
-          This timeline would not have been possible without the incredible work of beer historians, journalists, podcasters, and authors.
+          This timeline would not have been possible without the incredible work of beer historians, journalists, podcasters, bloggers, and authors.
           I want to give the following sources and the people behind them the biggest credit possible. Their dedication to beer culture and history has been an inspiration for this project.
         </p>
 

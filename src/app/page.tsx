@@ -38,7 +38,7 @@ export default async function Home() {
               <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
                 BEER CHRONICLES
               </h1>
-              <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+              <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
                 An Interactive Beer History Timeline
               </h2>
             </div>
@@ -132,7 +132,7 @@ export default async function Home() {
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
               BEER CHRONICLES
             </h1>
-            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
             </h2>
           </div>
