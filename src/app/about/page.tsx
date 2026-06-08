@@ -44,7 +44,7 @@ export default function AboutPage() {
       </header>
 
       <section className="max-w-2xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4">What is this about?</h2>
+        <h2 className="text-xl font-semibold mb-4">What Is This About?</h2>
 
         <div className="space-y-4 text-gray-800">
           {/* Image with text wrapping - float right on desktop, centered on mobile */}
