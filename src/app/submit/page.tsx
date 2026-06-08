@@ -170,6 +170,7 @@ export default function SubmitPage() {
             >
               <option value="date">Full date (year-month-day)</option>
               <option value="year">Year only</option>
+              <option value="decade">Decade (e.g., 1990s)</option>
             </select>
           </div>
 
