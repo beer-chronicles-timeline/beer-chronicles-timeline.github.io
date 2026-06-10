@@ -30,6 +30,12 @@ export default function SourcesPage() {
       imageUrl: "/images/Stan-Hieronymous-Brew-like-a-monk.jpg",
       link: "https://amzn.eu/d/04A0zDL0",
     },
+    {
+      title: "Craft Beer & Brewing: The Oxford Companion to Beer",
+      description: "An essential reference work covering all aspects of beer and brewing, from historical developments to technical brewing terms. The dictionary entries provided valuable context for many historical events and brewing concepts featured in this timeline.",
+      imageUrl: "/images/craft-beer-and-brewing.png",
+      link: "https://www.beerandbrewing.com/dictionary",
+    },
   ];
 
   return (
