@@ -8,7 +8,7 @@ export default function SourcesPage() {
   const sources = [
     {
       title: "Brautag Podcast",
-	description: "An indispensable podcast for all beer lovers and (home) brewing enthusiasts. The well-founded chapters on beer history have inspired and verified many of my entries.",
+      description: "An indispensable podcast for all beer lovers and (home) brewing enthusiasts. The well-founded chapters on beer history have inspired and verified many of my entries.",
       imageUrl: "/images/brautag.png",
       link: "https://brautagpodcast.com",
     },
@@ -17,6 +17,18 @@ export default function SourcesPage() {
       description: "An excellent book that explains the world of beer from the basics to the finest nuances. The historical chapters in particular were a valuable source for this project.",
       imageUrl: "/images/bier-verstehen.png",
       link: "https://amzn.eu/d/03i9FyVL",
+    },
+    {
+      title: "Andreas Krennmair: Vienna Lager",
+      description: "A comprehensive deep dive into the history and brewing techniques of Vienna Lager. This book provided essential context for understanding the development of lager beer styles in Central Europe.",
+      imageUrl: "/images/Andreas-Krennmair-Vienna-Lager.jpeg",
+      link: "https://amzn.eu/d/07tUwDrp",
+    },
+    {
+      title: "Stan Hieronymus: Brew Like a Monk",
+      description: "An authoritative exploration of Trappist and abbey brewing traditions. This book was invaluable for understanding the rich beer culture of Belgian monasteries and their historical significance.",
+      imageUrl: "/images/Stan-Hieronymous-Brew-like-a-monk.jpg",
+      link: "https://amzn.eu/d/04A0zDL0",
     },
   ];
 
@@ -38,9 +50,9 @@ export default function SourcesPage() {
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
               BEER CHRONICLES
             </h1>
-             <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
-               An Interactive Beer History Timeline
-             </h2>
+            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+              An Interactive Beer History Timeline
+            </h2>
           </div>
           <div className="w-1/3 flex justify-end">
             <HeaderMenu />
