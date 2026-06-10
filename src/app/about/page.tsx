@@ -5,6 +5,29 @@ import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 
 export default function AboutPage() {
+  const useCases = [
+    {
+      title: "For Sommeliers",
+      description: "Planning your next tasting and need historical context? Filter by beer style, brewery, ingredients, or time period. Use tags and categories to find the exact historic background you need to impress your guests with compelling stories behind each beer.",
+      icon: "🍻",
+    },
+    {
+      title: "For Retailers",
+      description: "Need a fresh angle for a new beer in your portfolio? Looking for an interesting anecdote from beer history to spark customer curiosity? Filter by beer or style and discover fascinating backstories that make your product stand out on the shelf.",
+      icon: "🛒",
+    },
+    {
+      title: "For (Home) Brewers",
+      description: "Curious about where a beer style comes from? Want to understand its original ingredients – grain bill, hops, yeast, and traditional brewing methods? Discover who brewed it first, what inspired them, and how historical examples can guide your own recipe development.",
+      icon: "🔬",
+    },
+    {
+      title: "For Craft Beer Pubs",
+      description: "Elevate your beer menu with rich historical context. Train your staff with authentic stories behind each pour, create themed tasting flights based on historical eras, and engage customers with the fascinating heritage of the beers you serve. A knowledgeable pub keeps patrons coming back.",
+      icon: "🏛️",
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <header className="mb-8">
@@ -43,7 +66,7 @@ export default function AboutPage() {
         </div>
       </header>
 
-      <section className="max-w-2xl mx-auto">
+      <section className="max-w-4xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">What Is This About?</h2>
 
         <div className="space-y-4 text-gray-800">
@@ -71,14 +94,29 @@ export default function AboutPage() {
           </p>
 
           <p>
-Disclaimer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included, please <Link href="/submit" className="underline">submit a new entry here</Link>!
+            Disclaimer: This timeline is, of course, not meant to be comprehensive. Moreover, although I tried to be as careful as possible, there can be mistakes! If you detect any bug: <a href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline" className="underline">just let me know</a> and I will correct. Additionally, if you have an entry in mind that needs to be included, please <Link href="/submit" className="underline">submit a new entry here</Link>!
           </p>
+        </div>
 
-          <p className="pt-4 text-sm text-gray-600">
-            <Link href="/" className="underline hover:no-underline">
-              ← Back to the Beer History Timeline
-            </Link>
-          </p>
+        {/* Use Cases Section */}
+        <div className="mt-12 pt-6 border-t border-stone-200">
+          <h2 className="text-xl font-semibold mb-6">Who Can Benefit from Beer Chronicles?</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {useCases.map((useCase, index) => (
+              <div key={index} className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm hover:shadow-md transition">
+                <div className="text-3xl mb-3">{useCase.icon}</div>
+                <h3 className="text-lg font-semibold font-serif text-stone-900 mb-2">{useCase.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{useCase.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 text-sm text-gray-600">
+          <Link href="/" className="underline hover:no-underline">
+            ← Back to the Beer History Timeline
+          </Link>
         </div>
       </section>
 
