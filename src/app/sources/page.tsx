@@ -38,6 +38,17 @@ export default function SourcesPage() {
     },
   ];
 
+  const otherTimelines = [
+    {
+      title: "CraftBeer.com – Beer History",
+      link: "https://www.craftbeer.com/beer/beer-history",
+    },
+    {
+      title: "Timetoast – Brewing History Timeline",
+      link: "https://www.timetoast.com/timelines/brewing-history",
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <header className="mb-8">
@@ -111,6 +122,28 @@ export default function SourcesPage() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Other Beer History Timelines Section */}
+        <div className="mt-12 pt-6 border-t border-stone-200">
+          <h3 className="text-xl font-semibold font-serif text-stone-900 mb-3">Other Beer History Timelines</h3>
+          <p className="text-gray-600 mb-4">
+            For further exploration of beer history, here are some other excellent timeline resources:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+            {otherTimelines.map((timeline, index) => (
+              <li key={index}>
+                <a 
+                  href={timeline.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="underline hover:text-stone-900"
+                >
+                  {timeline.title}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="mt-8 pt-4 text-sm text-gray-600">
