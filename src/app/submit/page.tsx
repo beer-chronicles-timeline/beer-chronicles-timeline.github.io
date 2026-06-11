@@ -4,9 +4,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
+import Footer from "@/components/Footer";
 
 export default function SubmitPage() {
   const [formData, setFormData] = useState({
+    name: "",
+    email: "",
     title: "",
     description: "",
     eventDate: "",
@@ -34,18 +37,22 @@ export default function SubmitPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
           title: formData.title,
           description: formData.description,
           eventDate: formData.eventDate,
           datePrecision: formData.datePrecision,
           sources: formData.sources,
-          _subject: "New Beer History Entry Submission",
+          _subject: `New Beer History Entry Submission from ${formData.name}`,
         }),
       });
 
       if (response.ok) {
         setSubmitStatus("success");
         setFormData({
+          name: "",
+          email: "",
           title: "",
           description: "",
           eventDate: "",
@@ -105,6 +112,40 @@ export default function SubmitPage() {
         <p className="text-gray-600 mb-6">You have an important beer history event to share that I should include in the Beer Chronicles? Just fill out the form below and I'll review it for inclusion.</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Name Field */}
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              Your Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+              placeholder="e.g., John Smith"
+            />
+          </div>
+
+          {/* Email Field */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Your Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+              placeholder="e.g., john@example.com"
+            />
+          </div>
+
           {/* Title Field */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
@@ -226,6 +267,8 @@ export default function SubmitPage() {
           </Link>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }
