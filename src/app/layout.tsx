@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Beer Chronicles | Interactive Beer History Timeline",
-  description: "An interactive timeline of beer history from 1300 to present day",
+  description: "An interactive timeline of beer history from 1000 to present day",
 };
 
 export default function RootLayout({
