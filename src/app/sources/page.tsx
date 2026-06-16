@@ -55,7 +55,7 @@ export default function SourcesPage() {
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
-            BEER
+            <Link href="/" className="hover:no-underline">BEER</Link>
           </h1>
           <HeaderMenu />
         </div>
@@ -65,7 +65,7 @@ export default function SourcesPage() {
           <div className="w-1/3" />
           <div className="w-1/3 text-center">
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
-              BEER CHRONICLES
+              <Link href="/" className="hover:no-underline">BEER CHRONICLES</Link>
             </h1>
             <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
@@ -79,7 +79,7 @@ export default function SourcesPage() {
         {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
         <div className="block md:hidden mt-2">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
-            CHRONICLES
+            <Link href="/" className="hover:no-underline">CHRONICLES</Link>
           </h1>
           <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
             Main Sources
