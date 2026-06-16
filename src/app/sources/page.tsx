@@ -149,7 +149,7 @@ export default function SourcesPage() {
         {/* Thank You Section */}
         <div className="mt-12 pt-6 border-t border-stone-200">
           <p className="text-gray-600 text-sm leading-relaxed">
-            Special thanks to Thomas Hostert, Johannes Thürauf, Nicole Renken, and Christoph Merten for their valuable feedback during the development of this website.
+            Special thanks to Thomas Hostert, Henri Lefebvre, Christoph Merten, Nicole Renken, and Johannes Thürauf for their valuable feedback during the development of this website.
           </p>
         </div>
 
