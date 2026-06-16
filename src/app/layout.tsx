@@ -28,6 +28,12 @@ export default function RootLayout({
       className={`${manrope.variable} ${playfair.variable} h-full antialiased`}
     >
       <head>
+        {/* Cloudflare Web Analytics */}
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "9d45a577f721475486595ada4ed25773"}'
+        />
         <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%BB%3C/text%3E%3C/svg%3E" />
         <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%BB%3C/text%3E%3C/svg%3E" />
       </head>
