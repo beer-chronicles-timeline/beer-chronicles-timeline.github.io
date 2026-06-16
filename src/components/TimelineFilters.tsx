@@ -1,7 +1,7 @@
 // components/TimelineFilters.tsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import YearRangeSlider from "./YearRangeSlider";
 import type { Tag } from "@/lib/types";
@@ -20,10 +20,7 @@ type TimelineFiltersProps = {
   selectedTagIds: string[];
   setSelectedTagIds: (ids: string[]) => void;
 
-  // New props for tag counts
   tagCounts?: Map<string, number>;
-
-  // Dynamic min/max years
   minYear: number;
   maxYear: number;
 };
@@ -46,6 +43,8 @@ export function TimelineFilters({
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isFirstRender = useRef(true);
+  const isUpdatingFromUrl = useRef(false);
 
   const toggleTag = (tagId: string) => {
     if (selectedTagIds.includes(tagId)) {
@@ -58,6 +57,20 @@ export function TimelineFilters({
   const clearTags = () => setSelectedTagIds([]);
 
   const selectedCount = selectedTagIds.length;
+
+  // Build tag name -> tag ID lookup
+  const tagNameToId = useMemo(() => {
+    const map = new Map<string, string>();
+    allTags.forEach(tag => map.set(tag.name, tag.id));
+    return map;
+  }, [allTags]);
+
+  // Build tag ID -> tag name lookup
+  const tagIdToName = useMemo(() => {
+    const map = new Map<string, string>();
+    allTags.forEach(tag => map.set(tag.id, tag.name));
+    return map;
+  }, [allTags]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -77,12 +90,16 @@ export function TimelineFilters({
     };
   }, [isTagDropdownOpen]);
 
-  // READ URL PARAMS ON PAGE LOAD
+  // READ URL PARAMS ON PAGE LOAD (only once)
   useEffect(() => {
+    if (!isFirstRender.current) return;
+    isFirstRender.current = false;
+    isUpdatingFromUrl.current = true;
+
     const category = searchParams.get("category");
     const from = searchParams.get("from");
     const to = searchParams.get("to");
-    const tags = searchParams.get("tags");
+    const tagNames = searchParams.get("tags");
 
     if (category) {
       setActiveCategory(category);
@@ -102,14 +119,20 @@ export function TimelineFilters({
       }
     }
 
-    if (tags) {
-      const tagIds = tags.split(",");
-      setSelectedTagIds(tagIds);
+    if (tagNames) {
+      const ids = tagNames.split(",")
+        .map(name => tagNameToId.get(name))
+        .filter((id): id is string => id !== undefined);
+      if (ids.length > 0) {
+        setSelectedTagIds(ids);
+      }
     }
-  }, [searchParams, setActiveCategory, setStartYear, setEndYear, setSelectedTagIds]);
 
-  // UPDATE URL WHEN FILTERS CHANGE
-  useEffect(() => {
+    isUpdatingFromUrl.current = false;
+  }, [searchParams, setActiveCategory, setStartYear, setEndYear, setSelectedTagIds, tagNameToId]);
+
+  // CREATE URL STATE FOR COMPARISON
+  const currentUrlState = useMemo(() => {
     const params = new URLSearchParams();
 
     if (activeCategory) {
@@ -125,14 +148,28 @@ export function TimelineFilters({
     }
 
     if (selectedTagIds.length > 0) {
-      params.set("tags", selectedTagIds.join(","));
+      const names = selectedTagIds
+        .map(id => tagIdToName.get(id))
+        .filter((name): name is string => name !== undefined);
+      if (names.length > 0) {
+        params.set("tags", names.join(","));
+      }
     }
 
-    const queryString = params.toString();
-    const url = queryString ? `/?${queryString}` : "/";
+    return params.toString();
+  }, [activeCategory, startYear, endYear, selectedTagIds, minYear, maxYear, tagIdToName]);
 
-    router.push(url, { scroll: false });
-  }, [activeCategory, startYear, endYear, selectedTagIds, router, minYear, maxYear]);
+  // UPDATE URL ONLY WHEN STATE CHANGES AND NOT FROM URL UPDATE
+  useEffect(() => {
+    // Skip on first render or when updating from URL
+    if (isFirstRender.current || isUpdatingFromUrl.current) return;
+
+    const currentUrl = searchParams.toString();
+    if (currentUrlState !== currentUrl) {
+      const url = currentUrlState ? `/?${currentUrlState}` : "/";
+      router.push(url, { scroll: false });
+    }
+  }, [currentUrlState, searchParams, router]);
 
   return (
     <div className="mb-6 space-y-4">

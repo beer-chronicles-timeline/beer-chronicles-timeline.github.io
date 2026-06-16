@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { TimelineFilters } from "./TimelineFilters";
+import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import type { TimelineEvent, Tag } from "@/lib/types";
 
 type TimelineProps = {
@@ -162,7 +162,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
 
   return (
     <>
-      <TimelineFilters
+      <TimelineFiltersWrapper
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
         startYear={startYear}
