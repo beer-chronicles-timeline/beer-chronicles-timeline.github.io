@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import YearRangeSlider from "./YearRangeSlider";
 import type { Tag } from "@/lib/types";
 
@@ -43,6 +44,8 @@ export function TimelineFilters({
 }: TimelineFiltersProps) {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const toggleTag = (tagId: string) => {
     if (selectedTagIds.includes(tagId)) {
@@ -73,6 +76,63 @@ export function TimelineFilters({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isTagDropdownOpen]);
+
+  // READ URL PARAMS ON PAGE LOAD
+  useEffect(() => {
+    const category = searchParams.get("category");
+    const from = searchParams.get("from");
+    const to = searchParams.get("to");
+    const tags = searchParams.get("tags");
+
+    if (category) {
+      setActiveCategory(category);
+    }
+
+    if (from) {
+      const fromYear = parseInt(from, 10);
+      if (!isNaN(fromYear)) {
+        setStartYear(fromYear);
+      }
+    }
+
+    if (to) {
+      const toYear = parseInt(to, 10);
+      if (!isNaN(toYear)) {
+        setEndYear(toYear);
+      }
+    }
+
+    if (tags) {
+      const tagIds = tags.split(",");
+      setSelectedTagIds(tagIds);
+    }
+  }, [searchParams, setActiveCategory, setStartYear, setEndYear, setSelectedTagIds]);
+
+  // UPDATE URL WHEN FILTERS CHANGE
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    if (activeCategory) {
+      params.set("category", activeCategory);
+    }
+
+    if (startYear !== minYear) {
+      params.set("from", startYear.toString());
+    }
+
+    if (endYear !== maxYear) {
+      params.set("to", endYear.toString());
+    }
+
+    if (selectedTagIds.length > 0) {
+      params.set("tags", selectedTagIds.join(","));
+    }
+
+    const queryString = params.toString();
+    const url = queryString ? `/?${queryString}` : "/";
+
+    router.push(url, { scroll: false });
+  }, [activeCategory, startYear, endYear, selectedTagIds, router, minYear, maxYear]);
 
   return (
     <div className="mb-6 space-y-4">
