@@ -149,7 +149,7 @@ export default function SourcesPage() {
         {/* Thank You Section */}
         <div className="mt-12 pt-6 border-t border-stone-200">
           <p className="text-gray-600 text-sm leading-relaxed">
-            Special thanks to Thomas Hostert, Henri Lefebvre, Christoph Merten, Nicole Renken, and Johannes Thürauf for their valuable feedback during the development of this website.
+            Special thanks to Thomas Hostert, Henri Lefebvre, <a href="https://www.instagram.com/bierblogtrier/" target="_blank" rel="noopener noreferrer" className="underline hover:text-stone-900">Andreas Gniffke</a>, Christoph Merten, Nicole Renken, and Johannes Thürauf for their valuable feedback during the development of this website.
           </p>
         </div>
 
