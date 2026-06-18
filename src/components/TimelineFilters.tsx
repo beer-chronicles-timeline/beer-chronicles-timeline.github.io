@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import YearRangeSlider from "./YearRangeSlider";
 import type { Tag } from "@/lib/types";
 
-const CATEGORIES = ["All", "Laws", "Breweries", "Events", "People", "Science", "Styles"];
+const CATEGORIES = ["All", "Laws", "Breweries", "Events", "People", "Science", "Styles", "Community"];
 
 type TimelineFiltersProps = {
   activeCategory: string | null;
