@@ -79,6 +79,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   const [startYear, setStartYear] = useState(minYear);
   const [endYear, setEndYear] = useState(maxYear);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
+  const [isOldestFirst, setIsOldestFirst] = useState(false);
 
   // Calculate tag counts (how many events have each tag)
   const tagCounts = useMemo(() => {
@@ -95,8 +96,8 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   }, [events, allTags]);
 
   const filteredEvents = useMemo(
-    () =>
-      events.filter((event) => {
+    () => {
+      let filtered = events.filter((event) => {
         if (activeCategory && event.category !== activeCategory) return false;
 
         const eventYear = parseInt(event.event_date.slice(0, 4), 10);
@@ -112,8 +113,24 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         }
 
         return true;
-      }),
-    [events, activeCategory, startYear, endYear, selectedTagIds]
+      });
+
+      // Sort based on toggle state
+      if (isOldestFirst) {
+        return filtered.sort((a, b) => {
+          const yearA = parseInt(a.event_date.slice(0, 4), 10);
+          const yearB = parseInt(b.event_date.slice(0, 4), 10);
+          return yearA - yearB;
+        });
+      } else {
+        return filtered.sort((a, b) => {
+          const yearA = parseInt(a.event_date.slice(0, 4), 10);
+          const yearB = parseInt(b.event_date.slice(0, 4), 10);
+          return yearB - yearA;
+        });
+      }
+    },
+    [events, activeCategory, startYear, endYear, selectedTagIds, isOldestFirst]
   );
 
   const totalEvents = events.length;
@@ -140,6 +157,10 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     if (selectedEventIndex !== null && selectedEventIndex > 0) {
       setSelectedEventIndex(selectedEventIndex - 1);
     }
+  };
+
+  const toggleOrder = () => {
+    setIsOldestFirst(!isOldestFirst);
   };
 
   // Keyboard navigation
@@ -177,13 +198,25 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         maxYear={maxYear}
       />
 
-      {/* Event Count Indicator */}
-      <div className="text-center mb-6 text-sm text-gray-500">
-        {hasActiveFilters ? (
-          <span>Showing <span className="font-semibold text-stone-700">{showingCount}</span> of <span className="font-semibold text-stone-700">{totalEvents}</span> events</span>
-        ) : (
-          <span><span className="font-semibold text-stone-700">{totalEvents}</span> events in total</span>
-        )}
+      {/* Event Count Indicator with Order Toggle - perfectly centered as a block */}
+      <div className="flex justify-center mb-6">
+        <div className="flex items-center gap-3">
+          <div className="px-4 py-1 text-sm bg-stone-100 rounded-full text-stone-700">
+            {hasActiveFilters ? (
+              <>Showing <span className="font-semibold">{showingCount}</span> of <span className="font-semibold">{totalEvents}</span> events</>
+            ) : (
+              <><span className="font-semibold">{totalEvents}</span> events in total</>
+            )}
+          </div>
+          <button
+            onClick={toggleOrder}
+            className="flex items-center gap-1.5 px-4 py-1 text-sm bg-stone-100 hover:bg-stone-200 rounded-full transition text-stone-700"
+            aria-label="Toggle timeline order"
+          >
+            <span>{isOldestFirst ? "↑" : "↓"}</span>
+            <span>{isOldestFirst ? "Oldest first" : "Newest first"}</span>
+          </button>
+        </div>
       </div>
 
       {/* TIMELINE - separate overlap for portrait, landscape, and desktop */}
@@ -266,6 +299,8 @@ function EventCard({ event, onClick }: EventCardProps) {
         return "bg-green-100 text-green-800";
       case "Styles":
         return "bg-orange-100 text-orange-800";
+      case "Community":
+        return "bg-pink-100 text-pink-800";
       default:
         return "bg-gray-100 text-gray-700";
     }
@@ -415,6 +450,7 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
                   case "People": return "bg-purple-100 text-purple-800";
                   case "Science": return "bg-green-100 text-green-800";
                   case "Styles": return "bg-orange-100 text-orange-800";
+                  case "Community": return "bg-pink-100 text-pink-800";
                   default: return "bg-gray-100 text-gray-700";
                 }
               })()}`}>
