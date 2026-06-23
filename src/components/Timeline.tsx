@@ -18,14 +18,12 @@ function formatEventDate(event: TimelineEvent): string {
   const raw = event.event_date;
   if (!raw) return "";
 
-  // Handle decade precision
   if (event.date_precision === "decade") {
     const year = raw.slice(0, 4);
     const decadeStart = Math.floor(parseInt(year, 10) / 10) * 10;
     return `${decadeStart}s`;
   }
 
-  // Handle month precision (e.g., "October 1990")
   if (event.date_precision === "month") {
     const parts = raw.split("-");
     if (parts.length >= 2) {
@@ -42,12 +40,10 @@ function formatEventDate(event: TimelineEvent): string {
     return raw;
   }
 
-  // Handle year precision
   if (event.date_precision === "year") {
     return raw.slice(0, 4);
   }
 
-  // Handle full date
   const parts = raw.split("-");
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -74,7 +70,6 @@ function formatEventDate(event: TimelineEvent): string {
   return raw;
 }
 
-// Simple word-boundary truncation for card preview
 function truncate(text: string | null | undefined, max = 160): string | null {
   if (!text) return null;
   if (text.length <= max) return text;
@@ -83,11 +78,11 @@ function truncate(text: string | null | undefined, max = 160): string | null {
   return `${slice.slice(0, cut > 80 ? cut : max).trim()}…`;
 }
 
-// URL helpers for sources
 const urlRegex = /\b(https?:\/\/[^\s)]+|www\.[^\s)]+)\b/gi;
+
 function normalizeUrl(url: string): string {
   if (/^https?:\/\//i.test(url)) return url;
-  if (/^www\./i.test(url)) return `[${url}](https://${url})`;
+  if (/^www\./i.test(url)) return `https://${url}`;
   return url;
 }
 
@@ -95,6 +90,9 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   const router = useRouter();
 
   const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(null);
+  const [randomEvent, setRandomEvent] = useState<TimelineEvent | null>(null);
+  const [isRollingRandom, setIsRollingRandom] = useState(false);
+
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [startYear, setStartYear] = useState(minYear);
   const [endYear, setEndYear] = useState(maxYear);
@@ -102,7 +100,6 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   const [isOldestFirst, setIsOldestFirst] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // READ SEARCH QUERY FROM URL ON MOUNT
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const s = params.get("string");
@@ -111,15 +108,16 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     }
   }, []);
 
-  // UPDATE URL WHEN SEARCH QUERY CHANGES
   useEffect(() => {
     const currentUrl = window.location.pathname + window.location.search;
     const params = new URLSearchParams(window.location.search);
+
     if (searchQuery.trim() !== "") {
       params.set("string", searchQuery.trim());
     } else {
       params.delete("string");
     }
+
     const queryString = params.toString();
     const newUrl = queryString ? `/?${queryString}` : "/";
 
@@ -128,13 +126,12 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     }
   }, [searchQuery, router]);
 
-  // Calculate tag counts (how many events have each tag)
   const tagCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    allTags.forEach(tag => counts.set(tag.id, 0));
+    allTags.forEach((tag) => counts.set(tag.id, 0));
 
-    events.forEach(event => {
-      event.tags?.forEach(tag => {
+    events.forEach((event) => {
+      event.tags?.forEach((tag) => {
         counts.set(tag.id, (counts.get(tag.id) || 0) + 1);
       });
     });
@@ -142,94 +139,113 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     return counts;
   }, [events, allTags]);
 
-  const filteredEvents = useMemo(
-    () => {
-      let filtered = events.filter((event) => {
-        if (activeCategory && event.category !== activeCategory) return false;
+  const filteredEvents = useMemo(() => {
+    const filtered = events.filter((event) => {
+      if (activeCategory && event.category !== activeCategory) return false;
 
-        const eventYear = parseInt(event.event_date.slice(0, 4), 10);
-        if (eventYear < startYear || eventYear > endYear) return false;
+      const eventYear = parseInt(event.event_date.slice(0, 4), 10);
+      if (eventYear < startYear || eventYear > endYear) return false;
 
-        if (selectedTagIds.length > 0) {
-          const eventTags = event.tags ?? [];
-          const eventTagIds = eventTags.map((t) => t.id);
-          const hasAllSelected = selectedTagIds.every((id) =>
-            eventTagIds.includes(id)
-          );
-          if (!hasAllSelected) return false;
-        }
-
-        // Search filter: split by spaces, treat as AND (all tokens must match)
-        const trimmedQuery = searchQuery.trim();
-        if (trimmedQuery !== "") {
-          const tokens = trimmedQuery.split(/\s+/).filter(t => t.length > 0);
-          const lowerTitle = (event.title || "").toLowerCase();
-          const lowerDescription = (event.description || "").toLowerCase();
-
-          // All tokens (lowercased) must be found in either title or description
-          const allTokensMatch = tokens.every(token => {
-            const lowerToken = token.toLowerCase();
-            return lowerTitle.includes(lowerToken) || lowerDescription.includes(lowerToken);
-          });
-
-          if (!allTokensMatch) return false;
-        }
-
-        return true;
-      });
-
-      // Sort based on toggle state
-      if (isOldestFirst) {
-        return filtered.sort((a, b) => {
-          const yearA = parseInt(a.event_date.slice(0, 4), 10);
-          const yearB = parseInt(b.event_date.slice(0, 4), 10);
-          return yearA - yearB;
-        });
-      } else {
-        return filtered.sort((a, b) => {
-          const yearA = parseInt(a.event_date.slice(0, 4), 10);
-          const yearB = parseInt(b.event_date.slice(0, 4), 10);
-          return yearB - yearA;
-        });
+      if (selectedTagIds.length > 0) {
+        const eventTags = event.tags ?? [];
+        const eventTagIds = eventTags.map((t) => t.id);
+        const hasAllSelected = selectedTagIds.every((id) =>
+          eventTagIds.includes(id)
+        );
+        if (!hasAllSelected) return false;
       }
-    },
-    [events, activeCategory, startYear, endYear, selectedTagIds, isOldestFirst, searchQuery]
-  );
+
+      const trimmedQuery = searchQuery.trim();
+      if (trimmedQuery !== "") {
+        const tokens = trimmedQuery.split(/\s+/).filter((t) => t.length > 0);
+        const lowerTitle = (event.title || "").toLowerCase();
+        const lowerDescription = (event.description || "").toLowerCase();
+
+        const allTokensMatch = tokens.every((token) => {
+          const lowerToken = token.toLowerCase();
+          return lowerTitle.includes(lowerToken) || lowerDescription.includes(lowerToken);
+        });
+
+        if (!allTokensMatch) return false;
+      }
+
+      return true;
+    });
+
+    if (isOldestFirst) {
+      return filtered.sort((a, b) => {
+        const yearA = parseInt(a.event_date.slice(0, 4), 10);
+        const yearB = parseInt(b.event_date.slice(0, 4), 10);
+        return yearA - yearB;
+      });
+    }
+
+    return filtered.sort((a, b) => {
+      const yearA = parseInt(a.event_date.slice(0, 4), 10);
+      const yearB = parseInt(b.event_date.slice(0, 4), 10);
+      return yearB - yearA;
+    });
+  }, [events, activeCategory, startYear, endYear, selectedTagIds, isOldestFirst, searchQuery]);
 
   const totalEvents = events.length;
   const showingCount = filteredEvents.length;
-  const hasActiveFilters = activeCategory !== null || startYear !== minYear || endYear !== maxYear || selectedTagIds.length > 0 || searchQuery.trim() !== "";
+  const hasActiveFilters =
+    activeCategory !== null ||
+    startYear !== minYear ||
+    endYear !== maxYear ||
+    selectedTagIds.length > 0 ||
+    searchQuery.trim() !== "";
 
   const selectedEvent = selectedEventIndex !== null ? filteredEvents[selectedEventIndex] : null;
+  const modalEvent = randomEvent ?? selectedEvent;
+  const isRandomDiscovery = randomEvent !== null;
 
   const handleOpenModal = (index: number) => {
+    setRandomEvent(null);
     setSelectedEventIndex(index);
   };
 
   const handleCloseModal = () => {
     setSelectedEventIndex(null);
+    setRandomEvent(null);
   };
 
   const handleNextEvent = () => {
+    if (randomEvent) return;
+
     if (selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1) {
       setSelectedEventIndex(selectedEventIndex + 1);
     }
   };
 
   const handlePrevEvent = () => {
+    if (randomEvent) return;
+
     if (selectedEventIndex !== null && selectedEventIndex > 0) {
       setSelectedEventIndex(selectedEventIndex - 1);
     }
+  };
+
+  const handleRandomEvent = () => {
+    if (events.length === 0 || isRollingRandom) return;
+
+    setIsRollingRandom(true);
+
+    window.setTimeout(() => {
+      const randomIndex = Math.floor(Math.random() * events.length);
+      setSelectedEventIndex(null);
+      setRandomEvent(events[randomIndex]);
+      setIsRollingRandom(false);
+    }, 350);
   };
 
   const toggleOrder = () => {
     setIsOldestFirst(!isOldestFirst);
   };
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedEventIndex === null) return;
+      if (selectedEventIndex === null || randomEvent) return;
 
       if (e.key === "ArrowRight") {
         e.preventDefault();
@@ -242,7 +258,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedEventIndex, filteredEvents.length]);
+  }, [selectedEventIndex, filteredEvents.length, randomEvent]);
 
   return (
     <>
@@ -261,22 +277,23 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         maxYear={maxYear}
       />
 
-      {/* Event Count, Search, and Order Toggle - responsive two-row layout */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 mb-6">
-        {/* Event Count - full width on mobile */}
         <div className="w-full md:w-auto flex justify-center">
           <div className="px-4 py-1 text-sm bg-stone-100 rounded-full text-stone-700 whitespace-nowrap">
             {hasActiveFilters ? (
-              <>Showing <span className="font-semibold">{showingCount}</span> of <span className="font-semibold">{totalEvents}</span> events</>
+              <>
+                Showing <span className="font-semibold">{showingCount}</span> of{" "}
+                <span className="font-semibold">{totalEvents}</span> events
+              </>
             ) : (
-              <><span className="font-semibold">{totalEvents}</span> events in total</>
+              <>
+                <span className="font-semibold">{totalEvents}</span> events in total
+              </>
             )}
           </div>
         </div>
 
-        {/* Search + Toggle - together on one line */}
         <div className="flex items-center gap-2">
-          {/* Search Input */}
           <div className="relative">
             <input
               type="text"
@@ -307,11 +324,12 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         </div>
       </div>
 
-      {/* TIMELINE - separate overlap for portrait, landscape, and desktop */}
       {filteredEvents.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-gray-500 text-lg">No events match your filters.</p>
-          <p className="text-gray-400 text-sm mt-2">Try adjusting the category, year range, tags, or search term.</p>
+          <p className="text-gray-400 text-sm mt-2">
+            Try adjusting the category, year range, tags, or search term.
+          </p>
         </div>
       ) : (
         <div className="relative">
@@ -322,8 +340,10 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
               const isLeft = index % 2 === 0;
 
               return (
-                <div key={event.id} className="relative flex w-full items-center -mt-20 landscape:-mt-8 first:mt-0 md:-mt-8">
-                  {/* Left side */}
+                <div
+                  key={event.id}
+                  className="relative flex w-full items-center -mt-20 landscape:-mt-8 first:mt-0 md:-mt-8"
+                >
                   <div className="w-1/2 flex justify-end pr-4 md:pr-7">
                     {isLeft && (
                       <EventCard
@@ -337,7 +357,6 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
                     <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
                   </div>
 
-                  {/* Right side */}
                   <div className="w-1/2 flex justify-start pl-4 md:pl-7">
                     {!isLeft && (
                       <EventCard
@@ -353,14 +372,30 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         </div>
       )}
 
-      {selectedEvent && (
+      <button
+        onClick={handleRandomEvent}
+        disabled={events.length === 0 || isRollingRandom}
+        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-600 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:w-auto md:px-5 md:py-3 md:rounded-full"
+        aria-label="Open random event"
+        title="Open random event"
+      >
+        <span className={`text-xl md:mr-2 ${isRollingRandom ? "animate-spin" : ""}`}>
+          🎲
+        </span>
+        <span className="hidden text-sm font-semibold md:inline">
+          {isRollingRandom ? "Rolling..." : "Surprise Me"}
+        </span>
+      </button>
+
+      {modalEvent && (
         <Modal
-          event={selectedEvent}
+          event={modalEvent}
           onClose={handleCloseModal}
           onNext={handleNextEvent}
           onPrev={handlePrevEvent}
-          hasNext={selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1}
-          hasPrev={selectedEventIndex !== null && selectedEventIndex > 0}
+          hasNext={!isRandomDiscovery && selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1}
+          hasPrev={!isRandomDiscovery && selectedEventIndex !== null && selectedEventIndex > 0}
+          isRandomDiscovery={isRandomDiscovery}
         />
       )}
     </>
@@ -405,7 +440,6 @@ function EventCard({ event, onClick }: EventCardProps) {
         {formatEventDate(event)}
       </p>
 
-      {/* Category - visible on mobile only, placed between date and title */}
       {event.category && (
         <div className="mt-1.5 md:hidden">
           <span
@@ -423,7 +457,6 @@ function EventCard({ event, onClick }: EventCardProps) {
           {event.title}
         </h2>
 
-        {/* Category - hidden on mobile, visible on desktop next to title */}
         {event.category && (
           <span
             className={`hidden md:inline-block text-[11px] px-2 py-0.5 rounded-full font-sans whitespace-nowrap ${getCategoryStyle(
@@ -451,31 +484,37 @@ type ModalProps = {
   onPrev: () => void;
   hasNext: boolean;
   hasPrev: boolean;
+  isRandomDiscovery?: boolean;
 };
 
-function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps) {
+function Modal({
+  event,
+  onClose,
+  onNext,
+  onPrev,
+  hasNext,
+  hasPrev,
+  isRandomDiscovery = false,
+}: ModalProps) {
   useEffect(() => {
-    // Get the current scroll position
     const scrollY = window.scrollY;
 
-    // Lock the body
-    document.body.style.position = 'fixed';
+    document.body.style.position = "fixed";
     document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
 
     return () => {
-      // Restore the body and scroll position
       const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
 
       if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+        window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
       }
     };
   }, []);
@@ -492,11 +531,11 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
         onPrev();
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose, onNext, onPrev, hasNext, hasPrev]);
 
-  // Parse sources into lines
   const rawLines =
     (event.sources || "")
       .split("\n")
@@ -512,7 +551,6 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
         className="bg-white border border-stone-200 rounded-lg p-6 max-w-lg w-full relative transform transition-all duration-200 scale-100 opacity-100 shadow-xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-xl hover:text-gray-700 z-10 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm"
@@ -522,6 +560,14 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
         </button>
 
         <div className="pr-8">
+          {isRandomDiscovery && (
+            <div className="mb-3">
+              <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+                🎲 Random Discovery
+              </span>
+            </div>
+          )}
+
           <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
 
           <h2 className="text-lg font-semibold font-serif text-stone-900">
@@ -562,11 +608,14 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
               <ul className="list-disc pl-5 space-y-1 text-sm text-stone-700 break-words">
                 {rawLines.map((line, i) => {
                   const match = line.match(urlRegex);
+
                   if (!match) {
                     return <li key={i}>{line}</li>;
                   }
+
                   const firstUrl = match[0];
                   const href = normalizeUrl(firstUrl);
+
                   return (
                     <li key={i}>
                       <a
@@ -584,10 +633,11 @@ function Modal({ event, onClose, onNext, onPrev, hasNext, hasPrev }: ModalProps)
             </div>
           )}
 
-          {/* Navigation hint - hidden on mobile, visible on desktop */}
-          <div className="hidden md:block mt-4 pt-3 border-t text-xs text-center text-gray-400">
-            ← →  arrow keys to navigate
-          </div>
+          {!isRandomDiscovery && (
+            <div className="hidden md:block mt-4 pt-3 border-t text-xs text-center text-gray-400">
+              ← → arrow keys to navigate
+            </div>
+          )}
         </div>
       </div>
     </div>
