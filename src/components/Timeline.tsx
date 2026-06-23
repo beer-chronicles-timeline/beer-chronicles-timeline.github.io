@@ -1,7 +1,7 @@
 // components/Timeline.tsx
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import type { TimelineEvent, Tag } from "@/lib/types";
@@ -93,7 +93,6 @@ function normalizeUrl(url: string): string {
 
 export default function Timeline({ events, allTags, minYear, maxYear }: TimelineProps) {
   const router = useRouter();
-  const isFirstRender = useRef(true);
 
   const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -103,7 +102,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   const [isOldestFirst, setIsOldestFirst] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // READ SEARCH QUERY FROM URL ON MOUNT (client-side only)
+  // READ SEARCH QUERY FROM URL ON MOUNT
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const s = params.get("string");
@@ -112,23 +111,22 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     }
   }, []);
 
-  // UPDATE URL WHEN SEARCH QUERY CHANGES (preserve other parameters)
+  // UPDATE URL WHEN SEARCH QUERY CHANGES
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
+    const currentUrl = window.location.pathname + window.location.search;
     const params = new URLSearchParams(window.location.search);
     if (searchQuery.trim() !== "") {
       params.set("string", searchQuery.trim());
     } else {
       params.delete("string");
     }
-
     const queryString = params.toString();
-    const url = queryString ? `/?${queryString}` : "/";
-    router.push(url, { scroll: false });
+    const newUrl = queryString ? `/?${queryString}` : "/";
+
+    // Only push if the URL actually changed
+    if (newUrl !== currentUrl) {
+      router.push(newUrl, { scroll: false });
+    }
   }, [searchQuery, router]);
 
   // Calculate tag counts (how many events have each tag)

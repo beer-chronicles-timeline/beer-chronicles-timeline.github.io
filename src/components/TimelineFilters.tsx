@@ -58,39 +58,33 @@ export function TimelineFilters({
 
   const selectedCount = selectedTagIds.length;
 
-  // Build tag name -> tag ID lookup
+  // Build tag name <-> ID lookups
   const tagNameToId = useMemo(() => {
     const map = new Map<string, string>();
     allTags.forEach(tag => map.set(tag.name, tag.id));
     return map;
   }, [allTags]);
 
-  // Build tag ID -> tag name lookup
   const tagIdToName = useMemo(() => {
     const map = new Map<string, string>();
     allTags.forEach(tag => map.set(tag.id, tag.name));
     return map;
   }, [allTags]);
 
-  // Close dropdown when clicking outside
+  // Close dropdown on outside click
   useEffect(() => {
     if (!isTagDropdownOpen) return;
-
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node | null;
       if (!dropdownRef.current) return;
       if (target && dropdownRef.current.contains(target)) return;
-
       setIsTagDropdownOpen(false);
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isTagDropdownOpen]);
 
-  // READ URL PARAMS ON PAGE LOAD (only once)
+  // READ URL PARAMS ON MOUNT
   useEffect(() => {
     if (!isFirstRender.current) return;
     isFirstRender.current = false;
@@ -100,32 +94,22 @@ export function TimelineFilters({
     const from = searchParams.get("from");
     const to = searchParams.get("to");
     const tagNames = searchParams.get("tags");
+    // We don't need to read 'string' here – Timeline handles that
 
-    if (category) {
-      setActiveCategory(category);
-    }
-
+    if (category) setActiveCategory(category);
     if (from) {
       const fromYear = parseInt(from, 10);
-      if (!isNaN(fromYear)) {
-        setStartYear(fromYear);
-      }
+      if (!isNaN(fromYear)) setStartYear(fromYear);
     }
-
     if (to) {
       const toYear = parseInt(to, 10);
-      if (!isNaN(toYear)) {
-        setEndYear(toYear);
-      }
+      if (!isNaN(toYear)) setEndYear(toYear);
     }
-
     if (tagNames) {
       const ids = tagNames.split(",")
         .map(name => tagNameToId.get(name))
         .filter((id): id is string => id !== undefined);
-      if (ids.length > 0) {
-        setSelectedTagIds(ids);
-      }
+      if (ids.length > 0) setSelectedTagIds(ids);
     }
 
     isUpdatingFromUrl.current = false;
@@ -135,33 +119,25 @@ export function TimelineFilters({
   const currentUrlState = useMemo(() => {
     const params = new URLSearchParams();
 
-    if (activeCategory) {
-      params.set("category", activeCategory);
-    }
-
-    if (startYear !== minYear) {
-      params.set("from", startYear.toString());
-    }
-
-    if (endYear !== maxYear) {
-      params.set("to", endYear.toString());
-    }
-
+    if (activeCategory) params.set("category", activeCategory);
+    if (startYear !== minYear) params.set("from", startYear.toString());
+    if (endYear !== maxYear) params.set("to", endYear.toString());
     if (selectedTagIds.length > 0) {
       const names = selectedTagIds
         .map(id => tagIdToName.get(id))
         .filter((name): name is string => name !== undefined);
-      if (names.length > 0) {
-        params.set("tags", names.join(","));
-      }
+      if (names.length > 0) params.set("tags", names.join(","));
     }
 
+    // Preserve existing 'string' parameter
+    const existingString = searchParams.get("string");
+    if (existingString) params.set("string", existingString);
+
     return params.toString();
-  }, [activeCategory, startYear, endYear, selectedTagIds, minYear, maxYear, tagIdToName]);
+  }, [activeCategory, startYear, endYear, selectedTagIds, minYear, maxYear, tagIdToName, searchParams]);
 
   // UPDATE URL ONLY WHEN STATE CHANGES AND NOT FROM URL UPDATE
   useEffect(() => {
-    // Skip on first render or when updating from URL
     if (isFirstRender.current || isUpdatingFromUrl.current) return;
 
     const currentUrl = searchParams.toString();
@@ -184,15 +160,16 @@ export function TimelineFilters({
               type="button"
               key={cat}
               onClick={() => setActiveCategory(isAll ? null : cat)}
-              className={`px-3 py-1 text-sm rounded-full border transition
-${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
+              className={`px-3 py-1 text-sm rounded-full border transition ${
+                isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"
+              }`}
             >
               {cat}
             </button>
           );
         })}
 
-        {/* TAG FILTER DROPDOWN TRIGGER, INLINE WITH CATEGORY BUTTONS */}
+        {/* TAG FILTER DROPDOWN */}
         <div className="relative inline-block text-left" ref={dropdownRef}>
           <button
             type="button"
@@ -214,15 +191,11 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
             <div className="absolute right-0 mt-2 w-56 rounded-lg bg-white shadow-lg border z-20">
               <div className="max-h-64 overflow-auto py-2">
                 {allTags.length === 0 && (
-                  <div className="px-3 py-2 text-xs text-gray-500">
-                    No tags available
-                  </div>
+                  <div className="px-3 py-2 text-xs text-gray-500">No tags available</div>
                 )}
-
                 {allTags.map((tag) => {
                   const checked = selectedTagIds.includes(tag.id);
                   const count = tagCounts?.get(tag.id) || 0;
-
                   return (
                     <label
                       key={tag.id}
@@ -242,7 +215,6 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
                   );
                 })}
               </div>
-
               {selectedCount > 0 && (
                 <div className="border-t px-3 py-2 flex justify-between items-center">
                   <button
@@ -266,7 +238,7 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
         </div>
       </div>
 
-      {/* YEAR RANGE SLIDER - with dynamic min/max */}
+      {/* YEAR RANGE SLIDER */}
       <YearRangeSlider
         startYear={startYear}
         endYear={endYear}

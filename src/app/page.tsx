@@ -1,4 +1,5 @@
 // app/page.tsx
+import { Suspense } from "react";
 import Link from "next/link";
 import Timeline from "@/components/Timeline";
 import HeaderMenu from "@/components/HeaderMenu";
@@ -153,7 +154,10 @@ export default async function Home() {
         </div>
       </header>
 
-      <Timeline events={events} allTags={tags} minYear={minYear} maxYear={maxYear} />
+      <Suspense fallback={<div className="h-20" />}>
+        <Timeline events={events} allTags={tags} minYear={minYear} maxYear={maxYear} />
+      </Suspense>
+
       <Footer />
       <ScrollToTop />
     </main>
