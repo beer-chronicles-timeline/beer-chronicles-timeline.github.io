@@ -1,7 +1,8 @@
 // components/Timeline.tsx
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import type { TimelineEvent, Tag } from "@/lib/types";
 
@@ -91,12 +92,44 @@ function normalizeUrl(url: string): string {
 }
 
 export default function Timeline({ events, allTags, minYear, maxYear }: TimelineProps) {
+  const router = useRouter();
+  const isFirstRender = useRef(true);
+
   const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [startYear, setStartYear] = useState(minYear);
   const [endYear, setEndYear] = useState(maxYear);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
   const [isOldestFirst, setIsOldestFirst] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // READ SEARCH QUERY FROM URL ON MOUNT (client-side only)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get("string");
+    if (s) {
+      setSearchQuery(s);
+    }
+  }, []);
+
+  // UPDATE URL WHEN SEARCH QUERY CHANGES (preserve other parameters)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (searchQuery.trim() !== "") {
+      params.set("string", searchQuery.trim());
+    } else {
+      params.delete("string");
+    }
+
+    const queryString = params.toString();
+    const url = queryString ? `/?${queryString}` : "/";
+    router.push(url, { scroll: false });
+  }, [searchQuery, router]);
 
   // Calculate tag counts (how many events have each tag)
   const tagCounts = useMemo(() => {
@@ -129,6 +162,22 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
           if (!hasAllSelected) return false;
         }
 
+        // Search filter: split by spaces, treat as AND (all tokens must match)
+        const trimmedQuery = searchQuery.trim();
+        if (trimmedQuery !== "") {
+          const tokens = trimmedQuery.split(/\s+/).filter(t => t.length > 0);
+          const lowerTitle = (event.title || "").toLowerCase();
+          const lowerDescription = (event.description || "").toLowerCase();
+
+          // All tokens (lowercased) must be found in either title or description
+          const allTokensMatch = tokens.every(token => {
+            const lowerToken = token.toLowerCase();
+            return lowerTitle.includes(lowerToken) || lowerDescription.includes(lowerToken);
+          });
+
+          if (!allTokensMatch) return false;
+        }
+
         return true;
       });
 
@@ -147,12 +196,12 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         });
       }
     },
-    [events, activeCategory, startYear, endYear, selectedTagIds, isOldestFirst]
+    [events, activeCategory, startYear, endYear, selectedTagIds, isOldestFirst, searchQuery]
   );
 
   const totalEvents = events.length;
   const showingCount = filteredEvents.length;
-  const hasActiveFilters = activeCategory !== null || startYear !== minYear || endYear !== maxYear || selectedTagIds.length > 0;
+  const hasActiveFilters = activeCategory !== null || startYear !== minYear || endYear !== maxYear || selectedTagIds.length > 0 || searchQuery.trim() !== "";
 
   const selectedEvent = selectedEventIndex !== null ? filteredEvents[selectedEventIndex] : null;
 
@@ -215,19 +264,40 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         maxYear={maxYear}
       />
 
-      {/* Event Count Indicator with Order Toggle - perfectly centered as a block */}
+      {/* Event Count Indicator with Search and Order Toggle - perfectly centered as a block */}
       <div className="flex justify-center mb-6">
         <div className="flex items-center gap-3">
-          <div className="px-4 py-1 text-sm bg-stone-100 rounded-full text-stone-700">
+          <div className="px-4 py-1 text-sm bg-stone-100 rounded-full text-stone-700 whitespace-nowrap">
             {hasActiveFilters ? (
               <>Showing <span className="font-semibold">{showingCount}</span> of <span className="font-semibold">{totalEvents}</span> events</>
             ) : (
               <><span className="font-semibold">{totalEvents}</span> events in total</>
             )}
           </div>
+
+          {/* Search Input */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-36 px-3 py-1 text-sm border border-gray-300 rounded-full focus:ring-2 focus:ring-stone-500 focus:border-transparent outline-none bg-white text-stone-700 placeholder:text-gray-400"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
           <button
             onClick={toggleOrder}
-            className="flex items-center gap-1.5 px-4 py-1 text-sm bg-stone-100 hover:bg-stone-200 rounded-full transition text-stone-700"
+            className="flex items-center gap-1.5 px-4 py-1 text-sm bg-stone-100 hover:bg-stone-200 rounded-full transition text-stone-700 whitespace-nowrap"
             aria-label="Toggle timeline order"
           >
             <span>{isOldestFirst ? "↑" : "↓"}</span>
@@ -240,7 +310,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
       {filteredEvents.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-gray-500 text-lg">No events match your filters.</p>
-          <p className="text-gray-400 text-sm mt-2">Try adjusting the category, year range, or tags.</p>
+          <p className="text-gray-400 text-sm mt-2">Try adjusting the category, year range, tags, or search term.</p>
         </div>
       ) : (
         <div className="relative">
