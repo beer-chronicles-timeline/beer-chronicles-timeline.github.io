@@ -123,7 +123,6 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     const queryString = params.toString();
     const newUrl = queryString ? `/?${queryString}` : "/";
 
-    // Only push if the URL actually changed
     if (newUrl !== currentUrl) {
       router.push(newUrl, { scroll: false });
     }
@@ -262,9 +261,10 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         maxYear={maxYear}
       />
 
-      {/* Event Count Indicator with Search and Order Toggle - perfectly centered as a block */}
-      <div className="flex justify-center mb-6">
-        <div className="flex items-center gap-3">
+      {/* Event Count, Search, and Order Toggle - responsive two-row layout on mobile */}
+      <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-6">
+        {/* Event Count - full width on mobile, auto on desktop */}
+        <div className="w-full md:w-auto flex justify-center order-2 md:order-1">
           <div className="px-4 py-1 text-sm bg-stone-100 rounded-full text-stone-700 whitespace-nowrap">
             {hasActiveFilters ? (
               <>Showing <span className="font-semibold">{showingCount}</span> of <span className="font-semibold">{totalEvents}</span> events</>
@@ -272,7 +272,10 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
               <><span className="font-semibold">{totalEvents}</span> events in total</>
             )}
           </div>
+        </div>
 
+        {/* Search + Toggle - together on one line */}
+        <div className="flex items-center gap-2 order-1 md:order-2">
           {/* Search Input */}
           <div className="relative">
             <input
