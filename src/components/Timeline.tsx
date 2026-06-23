@@ -24,6 +24,23 @@ function formatEventDate(event: TimelineEvent): string {
     return `${decadeStart}s`;
   }
 
+  // Handle month precision (e.g., "October 1990")
+  if (event.date_precision === "month") {
+    const parts = raw.split("-");
+    if (parts.length >= 2) {
+      const [year, month] = parts;
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
+      ];
+      const m = parseInt(month, 10) - 1;
+      if (!Number.isNaN(m) && m >= 0 && m < 12) {
+        return `${monthNames[m]} ${year}`;
+      }
+    }
+    return raw;
+  }
+
   // Handle year precision
   if (event.date_precision === "year") {
     return raw.slice(0, 4);
