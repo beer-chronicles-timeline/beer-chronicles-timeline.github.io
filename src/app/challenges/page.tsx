@@ -1,0 +1,129 @@
+// app/challenges/page.tsx
+import Link from "next/link";
+import HeaderMenu from "@/components/HeaderMenu";
+import Footer from "@/components/Footer";
+
+export default function ChallengesPage() {
+  const challenges = [
+    {
+      title: "Schieffer Brewery in Trier, Germany",
+      question: "When did they really stop brewing?",
+      context:
+        "The timeline needs a verifiable source for the real end date of Schieffer Brewery in Trier, Germany.",
+    },
+    {
+      title: "George Hodgson",
+      question: "What is his birth date?",
+      context:
+        "The timeline needs a verifiable source for the birth date of George Hodgson, the London brewer associated with the India Pale Ale storyline.",
+    },
+    {
+      title: "George Hodgson",
+      question: "What is his death date?",
+      context:
+        "The timeline needs a verifiable source for the death date of George Hodgson, the London brewer associated with the India Pale Ale storyline.",
+    },
+  ];
+
+  return (
+    <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+      <header className="mb-8">
+        {/* Mobile layout: menu and BEER on same line */}
+        <div className="flex items-start justify-between gap-2 md:hidden">
+          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+            <Link href="/" className="hover:no-underline">BEER</Link>
+          </h1>
+          <HeaderMenu />
+        </div>
+
+        {/* Desktop layout: centered title with menu on right */}
+        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
+          <div className="w-1/3" />
+          <div className="w-1/3 text-center">
+            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+              <Link href="/" className="hover:no-underline">BEER CHRONICLES</Link>
+            </h1>
+            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+              An Interactive Beer History Timeline
+            </h2>
+          </div>
+          <div className="w-1/3 flex justify-end">
+            <HeaderMenu />
+          </div>
+        </div>
+
+        {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
+        <div className="block md:hidden mt-2">
+          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+            <Link href="/" className="hover:no-underline">CHRONICLES</Link>
+          </h1>
+          <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+            Open Research Challenges
+          </h2>
+        </div>
+      </header>
+
+      <section className="max-w-3xl mx-auto w-full">
+        <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
+          Open Research Challenges
+        </h2>
+
+        <div className="space-y-4 text-gray-800">
+          <p>
+            Some beer history questions are still unresolved. This page collects open research challenges where Beer Chronicles needs stronger evidence before an entry can be added or corrected.
+          </p>
+
+          <p>
+            If you can resolve one of these questions with reliable sources, please{" "}
+            <Link href="/submit" className="underline hover:no-underline">
+              submit your finding here
+            </Link>
+            . Every resolved open research question will be awarded with a free beer of my choice, given to the submitting person if I accept the resolving entry.
+          </p>
+        </div>
+
+        <div className="mt-8 space-y-4">
+          {challenges.map((challenge, index) => (
+            <article
+              key={`${challenge.title}-${challenge.question}`}
+              className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm"
+            >
+              <div className="text-sm text-stone-500 mb-1">
+                Challenge #{index + 1}
+              </div>
+
+              <h3 className="text-lg font-semibold font-serif text-stone-900">
+                {challenge.title}
+              </h3>
+
+              <p className="mt-2 text-stone-800 font-medium">
+                {challenge.question}
+              </p>
+
+              <p className="mt-2 text-sm text-gray-700 leading-relaxed">
+                {challenge.context}
+              </p>
+
+              <div className="mt-4">
+                <Link
+                  href="/submit"
+                  className="inline-flex items-center rounded-full bg-stone-800 px-4 py-2 text-sm font-medium text-white hover:bg-stone-900 transition"
+                >
+                  Submit a Resolution
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 pt-4 text-sm text-gray-600">
+          <Link href="/" className="underline hover:no-underline">
+            ← Back to the Beer History Timeline
+          </Link>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}
