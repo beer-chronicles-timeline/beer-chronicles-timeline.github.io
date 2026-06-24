@@ -1,7 +1,7 @@
 // components/Timeline.tsx
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import type { TimelineEvent, Tag } from "@/lib/types";
@@ -13,7 +13,6 @@ type TimelineProps = {
   maxYear: number;
 };
 
-// Safari-safe date formatter with decade support
 function formatEventDate(event: TimelineEvent): string {
   const raw = event.event_date;
   if (!raw) return "";
@@ -25,46 +24,27 @@ function formatEventDate(event: TimelineEvent): string {
   }
 
   if (event.date_precision === "month") {
-    const parts = raw.split("-");
-    if (parts.length >= 2) {
-      const [year, month] = parts;
-      const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December",
-      ];
-      const m = parseInt(month, 10) - 1;
-      if (!Number.isNaN(m) && m >= 0 && m < 12) {
-        return `${monthNames[m]} ${year}`;
-      }
-    }
-    return raw;
+    const [year, month] = raw.split("-");
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December",
+    ];
+    const m = parseInt(month, 10) - 1;
+    return !Number.isNaN(m) && m >= 0 && m < 12 ? `${monthNames[m]} ${year}` : raw;
   }
 
-  if (event.date_precision === "year") {
-    return raw.slice(0, 4);
-  }
+  if (event.date_precision === "year") return raw.slice(0, 4);
 
-  const parts = raw.split("-");
+  const [year, month, day] = raw.split("-");
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
   ];
+  const m = parseInt(month, 10) - 1;
+  const d = parseInt(day, 10);
 
-  if (parts.length === 3) {
-    const [year, month, day] = parts;
-    const m = parseInt(month, 10) - 1;
-    const d = parseInt(day, 10);
-    if (!Number.isNaN(m) && m >= 0 && m < 12 && !Number.isNaN(d)) {
-      return `${monthNames[m]} ${d}, ${year}`;
-    }
-  }
-
-  if (parts.length === 2) {
-    const [year, month] = parts;
-    const m = parseInt(month, 10) - 1;
-    if (!Number.isNaN(m) && m >= 0 && m < 12) {
-      return `${monthNames[m]} ${year}`;
-    }
+  if (!Number.isNaN(m) && m >= 0 && m < 12 && !Number.isNaN(d)) {
+    return `${monthNames[m]} ${d}, ${year}`;
   }
 
   return raw;
@@ -76,6 +56,32 @@ function truncate(text: string | null | undefined, max = 160): string | null {
   const slice = text.slice(0, max);
   const cut = slice.lastIndexOf(" ");
   return `${slice.slice(0, cut > 80 ? cut : max).trim()}…`;
+}
+
+function getRelatedEvents(currentEvent: TimelineEvent, events: TimelineEvent[]) {
+  const currentTagIds = new Set((currentEvent.tags ?? []).map((tag) => tag.id));
+  const currentYear = parseInt(currentEvent.event_date.slice(0, 4), 10);
+
+  return events
+    .filter((event) => event.id !== currentEvent.id)
+    .map((event) => {
+      const eventTagIds = (event.tags ?? []).map((tag) => tag.id);
+      const sharedTagCount = eventTagIds.filter((id) => currentTagIds.has(id)).length;
+      const sameCategory = event.category && event.category === currentEvent.category ? 1 : 0;
+      const eventYear = parseInt(event.event_date.slice(0, 4), 10);
+      const yearDistance = Math.abs(currentYear - eventYear);
+
+      const score =
+        sharedTagCount * 100 +
+        sameCategory * 20 +
+        Math.max(0, 20 - Math.floor(yearDistance / 25));
+
+      return { event, score, sharedTagCount };
+    })
+    .filter((item) => item.sharedTagCount > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map((item) => item.event);
 }
 
 const urlRegex = /\b(https?:\/\/[^\s)]+|www\.[^\s)]+)\b/gi;
@@ -103,27 +109,20 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const s = params.get("string");
-    if (s) {
-      setSearchQuery(s);
-    }
+    if (s) setSearchQuery(s);
   }, []);
 
   useEffect(() => {
     const currentUrl = window.location.pathname + window.location.search;
     const params = new URLSearchParams(window.location.search);
 
-    if (searchQuery.trim() !== "") {
-      params.set("string", searchQuery.trim());
-    } else {
-      params.delete("string");
-    }
+    if (searchQuery.trim() !== "") params.set("string", searchQuery.trim());
+    else params.delete("string");
 
     const queryString = params.toString();
     const newUrl = queryString ? `/?${queryString}` : "/";
 
-    if (newUrl !== currentUrl) {
-      router.push(newUrl, { scroll: false });
-    }
+    if (newUrl !== currentUrl) router.push(newUrl, { scroll: false });
   }, [searchQuery, router]);
 
   const tagCounts = useMemo(() => {
@@ -147,12 +146,8 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
       if (eventYear < startYear || eventYear > endYear) return false;
 
       if (selectedTagIds.length > 0) {
-        const eventTags = event.tags ?? [];
-        const eventTagIds = eventTags.map((t) => t.id);
-        const hasAllSelected = selectedTagIds.every((id) =>
-          eventTagIds.includes(id)
-        );
-        if (!hasAllSelected) return false;
+        const eventTagIds = (event.tags ?? []).map((t) => t.id);
+        if (!selectedTagIds.every((id) => eventTagIds.includes(id))) return false;
       }
 
       const trimmedQuery = searchQuery.trim();
@@ -172,18 +167,10 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
       return true;
     });
 
-    if (isOldestFirst) {
-      return filtered.sort((a, b) => {
-        const yearA = parseInt(a.event_date.slice(0, 4), 10);
-        const yearB = parseInt(b.event_date.slice(0, 4), 10);
-        return yearA - yearB;
-      });
-    }
-
     return filtered.sort((a, b) => {
       const yearA = parseInt(a.event_date.slice(0, 4), 10);
       const yearB = parseInt(b.event_date.slice(0, 4), 10);
-      return yearB - yearA;
+      return isOldestFirst ? yearA - yearB : yearB - yearA;
     });
   }, [events, activeCategory, startYear, endYear, selectedTagIds, isOldestFirst, searchQuery]);
 
@@ -199,10 +186,16 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   const selectedEvent = selectedEventIndex !== null ? filteredEvents[selectedEventIndex] : null;
   const modalEvent = randomEvent ?? selectedEvent;
   const isRandomDiscovery = randomEvent !== null;
+  const relatedEvents = modalEvent ? getRelatedEvents(modalEvent, events) : [];
 
   const handleOpenModal = (index: number) => {
     setRandomEvent(null);
     setSelectedEventIndex(index);
+  };
+
+  const handleOpenRelatedEvent = (event: TimelineEvent) => {
+    setRandomEvent(event);
+    setSelectedEventIndex(null);
   };
 
   const handleCloseModal = () => {
@@ -212,7 +205,6 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
 
   const handleNextEvent = () => {
     if (randomEvent) return;
-
     if (selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1) {
       setSelectedEventIndex(selectedEventIndex + 1);
     }
@@ -220,7 +212,6 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
 
   const handlePrevEvent = () => {
     if (randomEvent) return;
-
     if (selectedEventIndex !== null && selectedEventIndex > 0) {
       setSelectedEventIndex(selectedEventIndex - 1);
     }
@@ -239,9 +230,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     }, 350);
   };
 
-  const toggleOrder = () => {
-    setIsOldestFirst(!isOldestFirst);
-  };
+  const toggleOrder = () => setIsOldestFirst(!isOldestFirst);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -345,12 +334,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
                   className="relative flex w-full items-center -mt-20 landscape:-mt-8 first:mt-0 md:-mt-8"
                 >
                   <div className="w-1/2 flex justify-end pr-4 md:pr-7">
-                    {isLeft && (
-                      <EventCard
-                        event={event}
-                        onClick={() => handleOpenModal(index)}
-                      />
-                    )}
+                    {isLeft && <EventCard event={event} onClick={() => handleOpenModal(index)} />}
                   </div>
 
                   <div className="w-0 relative flex justify-center">
@@ -358,12 +342,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
                   </div>
 
                   <div className="w-1/2 flex justify-start pl-4 md:pl-7">
-                    {!isLeft && (
-                      <EventCard
-                        event={event}
-                        onClick={() => handleOpenModal(index)}
-                      />
-                    )}
+                    {!isLeft && <EventCard event={event} onClick={() => handleOpenModal(index)} />}
                   </div>
                 </div>
               );
@@ -390,6 +369,8 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
       {modalEvent && (
         <Modal
           event={modalEvent}
+          relatedEvents={relatedEvents}
+          onOpenRelatedEvent={handleOpenRelatedEvent}
           onClose={handleCloseModal}
           onNext={handleNextEvent}
           onPrev={handlePrevEvent}
@@ -410,22 +391,14 @@ type EventCardProps = {
 function EventCard({ event, onClick }: EventCardProps) {
   function getCategoryStyle(category: string | null | undefined) {
     switch (category) {
-      case "Laws":
-        return "bg-red-100 text-red-800";
-      case "Breweries":
-        return "bg-yellow-100 text-yellow-800";
-      case "Events":
-        return "bg-blue-100 text-blue-800";
-      case "People":
-        return "bg-purple-100 text-purple-800";
-      case "Science":
-        return "bg-green-100 text-green-800";
-      case "Styles":
-        return "bg-orange-100 text-orange-800";
-      case "Community":
-        return "bg-pink-100 text-pink-800";
-      default:
-        return "bg-gray-100 text-gray-700";
+      case "Laws": return "bg-red-100 text-red-800";
+      case "Breweries": return "bg-yellow-100 text-yellow-800";
+      case "Events": return "bg-blue-100 text-blue-800";
+      case "People": return "bg-purple-100 text-purple-800";
+      case "Science": return "bg-green-100 text-green-800";
+      case "Styles": return "bg-orange-100 text-orange-800";
+      case "Community": return "bg-pink-100 text-pink-800";
+      default: return "bg-gray-100 text-gray-700";
     }
   }
 
@@ -436,17 +409,11 @@ function EventCard({ event, onClick }: EventCardProps) {
       onClick={onClick}
       className="bg-white border border-stone-200 shadow-md rounded-lg p-3.5 max-w-sm w-full cursor-pointer transition-all duration-150 hover:bg-gray-50 hover:scale-[1.02] hover:shadow-lg"
     >
-      <p className="text-[13px] leading-snug text-gray-500">
-        {formatEventDate(event)}
-      </p>
+      <p className="text-[13px] leading-snug text-gray-500">{formatEventDate(event)}</p>
 
       {event.category && (
         <div className="mt-1.5 md:hidden">
-          <span
-            className={`text-[10px] px-2 py-0.5 rounded-full font-sans ${getCategoryStyle(
-              event.category
-            )}`}
-          >
+          <span className={`text-[10px] px-2 py-0.5 rounded-full font-sans ${getCategoryStyle(event.category)}`}>
             {event.category}
           </span>
         </div>
@@ -458,11 +425,7 @@ function EventCard({ event, onClick }: EventCardProps) {
         </h2>
 
         {event.category && (
-          <span
-            className={`hidden md:inline-block text-[11px] px-2 py-0.5 rounded-full font-sans whitespace-nowrap ${getCategoryStyle(
-              event.category
-            )}`}
-          >
+          <span className={`hidden md:inline-block text-[11px] px-2 py-0.5 rounded-full font-sans whitespace-nowrap ${getCategoryStyle(event.category)}`}>
             {event.category}
           </span>
         )}
@@ -479,6 +442,8 @@ function EventCard({ event, onClick }: EventCardProps) {
 
 type ModalProps = {
   event: TimelineEvent;
+  relatedEvents: TimelineEvent[];
+  onOpenRelatedEvent: (event: TimelineEvent) => void;
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
@@ -489,6 +454,8 @@ type ModalProps = {
 
 function Modal({
   event,
+  relatedEvents,
+  onOpenRelatedEvent,
   onClose,
   onNext,
   onPrev,
@@ -496,6 +463,8 @@ function Modal({
   hasPrev,
   isRandomDiscovery = false,
 }: ModalProps) {
+  const modalContentRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const scrollY = window.scrollY;
 
@@ -513,17 +482,21 @@ function Modal({
       document.body.style.right = "";
       document.body.style.width = "";
 
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
-      }
+      if (scrollY) window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
-  }, []);
+    }, []);
+
+  useEffect(() => {
+    modalContentRef.current?.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [event.id]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      } else if (e.key === "ArrowRight" && hasNext) {
+      if (e.key === "Escape") onClose();
+      else if (e.key === "ArrowRight" && hasNext) {
         e.preventDefault();
         onNext();
       } else if (e.key === "ArrowLeft" && hasPrev) {
@@ -548,10 +521,10 @@ function Modal({
       onClick={onClose}
     >
       <div
+        ref={modalContentRef}
         className="bg-white border border-stone-200 rounded-lg p-6 max-w-lg w-full relative transform transition-all duration-200 scale-100 opacity-100 shadow-xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
-      >
-        <button
+      >        <button
           onClick={onClose}
           className="absolute top-3 right-3 text-xl hover:text-gray-700 z-10 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm"
           aria-label="Close"
@@ -576,18 +549,7 @@ function Modal({
 
           {event.category && (
             <div className="mt-2">
-              <span className={`text-xs px-2 py-0.5 rounded-full font-sans ${(() => {
-                switch (event.category) {
-                  case "Laws": return "bg-red-100 text-red-800";
-                  case "Breweries": return "bg-yellow-100 text-yellow-800";
-                  case "Events": return "bg-blue-100 text-blue-800";
-                  case "People": return "bg-purple-100 text-purple-800";
-                  case "Science": return "bg-green-100 text-green-800";
-                  case "Styles": return "bg-orange-100 text-orange-800";
-                  case "Community": return "bg-pink-100 text-pink-800";
-                  default: return "bg-gray-100 text-gray-700";
-                }
-              })()}`}>
+              <span className="text-xs px-2 py-0.5 rounded-full font-sans bg-gray-100 text-gray-700">
                 {event.category}
               </span>
             </div>
@@ -601,17 +563,13 @@ function Modal({
 
           {rawLines.length > 0 && (
             <div className="mt-4 pt-3 border-t">
-              <h3 className="text-sm font-semibold text-stone-800 mb-2">
-                Sources
-              </h3>
+              <h3 className="text-sm font-semibold text-stone-800 mb-2">Sources</h3>
 
               <ul className="list-disc pl-5 space-y-1 text-sm text-stone-700 break-words">
                 {rawLines.map((line, i) => {
                   const match = line.match(urlRegex);
 
-                  if (!match) {
-                    return <li key={i}>{line}</li>;
-                  }
+                  if (!match) return <li key={i}>{line}</li>;
 
                   const firstUrl = match[0];
                   const href = normalizeUrl(firstUrl);
@@ -630,6 +588,40 @@ function Modal({
                   );
                 })}
               </ul>
+            </div>
+          )}
+
+          {relatedEvents.length > 0 && (
+            <div className="mt-4 pt-3 border-t">
+              <h3 className="text-sm font-semibold text-stone-800">
+                Continue Exploring
+              </h3>
+              <p className="text-xs text-gray-500 mt-1 mb-3">
+                Based on shared topics.
+              </p>
+
+              <div className="space-y-2">
+                {relatedEvents.map((relatedEvent) => (
+                  <button
+                    key={relatedEvent.id}
+                    type="button"
+                    onClick={() => onOpenRelatedEvent(relatedEvent)}
+                    className="block w-full text-left rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 hover:bg-stone-100 transition"
+                  >
+                    <div className="text-xs text-gray-500">
+                      {formatEventDate(relatedEvent)}
+                    </div>
+                    <div className="text-sm font-semibold font-serif text-stone-900 mt-0.5">
+                      {relatedEvent.title}
+                    </div>
+                    {relatedEvent.description && (
+                      <div className="text-xs text-gray-600 mt-1">
+                        {truncate(relatedEvent.description, 100)}
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
