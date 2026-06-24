@@ -33,21 +33,21 @@ export default function HeaderMenu() {
 
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onClickOutside);
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onClickOutside);
     };
   }, [open]);
 
-  // Close when focus leaves the menu (basic focus management)
+  // Close when focus leaves the menu
   useEffect(() => {
     if (!open) return;
 
     const onFocus = (e: FocusEvent) => {
-      const t = e.target as Node | null;
+      const t = e.target as Node |null;
       if (!menuRef.current) return;
       if (t && menuRef.current.contains(t)) return;
-      // If focus moved completely outside, close
       close();
     };
 
@@ -89,7 +89,7 @@ export default function HeaderMenu() {
         <div
           role="menu"
           aria-label="Main menu"
-          className="absolute right-0 mt-2 w-48 rounded-lg bg-white shadow-lg border z-30"
+          className="absolute right-0 mt-2 w-52 rounded-lg bg-white shadow-lg border z-30"
         >
           <nav className="py-1 text-sm">
             <Link
@@ -100,6 +100,7 @@ export default function HeaderMenu() {
             >
               Timeline
             </Link>
+
             <Link
               href="/submit"
               role="menuitem"
@@ -108,6 +109,16 @@ export default function HeaderMenu() {
             >
               Submit New Entry
             </Link>
+
+            <Link
+              href="/challenges"
+              role="menuitem"
+              onClick={close}
+              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+            >
+              Open Challenges
+            </Link>
+
             <Link
               href="/sources"
               role="menuitem"
@@ -116,6 +127,7 @@ export default function HeaderMenu() {
             >
               Main Sources
             </Link>
+
             <Link
               href="/about"
               role="menuitem"
