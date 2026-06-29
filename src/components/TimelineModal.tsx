@@ -99,28 +99,30 @@ export default function TimelineModal({
           ✕
         </button>
 
-        <div className="pr-8">
-          {isRandomDiscovery && (
-            <div className="mb-3">
-              <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
-                🎲 Random Discovery
-              </span>
-            </div>
-          )}
+        <div>
+          <div className="pr-8">
+            {isRandomDiscovery && (
+              <div className="mb-3">
+                <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+                  🎲 Random Discovery
+                </span>
+              </div>
+            )}
 
-          <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
+            <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
 
-          <h2 className="text-lg font-semibold font-serif text-stone-900">
-            {event.title}
-          </h2>
+            <h2 className="text-lg font-semibold font-serif text-stone-900">
+              {event.title}
+            </h2>
 
-          {event.category && (
-            <div className="mt-2">
-              <span className="text-xs px-2 py-0.5 rounded-full font-sans bg-gray-100 text-gray-700">
-                {event.category}
-              </span>
-            </div>
-          )}
+            {event.category && (
+              <div className="mt-2">
+                <span className="text-xs px-2 py-0.5 rounded-full font-sans bg-gray-100 text-gray-700">
+                  {event.category}
+                </span>
+              </div>
+            )}
+          </div>
 
           {event.description && (
             <p className="text-gray-700 font-sans whitespace-pre-line mt-3">
