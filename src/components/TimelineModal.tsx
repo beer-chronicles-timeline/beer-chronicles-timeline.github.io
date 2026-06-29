@@ -166,9 +166,33 @@ export default function TimelineModal({
           />
 
           {!isRandomDiscovery && (
-            <div className="hidden md:block mt-4 pt-3 border-t text-xs text-center text-gray-400">
-              ← → arrow keys to navigate
-            </div>
+            <>
+              <div className="md:hidden mt-4 pt-3 border-t">
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={onPrev}
+                    disabled={!hasPrev}
+                    className="rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    ← Previous
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={onNext}
+                    disabled={!hasNext}
+                    className="rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    Next →
+                  </button>
+                </div>
+              </div>
+
+              <div className="hidden md:block mt-4 pt-3 border-t text-xs text-center text-gray-400">
+                ← → arrow keys to navigate
+              </div>
+            </>
           )}
         </div>
       </div>
