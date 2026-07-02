@@ -45,7 +45,7 @@ export default function HeaderMenu() {
     if (!open) return;
 
     const onFocus = (e: FocusEvent) => {
-      const t = e.target as Node |null;
+      const t = e.target as Node | null;
       if (!menuRef.current) return;
       if (t && menuRef.current.contains(t)) return;
       close();
@@ -117,6 +117,15 @@ export default function HeaderMenu() {
               className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
             >
               Open Challenges
+            </Link>
+
+            <Link
+              href="/editorial-principles"
+              role="menuitem"
+              onClick={close}
+              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+            >
+              Editorial Principles
             </Link>
 
             <Link
