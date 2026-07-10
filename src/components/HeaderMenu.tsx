@@ -102,21 +102,12 @@ export default function HeaderMenu() {
             </Link>
 
             <Link
-              href="/submit"
+              href="/about"
               role="menuitem"
               onClick={close}
               className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
             >
-              Submit New Entry
-            </Link>
-
-            <Link
-              href="/challenges"
-              role="menuitem"
-              onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
-            >
-              Open Challenges
+              About
             </Link>
 
             <Link
@@ -134,16 +125,25 @@ export default function HeaderMenu() {
               onClick={close}
               className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
             >
-              Main Sources
+              Sources
             </Link>
 
             <Link
-              href="/about"
+              href="/challenges"
               role="menuitem"
               onClick={close}
               className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
             >
-              About This Page
+              Open Challenges
+            </Link>
+
+            <Link
+              href="/submit"
+              role="menuitem"
+              onClick={close}
+              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+            >
+              Submit an Entry
             </Link>
           </nav>
         </div>
