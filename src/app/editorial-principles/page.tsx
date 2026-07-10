@@ -61,7 +61,7 @@ export default function EditorialPrinciplesPage() {
             </h3>
 
             <p className="text-gray-700 leading-relaxed">
-              Every entry is researched individually using reliable historical sources. Whenever possible, primary sources are preferred, while reputable secondary sources help provide historical context and interpretation.
+              Every entry is researched individually using reliable sources. Whenever possible, primary sources are preferred, while reputable secondary sources help provide historical context and interpretation.
             </p>
           </section>
 
@@ -105,6 +105,30 @@ export default function EditorialPrinciplesPage() {
             <p className="text-gray-700 leading-relaxed">
               Beer history is full of fascinating stories, but not every story is equally well documented. In some cases, sources disagree or the historical evidence is incomplete. Where appropriate, this uncertainty is reflected in the timeline so that readers can better understand the current state of historical knowledge.
             </p>
+          </section>
+
+          <section className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm">
+            <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
+              AI Assistance
+            </h3>
+
+            <div className="space-y-3 text-gray-700 leading-relaxed">
+              <p>
+                The Beer Chronicles website has been, and continues to be, developed through vibe coding with the assistance of AI tools.
+              </p>
+
+              <p>
+                AI also supports the historical research behind most entries. This assistance includes finding potentially relevant sources, comparing information across sources, checking whether claims and dates are supported, and helping prepare draft text based on the available evidence.
+              </p>
+
+              <p>
+                Editorial control remains entirely human. Decisions about which entries are added, expanded, revised, or removed are made by me. I also decide which sources are accepted, how uncertainty is presented, and which historical details are included in the final entry.
+              </p>
+
+              <p>
+                Neither the website nor its historical content is produced in an agentic or fully automated way. AI tools do not independently publish code, create entries, or make editorial decisions. Every change is reviewed and approved before it becomes part of Beer Chronicles.
+              </p>
+            </div>
           </section>
 
           <section className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm">
