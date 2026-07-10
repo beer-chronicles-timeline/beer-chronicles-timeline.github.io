@@ -18,11 +18,17 @@ export default function SubmitPage() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -75,7 +81,9 @@ export default function SubmitPage() {
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
-            <Link href="/" className="hover:no-underline">BEER</Link>
+            <Link href="/" className="hover:no-underline">
+              BEER
+            </Link>
           </h1>
           <HeaderMenu />
         </div>
@@ -85,11 +93,13 @@ export default function SubmitPage() {
           <div className="w-1/3" />
           <div className="w-1/3 text-center">
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
-              <Link href="/" className="hover:no-underline">BEER CHRONICLES</Link>
+              <Link href="/" className="hover:no-underline">
+                BEER CHRONICLES
+              </Link>
             </h1>
-             <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
-               An Interactive Beer History Timeline
-             </h2>
+            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+              An Interactive Beer History Timeline
+            </h2>
           </div>
           <div className="w-1/3 flex justify-end">
             <HeaderMenu />
@@ -99,7 +109,9 @@ export default function SubmitPage() {
         {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
         <div className="block md:hidden mt-2">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
-            <Link href="/" className="hover:no-underline">CHRONICLES</Link>
+            <Link href="/" className="hover:no-underline">
+              CHRONICLES
+            </Link>
           </h1>
           <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
             An Interactive Beer History Timeline
@@ -108,13 +120,41 @@ export default function SubmitPage() {
       </header>
 
       <section className="max-w-2xl mx-auto">
-        <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-2">Submit a New Beer History Entry</h2>
-        <p className="text-gray-600 mb-6">You have an important beer history event to share that I should include in the Beer Chronicles? Just fill out the form below and I'll review it for inclusion.</p>
+        <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
+          Submit a New Beer History Entry
+        </h2>
+
+        <p className="text-gray-600 mb-4">
+          You have an important beer history event to share that I should
+          include in the Beer Chronicles? Just fill out the form below and
+          I&apos;ll review it for inclusion.
+        </p>
+
+        <div className="mb-6 rounded-lg border border-stone-200 bg-stone-100 px-4 py-3 text-sm leading-relaxed text-stone-700">
+          <p>
+            Please include publicly accessible sources whenever possible, and
+            only use exact dates when they are explicitly supported by those
+            sources.
+          </p>
+          <p className="mt-2">
+            For more detail, see the{" "}
+            <Link
+              href="/editorial-principles"
+              className="font-medium underline underline-offset-2 hover:no-underline"
+            >
+              Editorial Principles
+            </Link>
+            .
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Name Field */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Your Name
             </label>
             <input
@@ -131,7 +171,10 @@ export default function SubmitPage() {
 
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Your Email
             </label>
             <input
@@ -148,7 +191,10 @@ export default function SubmitPage() {
 
           {/* Title Field */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Title
             </label>
             <input
@@ -165,7 +211,10 @@ export default function SubmitPage() {
 
           {/* Description Field */}
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Description
             </label>
             <textarea
@@ -182,7 +231,10 @@ export default function SubmitPage() {
 
           {/* Event Date Field */}
           <div>
-            <label htmlFor="eventDate" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="eventDate"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Event Date
             </label>
             <input
@@ -198,7 +250,10 @@ export default function SubmitPage() {
 
           {/* Date Precision Field */}
           <div>
-            <label htmlFor="datePrecision" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="datePrecision"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Date Precision
             </label>
             <select
@@ -218,7 +273,10 @@ export default function SubmitPage() {
 
           {/* Sources Field */}
           <div>
-            <label htmlFor="sources" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="sources"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Sources
             </label>
             <textarea
@@ -251,13 +309,19 @@ export default function SubmitPage() {
           {/* Status Messages */}
           {submitStatus === "success" && (
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-800">Thank you! Your entry has been submitted. I'll review it soon.</p>
+              <p className="text-green-800">
+                Thank you! Your entry has been submitted. I&apos;ll review it
+                soon.
+              </p>
             </div>
           )}
 
           {submitStatus === "error" && (
             <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-800">Sorry, there was an error sending your submission. Please try again or email me directly.</p>
+              <p className="text-red-800">
+                Sorry, there was an error sending your submission. Please try
+                again or email me directly.
+              </p>
             </div>
           )}
         </form>
