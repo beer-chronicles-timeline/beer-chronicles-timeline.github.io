@@ -12,27 +12,31 @@ export default function SourcesPage() {
         "An indispensable podcast for all beer lovers and (home) brewing enthusiasts. The well-founded chapters on beer history have inspired and verified many of my entries.",
       imageUrl: "/images/brautag.png",
       link: "https://brautagpodcast.com",
+      affiliate: false,
     },
     {
       title: "Jan Brücklmeier: Bier verstehen",
       description:
         "An excellent book that explains the world of beer from the basics to the finest nuances. The historical chapters in particular were a valuable source for this project.",
       imageUrl: "/images/bier-verstehen.png",
-      link: "https://amzn.eu/d/03i9FyVL",
+      link: "https://www.amazon.de/dp/3818613451?social_share=cm_sw_r_ffobk_cp_ud_dp_J14JVTKGM33QWZ8XPZ6G&bestFormat=true&linkCode=ll2&tag=beerchronicle-21&linkId=55a682dfcd4f6e2b69b83c7b6785b329&ref_=as_li_ss_tl",
+      affiliate: true,
     },
     {
       title: "Andreas Krennmair: Vienna Lager",
       description:
         "A comprehensive deep dive into the history and brewing techniques of Vienna Lager. This book provided essential context for understanding the development of lager beer styles in Central Europe.",
       imageUrl: "/images/Andreas-Krennmair-Vienna-Lager.jpeg",
-      link: "https://amzn.eu/d/07tUwDrp",
+      link: "https://www.amazon.de/dp/B08CPDLRT7?social_share=cm_sw_r_ffobk_cp_ud_dp_K6534CJPCHD5KBPFTCRP&bestFormat=true&linkCode=ll2&tag=beerchronicle-21&linkId=6e5f6e173b234c2fc5d8f603756bc115&ref_=as_li_ss_tl",
+      affiliate: true,
     },
     {
       title: "Stan Hieronymus: Brew Like a Monk",
       description:
         "An authoritative exploration of Trappist and abbey brewing traditions. This book was invaluable for understanding the rich beer culture of Belgian monasteries and their historical significance.",
       imageUrl: "/images/Stan-Hieronymous-Brew-like-a-monk.jpg",
-      link: "https://amzn.eu/d/04A0zDL0",
+      link: "https://www.amazon.de/dp/093738187X?social_share=cm_sw_r_ffobk_cp_ud_dp_CY5XK3GPRKZTRE1YCZ74_2&bestFormat=true&linkCode=ll2&tag=beerchronicle-21&linkId=33602c576368d2c1ba08befbcdf069c6&ref_=as_li_ss_tl",
+      affiliate: true,
     },
     {
       title: "Craft Beer & Brewing: The Oxford Companion to Beer",
@@ -40,6 +44,7 @@ export default function SourcesPage() {
         "An essential reference work covering all aspects of beer and brewing, from historical developments to technical brewing terms. The dictionary entries provided valuable context for many historical events and brewing concepts featured in this timeline.",
       imageUrl: "/images/craft-beer-and-brewing.png",
       link: "https://www.beerandbrewing.com/dictionary",
+      affiliate: false,
     },
   ];
 
@@ -121,13 +126,15 @@ export default function SourcesPage() {
           >
             Editorial Principles
           </Link>
-          .
+          . Some book links on this page are affiliate links. If you purchase a
+          book through one of these links, Beer Chronicles may receive a small
+          commission at no additional cost to you.
         </p>
 
         <div className="space-y-8">
-          {sources.map((source, index) => (
+          {sources.map((source) => (
             <div
-              key={index}
+              key={source.title}
               className="flex flex-col md:flex-row gap-6 bg-white border border-stone-200 rounded-lg p-6 shadow-sm"
             >
               {/* Image - left side */}
@@ -149,12 +156,23 @@ export default function SourcesPage() {
                   <a
                     href={source.link}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel={
+                      source.affiliate
+                        ? "noopener noreferrer sponsored"
+                        : "noopener noreferrer"
+                    }
                     className="hover:underline"
                   >
                     {source.title}
                   </a>
                 </h3>
+
+                {source.affiliate && (
+                  <p className="mb-2 text-xs font-medium uppercase tracking-wide text-stone-500">
+                    Affiliate link
+                  </p>
+                )}
+
                 <p className="text-gray-700 leading-relaxed">
                   {source.description}
                 </p>
@@ -173,8 +191,8 @@ export default function SourcesPage() {
             excellent timeline resources:
           </p>
           <ul className="list-disc pl-6 space-y-2 text-gray-700">
-            {otherTimelines.map((timeline, index) => (
-              <li key={index}>
+            {otherTimelines.map((timeline) => (
+              <li key={timeline.title}>
                 <a
                   href={timeline.link}
                   target="_blank"
