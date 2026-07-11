@@ -36,6 +36,10 @@ export default function Footer() {
         <Link href="/submit" className={linkClassName}>
           Submit an Entry
         </Link>
+
+        <Link href="/imprint" className={linkClassName}>
+          Imprint
+        </Link>
       </nav>
 
       <div className="mt-3">
