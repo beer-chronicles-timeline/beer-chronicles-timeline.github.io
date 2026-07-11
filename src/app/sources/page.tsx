@@ -128,7 +128,8 @@ export default function SourcesPage() {
           </Link>
           . Some book links on this page are affiliate links. If you purchase a
           book through one of these links, Beer Chronicles may receive a small
-          commission at no additional cost to you.
+          commission at no additional cost to you. As an Amazon Associate, 
+          I earn from qualifying purchases.
         </p>
 
         <div className="space-y-8">
