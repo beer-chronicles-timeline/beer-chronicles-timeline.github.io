@@ -1,7 +1,7 @@
 "use client";
 
 import * as Slider from "@radix-ui/react-slider";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   startYear: number;
@@ -12,6 +12,42 @@ type Props = {
   maxYear: number;
 };
 
+function formatHistoricalYear(year: number): string {
+  if (year < 0) {
+    return `${Math.abs(year)} BC`;
+  }
+
+  return String(year);
+}
+
+function parseHistoricalYear(value: string): number | null {
+  const normalized = value.trim().toUpperCase();
+
+  if (normalized === "") {
+    return null;
+  }
+
+  const bcMatch = normalized.match(/^(\d+)\s*(BC|BCE)$/);
+
+  if (bcMatch) {
+    const year = Number.parseInt(bcMatch[1], 10);
+
+    if (Number.isNaN(year) || year === 0) {
+      return null;
+    }
+
+    return -year;
+  }
+
+  const numericYear = Number.parseInt(normalized, 10);
+
+  if (Number.isNaN(numericYear) || numericYear === 0) {
+    return null;
+  }
+
+  return numericYear;
+}
+
 export default function YearRangeSlider({
   startYear,
   endYear,
@@ -20,89 +56,128 @@ export default function YearRangeSlider({
   minYear,
   maxYear,
 }: Props) {
-  const [startInputValue, setStartInputValue] = useState<string>(String(startYear));
-  const [endInputValue, setEndInputValue] = useState<string>(String(endYear));
+  const [startInputValue, setStartInputValue] = useState<string>(
+    formatHistoricalYear(startYear)
+  );
 
-  // Sync input fields when props change (slider drag or external updates)
+  const [endInputValue, setEndInputValue] = useState<string>(
+    formatHistoricalYear(endYear)
+  );
+
+  // Sync input fields when props change through slider movement or URL state.
   useEffect(() => {
-    setStartInputValue(String(startYear));
-    setEndInputValue(String(endYear));
+    setStartInputValue(formatHistoricalYear(startYear));
+    setEndInputValue(formatHistoricalYear(endYear));
   }, [startYear, endYear]);
 
-  const handleStartInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value;
+  const handleStartInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const raw = event.target.value;
     setStartInputValue(raw);
-    
-    // Only update the actual year if the value is valid
-    const num = parseInt(raw, 10);
-    if (!isNaN(num) && num >= minYear && num <= endYear) {
-      setStartYear(num);
+
+    const year = parseHistoricalYear(raw);
+
+    if (
+      year !== null &&
+      year >= minYear &&
+      year <= endYear
+    ) {
+      setStartYear(year);
     }
   };
 
   const handleStartInputBlur = () => {
-    // On blur, reset to valid value if invalid
-    const num = parseInt(startInputValue, 10);
-    if (isNaN(num) || num < minYear) {
-      setStartInputValue(String(startYear));
-    } else if (num > endYear) {
-      setStartInputValue(String(endYear));
+    const year = parseHistoricalYear(startInputValue);
+
+    if (
+      year === null ||
+      year < minYear ||
+      year > endYear
+    ) {
+      setStartInputValue(formatHistoricalYear(startYear));
+      return;
     }
+
+    setStartYear(year);
+    setStartInputValue(formatHistoricalYear(year));
   };
 
-  const handleEndInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value;
+  const handleEndInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const raw = event.target.value;
     setEndInputValue(raw);
-    
-    const num = parseInt(raw, 10);
-    if (!isNaN(num) && num >= startYear && num <= maxYear) {
-      setEndYear(num);
+
+    const year = parseHistoricalYear(raw);
+
+    if (
+      year !== null &&
+      year >= startYear &&
+      year <= maxYear
+    ) {
+      setEndYear(year);
     }
   };
 
   const handleEndInputBlur = () => {
-    const num = parseInt(endInputValue, 10);
-    if (isNaN(num) || num > maxYear) {
-      setEndInputValue(String(endYear));
-    } else if (num < startYear) {
-      setEndInputValue(String(startYear));
+    const year = parseHistoricalYear(endInputValue);
+
+    if (
+      year === null ||
+      year < startYear ||
+      year > maxYear
+    ) {
+      setEndInputValue(formatHistoricalYear(endYear));
+      return;
     }
+
+    setEndYear(year);
+    setEndInputValue(formatHistoricalYear(year));
   };
 
   return (
     <div className="w-full max-w-xl mx-auto mb-2 px-4 md:px-0">
-      {/* Labels + Input fields on the same row */}
+      {/* Labels + input fields on the same row */}
       <div className="flex justify-between text-sm text-gray-600 mb-1">
         <div className="flex items-center gap-1">
           <span>From:</span>
+
           <input
             id="startYearInput"
             type="text"
-            inputMode="numeric"
             value={startInputValue}
             onChange={handleStartInputChange}
             onBlur={handleStartInputBlur}
-            className="w-12 px-1 py-0.5 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+            aria-label="Start year"
+            className="w-24 px-1 py-0.5 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-stone-500 focus:border-transparent"
           />
         </div>
+
         <div className="flex items-center gap-1">
           <input
             id="endYearInput"
             type="text"
-            inputMode="numeric"
             value={endInputValue}
             onChange={handleEndInputChange}
             onBlur={handleEndInputBlur}
-            className="w-12 px-1 py-0.5 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+            aria-label="End year"
+            className="w-24 px-1 py-0.5 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-stone-500 focus:border-transparent text-right"
           />
+
           <span>To:</span>
         </div>
       </div>
 
-      {/* Year display below the labels/inputs */}
+      {/* Historical year display below the labels and inputs */}
       <div className="flex justify-between text-sm text-gray-600 mb-2">
-        <span className="font-medium">{startYear}</span>
-        <span className="font-medium">{endYear}</span>
+        <span className="font-medium">
+          {formatHistoricalYear(startYear)}
+        </span>
+
+        <span className="font-medium">
+          {formatHistoricalYear(endYear)}
+        </span>
       </div>
 
       <Slider.Root
@@ -120,8 +195,15 @@ export default function YearRangeSlider({
           <Slider.Range className="absolute bg-black rounded-full h-full" />
         </Slider.Track>
 
-        <Slider.Thumb className="block w-5 h-5 bg-white border-2 border-black rounded-full shadow hover:scale-110 transition" />
-        <Slider.Thumb className="block w-5 h-5 bg-white border-2 border-black rounded-full shadow hover:scale-110 transition" />
+        <Slider.Thumb
+          className="block w-5 h-5 bg-white border-2 border-black rounded-full shadow hover:scale-110 transition"
+          aria-label="Start year"
+        />
+
+        <Slider.Thumb
+          className="block w-5 h-5 bg-white border-2 border-black rounded-full shadow hover:scale-110 transition"
+          aria-label="End year"
+        />
       </Slider.Root>
     </div>
   );

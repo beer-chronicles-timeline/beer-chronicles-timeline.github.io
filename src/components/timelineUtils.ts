@@ -3,63 +3,147 @@ import type { TimelineEvent } from "@/lib/types";
 
 export const urlRegex = /\b(https?:\/\/[^\s)]+|www\.[^\s)]+)\b/gi;
 
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+function isBceDate(raw: string): boolean {
+  return /\sBC$/i.test(raw.trim());
+}
+
+function getDisplayedYear(raw: string): number | null {
+  const match = raw.trim().match(/^(\d+)-/);
+
+  if (!match) {
+    return null;
+  }
+
+  const storedYear = Number.parseInt(match[1], 10);
+
+  if (Number.isNaN(storedYear)) {
+    return null;
+  }
+
+  return isBceDate(raw) ? storedYear + 1 : storedYear;
+}
+
+function getTimelineYear(raw: string): number | null {
+  const displayedYear = getDisplayedYear(raw);
+
+  if (displayedYear === null) {
+    return null;
+  }
+
+  return isBceDate(raw) ? -displayedYear : displayedYear;
+}
+
 export function formatEventDate(event: TimelineEvent): string {
   const raw = event.event_date;
-  if (!raw) return "";
+
+  if (!raw) {
+    return "";
+  }
+
+  const displayedYear = getDisplayedYear(raw);
+  const isBce = isBceDate(raw);
+  const eraSuffix = isBce ? " BC" : "";
+
+  if (displayedYear === null) {
+    return raw;
+  }
 
   if (event.date_precision === "decade") {
-    const year = raw.slice(0, 4);
-    const decadeStart = Math.floor(parseInt(year, 10) / 10) * 10;
-    return `${decadeStart}s`;
+    const decadeStart = Math.ceil(displayedYear / 10) * 10;
+    return `${decadeStart}s${eraSuffix}`;
   }
 
   if (event.date_precision === "month") {
-    const [year, month] = raw.split("-");
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December",
-    ];
-    const m = parseInt(month, 10) - 1;
-    return !Number.isNaN(m) && m >= 0 && m < 12 ? `${monthNames[m]} ${year}` : raw;
+    const [, month] = raw.split("-");
+    const monthIndex = Number.parseInt(month, 10) - 1;
+
+    return !Number.isNaN(monthIndex) &&
+      monthIndex >= 0 &&
+      monthIndex < 12
+      ? `${monthNames[monthIndex]} ${displayedYear}${eraSuffix}`
+      : raw;
   }
 
-  if (event.date_precision === "year") return raw.slice(0, 4);
+  if (event.date_precision === "year") {
+    return `${displayedYear}${eraSuffix}`;
+  }
 
-  const [year, month, day] = raw.split("-");
-  const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
-  ];
-  const m = parseInt(month, 10) - 1;
-  const d = parseInt(day, 10);
+  const [, month, dayPart] = raw.split("-");
+  const monthIndex = Number.parseInt(month, 10) - 1;
+  const day = Number.parseInt(dayPart, 10);
 
-  if (!Number.isNaN(m) && m >= 0 && m < 12 && !Number.isNaN(d)) {
-    return `${monthNames[m]} ${d}, ${year}`;
+  if (
+    !Number.isNaN(monthIndex) &&
+    monthIndex >= 0 &&
+    monthIndex < 12 &&
+    !Number.isNaN(day)
+  ) {
+    return `${monthNames[monthIndex]} ${day}, ${displayedYear}${eraSuffix}`;
   }
 
   return raw;
 }
 
-export function truncate(text: string | null | undefined, max = 160): string | null {
-  if (!text) return null;
-  if (text.length <= max) return text;
+export function truncate(
+  text: string | null | undefined,
+  max = 160
+): string | null {
+  if (!text) {
+    return null;
+  }
+
+  if (text.length <= max) {
+    return text;
+  }
+
   const slice = text.slice(0, max);
   const cut = slice.lastIndexOf(" ");
+
   return `${slice.slice(0, cut > 80 ? cut : max).trim()}…`;
 }
 
-export function getRelatedEvents(currentEvent: TimelineEvent, events: TimelineEvent[]) {
-  const currentTagIds = new Set((currentEvent.tags ?? []).map((tag) => tag.id));
-  const currentYear = parseInt(currentEvent.event_date.slice(0, 4), 10);
+export function getRelatedEvents(
+  currentEvent: TimelineEvent,
+  events: TimelineEvent[]
+) {
+  const currentTagIds = new Set(
+    (currentEvent.tags ?? []).map((tag) => tag.id)
+  );
+
+  const currentYear = getTimelineYear(currentEvent.event_date);
 
   return events
     .filter((event) => event.id !== currentEvent.id)
     .map((event) => {
       const eventTagIds = (event.tags ?? []).map((tag) => tag.id);
-      const sharedTagCount = eventTagIds.filter((id) => currentTagIds.has(id)).length;
-      const sameCategory = event.category && event.category === currentEvent.category ? 1 : 0;
-      const eventYear = parseInt(event.event_date.slice(0, 4), 10);
-      const yearDistance = Math.abs(currentYear - eventYear);
+      const sharedTagCount = eventTagIds.filter((id) =>
+        currentTagIds.has(id)
+      ).length;
+
+      const sameCategory =
+        event.category && event.category === currentEvent.category ? 1 : 0;
+
+      const eventYear = getTimelineYear(event.event_date);
+
+      const yearDistance =
+        currentYear !== null && eventYear !== null
+          ? Math.abs(currentYear - eventYear)
+          : Number.POSITIVE_INFINITY;
 
       const score =
         sharedTagCount * 100 +
@@ -75,7 +159,13 @@ export function getRelatedEvents(currentEvent: TimelineEvent, events: TimelineEv
 }
 
 export function normalizeUrl(url: string): string {
-  if (/^https?:\/\//i.test(url)) return url;
-  if (/^www\./i.test(url)) return `https://${url}`;
+  if (/^https?:\/\//i.test(url)) {
+    return url;
+  }
+
+  if (/^www\./i.test(url)) {
+    return `https://${url}`;
+  }
+
   return url;
 }
