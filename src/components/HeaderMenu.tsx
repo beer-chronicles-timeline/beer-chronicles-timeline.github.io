@@ -111,6 +111,15 @@ export default function HeaderMenu() {
             </Link>
 
             <Link
+              href="/tastings"
+              role="menuitem"
+              onClick={close}
+              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+            >
+              Tastings
+            </Link>
+
+            <Link
               href="/editorial-principles"
               role="menuitem"
               onClick={close}
