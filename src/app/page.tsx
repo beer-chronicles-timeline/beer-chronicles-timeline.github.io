@@ -13,6 +13,8 @@ type EventTagRow = {
   tag_id: string;
 };
 
+const EVENT_TAG_PAGE_SIZE = 1000;
+
 function isBceDate(eventDate: string): boolean {
   return /\sBC$/i.test(eventDate.trim());
 }
@@ -65,6 +67,46 @@ function getTimelineSortValue(eventDate: string): number {
     : storedYear;
 
   return timelineYear * 10_000 + month * 100 + day;
+}
+
+async function fetchAllEventTags(): Promise<{
+  data: EventTagRow[];
+  errorMessage: string | null;
+}> {
+  const allRows: EventTagRow[] = [];
+  let from = 0;
+
+  while (true) {
+    const to = from + EVENT_TAG_PAGE_SIZE - 1;
+
+    const { data, error } = await supabase
+      .from("event_tags")
+      .select("event_id, tag_id")
+      .order("event_id", { ascending: true })
+      .order("tag_id", { ascending: true })
+      .range(from, to);
+
+    if (error) {
+      return {
+        data: [],
+        errorMessage: error.message,
+      };
+    }
+
+    const rows = (data ?? []) as EventTagRow[];
+    allRows.push(...rows);
+
+    if (rows.length < EVENT_TAG_PAGE_SIZE) {
+      break;
+    }
+
+    from += EVENT_TAG_PAGE_SIZE;
+  }
+
+  return {
+    data: allRows,
+    errorMessage: null,
+  };
 }
 
 export default async function Home() {
@@ -140,14 +182,18 @@ export default async function Home() {
 
   const tags: Tag[] = tagsError ? [] : ((tagData ?? []) as Tag[]);
 
-  // 3) Fetch event_tags relations
-  const { data: eventTagData, error: eventTagsError } = await supabase
-    .from("event_tags")
-    .select("event_id, tag_id");
+  // 3) Fetch all event_tags relations in pages
+  const {
+    data: eventTagRows,
+    errorMessage: eventTagsErrorMessage,
+  } = await fetchAllEventTags();
 
-  const eventTagRows: EventTagRow[] = eventTagsError
-    ? []
-    : ((eventTagData ?? []) as EventTagRow[]);
+  if (eventTagsErrorMessage) {
+    console.error(
+      "Error loading event_tags relations:",
+      eventTagsErrorMessage
+    );
+  }
 
   // 4) Build a lookup: tag_id -> Tag
   const tagById = new Map<string, Tag>();
