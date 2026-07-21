@@ -14,6 +14,7 @@ type EventTagRow = {
 };
 
 const EVENT_TAG_PAGE_SIZE = 1000;
+const MIN_VISIBLE_TAG_EVENT_COUNT = 3;
 
 function isBceDate(eventDate: string): boolean {
   return /\sBC$/i.test(eventDate.trim());
@@ -217,7 +218,7 @@ export default async function Home() {
     tagsForEvent.set(event_id, existing);
   });
 
-  // 6) Combine events with their tags into TimelineEvent[]
+  // 6) Combine events with all of their tags into TimelineEvent[]
   // PostgreSQL returns BCE dates using astronomical year numbering.
   // For example, 3600 BC is returned as 3599-01-01 BC.
   const events: TimelineEvent[] = eventRows
@@ -231,7 +232,29 @@ export default async function Home() {
         getTimelineSortValue(firstEvent.event_date)
     );
 
-  // 7) Calculate min and max historical years, including BCE years
+  // 7) Count distinct active events for each tag
+  const activeEventIds = new Set(eventRows.map((event) => event.id));
+  const activeEventIdsByTag = new Map<string, Set<string>>();
+
+  eventTagRows.forEach(({ event_id, tag_id }) => {
+    if (!activeEventIds.has(event_id)) {
+      return;
+    }
+
+    const eventIds = activeEventIdsByTag.get(tag_id) ?? new Set<string>();
+
+    eventIds.add(event_id);
+    activeEventIdsByTag.set(tag_id, eventIds);
+  });
+
+  // 8) Only expose tags used by at least three active events
+  const visibleTags = tags.filter(
+    (tag) =>
+      (activeEventIdsByTag.get(tag.id)?.size ?? 0) >=
+      MIN_VISIBLE_TAG_EVENT_COUNT
+  );
+
+  // 9) Calculate min and max historical years, including BCE years
   const years = events
     .map((event) => getTimelineYear(event.event_date))
     .filter((year): year is number => year !== null);
@@ -290,7 +313,7 @@ export default async function Home() {
       <Suspense fallback={<div className="h-20" />}>
         <Timeline
           events={events}
-          allTags={tags}
+          allTags={visibleTags}
           minYear={minYear}
           maxYear={maxYear}
         />
