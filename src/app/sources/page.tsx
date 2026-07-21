@@ -1,10 +1,48 @@
 // app/sources/page.tsx
 import Link from "next/link";
+import Image from "next/image";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
-import Image from "next/image";
 
 export default function SourcesPage() {
+  const sourceFamilies = [
+    {
+      title: "Books and Scholarly Publications",
+      description:
+        "Historical monographs, specialist beer books, academic articles, reference works, and critical editions provide broader context and help connect individual events to larger developments in brewing history.",
+    },
+    {
+      title: "Archives and Historical Collections",
+      description:
+        "Digitized newspapers, trade journals, municipal records, historical documents, maps, archival catalogues, and contemporary publications are used whenever they provide direct evidence for an event.",
+    },
+    {
+      title: "Museums and Cultural Institutions",
+      description:
+        "Museums, libraries, heritage organizations, and historical societies often make specialist research, collection records, and digitized primary material publicly accessible.",
+    },
+    {
+      title: "Legal and Government Sources",
+      description:
+        "Laws, regulations, court decisions, parliamentary records, government publications, and official geographical-protection registers are preferred for entries concerning legislation and regulation.",
+    },
+    {
+      title: "Scientific and Technical Institutions",
+      description:
+        "Universities, brewing research institutes, scientific journals, technical associations, and standards organizations support entries about brewing science, ingredients, measurement, quality control, and technology.",
+    },
+    {
+      title: "Breweries and Industry Organizations",
+      description:
+        "Official brewery histories, company archives, brewing associations, and contemporary industry publications can provide valuable first-hand information. Promotional accounts are treated carefully and cross-checked where possible.",
+    },
+    {
+      title: "Competitions and Style Records",
+      description:
+        "Official competition results, judging guidelines, style classifications, and records published by recognized organizers document the development of beer competitions and modern style taxonomy.",
+    },
+  ];
+
   const sources = [
     {
       title: "Brautag Podcast",
@@ -90,7 +128,7 @@ export default function SourcesPage() {
           </div>
         </div>
 
-        {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
+        {/* Mobile subtitle */}
         <div className="block md:hidden mt-2">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">
@@ -98,91 +136,126 @@ export default function SourcesPage() {
             </Link>
           </h1>
           <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
-            Main Sources
+            Sources
           </h2>
         </div>
       </header>
 
       <section className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-4">
-          Main Sources & Acknowledgments
+          Sources
         </h2>
 
         <p className="text-gray-700 mb-4 leading-relaxed">
-          This timeline would not have been possible without the incredible
-          work of beer historians, journalists, podcasters, bloggers, and
-          authors. I want to give the following sources and the people behind
-          them the biggest credit possible. Their dedication to beer culture
-          and history has been an inspiration for this project.
+          Beer Chronicles draws on different types of sources depending on the
+          subject and historical period. The source families below describe the
+          main kinds of material used throughout the timeline.
         </p>
 
-        <p className="text-sm text-gray-600 mb-8 leading-relaxed">
-          For more information on how Beer Chronicles selects sources, handles
-          conflicting evidence, and communicates historical uncertainty, see
-          the{" "}
-          <Link
-            href="/editorial-principles"
-            className="underline hover:text-stone-900"
-          >
-            Editorial Principles
-          </Link>
-          . Some book links on this page are affiliate links. If you purchase a
-          book through one of these links, Beer Chronicles may receive a small
-          commission at no additional cost to you. As an Amazon Associate, 
-          I earn from qualifying purchases.
+        <p className="text-gray-700 mb-8 leading-relaxed">
+          The direct sources supporting individual facts remain listed inside
+          the corresponding timeline entries. This keeps the evidence close to
+          the claims it supports rather than separating it into one centralized
+          bibliography.
         </p>
 
-        <div className="space-y-8">
-          {sources.map((source) => (
+        {/* Source Families */}
+        <div className="grid gap-4 md:grid-cols-2">
+          {sourceFamilies.map((family) => (
             <div
-              key={source.title}
-              className="flex flex-col md:flex-row gap-6 bg-white border border-stone-200 rounded-lg p-6 shadow-sm"
+              key={family.title}
+              className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm"
             >
-              {/* Image - left side */}
-              <div className="w-full md:w-1/3 flex justify-center">
-                <div className="w-32 h-32 md:w-full md:h-40 relative bg-amber-50 rounded-lg overflow-hidden">
-                  <Image
-                    src={source.imageUrl}
-                    alt={source.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 128px, 33vw"
-                  />
-                </div>
-              </div>
-
-              {/* Text - right side */}
-              <div className="w-full md:w-2/3">
-                <h3 className="text-xl font-semibold font-serif text-stone-900 mb-2">
-                  <a
-                    href={source.link}
-                    target="_blank"
-                    rel={
-                      source.affiliate
-                        ? "noopener noreferrer sponsored"
-                        : "noopener noreferrer"
-                    }
-                    className="hover:underline"
-                  >
-                    {source.title}
-                  </a>
-                </h3>
-
-                {source.affiliate && (
-                  <p className="mb-2 text-xs font-medium uppercase tracking-wide text-stone-500">
-                    Affiliate link
-                  </p>
-                )}
-
-                <p className="text-gray-700 leading-relaxed">
-                  {source.description}
-                </p>
-              </div>
+              <h3 className="text-lg font-semibold font-serif text-stone-900 mb-2">
+                {family.title}
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                {family.description}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* Other Beer History Timelines Section */}
+        {/* Featured Sources and Acknowledgments */}
+        <div className="mt-16 pt-10 border-t border-stone-200">
+          <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-4">
+            Featured Sources & Acknowledgments
+          </h2>
+
+          <p className="text-gray-700 mb-4 leading-relaxed">
+            This timeline would not have been possible without the incredible
+            work of beer historians, journalists, podcasters, bloggers, and
+            authors. I want to give the following sources and the people behind
+            them the biggest credit possible. Their dedication to beer culture
+            and history has been an inspiration for this project.
+          </p>
+
+          <p className="text-sm text-gray-600 mb-8 leading-relaxed">
+            For more information on how Beer Chronicles selects sources,
+            handles conflicting evidence, and communicates historical
+            uncertainty, see the{" "}
+            <Link
+              href="/editorial-principles"
+              className="underline hover:text-stone-900"
+            >
+              Editorial Principles
+            </Link>
+            . Some book links on this page are affiliate links. If you purchase
+            a book through one of these links, Beer Chronicles may receive a
+            small commission at no additional cost to you. As an Amazon
+            Associate, I earn from qualifying purchases.
+          </p>
+
+          <div className="space-y-8">
+            {sources.map((source) => (
+              <div
+                key={source.title}
+                className="flex flex-col md:flex-row gap-6 bg-white border border-stone-200 rounded-lg p-6 shadow-sm"
+              >
+                <div className="w-full md:w-1/3 flex justify-center">
+                  <div className="w-32 h-32 md:w-full md:h-40 relative bg-amber-50 rounded-lg overflow-hidden">
+                    <Image
+                      src={source.imageUrl}
+                      alt={source.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 128px, 33vw"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full md:w-2/3">
+                  <h3 className="text-xl font-semibold font-serif text-stone-900 mb-2">
+                    <a
+                      href={source.link}
+                      target="_blank"
+                      rel={
+                        source.affiliate
+                          ? "noopener noreferrer sponsored"
+                          : "noopener noreferrer"
+                      }
+                      className="hover:underline"
+                    >
+                      {source.title}
+                    </a>
+                  </h3>
+
+                  {source.affiliate && (
+                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-stone-500">
+                      Affiliate link
+                    </p>
+                  )}
+
+                  <p className="text-gray-700 leading-relaxed">
+                    {source.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Other Beer History Timelines */}
         <div className="mt-12 pt-6 border-t border-stone-200">
           <h3 className="text-xl font-semibold font-serif text-stone-900 mb-3">
             Other Beer History Timelines
