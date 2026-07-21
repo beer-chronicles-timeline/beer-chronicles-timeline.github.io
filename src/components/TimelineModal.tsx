@@ -109,7 +109,9 @@ export default function TimelineModal({
               </div>
             )}
 
-            <p className="text-sm text-gray-500 mb-2">{formatEventDate(event)}</p>
+            <p className="text-sm text-gray-500 mb-2">
+              {formatEventDate(event)}
+            </p>
 
             <h2 className="text-lg font-semibold font-serif text-stone-900">
               {event.title}
