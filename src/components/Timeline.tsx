@@ -6,21 +6,38 @@ import { useRouter } from "next/navigation";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import EventCard from "./EventCard";
 import TimelineModal from "./TimelineModal";
-import { filterTimelineEvents } from "./timelineFiltering";
+import {
+  filterTimelineEvents,
+  type TagFilterMode,
+} from "./timelineFiltering";
 import { getRelatedEvents } from "./timelineUtils";
 import type { TimelineEvent, Tag } from "@/lib/types";
 
 type TimelineProps = {
   events: TimelineEvent[];
+
+  // Tags shown in the manual dropdown
   allTags: Tag[];
+
+  // Complete tag list used for direct URL links
+  urlTags: Tag[];
+
   minYear: number;
   maxYear: number;
 };
 
-export default function Timeline({ events, allTags, minYear, maxYear }: TimelineProps) {
+export default function Timeline({
+  events,
+  allTags,
+  urlTags,
+  minYear,
+  maxYear,
+}: TimelineProps) {
   const router = useRouter();
 
-  const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(null);
+  const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(
+    null
+  );
   const [randomEvent, setRandomEvent] = useState<TimelineEvent | null>(null);
   const [isRollingRandom, setIsRollingRandom] = useState(false);
 
@@ -28,31 +45,50 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   const [startYear, setStartYear] = useState(minYear);
   const [endYear, setEndYear] = useState(maxYear);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
+  const [tagFilterMode, setTagFilterMode] =
+    useState<TagFilterMode>("all");
   const [isOldestFirst, setIsOldestFirst] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const s = params.get("string");
-    if (s) setSearchQuery(s);
+    const searchString = params.get("string");
+    const tagMode = params.get("tagMode");
+
+    if (searchString) {
+      setSearchQuery(searchString);
+    }
+
+    if (tagMode === "any") {
+      setTagFilterMode("any");
+    }
   }, []);
 
   useEffect(() => {
-    const currentUrl = window.location.pathname + window.location.search;
+    const currentUrl =
+      window.location.pathname + window.location.search;
     const params = new URLSearchParams(window.location.search);
 
-    if (searchQuery.trim() !== "") params.set("string", searchQuery.trim());
-    else params.delete("string");
+    if (searchQuery.trim() !== "") {
+      params.set("string", searchQuery.trim());
+    } else {
+      params.delete("string");
+    }
 
     const queryString = params.toString();
     const newUrl = queryString ? `/?${queryString}` : "/";
 
-    if (newUrl !== currentUrl) router.push(newUrl, { scroll: false });
+    if (newUrl !== currentUrl) {
+      router.push(newUrl, { scroll: false });
+    }
   }, [searchQuery, router]);
 
   const tagCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    allTags.forEach((tag) => counts.set(tag.id, 0));
+
+    urlTags.forEach((tag) => {
+      counts.set(tag.id, 0);
+    });
 
     events.forEach((event) => {
       event.tags?.forEach((tag) => {
@@ -61,7 +97,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     });
 
     return counts;
-  }, [events, allTags]);
+  }, [events, urlTags]);
 
   const filteredEvents = useMemo(
     () =>
@@ -71,6 +107,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         startYear,
         endYear,
         selectedTagIds,
+        tagFilterMode,
         isOldestFirst,
         searchQuery,
       }),
@@ -80,6 +117,7 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
       startYear,
       endYear,
       selectedTagIds,
+      tagFilterMode,
       isOldestFirst,
       searchQuery,
     ]
@@ -95,10 +133,16 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
     selectedTagIds.length > 0 ||
     searchQuery.trim() !== "";
 
-  const selectedEvent = selectedEventIndex !== null ? filteredEvents[selectedEventIndex] : null;
+  const selectedEvent =
+    selectedEventIndex !== null
+      ? filteredEvents[selectedEventIndex]
+      : null;
+
   const modalEvent = randomEvent ?? selectedEvent;
   const isRandomDiscovery = randomEvent !== null;
-  const relatedEvents = modalEvent ? getRelatedEvents(modalEvent, events) : [];
+  const relatedEvents = modalEvent
+    ? getRelatedEvents(modalEvent, events)
+    : [];
 
   const handleOpenModal = (index: number) => {
     setRandomEvent(null);
@@ -116,15 +160,22 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   };
 
   const handleNextEvent = () => {
-    if (randomEvent) return;
+    if (randomEvent) {
+      return;
+    }
 
-    if (selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1) {
+    if (
+      selectedEventIndex !== null &&
+      selectedEventIndex < filteredEvents.length - 1
+    ) {
       setSelectedEventIndex(selectedEventIndex + 1);
     }
   };
 
   const handlePrevEvent = () => {
-    if (randomEvent) return;
+    if (randomEvent) {
+      return;
+    }
 
     if (selectedEventIndex !== null && selectedEventIndex > 0) {
       setSelectedEventIndex(selectedEventIndex - 1);
@@ -132,35 +183,45 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
   };
 
   const handleRandomEvent = () => {
-    if (events.length === 0 || isRollingRandom) return;
+    if (events.length === 0 || isRollingRandom) {
+      return;
+    }
 
     setIsRollingRandom(true);
 
     window.setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * events.length);
+
       setSelectedEventIndex(null);
       setRandomEvent(events[randomIndex]);
       setIsRollingRandom(false);
     }, 350);
   };
 
-  const toggleOrder = () => setIsOldestFirst(!isOldestFirst);
+  const toggleOrder = () => {
+    setIsOldestFirst(!isOldestFirst);
+  };
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedEventIndex === null || randomEvent) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (selectedEventIndex === null || randomEvent) {
+        return;
+      }
 
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
         handleNextEvent();
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
         handlePrevEvent();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [selectedEventIndex, filteredEvents.length, randomEvent]);
 
   return (
@@ -173,8 +234,11 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         setStartYear={setStartYear}
         setEndYear={setEndYear}
         allTags={allTags}
+        urlTags={urlTags}
         selectedTagIds={selectedTagIds}
         setSelectedTagIds={setSelectedTagIds}
+        tagFilterMode={tagFilterMode}
+        setTagFilterMode={setTagFilterMode}
         tagCounts={tagCounts}
         minYear={minYear}
         maxYear={maxYear}
@@ -185,12 +249,15 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
           <div className="px-4 py-1 text-sm bg-stone-100 rounded-full text-stone-700 whitespace-nowrap">
             {hasActiveFilters ? (
               <>
-                Showing <span className="font-semibold">{showingCount}</span> of{" "}
-                <span className="font-semibold">{totalEvents}</span> events
+                Showing{" "}
+                <span className="font-semibold">{showingCount}</span> of{" "}
+                <span className="font-semibold">{totalEvents}</span>{" "}
+                events
               </>
             ) : (
               <>
-                <span className="font-semibold">{totalEvents}</span> events in total
+                <span className="font-semibold">{totalEvents}</span>{" "}
+                events in total
               </>
             )}
           </div>
@@ -202,7 +269,9 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
               type="text"
               placeholder="Search..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(event) =>
+                setSearchQuery(event.target.value)
+              }
               className="w-36 px-3 py-1 text-sm border border-gray-300 rounded-full focus:ring-2 focus:ring-stone-500 focus:border-transparent outline-none bg-white text-stone-700 placeholder:text-gray-400"
             />
 
@@ -223,16 +292,22 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
             aria-label="Toggle timeline order"
           >
             <span>{isOldestFirst ? "↑" : "↓"}</span>
-            <span>{isOldestFirst ? "Oldest first" : "Newest first"}</span>
+            <span>
+              {isOldestFirst ? "Oldest first" : "Newest first"}
+            </span>
           </button>
         </div>
       </div>
 
       {filteredEvents.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-gray-500 text-lg">No events match your filters.</p>
+          <p className="text-gray-500 text-lg">
+            No events match your filters.
+          </p>
+
           <p className="text-gray-400 text-sm mt-2">
-            Try adjusting the category, year range, tags, or search term.
+            Try adjusting the category, year range, tags, or search
+            term.
           </p>
         </div>
       ) : (
@@ -283,7 +358,11 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
         aria-label="Open random event"
         title="Open random event"
       >
-        <span className={`text-xl md:mr-2 ${isRollingRandom ? "animate-spin" : ""}`}>
+        <span
+          className={`text-xl md:mr-2 ${
+            isRollingRandom ? "animate-spin" : ""
+          }`}
+        >
           🎲
         </span>
 
@@ -300,8 +379,16 @@ export default function Timeline({ events, allTags, minYear, maxYear }: Timeline
           onClose={handleCloseModal}
           onNext={handleNextEvent}
           onPrev={handlePrevEvent}
-          hasNext={!isRandomDiscovery && selectedEventIndex !== null && selectedEventIndex < filteredEvents.length - 1}
-          hasPrev={!isRandomDiscovery && selectedEventIndex !== null && selectedEventIndex > 0}
+          hasNext={
+            !isRandomDiscovery &&
+            selectedEventIndex !== null &&
+            selectedEventIndex < filteredEvents.length - 1
+          }
+          hasPrev={
+            !isRandomDiscovery &&
+            selectedEventIndex !== null &&
+            selectedEventIndex > 0
+          }
           isRandomDiscovery={isRandomDiscovery}
         />
       )}

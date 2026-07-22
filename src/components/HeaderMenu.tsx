@@ -26,8 +26,10 @@ export default function HeaderMenu() {
 
     const onClickOutside = (e: MouseEvent) => {
       const t = e.target as Node | null;
+
       if (!menuRef.current) return;
       if (t && menuRef.current.contains(t)) return;
+
       close();
     };
 
@@ -46,13 +48,18 @@ export default function HeaderMenu() {
 
     const onFocus = (e: FocusEvent) => {
       const t = e.target as Node | null;
+
       if (!menuRef.current) return;
       if (t && menuRef.current.contains(t)) return;
+
       close();
     };
 
     document.addEventListener("focusin", onFocus);
-    return () => document.removeEventListener("focusin", onFocus);
+
+    return () => {
+      document.removeEventListener("focusin", onFocus);
+    };
   }, [open]);
 
   return (
@@ -99,6 +106,15 @@ export default function HeaderMenu() {
               className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
             >
               Timeline
+            </Link>
+
+            <Link
+              href="/storylines"
+              role="menuitem"
+              onClick={close}
+              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+            >
+              Storylines
             </Link>
 
             <Link

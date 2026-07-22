@@ -17,6 +17,10 @@ export default function Footer() {
           Timeline
         </Link>
 
+        <Link href="/storylines" className={linkClassName}>
+          Storylines
+        </Link>
+
         <Link href="/about" className={linkClassName}>
           About
         </Link>

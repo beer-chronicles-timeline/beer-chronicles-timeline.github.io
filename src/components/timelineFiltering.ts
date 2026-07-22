@@ -1,12 +1,15 @@
 // components/timelineFiltering.ts
 import type { TimelineEvent } from "@/lib/types";
 
+export type TagFilterMode = "all" | "any";
+
 type FilterTimelineEventsArgs = {
   events: TimelineEvent[];
   activeCategory: string | null;
   startYear: number;
   endYear: number;
   selectedTagIds: string[];
+  tagFilterMode?: TagFilterMode;
   isOldestFirst: boolean;
   searchQuery: string;
 };
@@ -62,6 +65,7 @@ export function filterTimelineEvents({
   startYear,
   endYear,
   selectedTagIds,
+  tagFilterMode = "all",
   isOldestFirst,
   searchQuery,
 }: FilterTimelineEventsArgs): TimelineEvent[] {
@@ -83,7 +87,12 @@ export function filterTimelineEvents({
     if (selectedTagIds.length > 0) {
       const eventTagIds = (event.tags ?? []).map((tag) => tag.id);
 
-      if (!selectedTagIds.every((id) => eventTagIds.includes(id))) {
+      const matchesSelectedTags =
+        tagFilterMode === "any"
+          ? selectedTagIds.some((id) => eventTagIds.includes(id))
+          : selectedTagIds.every((id) => eventTagIds.includes(id));
+
+      if (!matchesSelectedTags) {
         return false;
       }
     }

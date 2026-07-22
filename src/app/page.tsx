@@ -314,6 +314,7 @@ export default async function Home() {
         <Timeline
           events={events}
           allTags={visibleTags}
+          urlTags={tags}
           minYear={minYear}
           maxYear={maxYear}
         />
