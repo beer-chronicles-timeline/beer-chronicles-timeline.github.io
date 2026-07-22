@@ -88,6 +88,14 @@ export default function SourcesPage() {
 
   const otherTimelines = [
     {
+      title: "Brewery History Society Wiki",
+      link: "https://breweryhistory.com/wiki/index.php?title=Main_Page",
+    },
+    {
+      title: "Shut Up About Barclay Perkins",
+      link: "https://barclayperkins.blogspot.com",
+    },
+    {
       title: "CraftBeer.com – Beer History",
       link: "https://www.craftbeer.com/beer/beer-history",
     },
@@ -255,10 +263,10 @@ export default function SourcesPage() {
           </div>
         </div>
 
-        {/* Other Beer History Timelines */}
+        {/* Other Beer History Websites/Blogs/Timelines */}
         <div className="mt-12 pt-6 border-t border-stone-200">
           <h3 className="text-xl font-semibold font-serif text-stone-900 mb-3">
-            Other Beer History Timelines
+            Other Beer History Websites, Blogs, or Timelines 
           </h3>
           <p className="text-gray-600 mb-4">
             For further exploration of beer history, here are some other
@@ -278,6 +286,11 @@ export default function SourcesPage() {
               </li>
             ))}
           </ul>
+
+          <p className="text-gray-600 mt-4">
+            If I have missed your beer history blog or website, my apologies —
+            please let me know.
+          </p>
         </div>
 
         {/* Thank You Section */}
