@@ -121,7 +121,7 @@ export default async function Home() {
   if (eventsError) {
     return (
       <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
-        <header className="mb-8">
+        <header className="mb-6">
           {/* Mobile layout: menu and BEER on same line */}
           <div className="flex items-start justify-between gap-2 md:hidden">
             <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
@@ -129,22 +129,26 @@ export default async function Home() {
                 BEER
               </Link>
             </h1>
+
             <HeaderMenu />
           </div>
 
           {/* Desktop layout: centered title with menu on right */}
           <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
             <div className="w-1/3" />
+
             <div className="w-1/3 text-center">
               <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
                 <Link href="/" className="hover:no-underline">
                   BEER CHRONICLES
                 </Link>
               </h1>
+
               <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
                 An Interactive Beer History Timeline
               </h2>
             </div>
+
             <div className="w-1/3 flex justify-end">
               <HeaderMenu />
             </div>
@@ -157,6 +161,7 @@ export default async function Home() {
                 CHRONICLES
               </Link>
             </h1>
+
             <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
               An Interactive Beer History Timeline
             </h2>
@@ -264,7 +269,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
-      <header className="mb-8">
+      <header className="mb-6">
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
@@ -272,6 +277,7 @@ export default async function Home() {
               BEER
             </Link>
           </h1>
+
           <HeaderMenu />
         </div>
 
@@ -309,6 +315,35 @@ export default async function Home() {
           </h2>
         </div>
       </header>
+
+      <section
+        aria-labelledby="storylines-promo-heading"
+        className="mx-auto mb-8 flex w-full max-w-4xl flex-col gap-3 rounded-xl border border-stone-200 bg-white px-5 py-3 shadow-sm md:flex-row md:items-center md:justify-between md:gap-6"
+      >
+        <div className="flex min-w-0 flex-col gap-1 md:flex-row md:items-baseline md:gap-3 md:whitespace-nowrap">
+          <h2
+            id="storylines-promo-heading"
+            className="shrink-0 font-serif text-lg font-semibold text-stone-900"
+          >
+            Beer Storylines
+          </h2>
+
+          <p className="text-sm text-stone-600">
+            Follow beer’s connected histories across styles, science,
+            industry, and culture.
+          </p>
+        </div>
+
+        <Link
+          href="/storylines"
+          className="inline-flex shrink-0 items-center justify-center rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+        >
+          Explore
+          <span className="ml-2" aria-hidden="true">
+            →
+          </span>
+        </Link>
+      </section>
 
       <Suspense fallback={<div className="h-20" />}>
         <Timeline
