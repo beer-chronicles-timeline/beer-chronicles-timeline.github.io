@@ -305,7 +305,7 @@ export default function SourcesPage() {
             >
               Andreas Gniffke
             </a>
-            , Christoph Merten, Nicole Renken, Simon Stevens, and Johannes
+            , Christoph Merten, Daniel Metzler, Nicole Renken, Simon Stevens, and Johannes
             Thürauf for their valuable feedback during the development of this
             website.
           </p>
