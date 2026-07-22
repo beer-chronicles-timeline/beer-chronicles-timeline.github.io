@@ -21,6 +21,10 @@ export default function Footer() {
           About
         </Link>
 
+        <Link href="/tastings" className={linkClassName}>
+          Tastings
+        </Link>
+
         <Link href="/editorial-principles" className={linkClassName}>
           Editorial Principles
         </Link>
