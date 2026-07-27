@@ -146,6 +146,20 @@ function isEventInsideStorylineDateRange(
   return true;
 }
 
+function sortStorylinesAlphabetically(
+  storylines: Storyline[]
+): Storyline[] {
+  return [...storylines].sort((firstStoryline, secondStoryline) =>
+    firstStoryline.title.localeCompare(
+      secondStoryline.title,
+      "en",
+      {
+        sensitivity: "base",
+      }
+    )
+  );
+}
+
 async function fetchAllEventTags(): Promise<{
   data: EventTagRow[];
   errorMessage: string | null;
@@ -284,7 +298,10 @@ function StorylineCard({
   const href = getStorylineHref(storyline);
 
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <article
+      id={`storyline-${storyline.slug}`}
+      className="scroll-mt-6 flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+    >
       <div className="flex items-start justify-between gap-4">
         <h3 className="font-serif text-xl font-semibold text-stone-900">
           {storyline.title}
@@ -394,7 +411,10 @@ export default async function StorylinesPage() {
   const totalStorylines = STORYLINES.length;
 
   return (
-    <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+    <main
+      id="storylines-top"
+      className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col"
+    >
       <header className="mb-8">
         <div className="flex items-start justify-between gap-2 md:hidden">
           <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
@@ -466,15 +486,43 @@ export default async function StorylinesPage() {
           </p>
         </div>
 
+        {!errorMessage && (
+          <nav
+            aria-labelledby="section-navigation-heading"
+            className="mt-10 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
+          >
+            <h2
+              id="section-navigation-heading"
+              className="font-serif text-xl font-semibold text-stone-900"
+            >
+              Browse by section
+            </h2>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {STORYLINE_SECTIONS.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="rounded-full border border-stone-300 bg-stone-50 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:border-stone-400 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
+                >
+                  {section.title}
+                </a>
+              ))}
+            </div>
+          </nav>
+        )}
+
         {errorMessage ? (
           <div className="mt-10">
             <StorylinesError message={errorMessage} />
           </div>
         ) : (
-          <div className="mt-10 space-y-20">
+          <div className="mt-14 space-y-20">
             {STORYLINE_SECTIONS.map((section) => {
               const sectionStorylines =
-                getStorylinesForSection(section.id);
+                sortStorylinesAlphabetically(
+                  getStorylinesForSection(section.id)
+                );
 
               const sectionViews = sectionStorylines
                 .map((storyline) =>
@@ -487,8 +535,10 @@ export default async function StorylinesPage() {
 
               return (
                 <section
+                  id={section.id}
                   key={section.id}
                   aria-labelledby={`${section.id}-heading`}
+                  className="scroll-mt-6"
                 >
                   <div>
                     <h2
@@ -510,6 +560,15 @@ export default async function StorylinesPage() {
                         view={view}
                       />
                     ))}
+                  </div>
+
+                  <div className="mt-6 flex justify-end">
+                    <a
+                      href="#storylines-top"
+                      className="text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900"
+                    >
+                      Back to top ↑
+                    </a>
                   </div>
                 </section>
               );
