@@ -296,7 +296,9 @@ export default function SourcesPage() {
         {/* Thank You Section */}
         <div className="mt-12 pt-6 border-t border-stone-200">
           <p className="text-gray-600 text-sm leading-relaxed">
-            Special thanks to Thomas Hostert, Henri Lefebvre,{" "}
+            Special thanks to Thomas Hostert,
+            Henri Lefebvre,
+            {" "}
             <a
               href="https://www.instagram.com/bierblogtrier/"
               target="_blank"
@@ -304,9 +306,23 @@ export default function SourcesPage() {
               className="underline hover:text-stone-900"
             >
               Andreas Gniffke
-            </a>
-            , Christoph Merten, Daniel Metzler, Nicole Renken, Simon Stevens, and Johannes
-            Thürauf for their valuable feedback during the development of this
+            </a>, 
+            Christoph Merten, 
+            Daniel Metzler, 
+            {" "}
+            <a
+              href="https://www.instagram.com/panszpik/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-stone-900"
+            >
+              Marcin Ostajewski
+            </a>, 
+
+            Nicole Renken, 
+            Simon Stevens, 
+            and Johannes Thürauf
+            for their valuable feedback during the development of this
             website.
           </p>
         </div>
