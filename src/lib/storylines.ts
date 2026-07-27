@@ -206,6 +206,33 @@ export const STORYLINES: Storyline[] = [
     featuredEventId: "4510a8cc-4699-437c-85a4-64226dd6ea22",
   },
   {
+    slug: "lager",
+    sectionId: "styles-and-traditions",
+    title: "Lager",
+    description:
+      "Trace lager from seasonal cold storage and bottom fermentation to scientific yeast cultivation, mechanical refrigeration, industrial expansion, and global dominance.",
+    tagNames: ["Lager"],
+    featuredEventId: "75f744f8-353f-483c-9b09-3ce3b083b9f8",
+  },
+  {
+    slug: "pilsner",
+    sectionId: "styles-and-traditions",
+    title: "Pilsner",
+    description:
+      "Follow Pilsner from the creation of Pilsner Urquell in 1842 through international imitation, regional adaptations, mass-market success, and modern revival.",
+    tagNames: ["Pils"],
+    featuredEventId: "99e6098b-56e6-4860-bd99-5b7ca37d8aa7",
+  },
+  {
+    slug: "vienna-lager",
+    sectionId: "styles-and-traditions",
+    title: "Vienna Lager",
+    description:
+      "Trace Vienna Lager from Anton Dreher’s nineteenth-century innovations and Vienna malt through international influence, decline, survival in Mexico, and modern revival.",
+    tagNames: ["Vienna Lager"],
+    featuredEventId: "8c71a5b0-30df-4fd0-a5be-bf5f96fbf964",
+  },
+  {
     slug: "czech-beer-beyond-pilsner",
     sectionId: "styles-and-traditions",
     title: "Czech Beer Beyond Pilsner",
@@ -283,6 +310,15 @@ export const STORYLINES: Storyline[] = [
   },
 
   {
+    slug: "trier-beer-history",
+    sectionId: "industry-and-culture",
+    title: "Trier Beer History",
+    description:
+      "Trace Trier’s breweries, closures, revivals, festivals, beer bars, and homebrewing community across nearly two centuries of local beer culture.",
+    tagNames: ["Trier"],
+    featuredEventId: "8c178785-e252-4f73-894f-37394eb62dd5",
+  },
+  {
     slug: "women-in-beer-history",
     sectionId: "industry-and-culture",
     title: "Women in Beer History",
@@ -349,19 +385,9 @@ export const STORYLINES: Storyline[] = [
     sectionId: "modern-beer",
     title: "Modern Craft Beer",
     description:
-      "Trace the breweries, people, beers, festivals, and ideas that built the modern independent-beer movement across several generations.",
+      "Trace modern craft beer from its pioneering breweries to international expansion, BrewDog, Germany’s modern craft movement, later generations, new styles, and changing business models.",
     tagNames: ["Modern Craft Beer"],
     featuredEventId: "1a6d26a3-0dc8-4b35-8e3d-32d7d8dd5d44",
-  },
-  {
-    slug: "modern-craft-beers-second-generation",
-    sectionId: "modern-beer",
-    title: "Modern Craft Beer’s Second Generation",
-    description:
-      "Explore the breweries and styles that expanded craft beer after its pioneering era through stronger flavors, new business models, and international exchange.",
-    tagNames: ["Modern Craft Beer"],
-    fromYear: 2000,
-    featuredEventId: "d221ed67-04a9-4cdb-8f55-65e47d2c8da0",
   },
   {
     slug: "non-alcoholic-beer",
