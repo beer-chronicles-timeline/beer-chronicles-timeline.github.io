@@ -187,12 +187,22 @@ export const STORYLINES: Storyline[] = [
     featuredEventId: "a6d1b2e8-5c47-4f91-9d63-3e0a7b8c1245",
   },
   {
-    slug: "koelsch-and-altbier",
+    slug: "altbier-and-duesseldorf",
     sectionId: "styles-and-traditions",
-    title: "Kölsch and Altbier",
+    title: "Altbier and Düsseldorf",
     description:
-      "Explore the neighboring top-fermented traditions of Cologne and Düsseldorf, their breweries, serving cultures, and protected regional identities.",
-    tagNames: ["Kölsch", "Altbier"],
+      "Trace Altbier through Düsseldorf’s top-fermented brewing tradition, historic house breweries, cool maturation, local serving culture, and modern interpretations.",
+    tagNames: ["Altbier", "Düsseldorf"],
+    tagMode: "any",
+    featuredEventId: "af510a97-61aa-44c3-96c9-8bd7f9079694",
+  },
+  {
+    slug: "koelsch-and-cologne",
+    sectionId: "styles-and-traditions",
+    title: "Kölsch and Cologne",
+    description:
+      "Follow Kölsch from Cologne’s protected top-fermented tradition through Sünner, the Kölsch Convention, regional serving culture, and European protection.",
+    tagNames: ["Kölsch", "Cologne"],
     tagMode: "any",
     featuredEventId: "4a6aa2a8-7418-4cf7-8e6c-b96c6747fd60",
   },
