@@ -215,6 +215,15 @@ export const STORYLINES: Storyline[] = [
     featuredEventId: "e9732758-c7e4-4e11-9770-853fcb6a5db5",
   },
   {
+    slug: "trappists",
+    sectionId: "styles-and-traditions",
+    title: "Trappists",
+    description:
+      "Follow Trappist brewing from monastic foundations and historic abbey breweries to Dubbel, Tripel, international expansion, and the Authentic Trappist Product label.",
+    tagNames: ["Trappists"],
+    featuredEventId: "2adad940-15db-4407-83dd-62383d2b93a5",
+  },
+  {
     slug: "belgian-beer-beyond-trappists-and-lambic",
     sectionId: "styles-and-traditions",
     title: "Belgian Beer Beyond Trappists and Lambic",
