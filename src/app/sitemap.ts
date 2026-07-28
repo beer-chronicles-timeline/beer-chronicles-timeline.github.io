@@ -1,14 +1,18 @@
 // app/sitemap.ts
+
 import type { MetadataRoute } from "next";
+import { getEventStaticParamSources } from "@/lib/eventPageData";
+import { getEventUrl } from "@/lib/eventUrls";
 
 export const dynamic = "force-static";
 
 const BASE_URL = "https://beer-chronicles.org";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
+  const events = await getEventStaticParamSources();
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
       lastModified,
@@ -64,4 +68,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
   ];
+
+  const eventPages: MetadataRoute.Sitemap = events.map((event) => ({
+    url: getEventUrl(event.id, event.title),
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...eventPages];
 }

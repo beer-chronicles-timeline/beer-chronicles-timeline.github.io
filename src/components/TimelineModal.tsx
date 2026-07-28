@@ -3,8 +3,8 @@
 
 import { useEffect, useRef } from "react";
 import type { TimelineEvent } from "@/lib/types";
+import EventDetailContent from "./EventDetailContent";
 import RelatedEvents from "./RelatedEvents";
-import { formatEventDate, normalizeUrl, urlRegex } from "./timelineUtils";
 
 type TimelineModalProps = {
   event: TimelineEvent;
@@ -42,13 +42,19 @@ export default function TimelineModal({
 
     return () => {
       const scrollY = document.body.style.top;
+
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.left = "";
       document.body.style.right = "";
       document.body.style.width = "";
 
-      if (scrollY) window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      if (scrollY) {
+        window.scrollTo(
+          0,
+          Number.parseInt(scrollY || "0", 10) * -1
+        );
+      }
     };
   }, []);
 
@@ -60,145 +66,100 @@ export default function TimelineModal({
   }, [event.id]);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      else if (e.key === "ArrowRight" && hasNext) {
-        e.preventDefault();
+    const handleKeyDown = (keyboardEvent: KeyboardEvent) => {
+      if (keyboardEvent.key === "Escape") {
+        onClose();
+      } else if (
+        keyboardEvent.key === "ArrowRight" &&
+        hasNext
+      ) {
+        keyboardEvent.preventDefault();
         onNext();
-      } else if (e.key === "ArrowLeft" && hasPrev) {
-        e.preventDefault();
+      } else if (
+        keyboardEvent.key === "ArrowLeft" &&
+        hasPrev
+      ) {
+        keyboardEvent.preventDefault();
         onPrev();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose, onNext, onPrev, hasNext, hasPrev]);
 
-  const rawLines =
-    (event.sources || "")
-      .split("\n")
-      .map((s) => s.trim())
-      .filter(Boolean);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose, onNext, onPrev, hasNext, hasPrev]);
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-200 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 transition-opacity duration-200"
       onClick={onClose}
     >
       <div
         ref={modalContentRef}
-        className="bg-white border border-stone-200 rounded-lg p-6 max-w-lg w-full relative transform transition-all duration-200 scale-100 opacity-100 shadow-xl max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
+        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-stone-400 bg-white p-6 opacity-100 shadow-2xl ring-1 ring-black/10 transition-all duration-200"
+        onClick={(mouseEvent) => mouseEvent.stopPropagation()}
       >
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-3 right-3 text-xl hover:text-gray-700 z-10 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm"
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white text-xl shadow-sm hover:text-gray-700"
           aria-label="Close"
         >
           ✕
         </button>
 
-        <div>
-          <div className="pr-8">
-            {isRandomDiscovery && (
-              <div className="mb-3">
-                <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
-                  🎲 Random Discovery
-                </span>
-              </div>
-            )}
-
-            <p className="text-sm text-gray-500 mb-2">
-              {formatEventDate(event)}
-            </p>
-
-            <h2 className="text-lg font-semibold font-serif text-stone-900">
-              {event.title}
-            </h2>
-
-            {event.category && (
-              <div className="mt-2">
-                <span className="text-xs px-2 py-0.5 rounded-full font-sans bg-gray-100 text-gray-700">
-                  {event.category}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {event.description && (
-            <p className="text-gray-700 font-sans whitespace-pre-line mt-3">
-              {event.description}
-            </p>
-          )}
-
-          {rawLines.length > 0 && (
-            <div className="mt-4 pt-3 border-t">
-              <h3 className="text-sm font-semibold text-stone-800 mb-2">
-                Sources
-              </h3>
-
-              <ul className="list-disc pl-5 space-y-1 text-sm text-stone-700 break-words">
-                {rawLines.map((line, i) => {
-                  const match = line.match(urlRegex);
-
-                  if (!match) return <li key={i}>{line}</li>;
-
-                  const firstUrl = match[0];
-                  const href = normalizeUrl(firstUrl);
-
-                  return (
-                    <li key={i}>
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline break-all"
-                      >
-                        {firstUrl}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
+        <div className="pr-8">
+          {isRandomDiscovery && (
+            <div className="mb-3">
+              <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+                🎲 Random Discovery
+              </span>
             </div>
           )}
 
-          <RelatedEvents
-            relatedEvents={relatedEvents}
-            onOpenRelatedEvent={onOpenRelatedEvent}
+          <EventDetailContent
+            event={event}
+            showPermanentLink
+            titleAs="h2"
           />
-
-          {!isRandomDiscovery && (
-            <>
-              <div className="md:hidden mt-4 pt-3 border-t">
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={onPrev}
-                    disabled={!hasPrev}
-                    className="rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    ← Previous
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={onNext}
-                    disabled={!hasNext}
-                    className="rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    Next →
-                  </button>
-                </div>
-              </div>
-
-              <div className="hidden md:block mt-4 pt-3 border-t text-xs text-center text-gray-400">
-                ← → arrow keys to navigate
-              </div>
-            </>
-          )}
         </div>
+
+        <RelatedEvents
+          relatedEvents={relatedEvents}
+          onOpenRelatedEvent={onOpenRelatedEvent}
+        />
+
+        {!isRandomDiscovery && (
+          <>
+            <div className="mt-4 border-t pt-3 md:hidden">
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={onPrev}
+                  disabled={!hasPrev}
+                  className="rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  ← Previous
+                </button>
+
+                <button
+                  type="button"
+                  onClick={onNext}
+                  disabled={!hasNext}
+                  className="rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  Next →
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-4 hidden border-t pt-3 text-center text-xs text-gray-400 md:block">
+              ← → arrow keys to navigate
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
