@@ -1,7 +1,11 @@
 // components/TimelineModal.tsx
 "use client";
 
-import { useEffect, useRef } from "react";
+import {
+  useEffect,
+  useRef,
+  type MouseEvent as ReactMouseEvent,
+} from "react";
 import type { TimelineEvent } from "@/lib/types";
 import EventDetailContent from "./EventDetailContent";
 import RelatedEvents from "./RelatedEvents";
@@ -13,6 +17,7 @@ type TimelineModalProps = {
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
+  onOpenFilterLink?: (href: string) => void;
   hasNext: boolean;
   hasPrev: boolean;
   isRandomDiscovery?: boolean;
@@ -25,6 +30,7 @@ export default function TimelineModal({
   onClose,
   onNext,
   onPrev,
+  onOpenFilterLink,
   hasNext,
   hasPrev,
   isRandomDiscovery = false,
@@ -91,6 +97,40 @@ export default function TimelineModal({
     };
   }, [onClose, onNext, onPrev, hasNext, hasPrev]);
 
+  const handleContentClickCapture = (
+    mouseEvent: ReactMouseEvent<HTMLDivElement>
+  ) => {
+    if (!onOpenFilterLink) {
+      return;
+    }
+
+    const target = mouseEvent.target;
+
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    const link = target.closest("a");
+    const href = link?.getAttribute("href");
+
+    if (!href?.startsWith("/?")) {
+      return;
+    }
+
+    const url = new URL(href, window.location.origin);
+
+    if (
+      !url.searchParams.has("tags") &&
+      !url.searchParams.has("startYear") &&
+      !url.searchParams.has("endYear")
+    ) {
+      return;
+    }
+
+    mouseEvent.preventDefault();
+    onOpenFilterLink(href);
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 transition-opacity duration-200"
@@ -100,6 +140,7 @@ export default function TimelineModal({
         ref={modalContentRef}
         className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-stone-400 bg-white p-6 opacity-100 shadow-2xl ring-1 ring-black/10 transition-all duration-200"
         onClick={(mouseEvent) => mouseEvent.stopPropagation()}
+        onClickCapture={handleContentClickCapture}
       >
         <button
           type="button"

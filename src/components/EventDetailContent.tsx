@@ -51,7 +51,7 @@ export default function EventDetailContent({
       </div>
 
       {event.description && (
-        <p className="mt-5 whitespace-pre-line font-sans leading-7 text-gray-700">
+        <p className="mt-5 whitespace-pre-line font-sans leading-6 text-gray-700">
           {event.description}
         </p>
       )}
