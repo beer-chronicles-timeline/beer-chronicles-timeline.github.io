@@ -185,11 +185,11 @@ export default function Timeline({
       .map((tag) => tag.id);
 
     const parsedStartYear = Number.parseInt(
-      params.get("startYear") ?? "",
+      params.get("from") ?? "",
       10
     );
     const parsedEndYear = Number.parseInt(
-      params.get("endYear") ?? "",
+      params.get("to") ?? "",
       10
     );
 

@@ -121,8 +121,8 @@ export default function TimelineModal({
 
     if (
       !url.searchParams.has("tags") &&
-      !url.searchParams.has("startYear") &&
-      !url.searchParams.has("endYear")
+      !url.searchParams.has("from") &&
+      !url.searchParams.has("to")
     ) {
       return;
     }

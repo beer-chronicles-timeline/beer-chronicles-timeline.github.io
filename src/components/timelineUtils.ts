@@ -100,7 +100,7 @@ function getHistoricalCenturyNumber(
 function getHistoricalDecadeStart(
   historicalYear: number
 ): number {
-  return Math.floor(Math.abs(historicalYear) / 10) * 10;
+  return Math.ceil(Math.abs(historicalYear) / 10) * 10;
 }
 
 function formatOrdinal(value: number): string {

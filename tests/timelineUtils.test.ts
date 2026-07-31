@@ -80,6 +80,33 @@ test("formats prehistoric decades", () => {
   assert.equal(formatEventDate(event), "450s BCE");
 });
 
+test("formats historical-year decade boundaries without year zero", () => {
+  const cases = [
+    [-11, "20s BCE"],
+    [-10, "10s BCE"],
+    [-9, "10s BCE"],
+    [-1, "10s BCE"],
+    [1, "10s"],
+    [9, "10s"],
+    [10, "10s"],
+    [11, "20s"],
+  ] as const;
+
+  cases.forEach(([historicalYear, expected]) => {
+    const event = createEvent({
+      id: `decade-${historicalYear}`,
+      historicalYear,
+      datePrecision: "decade",
+    });
+
+    assert.equal(
+      formatEventDate(event),
+      expected,
+      `Unexpected decade for ${historicalYear}`
+    );
+  });
+});
+
 test("formats historical-year century boundaries", () => {
   const cases = [
     [-11000, "110th century BCE"],
