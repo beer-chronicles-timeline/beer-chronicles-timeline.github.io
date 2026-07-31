@@ -111,6 +111,13 @@ export default function AboutPage() {
           </p>
 
           <p>
+            Beer Chronicles follows this history from prehistoric evidence of
+            brewing to the present day. The timeline therefore includes both
+            BCE and CE dates and is not limited by the range of an ordinary
+            calendar date field.
+          </p>
+
+          <p>
             Disclaimer: This timeline is, of course, not meant to be
             comprehensive. Moreover, although I tried to be as careful as
             possible, there can be mistakes! If you detect any bug:{" "}

@@ -210,8 +210,11 @@ export default async function Home() {
     .map((event) => getEventTimelineYear(event))
     .filter((year): year is number => year !== null);
 
-  const minYear = years.length > 0 ? Math.min(...years) : 1000;
-  const maxYear = years.length > 0 ? Math.max(...years) : 2026;
+  const fallbackYear = new Date().getFullYear();
+  const minYear =
+    years.length > 0 ? Math.min(...years) : fallbackYear;
+  const maxYear =
+    years.length > 0 ? Math.max(...years) : fallbackYear;
 
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
@@ -275,8 +278,8 @@ export default async function Home() {
           </h2>
 
           <p className="text-sm text-stone-600">
-            Follow beer’s connected histories across styles, science,
-            industry, and culture.
+            Follow beer’s connected histories from prehistoric brewing
+            through styles, science, industry, and culture.
           </p>
         </div>
 

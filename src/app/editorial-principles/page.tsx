@@ -92,14 +92,23 @@ export default function EditorialPrinciplesPage() {
               Date Precision
             </h3>
 
-            <p className="text-gray-700 leading-relaxed">
-              Historical sources do not always provide the same level of
-              detail. For that reason, Beer Chronicles displays dates with the
-              level of precision that is supported by the available evidence.
-              Depending on the historical record, an event may therefore be
-              dated to an exact day, a month, a year, or, where appropriate,
-              only a decade.
-            </p>
+            <div className="space-y-3 text-gray-700 leading-relaxed">
+              <p>
+                Historical sources do not always provide the same level of
+                detail. For that reason, Beer Chronicles displays dates with
+                the level of precision supported by the available evidence.
+                Depending on the historical record, an event may therefore be
+                dated to an exact day, a month, a year, a decade, or a century.
+              </p>
+
+              <p>
+                The timeline also includes prehistoric evidence that lies
+                outside the range of ordinary calendar-date systems. These
+                entries are represented using historical years and displayed
+                using BCE and CE chronology. There is no year zero: 1 BCE is
+                followed directly by 1 CE.
+              </p>
+            </div>
 
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div className="rounded-lg bg-stone-50 border border-stone-200 p-3">
@@ -126,7 +135,15 @@ export default function EditorialPrinciplesPage() {
               <div className="rounded-lg bg-stone-50 border border-stone-200 p-3">
                 <div className="font-semibold text-stone-900">Decade</div>
                 <div className="text-gray-600 mt-1">
-                  Used when the evidence only supports a broader time period.
+                  Used when the evidence supports only an approximate decade.
+                </div>
+              </div>
+
+              <div className="rounded-lg bg-stone-50 border border-stone-200 p-3">
+                <div className="font-semibold text-stone-900">Century</div>
+                <div className="text-gray-600 mt-1">
+                  Used when the evidence supports only a broad historical
+                  period, especially for ancient or prehistoric events.
                 </div>
               </div>
             </div>

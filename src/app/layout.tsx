@@ -21,12 +21,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://beer-chronicles.org"),
   title: "Beer Chronicles | Interactive Beer History Timeline",
   description:
-    "An interactive timeline of beer history from ancient brewing to the present day.",
+    "An interactive timeline of beer history from prehistoric brewing to the present day.",
   openGraph: {
     title:
       "Beer Chronicles | Interactive Beer History Timeline",
     description:
-      "Explore thousands of years of beer history through a curated interactive timeline and connected storylines.",
+      "Explore beer history from prehistoric brewing to the present through a curated interactive timeline and connected storylines.",
     url: "/",
     siteName: "Beer Chronicles",
     type: "website",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     title:
       "Beer Chronicles | Interactive Beer History Timeline",
     description:
-      "Explore thousands of years of beer history through a curated interactive timeline and connected storylines.",
+      "Explore beer history from prehistoric brewing to the present through a curated interactive timeline and connected storylines.",
     images: [SOCIAL_IMAGE_PATH],
   },
 };
