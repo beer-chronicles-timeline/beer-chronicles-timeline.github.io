@@ -246,7 +246,8 @@ export default async function Home() {
       return;
     }
 
-    const eventIds = activeEventIdsByTag.get(tag_id) ?? new Set<string>();
+    const eventIds =
+      activeEventIdsByTag.get(tag_id) ?? new Set<string>();
 
     eventIds.add(event_id);
     activeEventIdsByTag.set(tag_id, eventIds);
@@ -318,9 +319,9 @@ export default async function Home() {
 
       <section
         aria-labelledby="storylines-promo-heading"
-        className="mx-auto mb-8 flex w-full max-w-4xl flex-col gap-3 rounded-xl border border-stone-200 bg-white px-5 py-3 shadow-sm md:flex-row md:items-center md:justify-between md:gap-6"
+        className="mx-auto mb-8 flex w-full max-w-4xl flex-col gap-3 rounded-xl border border-stone-200 bg-white px-5 py-3 shadow-sm lg:flex-row lg:items-center lg:justify-between lg:gap-6"
       >
-        <div className="flex min-w-0 flex-col gap-1 md:flex-row md:items-baseline md:gap-3 md:whitespace-nowrap">
+        <div className="flex min-w-0 flex-col gap-1 lg:flex-row lg:items-baseline lg:gap-3 lg:whitespace-nowrap">
           <h2
             id="storylines-promo-heading"
             className="shrink-0 font-serif text-lg font-semibold text-stone-900"
@@ -336,7 +337,7 @@ export default async function Home() {
 
         <Link
           href="/storylines"
-          className="inline-flex shrink-0 items-center justify-center rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+          className="inline-flex shrink-0 items-center justify-center self-start rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 lg:self-auto"
         >
           Explore
           <span className="ml-2" aria-hidden="true">
