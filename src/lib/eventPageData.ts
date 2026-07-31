@@ -1,6 +1,7 @@
 // lib/eventPageData.ts
 
 import { cache } from "react";
+import { compareEventsChronologicallyDescending } from "@/components/timelineUtils";
 import { supabase } from "@/lib/supabaseClient";
 import type {
   EventRow,
@@ -29,39 +30,6 @@ export type EventPageData = {
 };
 
 const EVENT_TAG_PAGE_SIZE = 1000;
-
-function isBceDate(eventDate: string): boolean {
-  return /\sBC$/i.test(eventDate.trim());
-}
-
-function getTimelineSortValue(eventDate: string): number {
-  const trimmedDate = eventDate.trim();
-  const dateMatch = trimmedDate.match(
-    /^(\d+)-(\d{2})-(\d{2})(?:\s+BC)?$/i
-  );
-
-  if (!dateMatch) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const storedYear = Number.parseInt(dateMatch[1], 10);
-  const month = Number.parseInt(dateMatch[2], 10);
-  const day = Number.parseInt(dateMatch[3], 10);
-
-  if (
-    Number.isNaN(storedYear) ||
-    Number.isNaN(month) ||
-    Number.isNaN(day)
-  ) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const timelineYear = isBceDate(trimmedDate)
-    ? -(storedYear + 1)
-    : storedYear;
-
-  return timelineYear * 10_000 + month * 100 + day;
-}
 
 async function fetchAllEventTags(): Promise<EventTagRow[]> {
   const allRows: EventTagRow[] = [];
@@ -156,11 +124,7 @@ const loadEventPageDataset = cache(
         ...event,
         tags: tagsForEvent.get(event.id) ?? [],
       }))
-      .sort(
-        (firstEvent, secondEvent) =>
-          getTimelineSortValue(secondEvent.event_date) -
-          getTimelineSortValue(firstEvent.event_date)
-      );
+      .sort(compareEventsChronologicallyDescending);
 
     const eventById = new Map<string, TimelineEvent>();
 

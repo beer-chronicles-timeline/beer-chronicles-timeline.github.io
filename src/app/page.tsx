@@ -5,6 +5,10 @@ import Timeline from "@/components/Timeline";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import {
+  compareEventsChronologicallyDescending,
+  getEventTimelineYear,
+} from "@/components/timelineUtils";
 import { supabase } from "@/lib/supabaseClient";
 import type { EventRow, TimelineEvent, Tag } from "@/lib/types";
 
@@ -15,60 +19,6 @@ type EventTagRow = {
 
 const EVENT_TAG_PAGE_SIZE = 1000;
 const MIN_VISIBLE_TAG_EVENT_COUNT = 3;
-
-function isBceDate(eventDate: string): boolean {
-  return /\sBC$/i.test(eventDate.trim());
-}
-
-function getTimelineYear(eventDate: string): number | null {
-  const trimmedDate = eventDate.trim();
-  const yearMatch = trimmedDate.match(/^(\d+)-/);
-
-  if (!yearMatch) {
-    return null;
-  }
-
-  const storedYear = Number.parseInt(yearMatch[1], 10);
-
-  if (Number.isNaN(storedYear)) {
-    return null;
-  }
-
-  if (isBceDate(trimmedDate)) {
-    return -(storedYear + 1);
-  }
-
-  return storedYear;
-}
-
-function getTimelineSortValue(eventDate: string): number {
-  const trimmedDate = eventDate.trim();
-  const dateMatch = trimmedDate.match(
-    /^(\d+)-(\d{2})-(\d{2})(?:\s+BC)?$/i
-  );
-
-  if (!dateMatch) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const storedYear = Number.parseInt(dateMatch[1], 10);
-  const month = Number.parseInt(dateMatch[2], 10);
-  const day = Number.parseInt(dateMatch[3], 10);
-
-  if (
-    Number.isNaN(storedYear) ||
-    Number.isNaN(month) ||
-    Number.isNaN(day)
-  ) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const timelineYear = isBceDate(trimmedDate)
-    ? -(storedYear + 1)
-    : storedYear;
-
-  return timelineYear * 10_000 + month * 100 + day;
-}
 
 async function fetchAllEventTags(): Promise<{
   data: EventTagRow[];
@@ -115,8 +65,7 @@ export default async function Home() {
   const { data: eventData, error: eventsError } = await supabase
     .from("events")
     .select("*")
-    .is("deleted_at", null)
-    .order("event_date", { ascending: false });
+    .is("deleted_at", null);
 
   if (eventsError) {
     return (
@@ -224,18 +173,14 @@ export default async function Home() {
   });
 
   // 6) Combine events with all of their tags into TimelineEvent[]
-  // PostgreSQL returns BCE dates using astronomical year numbering.
-  // For example, 3600 BC is returned as 3599-01-01 BC.
+  // Existing PostgreSQL BCE dates use astronomical year numbering.
+  // Events older than PostgreSQL's DATE range use historical_year.
   const events: TimelineEvent[] = eventRows
     .map((row) => ({
       ...row,
       tags: tagsForEvent.get(row.id) ?? [],
     }))
-    .sort(
-      (firstEvent, secondEvent) =>
-        getTimelineSortValue(secondEvent.event_date) -
-        getTimelineSortValue(firstEvent.event_date)
-    );
+    .sort(compareEventsChronologicallyDescending);
 
   // 7) Count distinct active events for each tag
   const activeEventIds = new Set(eventRows.map((event) => event.id));
@@ -262,7 +207,7 @@ export default async function Home() {
 
   // 9) Calculate min and max historical years, including BCE years
   const years = events
-    .map((event) => getTimelineYear(event.event_date))
+    .map((event) => getEventTimelineYear(event))
     .filter((year): year is number => year !== null);
 
   const minYear = years.length > 0 ? Math.min(...years) : 1000;

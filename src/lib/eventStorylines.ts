@@ -1,39 +1,17 @@
 // lib/eventStorylines.ts
 
+import { getEventTimelineYear } from "@/components/timelineUtils";
 import type { TimelineEvent } from "@/lib/types";
 import {
   STORYLINES,
   type Storyline,
 } from "@/lib/storylines";
 
-function isBceDate(eventDate: string): boolean {
-  return /\sBC$/i.test(eventDate.trim());
-}
-
-function getTimelineYear(eventDate: string): number | null {
-  const trimmedDate = eventDate.trim();
-  const yearMatch = trimmedDate.match(/^(\d+)-/);
-
-  if (!yearMatch) {
-    return null;
-  }
-
-  const storedYear = Number.parseInt(yearMatch[1], 10);
-
-  if (Number.isNaN(storedYear)) {
-    return null;
-  }
-
-  return isBceDate(trimmedDate)
-    ? -(storedYear + 1)
-    : storedYear;
-}
-
 function isEventInsideStorylineDateRange(
   event: TimelineEvent,
   storyline: Storyline
 ): boolean {
-  const eventYear = getTimelineYear(event.event_date);
+  const eventYear = getEventTimelineYear(event);
 
   if (eventYear === null) {
     return false;

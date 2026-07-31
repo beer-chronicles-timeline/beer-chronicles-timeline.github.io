@@ -12,7 +12,8 @@ export type EventRow = {
   id: string;
   title: string;
   description: string | null;
-  event_date: string; // ISO date string (DATE in Postgres)
+  event_date: string | null; // ISO date string (DATE in Postgres)
+  historical_year: number | null;
   image_url: string | null;
   created_at: string | null;
   // Extend as your schema grows:

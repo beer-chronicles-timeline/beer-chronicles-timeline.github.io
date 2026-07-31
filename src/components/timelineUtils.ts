@@ -18,11 +18,16 @@ const monthNames = [
   "December",
 ];
 
+type EventChronology = Pick<
+  TimelineEvent,
+  "event_date" | "historical_year"
+>;
+
 function isBceDate(raw: string): boolean {
   return /\sBC$/i.test(raw.trim());
 }
 
-function getDisplayedYear(raw: string): number | null {
+function getDisplayedYearFromDate(raw: string): number | null {
   const match = raw.trim().match(/^(\d+)-/);
 
   if (!match) {
@@ -38,8 +43,8 @@ function getDisplayedYear(raw: string): number | null {
   return isBceDate(raw) ? storedYear + 1 : storedYear;
 }
 
-function getTimelineYear(raw: string): number | null {
-  const displayedYear = getDisplayedYear(raw);
+function getTimelineYearFromDate(raw: string): number | null {
+  const displayedYear = getDisplayedYearFromDate(raw);
 
   if (displayedYear === null) {
     return null;
@@ -48,13 +53,54 @@ function getTimelineYear(raw: string): number | null {
   return isBceDate(raw) ? -displayedYear : displayedYear;
 }
 
-function getCenturyNumber(
+function getDateSortValue(raw: string): number | null {
+  const trimmedDate = raw.trim();
+  const dateMatch = trimmedDate.match(
+    /^(\d+)-(\d{2})-(\d{2})(?:\s+BC)?$/i
+  );
+
+  if (!dateMatch) {
+    return null;
+  }
+
+  const storedYear = Number.parseInt(dateMatch[1], 10);
+  const month = Number.parseInt(dateMatch[2], 10);
+  const day = Number.parseInt(dateMatch[3], 10);
+
+  if (
+    Number.isNaN(storedYear) ||
+    Number.isNaN(month) ||
+    Number.isNaN(day)
+  ) {
+    return null;
+  }
+
+  const timelineYear = isBceDate(trimmedDate)
+    ? -(storedYear + 1)
+    : storedYear;
+
+  return timelineYear * 10_000 + month * 100 + day;
+}
+
+function getDateCenturyNumber(
   displayedYear: number,
   isBce: boolean
 ): number {
   return isBce
     ? Math.ceil(displayedYear / 100)
     : Math.floor(displayedYear / 100) + 1;
+}
+
+function getHistoricalCenturyNumber(
+  historicalYear: number
+): number {
+  return Math.ceil(Math.abs(historicalYear) / 100);
+}
+
+function getHistoricalDecadeStart(
+  historicalYear: number
+): number {
+  return Math.floor(Math.abs(historicalYear) / 10) * 10;
 }
 
 function formatOrdinal(value: number): string {
@@ -76,14 +122,122 @@ function formatOrdinal(value: number): string {
   }
 }
 
+function formatHistoricalYear(historicalYear: number): string {
+  const absoluteYear = Math.abs(historicalYear).toLocaleString(
+    "en-US"
+  );
+
+  return historicalYear < 0
+    ? `${absoluteYear} BCE`
+    : absoluteYear;
+}
+
+function formatHistoricalEventDate(
+  event: TimelineEvent,
+  historicalYear: number
+): string {
+  if (event.date_precision === "century") {
+    const centuryNumber =
+      getHistoricalCenturyNumber(historicalYear);
+    const centuryLabel = `${formatOrdinal(
+      centuryNumber
+    )} century`;
+
+    return historicalYear < 0
+      ? `${centuryLabel} BCE`
+      : centuryLabel;
+  }
+
+  if (event.date_precision === "decade") {
+    const decadeStart =
+      getHistoricalDecadeStart(historicalYear);
+    const decadeLabel = `${decadeStart.toLocaleString(
+      "en-US"
+    )}s`;
+
+    return historicalYear < 0
+      ? `${decadeLabel} BCE`
+      : decadeLabel;
+  }
+
+  return formatHistoricalYear(historicalYear);
+}
+
+export function getEventTimelineYear(
+  event: EventChronology
+): number | null {
+  if (
+    event.historical_year !== null &&
+    event.historical_year !== 0
+  ) {
+    return event.historical_year;
+  }
+
+  if (!event.event_date) {
+    return null;
+  }
+
+  return getTimelineYearFromDate(event.event_date);
+}
+
+export function getEventChronologicalSortValue(
+  event: EventChronology
+): number {
+  if (
+    event.historical_year !== null &&
+    event.historical_year !== 0
+  ) {
+    return event.historical_year * 10_000 + 101;
+  }
+
+  if (!event.event_date) {
+    return Number.NEGATIVE_INFINITY;
+  }
+
+  return (
+    getDateSortValue(event.event_date) ??
+    Number.NEGATIVE_INFINITY
+  );
+}
+
+export function compareEventsChronologicallyAscending(
+  firstEvent: EventChronology,
+  secondEvent: EventChronology
+): number {
+  return (
+    getEventChronologicalSortValue(firstEvent) -
+    getEventChronologicalSortValue(secondEvent)
+  );
+}
+
+export function compareEventsChronologicallyDescending(
+  firstEvent: EventChronology,
+  secondEvent: EventChronology
+): number {
+  return (
+    getEventChronologicalSortValue(secondEvent) -
+    getEventChronologicalSortValue(firstEvent)
+  );
+}
+
 export function formatEventDate(event: TimelineEvent): string {
+  if (
+    event.historical_year !== null &&
+    event.historical_year !== 0
+  ) {
+    return formatHistoricalEventDate(
+      event,
+      event.historical_year
+    );
+  }
+
   const raw = event.event_date;
 
   if (!raw) {
     return "";
   }
 
-  const displayedYear = getDisplayedYear(raw);
+  const displayedYear = getDisplayedYearFromDate(raw);
   const isBce = isBceDate(raw);
   const eraSuffix = isBce ? " BC" : "";
 
@@ -92,11 +246,13 @@ export function formatEventDate(event: TimelineEvent): string {
   }
 
   if (event.date_precision === "century") {
-    const centuryNumber = getCenturyNumber(
+    const centuryNumber = getDateCenturyNumber(
       displayedYear,
       isBce
     );
-    const centuryLabel = `${formatOrdinal(centuryNumber)} century`;
+    const centuryLabel = `${formatOrdinal(
+      centuryNumber
+    )} century`;
 
     return isBce ? `${centuryLabel} BCE` : centuryLabel;
   }
@@ -163,7 +319,7 @@ export function getRelatedEvents(
     (currentEvent.tags ?? []).map((tag) => tag.id)
   );
 
-  const currentYear = getTimelineYear(currentEvent.event_date);
+  const currentYear = getEventTimelineYear(currentEvent);
 
   return events
     .filter((event) => event.id !== currentEvent.id)
@@ -174,9 +330,11 @@ export function getRelatedEvents(
       ).length;
 
       const sameCategory =
-        event.category && event.category === currentEvent.category ? 1 : 0;
+        event.category && event.category === currentEvent.category
+          ? 1
+          : 0;
 
-      const eventYear = getTimelineYear(event.event_date);
+      const eventYear = getEventTimelineYear(event);
 
       const yearDistance =
         currentYear !== null && eventYear !== null

@@ -1,4 +1,9 @@
 // components/timelineFiltering.ts
+import {
+  compareEventsChronologicallyAscending,
+  compareEventsChronologicallyDescending,
+  getEventTimelineYear,
+} from "./timelineUtils";
 import type { TimelineEvent } from "@/lib/types";
 
 export type TagFilterMode = "all" | "any";
@@ -13,51 +18,6 @@ type FilterTimelineEventsArgs = {
   isOldestFirst: boolean;
   searchQuery: string;
 };
-
-function getTimelineYear(eventDate: string): number | null {
-  const trimmedDate = eventDate.trim();
-  const yearMatch = trimmedDate.match(/^(\d+)-/);
-
-  if (!yearMatch) {
-    return null;
-  }
-
-  const year = Number.parseInt(yearMatch[1], 10);
-
-  if (Number.isNaN(year)) {
-    return null;
-  }
-
-  return /\sBC$/i.test(trimmedDate) ? -year : year;
-}
-
-function getTimelineSortValue(eventDate: string): number {
-  const trimmedDate = eventDate.trim();
-  const dateMatch = trimmedDate.match(
-    /^(\d+)-(\d{2})-(\d{2})(?:\s+BC)?$/i
-  );
-
-  if (!dateMatch) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const year = Number.parseInt(dateMatch[1], 10);
-  const month = Number.parseInt(dateMatch[2], 10);
-  const day = Number.parseInt(dateMatch[3], 10);
-  const isBce = /\sBC$/i.test(trimmedDate);
-
-  if (
-    Number.isNaN(year) ||
-    Number.isNaN(month) ||
-    Number.isNaN(day)
-  ) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const signedYear = isBce ? -year : year;
-
-  return signedYear * 10_000 + month * 100 + day;
-}
 
 export function filterTimelineEvents({
   events,
@@ -74,7 +34,7 @@ export function filterTimelineEvents({
       return false;
     }
 
-    const eventYear = getTimelineYear(event.event_date);
+    const eventYear = getEventTimelineYear(event);
 
     if (
       eventYear === null ||
@@ -124,12 +84,9 @@ export function filterTimelineEvents({
     return true;
   });
 
-  return filtered.sort((firstEvent, secondEvent) => {
-    const firstSortValue = getTimelineSortValue(firstEvent.event_date);
-    const secondSortValue = getTimelineSortValue(secondEvent.event_date);
-
-    return isOldestFirst
-      ? firstSortValue - secondSortValue
-      : secondSortValue - firstSortValue;
-  });
+  return filtered.sort(
+    isOldestFirst
+      ? compareEventsChronologicallyAscending
+      : compareEventsChronologicallyDescending
+  );
 }

@@ -4,8 +4,13 @@ import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import {
+  compareEventsChronologicallyAscending,
+  formatEventDate,
+  getEventTimelineYear,
+} from "@/components/timelineUtils";
 import { supabase } from "@/lib/supabaseClient";
-import type { DatePrecision } from "@/lib/types";
+import type { TimelineEvent } from "@/lib/types";
 import {
   STORYLINES,
   STORYLINE_SECTIONS,
@@ -30,13 +35,6 @@ export const metadata: Metadata = {
   },
 };
 
-type EventRow = {
-  id: string;
-  title: string;
-  event_date: string;
-  date_precision: DatePrecision | null;
-};
-
 type EventTagRow = {
   event_id: string;
   tag_id: string;
@@ -50,124 +48,16 @@ type TagRow = {
 type StorylineView = {
   storyline: Storyline;
   entryCount: number;
-  featuredEvent: EventRow | null;
+  featuredEvent: TimelineEvent | null;
 };
 
 const EVENT_TAG_PAGE_SIZE = 1000;
 
-function isBceDate(eventDate: string): boolean {
-  return /\sBC$/i.test(eventDate.trim());
-}
-
-function getTimelineYear(eventDate: string): number | null {
-  const trimmedDate = eventDate.trim();
-  const yearMatch = trimmedDate.match(/^(\d+)-/);
-
-  if (!yearMatch) {
-    return null;
-  }
-
-  const storedYear = Number.parseInt(yearMatch[1], 10);
-
-  if (Number.isNaN(storedYear)) {
-    return null;
-  }
-
-  return isBceDate(trimmedDate)
-    ? -(storedYear + 1)
-    : storedYear;
-}
-
-function getTimelineSortValue(eventDate: string): number {
-  const trimmedDate = eventDate.trim();
-  const dateMatch = trimmedDate.match(
-    /^(\d+)-(\d{2})-(\d{2})(?:\s+BC)?$/i
-  );
-
-  if (!dateMatch) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const storedYear = Number.parseInt(dateMatch[1], 10);
-  const month = Number.parseInt(dateMatch[2], 10);
-  const day = Number.parseInt(dateMatch[3], 10);
-
-  if (
-    Number.isNaN(storedYear) ||
-    Number.isNaN(month) ||
-    Number.isNaN(day)
-  ) {
-    return Number.NEGATIVE_INFINITY;
-  }
-
-  const timelineYear = isBceDate(trimmedDate)
-    ? -(storedYear + 1)
-    : storedYear;
-
-  return timelineYear * 10_000 + month * 100 + day;
-}
-
-function getCenturyNumber(
-  displayedYear: number,
-  isBce: boolean
-): number {
-  return isBce
-    ? Math.ceil(displayedYear / 100)
-    : Math.floor(displayedYear / 100) + 1;
-}
-
-function formatOrdinal(value: number): string {
-  const lastTwoDigits = value % 100;
-
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
-    return `${value}th`;
-  }
-
-  switch (value % 10) {
-    case 1:
-      return `${value}st`;
-    case 2:
-      return `${value}nd`;
-    case 3:
-      return `${value}rd`;
-    default:
-      return `${value}th`;
-  }
-}
-
-function formatFeaturedEventDate(event: EventRow): string {
-  const timelineYear = getTimelineYear(event.event_date);
-
-  if (timelineYear === null) {
-    return event.event_date;
-  }
-
-  if (event.date_precision === "century") {
-    const displayedYear = Math.abs(timelineYear);
-    const isBce = timelineYear < 0;
-    const centuryNumber = getCenturyNumber(
-      displayedYear,
-      isBce
-    );
-    const centuryLabel = `${formatOrdinal(centuryNumber)} century`;
-
-    return isBce
-      ? `${centuryLabel} BCE`
-      : centuryLabel;
-  }
-
-  if (timelineYear < 0) {
-    return `${Math.abs(timelineYear)} BCE`;
-  }
-
-  return timelineYear.toString();
-}
-
 function isEventInsideStorylineDateRange(
-  event: EventRow,
+  event: TimelineEvent,
   storyline: Storyline
 ): boolean {
-  const eventYear = getTimelineYear(event.event_date);
+  const eventYear = getEventTimelineYear(event);
 
   if (eventYear === null) {
     return false;
@@ -249,11 +139,11 @@ function buildStorylineViews({
   tags,
   eventTags,
 }: {
-  events: EventRow[];
+  events: TimelineEvent[];
   tags: TagRow[];
   eventTags: EventTagRow[];
 }): StorylineView[] {
-  const eventById = new Map<string, EventRow>();
+  const eventById = new Map<string, TimelineEvent>();
   const tagIdByName = new Map<string, string>();
   const tagIdsByEventId = new Map<string, Set<string>>();
 
@@ -305,11 +195,7 @@ function buildStorylineViews({
           eventTagIds.has(tagId)
         );
       })
-      .sort(
-        (firstEvent, secondEvent) =>
-          getTimelineSortValue(firstEvent.event_date) -
-          getTimelineSortValue(secondEvent.event_date)
-      );
+      .sort(compareEventsChronologicallyAscending);
 
     const configuredFeaturedEvent = eventById.get(
       storyline.featuredEventId
@@ -373,7 +259,7 @@ function StorylineCard({
 
             <span className="text-stone-400">
               {" "}
-              · {formatFeaturedEventDate(featuredEvent)}
+              · {formatEventDate(featuredEvent)}
             </span>
           </p>
         ) : (
@@ -420,7 +306,7 @@ export default async function StorylinesPage() {
   ] = await Promise.all([
     supabase
       .from("events")
-      .select("id, title, event_date, date_precision")
+      .select("*")
       .is("deleted_at", null),
     supabase
       .from("tags")
@@ -434,7 +320,7 @@ export default async function StorylinesPage() {
     tagsError?.message ??
     eventTagResult.errorMessage;
 
-  const events = (eventData ?? []) as EventRow[];
+  const events = (eventData ?? []) as TimelineEvent[];
   const tags = (tagData ?? []) as TagRow[];
 
   const storylineViews = errorMessage

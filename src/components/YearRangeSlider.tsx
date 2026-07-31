@@ -48,6 +48,14 @@ function parseHistoricalYear(value: string): number | null {
   return numericYear;
 }
 
+function historicalYearToSliderValue(year: number): number {
+  return year < 0 ? year : year - 1;
+}
+
+function sliderValueToHistoricalYear(value: number): number {
+  return value < 0 ? value : value + 1;
+}
+
 export default function YearRangeSlider({
   startYear,
   endYear,
@@ -182,13 +190,20 @@ export default function YearRangeSlider({
 
       <Slider.Root
         className="relative flex items-center select-none touch-none w-full h-5"
-        min={minYear}
-        max={maxYear}
+        min={historicalYearToSliderValue(minYear)}
+        max={historicalYearToSliderValue(maxYear)}
         step={1}
-        value={[startYear, endYear]}
+        value={[
+          historicalYearToSliderValue(startYear),
+          historicalYearToSliderValue(endYear),
+        ]}
         onValueChange={(value) => {
-          setStartYear(value[0]);
-          setEndYear(value[1]);
+          setStartYear(
+            sliderValueToHistoricalYear(value[0])
+          );
+          setEndYear(
+            sliderValueToHistoricalYear(value[1])
+          );
         }}
       >
         <Slider.Track className="bg-gray-200 relative grow rounded-full h-2">
