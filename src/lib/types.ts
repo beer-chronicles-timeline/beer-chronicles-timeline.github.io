@@ -1,5 +1,12 @@
 // lib/types.ts
 
+export type DatePrecision =
+  | "date"
+  | "month"
+  | "year"
+  | "decade"
+  | "century";
+
 // Raw event row as it comes from Supabase "events" table
 export type EventRow = {
   id: string;
@@ -10,7 +17,7 @@ export type EventRow = {
   created_at: string | null;
   // Extend as your schema grows:
   category?: string | null;
-  date_precision?: "year" | "date" | string | null;
+  date_precision?: DatePrecision | null;
   sources?: string | null; // NEW: free-form sources (newline-separated)
 };
 

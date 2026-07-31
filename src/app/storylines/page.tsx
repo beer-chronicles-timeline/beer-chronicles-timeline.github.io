@@ -5,6 +5,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import { supabase } from "@/lib/supabaseClient";
+import type { DatePrecision } from "@/lib/types";
 import {
   STORYLINES,
   STORYLINE_SECTIONS,
@@ -33,6 +34,7 @@ type EventRow = {
   id: string;
   title: string;
   event_date: string;
+  date_precision: DatePrecision | null;
 };
 
 type EventTagRow = {
@@ -105,11 +107,53 @@ function getTimelineSortValue(eventDate: string): number {
   return timelineYear * 10_000 + month * 100 + day;
 }
 
-function formatEventYear(eventDate: string): string {
-  const timelineYear = getTimelineYear(eventDate);
+function getCenturyNumber(
+  displayedYear: number,
+  isBce: boolean
+): number {
+  return isBce
+    ? Math.ceil(displayedYear / 100)
+    : Math.floor(displayedYear / 100) + 1;
+}
+
+function formatOrdinal(value: number): string {
+  const lastTwoDigits = value % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return `${value}th`;
+  }
+
+  switch (value % 10) {
+    case 1:
+      return `${value}st`;
+    case 2:
+      return `${value}nd`;
+    case 3:
+      return `${value}rd`;
+    default:
+      return `${value}th`;
+  }
+}
+
+function formatFeaturedEventDate(event: EventRow): string {
+  const timelineYear = getTimelineYear(event.event_date);
 
   if (timelineYear === null) {
-    return eventDate;
+    return event.event_date;
+  }
+
+  if (event.date_precision === "century") {
+    const displayedYear = Math.abs(timelineYear);
+    const isBce = timelineYear < 0;
+    const centuryNumber = getCenturyNumber(
+      displayedYear,
+      isBce
+    );
+    const centuryLabel = `${formatOrdinal(centuryNumber)} century`;
+
+    return isBce
+      ? `${centuryLabel} BCE`
+      : centuryLabel;
   }
 
   if (timelineYear < 0) {
@@ -329,7 +373,7 @@ function StorylineCard({
 
             <span className="text-stone-400">
               {" "}
-              · {formatEventYear(featuredEvent.event_date)}
+              · {formatFeaturedEventDate(featuredEvent)}
             </span>
           </p>
         ) : (
@@ -376,7 +420,7 @@ export default async function StorylinesPage() {
   ] = await Promise.all([
     supabase
       .from("events")
-      .select("id, title, event_date")
+      .select("id, title, event_date, date_precision")
       .is("deleted_at", null),
     supabase
       .from("tags")

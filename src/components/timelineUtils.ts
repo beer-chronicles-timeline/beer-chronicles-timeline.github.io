@@ -48,6 +48,34 @@ function getTimelineYear(raw: string): number | null {
   return isBceDate(raw) ? -displayedYear : displayedYear;
 }
 
+function getCenturyNumber(
+  displayedYear: number,
+  isBce: boolean
+): number {
+  return isBce
+    ? Math.ceil(displayedYear / 100)
+    : Math.floor(displayedYear / 100) + 1;
+}
+
+function formatOrdinal(value: number): string {
+  const lastTwoDigits = value % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return `${value}th`;
+  }
+
+  switch (value % 10) {
+    case 1:
+      return `${value}st`;
+    case 2:
+      return `${value}nd`;
+    case 3:
+      return `${value}rd`;
+    default:
+      return `${value}th`;
+  }
+}
+
 export function formatEventDate(event: TimelineEvent): string {
   const raw = event.event_date;
 
@@ -61,6 +89,16 @@ export function formatEventDate(event: TimelineEvent): string {
 
   if (displayedYear === null) {
     return raw;
+  }
+
+  if (event.date_precision === "century") {
+    const centuryNumber = getCenturyNumber(
+      displayedYear,
+      isBce
+    );
+    const centuryLabel = `${formatOrdinal(centuryNumber)} century`;
+
+    return isBce ? `${centuryLabel} BCE` : centuryLabel;
   }
 
   if (event.date_precision === "decade") {
