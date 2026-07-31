@@ -278,8 +278,7 @@ export default async function Home() {
           </h2>
 
           <p className="text-sm text-stone-600">
-            Follow beer’s connected histories from prehistoric brewing
-            through styles, science, industry, and culture.
+            Explore beer’s connected history across time, styles, science, and culture.
           </p>
         </div>
 
