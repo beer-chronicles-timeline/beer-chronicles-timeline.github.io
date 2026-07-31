@@ -2,12 +2,16 @@
 "use client";
 
 import {
-  useState,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
-import { useRouter } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import EventCard from "./EventCard";
 import TimelineModal from "./TimelineModal";
@@ -39,6 +43,7 @@ export default function Timeline({
   maxYear,
 }: TimelineProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const skipNextSearchUrlSyncRef = useRef(false);
 
   const [selectedEventIndex, setSelectedEventIndex] = useState<
@@ -57,23 +62,13 @@ export default function Timeline({
     []
   );
   const [tagFilterMode, setTagFilterMode] =
-    useState<TagFilterMode>("all");
+    useState<TagFilterMode>(() =>
+      searchParams.get("tagMode") === "any" ? "any" : "all"
+    );
   const [isOldestFirst, setIsOldestFirst] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const searchString = params.get("string");
-    const tagMode = params.get("tagMode");
-
-    if (searchString) {
-      setSearchQuery(searchString);
-    }
-
-    if (tagMode === "any") {
-      setTagFilterMode("any");
-    }
-  }, []);
+  const [searchQuery, setSearchQuery] = useState(
+    () => searchParams.get("string") ?? ""
+  );
 
   useEffect(() => {
     if (skipNextSearchUrlSyncRef.current) {
@@ -225,31 +220,36 @@ export default function Timeline({
     router.push(href, { scroll: false });
   };
 
-  const handleNextEvent = () => {
+  const handleNextEvent = useCallback(() => {
     if (randomEvent) {
       return;
     }
 
-    if (
-      selectedEventIndex !== null &&
-      selectedEventIndex < filteredEvents.length - 1
-    ) {
-      setSelectedEventIndex(selectedEventIndex + 1);
-    }
-  };
+    setSelectedEventIndex((currentIndex) => {
+      if (
+        currentIndex !== null &&
+        currentIndex < filteredEvents.length - 1
+      ) {
+        return currentIndex + 1;
+      }
 
-  const handlePrevEvent = () => {
+      return currentIndex;
+    });
+  }, [randomEvent, filteredEvents.length]);
+
+  const handlePrevEvent = useCallback(() => {
     if (randomEvent) {
       return;
     }
 
-    if (
-      selectedEventIndex !== null &&
-      selectedEventIndex > 0
-    ) {
-      setSelectedEventIndex(selectedEventIndex - 1);
-    }
-  };
+    setSelectedEventIndex((currentIndex) => {
+      if (currentIndex !== null && currentIndex > 0) {
+        return currentIndex - 1;
+      }
+
+      return currentIndex;
+    });
+  }, [randomEvent]);
 
   const handleRandomEvent = () => {
     if (events.length === 0 || isRollingRandom) {
@@ -270,7 +270,7 @@ export default function Timeline({
   };
 
   const toggleOrder = () => {
-    setIsOldestFirst(!isOldestFirst);
+    setIsOldestFirst((currentValue) => !currentValue);
   };
 
   useEffect(() => {
@@ -295,8 +295,9 @@ export default function Timeline({
     };
   }, [
     selectedEventIndex,
-    filteredEvents.length,
     randomEvent,
+    handleNextEvent,
+    handlePrevEvent,
   ]);
 
   return (

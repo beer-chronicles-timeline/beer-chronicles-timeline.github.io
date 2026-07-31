@@ -68,7 +68,7 @@ export default function SubmitPage() {
       } else {
         setSubmitStatus("error");
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -149,7 +149,6 @@ export default function SubmitPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Name Field */}
           <div>
             <label
               htmlFor="name"
@@ -169,7 +168,6 @@ export default function SubmitPage() {
             />
           </div>
 
-          {/* Email Field */}
           <div>
             <label
               htmlFor="email"
@@ -189,7 +187,6 @@ export default function SubmitPage() {
             />
           </div>
 
-          {/* Title Field */}
           <div>
             <label
               htmlFor="title"
@@ -209,7 +206,6 @@ export default function SubmitPage() {
             />
           </div>
 
-          {/* Description Field */}
           <div>
             <label
               htmlFor="description"
@@ -229,7 +225,6 @@ export default function SubmitPage() {
             />
           </div>
 
-          {/* Event Date Field */}
           <div>
             <label
               htmlFor="eventDate"
@@ -248,7 +243,6 @@ export default function SubmitPage() {
             />
           </div>
 
-          {/* Date Precision Field */}
           <div>
             <label
               htmlFor="datePrecision"
@@ -272,7 +266,6 @@ export default function SubmitPage() {
             </select>
           </div>
 
-          {/* Sources Field */}
           <div>
             <label
               htmlFor="sources"
@@ -292,7 +285,6 @@ export default function SubmitPage() {
             />
           </div>
 
-          {/* Submit Button */}
           <div>
             <button
               type="submit"
@@ -307,7 +299,6 @@ export default function SubmitPage() {
             </button>
           </div>
 
-          {/* Status Messages */}
           {submitStatus === "success" && (
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
               <p className="text-green-800">

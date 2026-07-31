@@ -1,7 +1,7 @@
 "use client";
 
 import * as Slider from "@radix-ui/react-slider";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Props = {
   startYear: number;
@@ -64,25 +64,23 @@ export default function YearRangeSlider({
   minYear,
   maxYear,
 }: Props) {
-  const [startInputValue, setStartInputValue] = useState<string>(
-    formatHistoricalYear(startYear)
-  );
+  const [startInputDraft, setStartInputDraft] =
+    useState<string | null>(null);
 
-  const [endInputValue, setEndInputValue] = useState<string>(
-    formatHistoricalYear(endYear)
-  );
+  const [endInputDraft, setEndInputDraft] =
+    useState<string | null>(null);
 
-  // Sync input fields when props change through slider movement or URL state.
-  useEffect(() => {
-    setStartInputValue(formatHistoricalYear(startYear));
-    setEndInputValue(formatHistoricalYear(endYear));
-  }, [startYear, endYear]);
+  const startInputValue =
+    startInputDraft ?? formatHistoricalYear(startYear);
+
+  const endInputValue =
+    endInputDraft ?? formatHistoricalYear(endYear);
 
   const handleStartInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const raw = event.target.value;
-    setStartInputValue(raw);
+    setStartInputDraft(raw);
 
     const year = parseHistoricalYear(raw);
 
@@ -103,19 +101,19 @@ export default function YearRangeSlider({
       year < minYear ||
       year > endYear
     ) {
-      setStartInputValue(formatHistoricalYear(startYear));
+      setStartInputDraft(null);
       return;
     }
 
     setStartYear(year);
-    setStartInputValue(formatHistoricalYear(year));
+    setStartInputDraft(null);
   };
 
   const handleEndInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const raw = event.target.value;
-    setEndInputValue(raw);
+    setEndInputDraft(raw);
 
     const year = parseHistoricalYear(raw);
 
@@ -136,12 +134,12 @@ export default function YearRangeSlider({
       year < startYear ||
       year > maxYear
     ) {
-      setEndInputValue(formatHistoricalYear(endYear));
+      setEndInputDraft(null);
       return;
     }
 
     setEndYear(year);
-    setEndInputValue(formatHistoricalYear(year));
+    setEndInputDraft(null);
   };
 
   return (
