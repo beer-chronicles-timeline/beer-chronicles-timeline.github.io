@@ -300,6 +300,15 @@ export default function SourcesPage() {
             Henri Lefebvre,
             {" "}
             <a
+              href="https://fermentos.beer/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-stone-900"
+            >
+              Ben Kirst
+            </a>, 
+            {" "}
+            <a
               href="https://www.instagram.com/bierblogtrier/"
               target="_blank"
               rel="noopener noreferrer"
@@ -318,7 +327,6 @@ export default function SourcesPage() {
             >
               Marcin Ostajewski
             </a>, 
-
             Nicole Renken, 
             Simon Stevens, 
             and Johannes Thürauf
