@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ "$#" -lt 1 ]; then
+  echo 'Usage: ./audit-storyline "Storyline Name"' >&2
+  exit 1
+fi
+
+# Always operate from the Beer Chronicles repository root,
+# regardless of the directory from which the script was called.
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+STORYLINE="$*"
+
+# Create a filesystem-safe Storyline name.
+SLUG="$(
+  printf '%s' "$STORYLINE" \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+)"
+
+if [ -z "$SLUG" ]; then
+  SLUG="storyline"
+fi
+
+STAMP="$(date '+%Y-%m-%d_%H-%M-%S')"
+OUTDIR="audits/$SLUG"
+OUTFILE="$OUTDIR/$STAMP.md"
+
+mkdir -p "$OUTDIR"
+
+PROMPT="\$storyline-audit $STORYLINE"
+
+echo "Auditing Storyline: $STORYLINE"
+echo "Audit mode: read-only"
+echo "Report: $OUTFILE"
+echo
+
+if codex exec \
+  --profile beer-audit \
+  -o "$OUTFILE" \
+  "$PROMPT"
+then
+  echo
+  echo "Audit completed."
+  echo "Saved report to: $OUTFILE"
+else
+  rm -f "$OUTFILE"
+  echo
+  echo "Audit failed. No report was kept." >&2
+  exit 1
+fi

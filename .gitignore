@@ -47,3 +47,6 @@ supabase-backup/
 /literature-to-crawl/
 /githubtoken
 /sticker/
+
+# Local Beer Chronicles audit reports
+/audits/
