@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import type { TimelineEvent } from "@/lib/types";
-import { getEventPath } from "@/lib/eventUrls";
+import {
+  getCorrectionSubmissionPath,
+  getEventPath,
+} from "@/lib/eventUrls";
 import { getStorylinesForEvent } from "@/lib/eventStorylines";
 import { getStorylineHref } from "@/lib/storylines";
 import {
@@ -153,19 +156,33 @@ export default function EventDetailContent({
         </section>
       )}
 
-      {showPermanentLink && (
-        <div className="mt-6 border-t border-stone-200 pt-5">
+      <div className="mt-6 border-t border-stone-200 pt-5">
+        {showPermanentLink && (
+          <div>
+            <Link
+              href={getEventPath(event.id, event.title)}
+              className="inline-flex items-center rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+            >
+              Open full entry
+              <span className="ml-2" aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </div>
+        )}
+
+        <div className={showPermanentLink ? "mt-3" : ""}>
           <Link
-            href={getEventPath(event.id, event.title)}
-            className="inline-flex items-center rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+            href={getCorrectionSubmissionPath(
+              event.id,
+              event.title
+            )}
+            className="inline-block py-1 text-sm text-stone-500 underline decoration-stone-300 underline-offset-2 transition hover:text-stone-700 hover:decoration-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
           >
-            Open full entry
-            <span className="ml-2" aria-hidden="true">
-              →
-            </span>
+            Suggest a correction or additional source
           </Link>
         </div>
-      )}
+      </div>
     </div>
   );
 }

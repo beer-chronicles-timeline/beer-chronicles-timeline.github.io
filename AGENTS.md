@@ -1,5 +1,14 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+Beer Chronicles — Vibe Coding Commandments
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+1)  Git push only at the end. Push only after the whole feature or
+    refactor is finished and tested.
+
+2)  Refactoring means zero functional changes. During pure refactoring,
+    preserve behavior, styling, wording, and UX unless a change is
+    explicitly requested.
+
+3)  Test after each file or patch.
+
+4) Preserve the existing project style. Keep existing naming, layout
+   patterns, Tailwind style, wording, and structure unless the user
+   explicitly asks for a change.

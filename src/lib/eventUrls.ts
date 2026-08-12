@@ -23,6 +23,19 @@ export function getEventUrl(id: string, title: string): string {
   return new URL(getEventPath(id, title), BASE_URL).toString();
 }
 
+export function getCorrectionSubmissionPath(
+  id: string,
+  title: string
+): string {
+  const params = new URLSearchParams({
+    submissionType: "correction",
+    eventTitle: title,
+    eventUrl: getEventUrl(id, title),
+  });
+
+  return `/submit?${params.toString()}`;
+}
+
 export function isCurrentEventSlug(
   suppliedSlug: string,
   title: string

@@ -1,16 +1,41 @@
 // app/submit/page.tsx
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 
-export default function SubmitPage() {
+const CORRECTION_SUBMISSION_TYPE =
+  "Correction / additional source";
+
+function isCanonicalEventUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+
+    return (
+      url.origin === "https://beer-chronicles.org" &&
+      url.pathname.startsWith("/events/")
+    );
+  } catch {
+    return false;
+  }
+}
+
+function SubmitForm() {
+  const searchParams = useSearchParams();
+  const eventTitle = searchParams.get("eventTitle")?.trim() ?? "";
+  const eventUrl = searchParams.get("eventUrl")?.trim() ?? "";
+  const isCorrection =
+    searchParams.get("submissionType") === "correction" &&
+    eventTitle !== "" &&
+    isCanonicalEventUrl(eventUrl);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    title: "",
+    title: isCorrection ? eventTitle : "",
     description: "",
     eventDate: "",
     datePrecision: "date",
@@ -50,7 +75,15 @@ export default function SubmitPage() {
           eventDate: formData.eventDate,
           datePrecision: formData.datePrecision,
           sources: formData.sources,
-          _subject: `New Beer History Entry Submission from ${formData.name}`,
+          ...(isCorrection
+            ? {
+                submissionType: CORRECTION_SUBMISSION_TYPE,
+                eventUrl,
+              }
+            : {}),
+          _subject: isCorrection
+            ? `Beer History Correction Suggestion from ${formData.name}`
+            : `New Beer History Entry Submission from ${formData.name}`,
         }),
       });
 
@@ -121,14 +154,39 @@ export default function SubmitPage() {
 
       <section className="max-w-2xl mx-auto">
         <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
-          Submit a New Beer History Entry
+          {isCorrection
+            ? "Suggest a Correction or Additional Source"
+            : "Submit a New Beer History Entry"}
         </h2>
 
         <p className="text-gray-600 mb-4">
-          You have an important beer history event to share that I should
-          include in the Beer Chronicles? Just fill out the form below and
-          I&apos;ll review it for inclusion.
+          {isCorrection ? (
+            <>
+              Spotted something that should be corrected or have an
+              additional source to suggest? Share the details below and
+              I&apos;ll review them.
+            </>
+          ) : (
+            <>
+              You have an important beer history event to share that I
+              should include in the Beer Chronicles? Just fill out the
+              form below and I&apos;ll review it for inclusion.
+            </>
+          )}
         </p>
+
+        {isCorrection && (
+          <div className="mb-6 rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm leading-relaxed text-stone-700">
+            <p>
+              <span className="font-medium">Submission type:</span>{" "}
+              {CORRECTION_SUBMISSION_TYPE}
+            </p>
+
+            <p className="mt-2 break-words">
+              <span className="font-medium">Event:</span> {eventUrl}
+            </p>
+          </div>
+        )}
 
         <div className="mb-6 rounded-lg border border-stone-200 bg-stone-100 px-4 py-3 text-sm leading-relaxed text-stone-700">
           <p>
@@ -250,7 +308,7 @@ export default function SubmitPage() {
               type="date"
               id="eventDate"
               name="eventDate"
-              required
+              required={!isCorrection}
               value={formData.eventDate}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
@@ -292,13 +350,24 @@ export default function SubmitPage() {
             <textarea
               id="sources"
               name="sources"
-              required
+              required={!isCorrection}
               rows={3}
               value={formData.sources}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-              placeholder="URLs or references that support this entry (one per line)"
+              placeholder={
+                isCorrection
+                  ? "Relevant URLs or references, if available (one per line)"
+                  : "URLs or references that support this entry (one per line)"
+              }
             />
+
+            {isCorrection && (
+              <p className="mt-1 text-xs text-stone-500">
+                Optional. Reliable sources are encouraged when they are
+                relevant to the suggested change.
+              </p>
+            )}
           </div>
 
           {/* Submit Button */}
@@ -312,7 +381,11 @@ export default function SubmitPage() {
                   : "bg-stone-800 hover:bg-stone-900"
               }`}
             >
-              {isSubmitting ? "Sending..." : "Send Entry"}
+              {isSubmitting
+                ? "Sending..."
+                : isCorrection
+                  ? "Send Suggestion"
+                  : "Send Entry"}
             </button>
           </div>
 
@@ -320,8 +393,9 @@ export default function SubmitPage() {
           {submitStatus === "success" && (
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
               <p className="text-green-800">
-                Thank you! Your entry has been submitted. I&apos;ll review it
-                soon.
+                {isCorrection
+                  ? "Thank you! Your suggestion has been submitted. I’ll review it soon."
+                  : "Thank you! Your entry has been submitted. I’ll review it soon."}
               </p>
             </div>
           )}
@@ -345,5 +419,13 @@ export default function SubmitPage() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function SubmitPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-stone-50" />}>
+      <SubmitForm />
+    </Suspense>
   );
 }
