@@ -9,6 +9,7 @@ import {
   formatEventDate,
   getEventTimelineYear,
 } from "@/components/timelineUtils";
+import { getEventPath } from "@/lib/eventUrls";
 import { supabase } from "@/lib/supabaseClient";
 import type { TimelineEvent } from "@/lib/types";
 import {
@@ -253,9 +254,15 @@ function StorylineCard({
 
         {featuredEvent ? (
           <p className="mt-1 text-sm leading-5 text-stone-700">
-            <span className="font-medium text-stone-900">
+            <Link
+              href={getEventPath(
+                featuredEvent.id,
+                featuredEvent.title
+              )}
+              className="font-medium text-stone-900 underline decoration-transparent underline-offset-2 transition hover:decoration-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
+            >
               {featuredEvent.title}
-            </span>
+            </Link>
 
             <span className="text-stone-400">
               {" "}
