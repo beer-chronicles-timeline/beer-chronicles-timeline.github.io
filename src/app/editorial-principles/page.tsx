@@ -191,11 +191,14 @@ export default function EditorialPrinciplesPage() {
               </p>
 
               <p>
-                Neither the website nor its historical content is produced in
-                an agentic or fully automated way. AI tools do not independently
-                publish code, create entries, or make editorial decisions.
-                Every change is reviewed and approved before it becomes part of
-                Beer Chronicles.
+                The website’s development workflow may involve Codex and
+                similar agentic AI tools inspecting the repository, running
+                audits, researching issues, proposing changes, implementing
+                code under my instructions, and running tests. These tools
+                assist with the work, but they do not decide what is accepted
+                into Beer Chronicles. Every change—whether to the website or
+                its historical content—is reviewed and approved by me before it
+                becomes part of the project.
               </p>
             </div>
           </section>
