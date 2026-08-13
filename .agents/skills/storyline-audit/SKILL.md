@@ -52,6 +52,32 @@ For the requested Storyline:
 
 The local repository may be inspected when useful for understanding technical behavior such as related-entry generation, tags, URLs, or site structure, but local repository content must not replace the live published site as the canonical audit scope.
 
+### Static-export fallback
+
+The live Beer Chronicles website remains canonical for determining which entries are currently published and included in the requested Storyline.
+
+If client-side rendering or another technical limitation prevents the live web reader from exposing the complete entry data or exact cited source URLs, inspect the repository's existing read-only `out/` static export when available.
+
+The static export may be used to recover:
+
+- exact published event titles and event URLs;
+- exact cited source URLs;
+- other rendered entry data required for the audit.
+
+Use the static export only as a read-only representation of published content.
+
+Do not use the static export to silently change the Storyline scope established from the live site.
+
+When extracting source URLs from generated HTML or Next.js output:
+
+- identify the actual published source URLs associated with the entry;
+- ignore duplicate occurrences caused by serialization or rendering;
+- ignore generated variants that append artificial suffixes or identifiers to otherwise valid URLs;
+- ignore unrelated technical URLs such as schema.org, Cloudflare scripts, social images, or Beer Chronicles metadata URLs;
+- do not infer a source URL merely from a similar-looking generated string.
+
+If the local static export appears materially stale or conflicts with the live site, report the conflict rather than treating the local export as canonical.
+
 ## Research principles
 
 Historical accuracy comes first.
@@ -123,20 +149,130 @@ The existence of a stronger source does not automatically make the existing sour
 
 ## Link-health rules
 
-Check the current URLs cited by Beer Chronicles.
+Check every current URL cited by Beer Chronicles.
 
-Distinguish between:
+Use exactly these link-health statuses:
 
-- working;
-- working after redirect;
-- dead, such as a confirmed 404 or equivalent;
-- access-blocked, such as authentication, paywall, robots restriction, Cloudflare, or HTTP 403;
-- mistargeted, where the URL works but does not lead to the source it claims to cite;
-- unable to verify.
+- `valid` — the cited URL is reachable and leads to the source it claims to cite;
+- `redirect` — the cited URL redirects to a reachable destination that still represents the cited source;
+- `access-blocked` — automated access is prevented by authentication, paywall, robots restriction, Cloudflare, HTTP 403, HTTP 429, or comparable access control;
+- `broken` — the cited URL is confirmed unavailable, such as HTTP 404, HTTP 410, or an equivalent persistent failure, but the evidence does not establish that the underlying source itself has disappeared;
+- `mistargeted` — the URL is reachable but does not lead to the source it claims to cite;
+- `source-disappeared` — the cited URL is unavailable and reasonable investigation indicates that the underlying cited source itself is no longer available at an identifiable current location;
+- `replacement-found` — there is reasonable evidence that the original cited URL is genuinely obsolete or unavailable, and the same source, a canonical successor location, an archived copy, or another clearly appropriate replacement location has been identified;
+- `unable-to-verify` — available evidence is insufficient to classify the link reliably.
 
-Do not classify an access-blocked source as dead.
+Assign exactly one status to every cited URL.
 
-A functioning URL that does not actually lead to the cited work is a source-target problem and should be reported separately.
+Do not classify an `access-blocked` source as `broken`.
+
+Do not classify a temporary timeout, transient server error, safety-gate refusal, robots restriction, or other ambiguous technical failure as `broken` unless repeated or corroborating evidence establishes that the URL is genuinely unavailable.
+
+A functioning URL that does not actually lead to the cited work is `mistargeted` and should be treated as a source-target problem rather than merely a link-health problem.
+
+When a URL is confirmed `broken`, perform reasonable research to determine whether:
+
+- the same source has moved to another URL;
+- a canonical successor location exists;
+- an archived version of the cited source exists;
+- the underlying source appears to have disappeared.
+
+Do not infer the contents of an inaccessible source.
+
+Do not replace one historical source with a different source merely because the original URL is broken.
+
+Distinguish clearly between:
+
+- relocation of the same cited source;
+- an archived copy of the same cited source;
+- a different source that supports the same historical claim.
+
+A different supporting source is not automatically a replacement for the cited source.
+
+### Replacement-found threshold
+
+Use `replacement-found` only when both conditions are satisfied:
+
+1. there is reasonable evidence that the original Beer Chronicles URL is genuinely obsolete or unavailable; and
+2. a replacement location has been identified with adequate confidence.
+
+Evidence that can support the first condition includes:
+
+- confirmed HTTP 404 or 410;
+- an explicit publisher or site migration;
+- an old URL that redirects or points to a clearly obsolete location;
+- reliable evidence that the former page or identifier has been superseded;
+- repeated and corroborated failure together with evidence of relocation.
+
+Do not assign `replacement-found` merely because:
+
+- the original URL times out;
+- automated access is blocked;
+- the URL cannot be opened by the audit environment;
+- a search result shows the same or similar source at another URL;
+- a newer-looking URL exists.
+
+In those cases, retain the appropriate status such as `unable-to-verify` or `access-blocked`.
+
+If a possible successor URL is found while the original URL remains inconclusive:
+
+- record the possible successor explicitly;
+- label it as a candidate successor or candidate replacement;
+- do not classify the original URL as `replacement-found`.
+
+The existence of a candidate successor must not be treated as evidence that the original URL is obsolete.
+
+### Exact-URL recording
+
+The link-health audit must preserve the exact URLs involved.
+
+For every cited URL:
+
+- record the exact URL currently stored or published by Beer Chronicles;
+- do not substitute a source title, publisher name, shortened description, or hyperlink label for the URL;
+- do not omit the URL merely because the source is described elsewhere in the report.
+
+For `redirect`:
+
+- record the exact original Beer Chronicles URL;
+- record the final destination URL reached after redirects.
+
+For `replacement-found`:
+
+- record the exact original Beer Chronicles URL;
+- record the newly identified URL;
+- state what evidence establishes that the original URL is obsolete or unavailable;
+- state whether the new URL is:
+  - the same source at a new location;
+  - a canonical successor location;
+  - an archived copy;
+  - a different replacement source.
+
+For `mistargeted`:
+
+- record the exact original Beer Chronicles URL;
+- state what the URL actually resolves to or why it does not represent the cited source.
+
+For `access-blocked`:
+
+- record the exact URL;
+- state the observed restriction where known.
+
+For `broken` or `source-disappeared`:
+
+- record the exact URL;
+- state what failure was observed;
+- summarize the reasonable follow-up investigation performed.
+
+For `unable-to-verify`:
+
+- record the exact URL;
+- state why a stronger classification could not be made;
+- if a possible relocated or successor URL is discovered, record that candidate URL explicitly but do not classify it as `replacement-found` unless the replacement-found threshold is satisfied.
+
+All link-health findings are advisory.
+
+Never update a Beer Chronicles source URL automatically.
 
 ## Entry-by-entry audit
 
@@ -204,6 +340,10 @@ Report source quality with nuance.
 ### 6. Link health
 
 Check every current cited URL according to the link-health rules above.
+
+Assign exactly one link-health status to every cited URL.
+
+Include every cited URL in the report's Source and link health register.
 
 ### 7. Duplication
 
@@ -324,20 +464,24 @@ Do not provide SQL, replacement database records, automatic patches, or implemen
 
 ## Required report structure
 
-Produce the report in this order.
+Produce the report in this exact order.
 
 ### Audit provenance
 
-Include:
+Include each of the following fields explicitly:
 
-- Storyline name;
-- Storyline URL;
-- audit date;
-- number of published entries audited;
-- mode: `Advisory / read-only`;
-- live Beer Chronicles site checked: yes/no;
-- external-source research performed: yes/no;
-- repository modifications: `None`.
+- `Storyline:`
+- `Storyline URL:`
+- `Audit date:`
+- `Published entries audited:`
+- `Mode: Advisory / read-only`
+- `Live Beer Chronicles site checked: yes/no`
+- `External-source research performed: yes/no`
+- `Repository modifications: None`
+
+Do not replace these fields with a looser prose description.
+
+The Storyline URL must be the actual live Beer Chronicles URL used to establish the audit scope.
 
 ### 1. Executive summary
 
@@ -349,16 +493,65 @@ Do not imply that the presence of findings requires editorial changes.
 
 Review every published entry, including entries marked `OK`.
 
-### 3. Source and link issues
+### 3. Source and link health
 
-Separate:
+Provide a compact link-health summary for every current Beer Chronicles source URL checked.
 
-- dead links;
-- redirects;
-- access-blocked sources;
-- mistargeted sources;
-- unable-to-verify sources;
-- source-quality observations.
+First provide counts by status:
+
+- `valid`;
+- `redirect`;
+- `access-blocked`;
+- `broken`;
+- `mistargeted`;
+- `source-disappeared`;
+- `replacement-found`;
+- `unable-to-verify`.
+
+State:
+
+- total citation occurrences checked;
+- whether repeated URLs were counted once per occurrence or once per unique URL.
+
+Then provide a link-health register.
+
+The register must include every cited URL checked.
+
+For each citation occurrence, include:
+
+- Beer Chronicles entry;
+- exact Beer Chronicles source URL;
+- link-health status;
+- result or short note.
+
+Never replace the exact source URL with only a source title, publisher name, citation label, or descriptive shorthand.
+
+Keep `valid` entries concise.
+
+For every status other than `valid`, provide enough detail to understand the result.
+
+For `redirect`, include the final destination URL.
+
+For `replacement-found`, include:
+
+- original Beer Chronicles URL;
+- evidence that the original URL is genuinely obsolete or unavailable;
+- newly identified URL;
+- whether it is the same source at a new location, a canonical successor, an archived copy, or a different replacement source.
+
+For `access-blocked`, state the observed access restriction and do not imply that the source is dead.
+
+For `mistargeted`, state what the URL actually targets or why it does not represent the cited source.
+
+For `broken` or `source-disappeared`, state what investigation was performed before assigning the status.
+
+For `unable-to-verify`, explain briefly why verification was inconclusive.
+
+If research identifies a possible relocated or successor URL without enough evidence for `replacement-found`, include the candidate URL in the note and label it explicitly as a candidate.
+
+Separate link-health findings from source-quality findings.
+
+A source may be reachable but weak, or inaccessible while still historically appropriate.
 
 ### 4. Potential duplicates
 
