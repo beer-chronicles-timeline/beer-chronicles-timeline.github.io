@@ -1,5 +1,6 @@
 // app/page.tsx
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Timeline from "@/components/Timeline";
 import HeaderMenu from "@/components/HeaderMenu";
@@ -19,6 +20,12 @@ type EventTagRow = {
 
 const EVENT_TAG_PAGE_SIZE = 1000;
 const MIN_VISIBLE_TAG_EVENT_COUNT = 3;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://beer-chronicles.org/",
+  },
+};
 
 async function fetchAllEventTags(): Promise<{
   data: EventTagRow[];
