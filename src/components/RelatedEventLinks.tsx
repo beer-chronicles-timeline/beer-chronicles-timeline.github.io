@@ -19,7 +19,7 @@ export default function RelatedEventLinks({
   return (
     <section
       aria-labelledby="related-events-heading"
-      className="mt-8 border-t border-stone-200 pt-6"
+      className="mt-8 border-t border-stone-300 pt-6"
     >
       <h2
         id="related-events-heading"

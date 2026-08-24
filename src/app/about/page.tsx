@@ -46,10 +46,10 @@ export default function AboutPage() {
         </div>
 
         {/* Desktop layout: centered title with menu on right */}
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
-          <div className="w-1/3 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
+          <div className="text-center">
+            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
@@ -58,7 +58,7 @@ export default function AboutPage() {
               An Interactive Beer History Timeline
             </h2>
           </div>
-          <div className="w-1/3 flex justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>
@@ -77,11 +77,13 @@ export default function AboutPage() {
       </header>
 
       <section className="max-w-4xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4">What Is This About?</h2>
+        <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-4">
+          What Is This About?
+        </h2>
 
         <div className="space-y-4 text-gray-800">
           {/* Image with text wrapping - float right on desktop, centered on mobile */}
-          <div className="float-right ml-6 mb-4 w-40 md:w-48">
+          <div className="mx-auto mb-5 w-40 md:float-right md:mx-0 md:ml-6 md:mb-4 md:w-48">
             <Image
               src="/images/martin-schmidt.jpg"
               alt="Martin Schmidt - Beer historian and homebrewer"
@@ -123,17 +125,23 @@ export default function AboutPage() {
             possible, there can be mistakes! If you detect any bug:{" "}
             <a
               href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline"
-              className="underline"
+              className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
             >
               just let me know
             </a>{" "}
             and I will correct. Additionally, if you have an entry in mind that
             needs to be included, please{" "}
-            <Link href="/submit" className="underline">
+            <Link
+              href="/submit"
+              className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
               submit a new entry here
             </Link>
             . You can also help investigate unresolved questions on the{" "}
-            <Link href="/challenges" className="underline">
+            <Link
+              href="/challenges"
+              className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
               Open Challenges page
             </Link>
             .
@@ -150,7 +158,7 @@ export default function AboutPage() {
             {useCases.map((useCase, index) => (
               <div
                 key={index}
-                className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm hover:shadow-md transition"
+                className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm"
               >
                 <div className="text-3xl mb-3">{useCase.icon}</div>
                 <h3 className="text-lg font-semibold font-serif text-stone-900 mb-2">
@@ -165,7 +173,10 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-8 pt-4 text-sm text-gray-600">
-          <Link href="/" className="underline hover:no-underline">
+          <Link
+            href="/"
+            className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+          >
             ← Back to the Beer History Timeline
           </Link>
         </div>

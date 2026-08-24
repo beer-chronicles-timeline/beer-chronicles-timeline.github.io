@@ -302,87 +302,92 @@ export default function Timeline({
 
   return (
     <>
-      <TimelineFiltersWrapper
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-        startYear={startYear}
-        endYear={endYear}
-        setStartYear={setStartYear}
-        setEndYear={setEndYear}
-        allTags={allTags}
-        urlTags={urlTags}
-        selectedTagIds={selectedTagIds}
-        setSelectedTagIds={setSelectedTagIds}
-        tagFilterMode={tagFilterMode}
-        setTagFilterMode={setTagFilterMode}
-        tagCounts={tagCounts}
-        minYear={minYear}
-        maxYear={maxYear}
-      />
+      <section
+        aria-label="Timeline exploration controls"
+        className="mx-auto mb-4 w-full max-w-4xl border-y border-stone-200 py-2"
+      >
+        <TimelineFiltersWrapper
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          startYear={startYear}
+          endYear={endYear}
+          setStartYear={setStartYear}
+          setEndYear={setEndYear}
+          allTags={allTags}
+          urlTags={urlTags}
+          selectedTagIds={selectedTagIds}
+          setSelectedTagIds={setSelectedTagIds}
+          tagFilterMode={tagFilterMode}
+          setTagFilterMode={setTagFilterMode}
+          tagCounts={tagCounts}
+          minYear={minYear}
+          maxYear={maxYear}
+        />
 
-      <div className="mb-6 flex flex-col items-center justify-center gap-2 md:flex-row md:gap-3">
-        <div className="flex w-full justify-center md:w-auto">
-          <div className="whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700">
-            {hasActiveFilters ? (
-              <>
-                Showing{" "}
-                <span className="font-semibold">
-                  {showingCount}
-                </span>{" "}
-                of{" "}
-                <span className="font-semibold">
-                  {totalEvents}
-                </span>{" "}
-                events
-              </>
-            ) : (
-              <>
-                <span className="font-semibold">
-                  {totalEvents}
-                </span>{" "}
-                events in total
-              </>
-            )}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(event) =>
-                setSearchQuery(event.target.value)
-              }
-              className="w-36 rounded-full border border-gray-300 bg-white px-3 py-1 text-sm text-stone-700 outline-none placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-stone-500"
-            />
-
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600"
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
+        <div className="mt-3 flex flex-col items-center justify-center gap-2 border-t border-stone-200 pt-3 md:flex-row md:gap-3">
+          <div className="flex w-full justify-center md:w-auto">
+            <div className="whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700">
+              {hasActiveFilters ? (
+                <>
+                  Showing{" "}
+                  <span className="font-semibold">
+                    {showingCount}
+                  </span>{" "}
+                  of{" "}
+                  <span className="font-semibold">
+                    {totalEvents}
+                  </span>{" "}
+                  events
+                </>
+              ) : (
+                <>
+                  <span className="font-semibold">
+                    {totalEvents}
+                  </span>{" "}
+                  events in total
+                </>
+              )}
+            </div>
           </div>
 
-          <button
-            onClick={toggleOrder}
-            className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700 transition hover:bg-stone-200"
-            aria-label="Toggle timeline order"
-          >
-            <span>{isOldestFirst ? "↑" : "↓"}</span>
-            <span>
-              {isOldestFirst
-                ? "Oldest first"
-                : "Newest first"}
-            </span>
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(event) =>
+                  setSearchQuery(event.target.value)
+                }
+                className="h-10 w-36 rounded-full border border-gray-300 bg-white px-3 py-1 pr-10 text-sm text-stone-700 outline-none placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-stone-500"
+              />
+
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-1 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-xs text-gray-400 hover:bg-stone-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
+            <button
+              onClick={toggleOrder}
+              className="flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700 transition hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+              aria-label="Toggle timeline order"
+            >
+              <span>{isOldestFirst ? "↑" : "↓"}</span>
+              <span>
+                {isOldestFirst
+                  ? "Oldest first"
+                  : "Newest first"}
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
+      </section>
 
       {filteredEvents.length === 0 ? (
         <div className="py-16 text-center">
@@ -397,7 +402,7 @@ export default function Timeline({
         </div>
       ) : (
         <div className="relative">
-          <div className="absolute left-1/2 top-0 h-full w-1.5 -translate-x-1/2 bg-gray-300"></div>
+          <div className="absolute left-4 top-0 h-full w-1.5 -translate-x-1/2 bg-gray-300 md:left-1/2"></div>
 
           <div className="flex flex-col gap-0">
             {filteredEvents.map((event, index) => {
@@ -406,9 +411,15 @@ export default function Timeline({
               return (
                 <div
                   key={event.id}
-                  className="relative -mt-20 flex w-full items-center first:mt-0 landscape:-mt-8 md:-mt-8"
+                  className="relative flex w-full items-start pb-5 last:pb-0 md:-mt-8 md:items-center md:pb-0 md:first:mt-0"
                 >
-                  <div className="flex w-1/2 justify-end pr-4 md:pr-7">
+                  <div
+                    className={
+                      isLeft
+                        ? "flex w-full pl-10 pr-1 md:w-1/2 md:justify-end md:pl-0 md:pr-7"
+                        : "hidden md:flex md:w-1/2 md:justify-end md:pr-7"
+                    }
+                  >
                     {isLeft && (
                       <EventCard
                         event={event}
@@ -419,11 +430,19 @@ export default function Timeline({
                     )}
                   </div>
 
-                  <div className="relative flex w-0 justify-center">
-                    <div className="absolute left-1/2 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-black"></div>
+                  <div className="absolute left-4 top-6 flex w-0 justify-center md:relative md:left-auto md:top-auto">
+                    <div className="absolute left-1/2 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black md:translate-y-0"></div>
                   </div>
 
-                  <div className="flex w-1/2 justify-start pl-4 md:pl-7">
+                  <div className="absolute left-4 top-6 h-px w-6 bg-gray-300 md:hidden"></div>
+
+                  <div
+                    className={
+                      isLeft
+                        ? "hidden md:flex md:w-1/2 md:justify-start md:pl-7"
+                        : "flex w-full pl-10 pr-1 md:w-1/2 md:justify-start md:pl-7 md:pr-0"
+                    }
+                  >
                     {!isLeft && (
                       <EventCard
                         event={event}
@@ -443,7 +462,7 @@ export default function Timeline({
       <button
         onClick={handleRandomEvent}
         disabled={events.length === 0 || isRollingRandom}
-        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-600 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:w-auto md:rounded-full md:px-5 md:py-3"
+        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-600 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
         aria-label="Open random event"
         title="Open random event"
       >

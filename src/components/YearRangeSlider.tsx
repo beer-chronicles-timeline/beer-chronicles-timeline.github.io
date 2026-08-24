@@ -156,7 +156,7 @@ export default function YearRangeSlider({
             onChange={handleStartInputChange}
             onBlur={handleStartInputBlur}
             aria-label="Start year"
-            className="w-24 px-1 py-0.5 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+            className="h-10 w-24 rounded-md border border-gray-300 px-2 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-stone-500"
           />
         </div>
 
@@ -168,7 +168,7 @@ export default function YearRangeSlider({
             onChange={handleEndInputChange}
             onBlur={handleEndInputBlur}
             aria-label="End year"
-            className="w-24 px-1 py-0.5 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-stone-500 focus:border-transparent text-right"
+            className="h-10 w-24 rounded-md border border-gray-300 px-2 text-right text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-stone-500"
           />
 
           <span>To:</span>
@@ -209,12 +209,12 @@ export default function YearRangeSlider({
         </Slider.Track>
 
         <Slider.Thumb
-          className="block w-5 h-5 bg-white border-2 border-black rounded-full shadow hover:scale-110 transition"
+          className="block h-5 w-5 rounded-full border-2 border-black bg-white shadow transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           aria-label="Start year"
         />
 
         <Slider.Thumb
-          className="block w-5 h-5 bg-white border-2 border-black rounded-full shadow hover:scale-110 transition"
+          className="block h-5 w-5 rounded-full border-2 border-black bg-white shadow transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           aria-label="End year"
         />
       </Slider.Root>

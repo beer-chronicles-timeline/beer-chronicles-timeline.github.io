@@ -271,7 +271,7 @@ export function TimelineFilters({
   }, [currentUrlState, searchParams, router]);
 
   return (
-    <div className="mb-6 space-y-4">
+    <div className="space-y-4">
       <div className="flex flex-wrap gap-2 justify-center">
         {CATEGORIES.map((cat) => {
           const isAll = cat === "All";
@@ -285,7 +285,7 @@ export function TimelineFilters({
               onClick={() =>
                 setActiveCategory(isAll ? null : cat)
               }
-              className={`px-3 py-1 text-sm rounded-full border transition
+              className={`min-h-10 px-3 py-1 text-sm rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2
 ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
             >
               {cat}
@@ -302,7 +302,7 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
             onClick={() =>
               setIsTagDropdownOpen((open) => !open)
             }
-            className="inline-flex items-center gap-2 px-3 py-1 text-sm border rounded-full bg-white hover:bg-gray-50 transition"
+            className="inline-flex min-h-10 items-center gap-2 rounded-full border bg-white px-3 py-1 text-sm transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           >
             <span>Tags</span>
 
@@ -333,12 +333,12 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
                   return (
                     <label
                       key={tag.id}
-                      className="flex items-center justify-between gap-2 px-3 py-1.5 text-sm hover:bg-gray-50 cursor-pointer"
+                      className="flex min-h-10 cursor-pointer items-center justify-between gap-2 px-3 py-1.5 text-sm hover:bg-gray-50 focus-within:bg-gray-50"
                     >
                       <div className="flex items-center gap-2">
                         <input
                           type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300"
+                          className="h-4 w-4 rounded border-gray-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-1"
                           checked={checked}
                           onChange={() => toggleTag(tag.id)}
                         />
@@ -359,7 +359,7 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
                   <button
                     type="button"
                     onClick={clearTags}
-                    className="text-xs text-gray-600 hover:text-gray-900"
+                    className="min-h-10 px-1 text-xs text-gray-600 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-1"
                   >
                     Clear tags
                   </button>
@@ -367,7 +367,7 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
                   <button
                     type="button"
                     onClick={() => setIsTagDropdownOpen(false)}
-                    className="text-xs text-gray-900 font-medium"
+                    className="min-h-10 px-1 text-xs font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-1"
                   >
                     Done
                   </button>

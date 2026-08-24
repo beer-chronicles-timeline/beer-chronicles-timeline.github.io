@@ -29,7 +29,7 @@ export default function RelatedEvents({
             key={relatedEvent.id}
             type="button"
             onClick={() => onOpenRelatedEvent(relatedEvent)}
-            className="block w-full text-left rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 hover:bg-stone-100 transition"
+            className="block min-h-11 w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-left transition hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           >
             <div className="text-xs text-gray-500">
               {formatEventDate(relatedEvent)}

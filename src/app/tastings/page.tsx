@@ -35,10 +35,10 @@ export default function TastingsPage() {
         </div>
 
         {/* Desktop layout: centered title with menu on right */}
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
-          <div className="w-1/3 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
+          <div className="text-center">
+            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
@@ -47,7 +47,7 @@ export default function TastingsPage() {
               An Interactive Beer History Timeline
             </h2>
           </div>
-          <div className="w-1/3 flex justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>
@@ -189,7 +189,10 @@ export default function TastingsPage() {
             <p>
               You can learn more about me and the background of Beer Chronicles
               on the{" "}
-              <Link href="/about" className="underline hover:no-underline">
+              <Link
+                href="/about"
+                className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+              >
                 About page
               </Link>
               .
@@ -243,7 +246,10 @@ export default function TastingsPage() {
         </div>
 
         <div className="mt-8 pt-4 text-sm text-gray-600">
-          <Link href="/" className="underline hover:no-underline">
+          <Link
+            href="/"
+            className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+          >
             ← Back to the Beer History Timeline
           </Link>
         </div>

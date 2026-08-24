@@ -90,11 +90,11 @@ export default async function Home() {
           </div>
 
           {/* Desktop layout: centered title with menu on right */}
-          <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-            <div className="w-1/3" />
+          <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+            <div />
 
-            <div className="w-1/3 text-center">
-              <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+            <div className="text-center">
+              <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
                 <Link href="/" className="hover:no-underline">
                   BEER CHRONICLES
                 </Link>
@@ -105,7 +105,7 @@ export default async function Home() {
               </h2>
             </div>
 
-            <div className="w-1/3 flex justify-end">
+            <div className="flex min-w-0 justify-end">
               <HeaderMenu />
             </div>
           </div>
@@ -238,11 +238,11 @@ export default async function Home() {
         </div>
 
         {/* Desktop layout: centered title with menu on right */}
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
 
-          <div className="w-1/3 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+          <div className="text-center">
+            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
@@ -253,7 +253,7 @@ export default async function Home() {
             </h2>
           </div>
 
-          <div className="w-1/3 flex justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>

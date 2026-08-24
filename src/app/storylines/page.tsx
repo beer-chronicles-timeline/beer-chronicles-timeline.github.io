@@ -231,16 +231,16 @@ function StorylineCard({
   return (
     <article
       id={`storyline-${storyline.slug}`}
-      className="scroll-mt-6 flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+      className="scroll-mt-6 flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
     >
-      <div className="flex items-start justify-between gap-4">
+      <div>
         <h3 className="font-serif text-xl font-semibold text-stone-900">
           {storyline.title}
         </h3>
 
-        <span className="shrink-0 rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-600">
+        <p className="mt-1 text-xs font-medium text-stone-500">
           {entryCount} {entryCount === 1 ? "entry" : "entries"}
-        </span>
+        </p>
       </div>
 
       <p className="mt-3 flex-1 text-sm leading-6 text-stone-600">
@@ -253,22 +253,21 @@ function StorylineCard({
         </p>
 
         {featuredEvent ? (
-          <p className="mt-1 text-sm leading-5 text-stone-700">
+          <div className="mt-1">
             <Link
               href={getEventPath(
                 featuredEvent.id,
                 featuredEvent.title
               )}
-              className="font-medium text-stone-900 underline decoration-transparent underline-offset-2 transition hover:decoration-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
+              className="block font-serif text-base font-semibold leading-5 text-stone-900 underline decoration-transparent underline-offset-2 transition hover:decoration-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
             >
               {featuredEvent.title}
             </Link>
 
-            <span className="text-stone-400">
-              {" "}
-              · {formatEventDate(featuredEvent)}
-            </span>
-          </p>
+            <p className="mt-1 text-xs text-stone-400">
+              {formatEventDate(featuredEvent)}
+            </p>
+          </div>
         ) : (
           <p className="mt-1 text-sm text-stone-500">
             No matching entry is currently available.
@@ -278,7 +277,7 @@ function StorylineCard({
 
       <Link
         href={href}
-        className="mt-5 inline-flex items-center justify-between rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+        className="mt-5 inline-flex min-h-10 self-start items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
       >
         <span>Explore storyline</span>
         <span aria-hidden="true">→</span>
@@ -363,11 +362,11 @@ export default async function StorylinesPage() {
           <HeaderMenu />
         </div>
 
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
 
-          <div className="w-1/3 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+          <div className="text-center">
+            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
@@ -378,7 +377,7 @@ export default async function StorylinesPage() {
             </h2>
           </div>
 
-          <div className="w-1/3 flex justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>

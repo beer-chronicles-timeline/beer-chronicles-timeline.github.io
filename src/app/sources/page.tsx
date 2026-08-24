@@ -119,10 +119,10 @@ export default function SourcesPage() {
         </div>
 
         {/* Desktop layout: centered title with menu on right */}
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
-          <div className="w-1/3 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
+          <div className="text-center">
+            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
@@ -131,7 +131,7 @@ export default function SourcesPage() {
               An Interactive Beer History Timeline
             </h2>
           </div>
-          <div className="w-1/3 flex justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>
@@ -168,16 +168,20 @@ export default function SourcesPage() {
         </p>
 
         {/* Source Families */}
-        <div className="grid gap-4 md:grid-cols-2">
-          {sourceFamilies.map((family) => (
+        <div className="grid gap-x-8 md:grid-cols-2">
+          {sourceFamilies.map((family, index) => (
             <div
               key={family.title}
-              className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm"
+              className={`border-t border-stone-200 py-5 ${
+                index === sourceFamilies.length - 1
+                  ? "md:col-span-2"
+                  : ""
+              }`}
             >
               <h3 className="text-lg font-semibold font-serif text-stone-900 mb-2">
                 {family.title}
               </h3>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="max-w-3xl text-gray-700 leading-relaxed">
                 {family.description}
               </p>
             </div>
@@ -204,7 +208,7 @@ export default function SourcesPage() {
             uncertainty, see the{" "}
             <Link
               href="/editorial-principles"
-              className="underline hover:text-stone-900"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
             >
               Editorial Principles
             </Link>
@@ -242,7 +246,7 @@ export default function SourcesPage() {
                           ? "noopener noreferrer sponsored"
                           : "noopener noreferrer"
                       }
-                      className="hover:underline"
+                      className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
                     >
                       {source.title}
                     </a>
@@ -279,7 +283,7 @@ export default function SourcesPage() {
                   href={timeline.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline hover:text-stone-900"
+                  className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
                 >
                   {timeline.title}
                 </a>
@@ -303,7 +307,7 @@ export default function SourcesPage() {
               href="https://fermentos.beer/"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-stone-900"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
             >
               Ben Kirst
             </a>, 
@@ -312,7 +316,7 @@ export default function SourcesPage() {
               href="https://www.instagram.com/bierblogtrier/"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-stone-900"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
             >
               Andreas Gniffke
             </a>, 
@@ -323,7 +327,7 @@ export default function SourcesPage() {
               href="https://www.instagram.com/panszpik/"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-stone-900"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
             >
               Marcin Ostajewski
             </a>, 
@@ -336,7 +340,10 @@ export default function SourcesPage() {
         </div>
 
         <div className="mt-8 pt-4 text-sm text-gray-600">
-          <Link href="/" className="underline hover:no-underline">
+          <Link
+            href="/"
+            className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+          >
             ← Back to the Beer History Timeline
           </Link>
         </div>

@@ -155,11 +155,11 @@ export default async function EventPage({
           <HeaderMenu />
         </div>
 
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
 
-          <div className="w-1/3 text-center">
-            <p className="whitespace-nowrap font-serif text-4xl font-semibold tracking-tight text-stone-900">
+          <div className="text-center">
+            <p className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
@@ -170,7 +170,7 @@ export default async function EventPage({
             </p>
           </div>
 
-          <div className="flex w-1/3 justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>
@@ -189,7 +189,7 @@ export default async function EventPage({
       </header>
 
       <div className="mx-auto w-full max-w-3xl">
-        <article className="rounded-2xl border border-stone-300 bg-white p-6 shadow-lg ring-1 ring-black/5 md:p-8">
+        <article className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">
           <EventDetailContent event={event} titleAs="h1" />
 
           <RelatedEventLinks relatedEvents={relatedEvents} />

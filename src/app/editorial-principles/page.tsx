@@ -16,10 +16,10 @@ export default function EditorialPrinciplesPage() {
           <HeaderMenu />
         </div>
 
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
-          <div className="w-1/3 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
+          <div className="text-center">
+            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
@@ -28,7 +28,7 @@ export default function EditorialPrinciplesPage() {
               An Interactive Beer History Timeline
             </h2>
           </div>
-          <div className="w-1/3 flex justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>
@@ -67,8 +67,8 @@ export default function EditorialPrinciplesPage() {
           </p>
         </div>
 
-        <div className="mt-8 space-y-4">
-          <section className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm">
+        <div className="mt-8">
+          <section>
             <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Source-Based Entries
             </h3>
@@ -80,14 +80,17 @@ export default function EditorialPrinciplesPage() {
               interpretation. A selection of the books, podcasts, reference
               works, and other resources that have been especially important to
               the project is collected on the{" "}
-              <Link href="/sources" className="underline hover:no-underline">
+              <Link
+                href="/sources"
+                className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+              >
                 Sources page
               </Link>
               .
             </p>
           </section>
 
-          <section className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm">
+          <section className="mt-8 border-t border-stone-200 pt-6">
             <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Date Precision
             </h3>
@@ -149,7 +152,7 @@ export default function EditorialPrinciplesPage() {
             </div>
           </section>
 
-          <section className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm">
+          <section className="mt-8 border-t border-stone-200 pt-6">
             <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Uncertainty Is Part of the Story
             </h3>
@@ -163,7 +166,7 @@ export default function EditorialPrinciplesPage() {
             </p>
           </section>
 
-          <section className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm">
+          <section className="mt-8 border-t border-stone-200 pt-6">
             <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               AI Assistance
             </h3>
@@ -203,7 +206,7 @@ export default function EditorialPrinciplesPage() {
             </div>
           </section>
 
-          <section className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm">
+          <section className="mt-8 border-t border-stone-200 pt-6">
             <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Corrections and Open Questions
             </h3>
@@ -212,11 +215,17 @@ export default function EditorialPrinciplesPage() {
               Mistakes can happen. If you find one, please let me know. If you
               can resolve an open research question, you can submit your
               finding through the{" "}
-              <Link href="/submit" className="underline hover:no-underline">
+              <Link
+                href="/submit"
+                className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+              >
                 Submission page
               </Link>
               . Current unresolved questions are collected on the{" "}
-              <Link href="/challenges" className="underline hover:no-underline">
+              <Link
+                href="/challenges"
+                className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+              >
                 Open Challenges page
               </Link>
               .
@@ -225,7 +234,10 @@ export default function EditorialPrinciplesPage() {
         </div>
 
         <div className="mt-8 pt-4 text-sm text-gray-600">
-          <Link href="/" className="underline hover:no-underline">
+          <Link
+            href="/"
+            className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+          >
             ← Back to the Beer History Timeline
           </Link>
         </div>

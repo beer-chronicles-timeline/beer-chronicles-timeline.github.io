@@ -69,7 +69,7 @@ export default function HeaderMenu() {
         ref={buttonRef}
         type="button"
         onClick={toggle}
-        className="inline-flex flex-col justify-center items-center w-10 h-10 rounded-full border bg-white shadow-sm hover:bg-gray-50 transition"
+        className="inline-flex h-11 w-11 flex-col items-center justify-center rounded-full border bg-white shadow-sm transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
         aria-label="Open menu"
         aria-expanded={open}
         aria-haspopup="menu"
@@ -103,7 +103,7 @@ export default function HeaderMenu() {
               href="/"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Timeline
             </Link>
@@ -112,7 +112,7 @@ export default function HeaderMenu() {
               href="/storylines"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Storylines
             </Link>
@@ -121,7 +121,7 @@ export default function HeaderMenu() {
               href="/about"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               About
             </Link>
@@ -130,7 +130,7 @@ export default function HeaderMenu() {
               href="/tastings"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Tastings
             </Link>
@@ -139,7 +139,7 @@ export default function HeaderMenu() {
               href="/editorial-principles"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Editorial Principles
             </Link>
@@ -148,7 +148,7 @@ export default function HeaderMenu() {
               href="/sources"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Sources
             </Link>
@@ -157,7 +157,7 @@ export default function HeaderMenu() {
               href="/challenges"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Open Challenges
             </Link>
@@ -166,7 +166,7 @@ export default function HeaderMenu() {
               href="/submit"
               role="menuitem"
               onClick={close}
-              className="block px-4 py-2 hover:bg-gray-50 focus:bg-gray-100 focus:outline-none"
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Submit an Entry
             </Link>

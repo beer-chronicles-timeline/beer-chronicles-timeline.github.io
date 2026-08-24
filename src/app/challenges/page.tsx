@@ -37,17 +37,17 @@ export default function ChallengesPage() {
         </div>
 
         {/* Desktop layout: centered title with menu on right */}
-        <div className="hidden md:flex md:flex-row md:items-center md:justify-between">
-          <div className="w-1/3" />
-          <div className="w-1/3 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif whitespace-nowrap">
+        <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <div />
+          <div className="text-center">
+            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">BEER CHRONICLES</Link>
             </h1>
             <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
             </h2>
           </div>
-          <div className="w-1/3 flex justify-end">
+          <div className="flex min-w-0 justify-end">
             <HeaderMenu />
           </div>
         </div>
@@ -75,7 +75,10 @@ export default function ChallengesPage() {
 
           <p>
             If you can resolve one of these questions with reliable sources, please{" "}
-            <Link href="/submit" className="underline hover:no-underline">
+            <Link
+              href="/submit"
+              className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
               submit your finding here
             </Link>
             . Every resolved open research question will be awarded with a free beer of my choice, given to the submitting person if I accept the resolving entry.
@@ -88,7 +91,7 @@ export default function ChallengesPage() {
               key={`${challenge.title}-${challenge.question}`}
               className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm"
             >
-              <div className="text-sm text-stone-500 mb-1">
+              <div className="mb-1 text-xs font-medium uppercase tracking-wide text-stone-500">
                 Challenge #{index + 1}
               </div>
 
@@ -96,7 +99,7 @@ export default function ChallengesPage() {
                 {challenge.title}
               </h3>
 
-              <p className="mt-2 text-stone-800 font-medium">
+              <p className="mt-2 font-serif text-base font-semibold leading-snug text-stone-800">
                 {challenge.question}
               </p>
 
@@ -107,7 +110,7 @@ export default function ChallengesPage() {
               <div className="mt-4">
                 <Link
                   href="/submit"
-                  className="inline-flex items-center rounded-full bg-stone-800 px-4 py-2 text-sm font-medium text-white hover:bg-stone-900 transition"
+                  className="inline-flex min-h-10 items-center rounded-md bg-stone-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
                 >
                   Submit a Resolution
                 </Link>
@@ -117,7 +120,10 @@ export default function ChallengesPage() {
         </div>
 
         <div className="mt-8 pt-4 text-sm text-gray-600">
-          <Link href="/" className="underline hover:no-underline">
+          <Link
+            href="/"
+            className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+          >
             ← Back to the Beer History Timeline
           </Link>
         </div>

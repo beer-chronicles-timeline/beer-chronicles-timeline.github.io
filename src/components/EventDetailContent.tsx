@@ -32,6 +32,7 @@ export default function EventDetailContent({
 
   const storylines = getStorylinesForEvent(event);
   const Title = titleAs;
+  const isPermanentPage = titleAs === "h1";
 
   return (
     <div>
@@ -40,7 +41,11 @@ export default function EventDetailContent({
           {formatEventDate(event)}
         </p>
 
-        <Title className="font-serif text-2xl font-semibold leading-tight text-stone-900">
+        <Title
+          className={`font-serif text-2xl font-semibold leading-tight text-stone-900 ${
+            isPermanentPage ? "break-words md:text-3xl" : ""
+          }`}
+        >
           {event.title}
         </Title>
 
@@ -54,133 +59,179 @@ export default function EventDetailContent({
       </div>
 
       {event.description && (
-        <p className="mt-5 whitespace-pre-line font-sans leading-6 text-gray-700">
+        <p
+          className={`mt-5 whitespace-pre-line font-sans leading-6 text-gray-700 ${
+            isPermanentPage ? "md:leading-7" : ""
+          }`}
+        >
           {event.description}
         </p>
       )}
 
-      {storylines.length > 0 && (
-        <section
-          aria-labelledby={`event-storylines-${event.id}`}
-          className="mt-6 border-t border-stone-200 pt-5"
+      {(storylines.length > 0 || (event.tags ?? []).length > 0) && (
+        <div
+          className={
+            isPermanentPage
+              ? "mt-6 border-t border-stone-200 pt-5"
+              : "contents"
+          }
         >
-          <h3
-            id={`event-storylines-${event.id}`}
-            className="text-sm font-semibold text-stone-800"
-          >
-            Explore the Storylines
-          </h3>
-
-          <div className="mt-3 flex flex-wrap gap-2">
-            {storylines.map((storyline) => (
-              <Link
-                key={storyline.slug}
-                href={getStorylineHref(storyline)}
-                className="rounded-full border border-stone-300 bg-stone-50 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:border-stone-400 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
-              >
-                {storyline.title}
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {(event.tags ?? []).length > 0 && (
-        <section
-          aria-labelledby={`event-tags-${event.id}`}
-          className="mt-6 border-t border-stone-200 pt-5"
-        >
-          <h3
-            id={`event-tags-${event.id}`}
-            className="text-sm font-semibold text-stone-800"
-          >
-            Tags
-          </h3>
-
-          <div className="mt-3 flex flex-wrap gap-2">
-            {(event.tags ?? []).map((tag) => (
-              <Link
-                key={tag.id}
-                href={`/?tags=${encodeURIComponent(tag.name)}`}
-                className="rounded-full bg-stone-100 px-3 py-1.5 text-xs font-medium text-stone-600 transition hover:bg-stone-200 hover:text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
-              >
-                {tag.name}
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {rawSourceLines.length > 0 && (
-        <section
-          aria-labelledby={`event-sources-${event.id}`}
-          className="mt-6 border-t border-stone-200 pt-5"
-        >
-          <h3
-            id={`event-sources-${event.id}`}
-            className="text-sm font-semibold text-stone-800"
-          >
-            Sources
-          </h3>
-
-          <p className="mt-1 text-xs leading-5 text-stone-500">
-            These sources support the dating and historical claims in
-            this entry.
-          </p>
-
-          <ul className="mt-3 list-disc space-y-1.5 break-words pl-5 text-sm leading-6 text-stone-700">
-            {rawSourceLines.map((line, index) => {
-              const match = line.match(urlRegex);
-
-              if (!match) {
-                return <li key={`${line}-${index}`}>{line}</li>;
+          {storylines.length > 0 && (
+            <section
+              aria-labelledby={`event-storylines-${event.id}`}
+              className={
+                isPermanentPage
+                  ? ""
+                  : "mt-6 border-t border-stone-200 pt-5"
               }
+            >
+              <h3
+                id={`event-storylines-${event.id}`}
+                className="text-sm font-semibold text-stone-800"
+              >
+                Explore the Storylines
+              </h3>
 
-              const firstUrl = match[0];
-              const href = normalizeUrl(firstUrl);
-
-              return (
-                <li key={`${line}-${index}`}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline decoration-stone-300 underline-offset-2 transition hover:decoration-stone-700"
+              <div className="mt-3 flex flex-wrap gap-2">
+                {storylines.map((storyline) => (
+                  <Link
+                    key={storyline.slug}
+                    href={getStorylineHref(storyline)}
+                    className="rounded-full border border-stone-300 bg-stone-50 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:border-stone-400 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
                   >
-                    {firstUrl}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
+                    {storyline.title}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {(event.tags ?? []).length > 0 && (
+            <section
+              aria-labelledby={`event-tags-${event.id}`}
+              className={
+                isPermanentPage
+                  ? storylines.length > 0
+                    ? "mt-5"
+                    : ""
+                  : "mt-6 border-t border-stone-200 pt-5"
+              }
+            >
+              <h3
+                id={`event-tags-${event.id}`}
+                className="text-sm font-semibold text-stone-800"
+              >
+                Tags
+              </h3>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                {(event.tags ?? []).map((tag) => (
+                  <Link
+                    key={tag.id}
+                    href={`/?tags=${encodeURIComponent(tag.name)}`}
+                    className="rounded-full bg-stone-100 px-3 py-1.5 text-xs font-medium text-stone-600 transition hover:bg-stone-200 hover:text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
+                  >
+                    {tag.name}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
       )}
 
-      <div className="mt-6 border-t border-stone-200 pt-5">
-        {showPermanentLink && (
-          <div>
-            <Link
-              href={getEventPath(event.id, event.title)}
-              className="inline-flex items-center rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+      <div
+        className={
+          isPermanentPage
+            ? "mt-7 border-t border-stone-300 pt-5"
+            : "contents"
+        }
+      >
+        {rawSourceLines.length > 0 && (
+          <section
+            aria-labelledby={`event-sources-${event.id}`}
+            className={
+              isPermanentPage
+                ? ""
+                : "mt-6 border-t border-stone-200 pt-5"
+            }
+          >
+            <h3
+              id={`event-sources-${event.id}`}
+              className="text-sm font-semibold text-stone-800"
             >
-              Open full entry
-              <span className="ml-2" aria-hidden="true">
-                →
-              </span>
-            </Link>
-          </div>
+              Sources
+            </h3>
+
+            <p className="mt-1 text-xs leading-5 text-stone-500">
+              These sources support the dating and historical claims in
+              this entry.
+            </p>
+
+            <ul className="mt-3 list-disc space-y-1.5 break-words pl-5 text-sm leading-6 text-stone-700">
+              {rawSourceLines.map((line, index) => {
+                const match = line.match(urlRegex);
+
+                if (!match) {
+                  return <li key={`${line}-${index}`}>{line}</li>;
+                }
+
+                const firstUrl = match[0];
+                const href = normalizeUrl(firstUrl);
+
+                return (
+                  <li key={`${line}-${index}`}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-stone-300 underline-offset-2 transition hover:decoration-stone-700"
+                    >
+                      {firstUrl}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
         )}
 
-        <div className={showPermanentLink ? "mt-3" : ""}>
-          <Link
-            href={getCorrectionSubmissionPath(
-              event.id,
-              event.title
-            )}
-            className="inline-block py-1 text-sm text-stone-500 underline decoration-stone-300 underline-offset-2 transition hover:text-stone-700 hover:decoration-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
-          >
-            Suggest a correction or additional source
-          </Link>
+        <div
+          className={
+            isPermanentPage
+              ? rawSourceLines.length > 0
+                ? "mt-4"
+                : ""
+              : "mt-6 border-t border-stone-200 pt-5"
+          }
+        >
+          {showPermanentLink && (
+            <div>
+              <Link
+                href={getEventPath(event.id, event.title)}
+                className="inline-flex items-center rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+              >
+                Open full entry
+                <span className="ml-2" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            </div>
+          )}
+
+          <div className={showPermanentLink ? "mt-3" : ""}>
+            <Link
+              href={getCorrectionSubmissionPath(
+                event.id,
+                event.title
+              )}
+              className={`inline-block text-sm text-stone-500 underline decoration-stone-300 underline-offset-2 transition hover:text-stone-700 hover:decoration-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 ${
+                isPermanentPage ? "py-2" : "py-1"
+              }`}
+            >
+              Suggest a correction or additional source
+            </Link>
+          </div>
         </div>
       </div>
     </div>

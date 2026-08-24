@@ -40,11 +40,10 @@ export default function EventCard({ event, onClick }: EventCardProps) {
 
   return (
     <div
-      onClick={onClick}
-      className={`${cardClasses} rounded-lg p-3.5 max-w-sm w-full cursor-pointer transition-all duration-150 hover:scale-[1.02]`}
+      className={`${cardClasses} relative block max-w-sm w-full cursor-pointer rounded-lg p-3.5 text-left transition-all duration-150 hover:scale-[1.02]`}
     >
       <div className="flex items-start justify-between gap-2">
-        <p className="text-[13px] leading-snug text-gray-500">
+        <p className="text-xs font-medium leading-snug text-stone-500">
           {formatEventDate(event)}
         </p>
 
@@ -67,8 +66,8 @@ export default function EventCard({ event, onClick }: EventCardProps) {
         </div>
       )}
 
-      <div className="flex items-start justify-between gap-2 mt-1">
-        <h2 className="text-base leading-tight font-semibold font-serif text-stone-900 break-words hyphens-auto">
+      <div className="mt-1.5 flex items-start justify-between gap-2">
+        <h2 className="break-words font-serif text-[17px] font-semibold leading-tight text-stone-900 hyphens-auto md:text-lg">
           {event.title}
         </h2>
 
@@ -84,10 +83,17 @@ export default function EventCard({ event, onClick }: EventCardProps) {
       </div>
 
       {preview && (
-        <p className="text-[13px] leading-snug text-gray-600 mt-1 break-words hyphens-auto">
+        <p className="mt-2 break-words text-[13px] leading-relaxed text-gray-600 hyphens-auto">
           {preview}
         </p>
       )}
+
+      <button
+        type="button"
+        onClick={onClick}
+        aria-label={`Open event: ${event.title}`}
+        className="absolute inset-0 cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+      />
     </div>
   );
 }
