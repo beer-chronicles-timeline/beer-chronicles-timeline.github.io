@@ -111,6 +111,11 @@ Before presenting a candidate as final, verify:
 - chronology, spelling, branding, and website URL;
 - no invented facts, UI, or unnecessary tiny text.
 
+Whenever presenting an image for user inspection, include the exact clickable
+absolute path to that specific candidate. Repeat the path for every revised
+candidate so it is always unambiguous which image awaits review. A preview or
+inline rendering does not replace the path.
+
 ## Approval and image storage
 
 Do not save drafts or previews to a final approved path.
@@ -130,6 +135,14 @@ Create a human-readable filename in the established style:
 Examples: `British-Ale-Beyond-IPA.png`, `Kölsch.png`, `Measurement-and-Quality-Control.png`.
 
 If the target already exists, do not overwrite it. Tell the user and obtain explicit overwrite approval. After saving, verify that the written PNG is the exact approved image and that its file type, dimensions, and aspect ratio are correct.
+
+When a social post links to a tag-filtered timeline, display the URL in this
+human-readable form:
+
+`https://beer-chronicles.org/?tags=<tag1>%2C<tag2>&tagMode=any`
+
+Put `tags` before `tagMode`, keep the comma encoded as `%2C`, and preserve
+genuine Unicode letters in tag names instead of percent-encoding them.
 
 ## Instagram caption
 
