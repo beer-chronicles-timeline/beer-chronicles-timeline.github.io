@@ -50,3 +50,6 @@ supabase-backup/
 
 # Local Beer Chronicles audit reports
 /audits/
+
+# Temporary editorial SQL proposals
+/sql/*-proposal.sql
