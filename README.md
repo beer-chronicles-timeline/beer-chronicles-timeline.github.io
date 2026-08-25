@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Beer Chronicles
 
-## Getting Started
+[Beer Chronicles](https://beer-chronicles.org) is a curated, source-based interactive timeline and connected knowledge graph of beer history. It combines permanent historical event pages with chronological exploration, thematic Storylines, tags, related entries, source references, and editorial context.
 
-First, run the development server:
+The live website is the canonical view of currently published content.
+
+## Technology
+
+- Next.js 16 with the App Router
+- React 19 and TypeScript
+- Tailwind CSS
+- Supabase as the published-data source
+- Static export hosted on GitHub Pages
+
+## Repository structure
+
+- `src/app/` — routes, metadata, sitemap, and static-export endpoints
+- `src/components/` — timeline, filters, event cards, modals, and shared UI
+- `src/lib/` — data access, types, URL helpers, and Storyline/domain utilities
+- `tests/` — chronology and event-URL tests
+- `.agents/skills/` — task-specific Codex workflows
+- `AGENTS.md` — repository governance and editorial safeguards
+
+Generated build output is written to `out/` and is not committed.
+
+## Local development
+
+Use Node.js 20 and npm, matching the deployment workflow.
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application reads published timeline data from Supabase. A production build therefore requires network access and availability of the live data source. No private Supabase credentials are required for the current public read-only application setup.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Checks
 
-## Learn More
+```bash
+npm run lint
+node --test --experimental-strip-types tests/*.test.ts
+npm run build
+git diff --check
+```
 
-To learn more about Next.js, take a look at the following resources:
+`npm run build` creates the statically exported site in `out/`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which:
 
-## Deploy on Vercel
+1. installs dependencies with `npm ci`;
+2. builds the static export with `npm run build`;
+3. uploads `out/`; and
+4. deploys it to GitHub Pages.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Do not push solely to test a change: verify locally first because a push to `main` publishes the site.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Editorial and contribution safeguards
+
+Beer Chronicles is curated. Historical entries, dates, sources, tags, Storylines, and relationships require human editorial review. Automated tooling must not directly create, change, delete, or publish editorial records in Supabase.
+
+For complete repository rules and task routing, read [`AGENTS.md`](./AGENTS.md). Relevant reusable workflows are maintained under [`.agents/skills/`](./.agents/skills/).
