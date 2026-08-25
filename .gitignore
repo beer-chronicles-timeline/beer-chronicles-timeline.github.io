@@ -51,5 +51,8 @@ supabase-backup/
 # Local Beer Chronicles audit reports
 /audits/
 
+# Local post-review task prompts
+/next-actions-prompts-after-review/
+
 # Temporary editorial SQL proposals
 /sql/*-proposal.sql

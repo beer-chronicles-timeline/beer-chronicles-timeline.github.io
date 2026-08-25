@@ -103,6 +103,20 @@ Assign individual issues one severity, separate from dimension ratings:
 
 Include confidence when useful. Prioritize by impact and evidence, not cosmetic ease. Recommendations remain advisory.
 
+## Optional post-review task prompts
+
+The review itself remains read-only. Create or update repository files only when the user explicitly asks for post-review handoff prompts or similar artifacts.
+
+When requested, turn the selected recommendations into separate, self-contained Markdown task prompts in the user-specified location. Each prompt should:
+
+- route the future task to the appropriate project skill;
+- preserve the finding's evidence, scope, and uncertainty without presenting unverified assumptions as facts;
+- define concrete requirements, exclusions, and proportionate verification;
+- restate relevant repository safeguards, including no editorial-data mutation and no commit, push, or deployment unless separately authorized;
+- be usable in a fresh conversation without depending on the original review report.
+
+Generating handoff prompts does not authorize implementing their recommendations. After creating them, stop unless the user separately requests implementation.
+
 ## Report structure
 
 For every review, provide:
