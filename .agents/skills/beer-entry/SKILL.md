@@ -118,6 +118,16 @@ The proposal must:
 
 Do not bundle unrelated corrections or related-entry opportunities into the transaction without explicit user scope.
 
+### Local SQL proposal file
+
+Whenever SQL is produced, also save the complete proposal in the repository at `sql/<descriptive-name>-proposal.sql`.
+
+- Use a concise, lowercase, hyphenated name that identifies the entry or update.
+- Put `-- UNEXECUTED SQL PROPOSAL — HUMAN REVIEW AND MANUAL EXECUTION REQUIRED` at the top of the file.
+- Include the transaction and read-only verification queries in the saved file, not only in the response.
+- Never execute the saved SQL.
+- Report the file path in the final response.
+
 ## Self-check and output
 
 Before answering, verify:
