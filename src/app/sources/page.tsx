@@ -1,8 +1,34 @@
 // app/sources/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Beer History Sources | Beer Chronicles",
+  description:
+    "Explore the source families, featured works, and acknowledgments behind Beer Chronicles, with direct evidence listed in each timeline entry.",
+  alternates: {
+    canonical: "/sources",
+  },
+  openGraph: {
+    title: "Beer History Sources | Beer Chronicles",
+    description:
+      "Explore the source families, featured works, and acknowledgments behind Beer Chronicles.",
+    url: "/sources",
+    siteName: "Beer Chronicles",
+    type: "website",
+    images: [
+      {
+        url: "/images/beer-chronicles-social.png",
+        width: 1731,
+        height: 909,
+        alt: "Beer Chronicles — A Timeline of Beer History",
+      },
+    ],
+  },
+};
 
 export default function SourcesPage() {
   const sourceFamilies = [

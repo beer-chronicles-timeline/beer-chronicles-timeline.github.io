@@ -1,7 +1,33 @@
 // app/challenges/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Open Research Challenges | Beer Chronicles",
+  description:
+    "Explore unresolved beer history questions where Beer Chronicles needs stronger evidence before an entry can be added or corrected.",
+  alternates: {
+    canonical: "/challenges",
+  },
+  openGraph: {
+    title: "Open Research Challenges | Beer Chronicles",
+    description:
+      "Explore unresolved beer history questions where Beer Chronicles needs stronger evidence.",
+    url: "/challenges",
+    siteName: "Beer Chronicles",
+    type: "website",
+    images: [
+      {
+        url: "/images/beer-chronicles-social.png",
+        width: 1731,
+        height: 909,
+        alt: "Beer Chronicles — A Timeline of Beer History",
+      },
+    ],
+  },
+};
 
 export default function ChallengesPage() {
   const challenges = [

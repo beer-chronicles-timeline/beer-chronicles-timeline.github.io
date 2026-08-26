@@ -2,14 +2,21 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
 import type { Tag } from "@/lib/types";
 import type { TagFilterMode } from "./timelineFiltering";
 
 // Import the actual TimelineFilters component with SSR disabled
 const TimelineFilters = dynamic(
   () => import("./TimelineFilters").then((mod) => mod.TimelineFilters),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="h-80 animate-pulse rounded-lg bg-stone-100 motion-reduce:animate-none md:h-40"
+        aria-hidden="true"
+      />
+    ),
+  }
 );
 
 type TimelineFiltersWrapperProps = {
@@ -38,9 +45,5 @@ type TimelineFiltersWrapperProps = {
 export function TimelineFiltersWrapper(
   props: TimelineFiltersWrapperProps
 ) {
-  return (
-    <Suspense fallback={<div className="h-20" />}>
-      <TimelineFilters {...props} />
-    </Suspense>
-  );
+  return <TimelineFilters {...props} />;
 }

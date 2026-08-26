@@ -1,7 +1,33 @@
 // app/tastings/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Beer Tastings with History | Beer Chronicles",
+  description:
+    "Discover tailored beer tastings that combine selected beers, guided sensory analysis, brewing context, and a journey through beer history.",
+  alternates: {
+    canonical: "/tastings",
+  },
+  openGraph: {
+    title: "Beer Tastings with History | Beer Chronicles",
+    description:
+      "Discover tailored beer tastings combining sensory analysis, brewing context, and a journey through beer history.",
+    url: "/tastings",
+    siteName: "Beer Chronicles",
+    type: "website",
+    images: [
+      {
+        url: "/images/beer-chronicles-social.png",
+        width: 1731,
+        height: 909,
+        alt: "Beer Chronicles — A Timeline of Beer History",
+      },
+    ],
+  },
+};
 
 export default function TastingsPage() {
   const tastingElements = [

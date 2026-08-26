@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import TimelineDataLoader from "@/components/TimelineDataLoader";
+import TimelineLoadingState from "@/components/TimelineLoadingState";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -91,7 +92,7 @@ export default function Home() {
         </Link>
       </section>
 
-      <Suspense fallback={<div className="h-20" />}>
+      <Suspense fallback={<TimelineLoadingState />}>
         <TimelineDataLoader />
       </Suspense>
 
