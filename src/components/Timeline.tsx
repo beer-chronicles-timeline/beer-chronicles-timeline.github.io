@@ -35,6 +35,70 @@ type TimelineProps = {
   maxYear: number;
 };
 
+const SEARCH_DEBOUNCE_MS = 250;
+
+type TimelineSearchProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+function TimelineSearch({ value, onChange }: TimelineSearchProps) {
+  const [edit, setEdit] = useState({
+    baseValue: value,
+    draftValue: value,
+  });
+  const draftValue =
+    edit.baseValue === value ? edit.draftValue : value;
+
+  useEffect(() => {
+    if (draftValue === value) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      onChange(draftValue);
+    }, SEARCH_DEBOUNCE_MS);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [draftValue, value, onChange]);
+
+  const clearSearch = () => {
+    setEdit({ baseValue: value, draftValue: "" });
+    onChange("");
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        aria-label="Search timeline"
+        placeholder="Search..."
+        value={draftValue}
+        onChange={(event) =>
+          setEdit({
+            baseValue: value,
+            draftValue: event.target.value,
+          })
+        }
+        className="h-10 w-36 rounded-full border border-gray-300 bg-white px-3 py-1 pr-10 text-sm text-stone-700 outline-none placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-stone-500"
+      />
+
+      {draftValue && (
+        <button
+          type="button"
+          onClick={clearSearch}
+          className="absolute right-1 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-xs text-gray-400 hover:bg-stone-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+          aria-label="Clear search"
+        >
+          ✕
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function Timeline({
   events,
   allTags,
@@ -90,7 +154,7 @@ export default function Timeline({
     const newUrl = queryString ? `/?${queryString}` : "/";
 
     if (newUrl !== currentUrl) {
-      router.push(newUrl, { scroll: false });
+      router.replace(newUrl, { scroll: false });
     }
   }, [searchQuery, router]);
 
@@ -351,27 +415,10 @@ export default function Timeline({
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(event) =>
-                  setSearchQuery(event.target.value)
-                }
-                className="h-10 w-36 rounded-full border border-gray-300 bg-white px-3 py-1 pr-10 text-sm text-stone-700 outline-none placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-stone-500"
-              />
-
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-1 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-xs text-gray-400 hover:bg-stone-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
-                  aria-label="Clear search"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
+            <TimelineSearch
+              value={searchQuery}
+              onChange={setSearchQuery}
+            />
 
             <button
               onClick={toggleOrder}
