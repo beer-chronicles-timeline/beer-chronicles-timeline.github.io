@@ -17,6 +17,7 @@ import {
   STORYLINES,
   STORYLINE_SECTIONS,
   getStorylineHref,
+  getStorylineTimelineHref,
   getStorylinesForSection,
   type Storyline,
 } from "@/lib/storylines";
@@ -280,13 +281,23 @@ function StorylineCard({
         )}
       </div>
 
-      <Link
-        href={href}
-        className="mt-5 inline-flex min-h-10 self-start items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
-      >
-        <span>Explore storyline</span>
-        <span aria-hidden="true">→</span>
-      </Link>
+      <div className="mt-5 flex flex-wrap gap-2">
+        <Link
+          href={href}
+          className="inline-flex min-h-10 items-center gap-2 rounded-full border border-stone-300 bg-stone-50 px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-stone-400 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+        >
+          <span>View Storyline</span>
+          <span aria-hidden="true">→</span>
+        </Link>
+
+        <Link
+          href={getStorylineTimelineHref(storyline)}
+          className="inline-flex min-h-10 items-center gap-2 rounded-full border border-stone-300 bg-stone-50 px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-stone-400 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+        >
+          <span>Explore on Timeline</span>
+          <span aria-hidden="true">→</span>
+        </Link>
+      </div>
     </article>
   );
 }

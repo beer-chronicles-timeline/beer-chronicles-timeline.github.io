@@ -1,11 +1,14 @@
 // lib/eventStorylines.ts
 
-import { getEventTimelineYear } from "@/components/timelineUtils";
-import type { TimelineEvent } from "@/lib/types";
+import {
+  compareEventsChronologicallyAscending,
+  getEventTimelineYear,
+} from "../components/timelineUtils.ts";
+import type { TimelineEvent } from "./types.ts";
 import {
   STORYLINES,
   type Storyline,
-} from "@/lib/storylines";
+} from "./storylines.ts";
 
 function isEventInsideStorylineDateRange(
   event: TimelineEvent,
@@ -63,4 +66,13 @@ export function getStorylinesForEvent(
   return STORYLINES.filter((storyline) =>
     doesEventMatchStoryline(event, storyline)
   );
+}
+
+export function getEventsForStoryline(
+  events: TimelineEvent[],
+  storyline: Storyline
+): TimelineEvent[] {
+  return events
+    .filter((event) => doesEventMatchStoryline(event, storyline))
+    .sort(compareEventsChronologicallyAscending);
 }

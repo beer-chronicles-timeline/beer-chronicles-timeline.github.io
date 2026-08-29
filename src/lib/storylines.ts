@@ -419,7 +419,23 @@ export const STORYLINES: Storyline[] = [
   },
 ];
 
+const BASE_URL = "https://beer-chronicles.org";
+
+export function getStorylinePath(storyline: Storyline): string {
+  return `/storylines/${storyline.slug}`;
+}
+
+export function getStorylineUrl(storyline: Storyline): string {
+  return new URL(getStorylinePath(storyline), BASE_URL).toString();
+}
+
 export function getStorylineHref(storyline: Storyline): string {
+  return getStorylinePath(storyline);
+}
+
+export function getStorylineTimelineHref(
+  storyline: Storyline
+): string {
   const params = new URLSearchParams();
 
   params.set("tags", storyline.tagNames.join(","));
@@ -440,6 +456,26 @@ export function getStorylineHref(storyline: Storyline): string {
   }
 
   return `/?${params.toString()}`;
+}
+
+export function getStorylineBySlug(
+  slug: string
+): Storyline | undefined {
+  return STORYLINES.find((storyline) => storyline.slug === slug);
+}
+
+export function getStorylineStaticParams(): { slug: string }[] {
+  return STORYLINES.map((storyline) => ({
+    slug: storyline.slug,
+  }));
+}
+
+export function getStorylineSitemapUrls(): string[] {
+  return STORYLINES.map(getStorylineUrl);
+}
+
+export function getStorylinePageTitle(storyline: Storyline): string {
+  return `${storyline.title}: A Beer History Storyline | Beer Chronicles`;
 }
 
 export function getStorylinesForSection(
