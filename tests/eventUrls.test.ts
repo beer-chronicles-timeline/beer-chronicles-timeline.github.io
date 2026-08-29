@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   getCorrectionSubmissionPath,
   getEventPath,
+  getEventUrl,
 } from "../src/lib/eventUrls.ts";
 
 test("builds correction submission context with the canonical event URL", () => {
@@ -24,5 +25,12 @@ test("preserves existing event path behavior", () => {
   assert.equal(
     getEventPath("event/id", "Bräu’s Beer & Brewing: 1842!"),
     "/events/event%2Fid/braus-beer-and-brewing-1842"
+  );
+});
+
+test("builds the permanent absolute event URL without query or fragment data", () => {
+  assert.equal(
+    getEventUrl("event/id", "Bräu’s Beer & Brewing: 1842!"),
+    "https://beer-chronicles.org/events/event%2Fid/braus-beer-and-brewing-1842"
   );
 });

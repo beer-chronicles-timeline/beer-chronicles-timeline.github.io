@@ -1,10 +1,12 @@
 // components/EventDetailContent.tsx
 
 import Link from "next/link";
+import EventShareButton from "@/components/EventShareButton";
 import type { TimelineEvent } from "@/lib/types";
 import {
   getCorrectionSubmissionPath,
   getEventPath,
+  getEventUrl,
 } from "@/lib/eventUrls";
 import { getStorylinesForEvent } from "@/lib/eventStorylines";
 import { getStorylineHref } from "@/lib/storylines";
@@ -232,6 +234,15 @@ export default function EventDetailContent({
               Suggest a correction or additional source
             </Link>
           </div>
+
+          {isPermanentPage && (
+            <div className="mt-3">
+              <EventShareButton
+                title={event.title}
+                canonicalUrl={getEventUrl(event.id, event.title)}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
