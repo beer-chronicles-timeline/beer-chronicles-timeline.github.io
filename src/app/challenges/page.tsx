@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "Open Research Challenges | Beer Chronicles",
@@ -27,6 +28,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: getTwitterMetadata(
+    "Open Research Challenges | Beer Chronicles",
+    "Explore unresolved beer history questions where Beer Chronicles needs stronger evidence."
+  ),
 };
 
 export default function ChallengesPage() {

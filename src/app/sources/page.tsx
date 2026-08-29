@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "Beer History Sources | Beer Chronicles",
@@ -28,6 +29,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: getTwitterMetadata(
+    "Beer History Sources | Beer Chronicles",
+    "Explore the source families, featured works, and acknowledgments behind Beer Chronicles."
+  ),
 };
 
 export default function SourcesPage() {

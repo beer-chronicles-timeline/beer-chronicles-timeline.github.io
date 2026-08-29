@@ -12,6 +12,7 @@ import {
 import { getEventPath } from "@/lib/eventUrls";
 import { supabase } from "@/lib/supabaseClient";
 import type { TimelineEvent } from "@/lib/types";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 import {
   STORYLINES,
   STORYLINE_SECTIONS,
@@ -34,6 +35,10 @@ export const metadata: Metadata = {
     url: "/storylines",
     type: "website",
   },
+  twitter: getTwitterMetadata(
+    "Beer History Storylines | Beer Chronicles",
+    "Explore connected stories across thousands of years of beer history."
+  ),
 };
 
 type EventTagRow = {

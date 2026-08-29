@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "Imprint | Beer Chronicles",
@@ -27,6 +28,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: getTwitterMetadata(
+    "Imprint | Beer Chronicles",
+    "Legal notice, contact information, and disclosures for Beer Chronicles."
+  ),
 };
 
 export default function ImprintPage() {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "About Beer Chronicles | Beer Chronicles",
@@ -28,6 +29,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: getTwitterMetadata(
+    "About Beer Chronicles | Beer Chronicles",
+    "Learn about Beer Chronicles, Martin Schmidt, and how the interactive, filterable beer history timeline began."
+  ),
 };
 
 export default function AboutPage() {

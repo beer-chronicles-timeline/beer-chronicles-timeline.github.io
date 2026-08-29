@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "Editorial Principles | Beer Chronicles",
@@ -27,6 +28,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: getTwitterMetadata(
+    "Editorial Principles | Beer Chronicles",
+    "Read how Beer Chronicles approaches sources, date precision, uncertainty, AI assistance, and human editorial control."
+  ),
 };
 
 export default function EditorialPrinciplesPage() {

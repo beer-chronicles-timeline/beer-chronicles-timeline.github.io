@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "Submit a Beer History Entry | Beer Chronicles",
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: getTwitterMetadata(
+    "Submit a Beer History Entry | Beer Chronicles",
+    "Submit a beer history event, correction, or additional source for review by Beer Chronicles."
+  ),
 };
 
 export default function SubmitLayout({

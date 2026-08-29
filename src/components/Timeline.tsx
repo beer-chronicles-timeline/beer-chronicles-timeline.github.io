@@ -12,15 +12,19 @@ import {
   useRouter,
   useSearchParams,
 } from "next/navigation";
+import dynamic from "next/dynamic";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import EventCard from "./EventCard";
-import TimelineModal from "./TimelineModal";
 import {
   filterTimelineEvents,
   type TagFilterMode,
 } from "./timelineFiltering";
 import { getRelatedEvents } from "./timelineUtils";
 import type { TimelineEvent, Tag } from "@/lib/types";
+
+const TimelineModal = dynamic(() => import("./TimelineModal"), {
+  ssr: false,
+});
 
 type TimelineProps = {
   events: TimelineEvent[];
@@ -423,7 +427,9 @@ export default function Timeline({
             <button
               onClick={toggleOrder}
               className="flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700 transition hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
-              aria-label="Toggle timeline order"
+              aria-label={
+                isOldestFirst ? "Oldest first" : "Newest first"
+              }
             >
               <span>{isOldestFirst ? "↑" : "↓"}</span>
               <span>

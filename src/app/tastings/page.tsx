@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
+import { getTwitterMetadata } from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "Beer Tastings with History | Beer Chronicles",
@@ -27,6 +28,10 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: getTwitterMetadata(
+    "Beer Tastings with History | Beer Chronicles",
+    "Discover tailored beer tastings combining sensory analysis, brewing context, and a journey through beer history."
+  ),
 };
 
 export default function TastingsPage() {
