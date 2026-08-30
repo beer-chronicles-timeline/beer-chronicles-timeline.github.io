@@ -263,7 +263,7 @@ export const STORYLINES: Storyline[] = [
   {
     slug: "belgian-beer-beyond-trappists-and-lambic",
     sectionId: "styles-and-traditions",
-    title: "Belgian Beer Beyond Trappists and Lambic",
+    title: "Belgian Beer: Trappists, Lambic, and Beyond",
     description:
       "Discover saison, witbier, strong golden ale, Spéciale Belge, influential secular breweries, and Belgium’s wider culture of beer diversity.",
     tagNames: ["Belgium"],
