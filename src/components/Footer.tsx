@@ -48,6 +48,10 @@ export default function Footer() {
         <Link href="/imprint" className={linkClassName}>
           Imprint
         </Link>
+
+        <Link href="/privacy" className={linkClassName}>
+          Privacy
+        </Link>
       </nav>
 
       <div className="mt-3">
