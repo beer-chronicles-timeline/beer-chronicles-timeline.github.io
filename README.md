@@ -75,8 +75,11 @@ Do not push solely to test a change: verify locally first because a push to `mai
 The separate `.github/workflows/source-link-audit.yml` workflow runs on the
 first day of every month and can also be started manually. It checks the public
 timeline without Supabase credentials and uploads its reports as a workflow
-artifact retained for 90 days. It is independent of deployment and never
-changes or removes a citation.
+artifact retained for 90 days. When definite `404` or `410` responses are
+present, it creates or updates one GitHub issue; a later clean run closes that
+issue. Other response categories remain in the report only. The notification
+step is non-blocking, the audit is independent of deployment, and neither can
+change or remove a citation or interrupt the live website.
 
 ## Editorial and contribution safeguards
 

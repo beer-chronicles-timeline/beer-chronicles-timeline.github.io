@@ -3,7 +3,29 @@ export type SourceCitation = {
   urls: string[];
 };
 
-const sourceUrlRegex = /\b(?:https?:\/\/[^\s<>)]+|www\.[^\s<>)]+)/gi;
+const sourceUrlRegex = /\b(?:https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)/gi;
+const trailingUrlPunctuationRegex = /[.,;:!?]+$/;
+
+function trimTrailingUrlPunctuation(candidate: string): string {
+  let url = candidate.replace(trailingUrlPunctuationRegex, "");
+
+  while (url.endsWith(")")) {
+    const openingParentheses = [...url].filter(
+      (character) => character === "("
+    ).length;
+    const closingParentheses = [...url].filter(
+      (character) => character === ")"
+    ).length;
+
+    if (closingParentheses <= openingParentheses) {
+      break;
+    }
+
+    url = url.slice(0, -1).replace(trailingUrlPunctuationRegex, "");
+  }
+
+  return url;
+}
 
 type LegacyStructuredSource = {
   title: string;
@@ -62,8 +84,8 @@ function parseSourceParagraph(paragraph: string): SourceCitation[] {
     .map((line) => line.trim())
     .filter(Boolean)
     .forEach((line) => {
-      const urls = [...line.matchAll(sourceUrlRegex)].map(
-        (match) => match[0]
+      const urls = [...line.matchAll(sourceUrlRegex)].map((match) =>
+        trimTrailingUrlPunctuation(match[0])
       );
       const text = line.replace(sourceUrlRegex, "").trim();
 

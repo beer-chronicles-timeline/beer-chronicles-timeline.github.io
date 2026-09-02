@@ -48,6 +48,31 @@ test("removes a complete inline URL from the displayed citation text", () => {
   );
 });
 
+test("preserves balanced parentheses at the end of source URLs", () => {
+  assert.deepEqual(
+    parseSourceCitations(
+      "Wikipedia. La Trappe.\nhttps://de.wikipedia.org/wiki/La_Trappe_(Biermarke)\n\nWikipedia. Löwenbrauerei.\nhttps://de.wikipedia.org/wiki/Löwenbrauerei_(Trier)"
+    ),
+    [
+      {
+        text: ["Wikipedia. La Trappe."],
+        urls: ["https://de.wikipedia.org/wiki/La_Trappe_(Biermarke)"],
+      },
+      {
+        text: ["Wikipedia. Löwenbrauerei."],
+        urls: ["https://de.wikipedia.org/wiki/Löwenbrauerei_(Trier)"],
+      },
+    ]
+  );
+});
+
+test("removes unmatched closing parentheses and sentence punctuation", () => {
+  assert.deepEqual(
+    parseSourceCitations("https://example.com/article)."),
+    [{ text: [], urls: ["https://example.com/article"] }]
+  );
+});
+
 test("parses the legacy serialized source array into separate citations", () => {
   assert.deepEqual(
     parseSourceCitations(
