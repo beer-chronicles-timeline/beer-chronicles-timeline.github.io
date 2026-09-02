@@ -7,6 +7,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import HomepageStructuredData from "@/components/HomepageStructuredData";
+import MainContentStart from "@/components/MainContentStart";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import type { TimelineEvent } from "@/lib/types";
 
@@ -39,7 +40,7 @@ export default async function Home() {
   const previewEvents = getTimelinePreviewEvents(events);
 
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+    <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <HomepageStructuredData previewEvents={previewEvents} />
 
       <h1 className="sr-only">
@@ -92,6 +93,8 @@ export default async function Home() {
           </p>
         </div>
       </header>
+
+      <MainContentStart />
 
       <section
         aria-labelledby="storylines-promo-heading"

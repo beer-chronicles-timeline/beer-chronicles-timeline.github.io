@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
+import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import {
@@ -364,7 +365,7 @@ export default async function StorylinesPage() {
 
   return (
     <main
-      id="main-content"
+      id="storylines-top"
       tabIndex={-1}
       className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col"
     >
@@ -411,6 +412,8 @@ export default async function StorylinesPage() {
           </p>
         </div>
       </header>
+
+      <MainContentStart />
 
       <section className="max-w-4xl mx-auto w-full">
         <div aria-labelledby="storylines-heading">
@@ -517,7 +520,7 @@ export default async function StorylinesPage() {
 
                   <div className="mt-6 flex justify-end">
                     <a
-                      href="#main-content"
+                      href="#storylines-top"
                       className="text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900"
                     >
                       Back to top ↑

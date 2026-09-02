@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
+import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import { getTwitterMetadata } from "@/lib/siteMetadata";
 
@@ -53,7 +54,7 @@ export default function TastingsPage() {
   ];
 
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+    <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <header className="mb-8">
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
@@ -95,6 +96,8 @@ export default function TastingsPage() {
           </p>
         </div>
       </header>
+
+      <MainContentStart />
 
       <section className="max-w-4xl mx-auto w-full">
         <div className="mb-10">

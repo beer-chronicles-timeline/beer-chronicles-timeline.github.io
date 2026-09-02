@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import HeaderMenu from "@/components/HeaderMenu";
+import MainContentStart from "@/components/MainContentStart";
 import ScrollToTop from "@/components/ScrollToTop";
 import StorylineStructuredData from "@/components/StorylineStructuredData";
 import { formatEventDate } from "@/components/timelineUtils";
@@ -70,7 +71,7 @@ export default async function StorylinePage({
   const { storyline, events } = pageData;
 
   return (
-    <main id="main-content" tabIndex={-1} className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10">
+    <main className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10">
       <StorylineStructuredData storyline={storyline} />
 
       <header className="mb-8">
@@ -111,6 +112,8 @@ export default async function StorylinePage({
           </p>
         </div>
       </header>
+
+      <MainContentStart />
 
       <article className="mx-auto w-full max-w-3xl">
         <header className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">

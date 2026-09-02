@@ -7,6 +7,7 @@ import EventDetailContent from "@/components/EventDetailContent";
 import EventStructuredData from "@/components/EventStructuredData";
 import Footer from "@/components/Footer";
 import HeaderMenu from "@/components/HeaderMenu";
+import MainContentStart from "@/components/MainContentStart";
 import RelatedEventLinks from "@/components/RelatedEventLinks";
 import ScrollToTop from "@/components/ScrollToTop";
 import {
@@ -138,7 +139,7 @@ export default async function EventPage({
   ).toString();
 
   return (
-    <main id="main-content" tabIndex={-1} className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10">
+    <main className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10">
       <EventStructuredData
         event={event}
         socialImageUrl={absoluteSocialImageUrl}
@@ -187,6 +188,8 @@ export default async function EventPage({
           </p>
         </div>
       </header>
+
+      <MainContentStart />
 
       <div className="mx-auto w-full max-w-3xl">
         <article className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">
