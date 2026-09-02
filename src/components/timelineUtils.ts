@@ -1,5 +1,6 @@
 // components/timelineUtils.ts
 import type { TimelineEvent } from "@/lib/types";
+import { STORYLINES } from "@/lib/storylines";
 
 export const urlRegex = /\b(https?:\/\/[^\s)]+|www\.[^\s)]+)\b/gi;
 
@@ -324,18 +325,56 @@ export function getRelatedEvents(
   currentEvent: TimelineEvent,
   events: TimelineEvent[]
 ) {
+  const genericRelationshipTags = new Set([
+    "Breweries",
+    "Community",
+    "Events",
+    "Laws",
+    "People",
+    "Science",
+    "Styles",
+  ]);
   const currentTagIds = new Set(
-    (currentEvent.tags ?? []).map((tag) => tag.id)
+    (currentEvent.tags ?? [])
+      .filter((tag) => !genericRelationshipTags.has(tag.name))
+      .map((tag) => tag.id)
   );
 
   const currentYear = getEventTimelineYear(currentEvent);
+  const getMatchingStorylineSlugs = (event: TimelineEvent) => {
+    const eventYear = getEventTimelineYear(event);
+    const tagNames = new Set((event.tags ?? []).map((tag) => tag.name));
+
+    return STORYLINES.filter((storyline) => {
+      if (
+        eventYear === null ||
+        (storyline.fromYear !== undefined &&
+          eventYear < storyline.fromYear) ||
+        (storyline.toYear !== undefined && eventYear > storyline.toYear)
+      ) {
+        return false;
+      }
+
+      return storyline.tagMode === "any"
+        ? storyline.tagNames.some((tagName) => tagNames.has(tagName))
+        : storyline.tagNames.every((tagName) => tagNames.has(tagName));
+    }).map((storyline) => storyline.slug);
+  };
+  const currentStorylineSlugs = new Set(
+    getMatchingStorylineSlugs(currentEvent)
+  );
 
   return events
     .filter((event) => event.id !== currentEvent.id)
     .map((event) => {
-      const eventTagIds = (event.tags ?? []).map((tag) => tag.id);
+      const eventTagIds = (event.tags ?? [])
+        .filter((tag) => !genericRelationshipTags.has(tag.name))
+        .map((tag) => tag.id);
       const sharedTagCount = eventTagIds.filter((id) =>
         currentTagIds.has(id)
+      ).length;
+      const sharedStorylineCount = getMatchingStorylineSlugs(event).filter(
+        (slug) => currentStorylineSlugs.has(slug)
       ).length;
 
       const sameCategory =
@@ -351,14 +390,22 @@ export function getRelatedEvents(
           : Number.POSITIVE_INFINITY;
 
       const score =
+        sharedStorylineCount * 1_000 +
         sharedTagCount * 100 +
-        sameCategory * 20 +
-        Math.max(0, 20 - Math.floor(yearDistance / 25));
+        sameCategory * 10 +
+        Math.max(0, 50 - Math.floor(yearDistance / 25));
 
-      return { event, score, sharedTagCount };
+      return { event, score, sharedStorylineCount, sharedTagCount };
     })
-    .filter((item) => item.sharedTagCount > 0)
-    .sort((a, b) => b.score - a.score)
+    .filter(
+      (item) =>
+        item.sharedStorylineCount > 0 || item.sharedTagCount > 0
+    )
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        compareEventsChronologicallyAscending(a.event, b.event)
+    )
     .slice(0, 3)
     .map((item) => item.event);
 }

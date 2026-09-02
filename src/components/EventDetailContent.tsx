@@ -35,6 +35,7 @@ export default function EventDetailContent({
   const storylines = getStorylinesForEvent(event);
   const Title = titleAs;
   const isPermanentPage = titleAs === "h1";
+  const SectionHeading = isPermanentPage ? "h2" : "h3";
 
   return (
     <div>
@@ -88,12 +89,12 @@ export default function EventDetailContent({
                   : "mt-6 border-t border-stone-200 pt-5"
               }
             >
-              <h3
+              <SectionHeading
                 id={`event-storylines-${event.id}`}
                 className="text-sm font-semibold text-stone-800"
               >
                 Explore the Storylines
-              </h3>
+              </SectionHeading>
 
               <div className="mt-3 flex flex-wrap gap-2">
                 {storylines.map((storyline) => (
@@ -120,12 +121,12 @@ export default function EventDetailContent({
                   : "mt-6 border-t border-stone-200 pt-5"
               }
             >
-              <h3
+              <SectionHeading
                 id={`event-tags-${event.id}`}
                 className="text-sm font-semibold text-stone-800"
               >
                 Tags
-              </h3>
+              </SectionHeading>
 
               <div className="mt-3 flex flex-wrap gap-2">
                 {(event.tags ?? []).map((tag) => (
@@ -159,12 +160,12 @@ export default function EventDetailContent({
                 : "mt-6 border-t border-stone-200 pt-5"
             }
           >
-            <h3
+            <SectionHeading
               id={`event-sources-${event.id}`}
               className="text-sm font-semibold text-stone-800"
             >
               Sources
-            </h3>
+            </SectionHeading>
 
             <p className="mt-1 text-xs leading-5 text-stone-500">
               These sources support the dating and historical claims in

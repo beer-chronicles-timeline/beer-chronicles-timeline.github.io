@@ -6,6 +6,7 @@ import {
   formatEventDate,
   getEventChronologicalSortValue,
   getEventTimelineYear,
+  getRelatedEvents,
 } from "../src/components/timelineUtils.ts";
 import type {
   DatePrecision,
@@ -17,11 +18,15 @@ function createEvent({
   eventDate = null,
   historicalYear = null,
   datePrecision = "year",
+  category = null,
+  tags = [],
 }: {
   id: string;
   eventDate?: string | null;
   historicalYear?: number | null;
   datePrecision?: DatePrecision | null;
+  category?: string | null;
+  tags?: TimelineEvent["tags"];
 }): TimelineEvent {
   return {
     id,
@@ -31,10 +36,10 @@ function createEvent({
     historical_year: historicalYear,
     image_url: null,
     created_at: null,
-    category: null,
+    category,
     date_precision: datePrecision,
     sources: null,
-    tags: [],
+    tags,
   };
 }
 
@@ -279,4 +284,54 @@ test("supports oldest and newest ordering", () => {
     "ancient",
     "prehistoric",
   ]);
+});
+
+test("related events favor shared Storylines over generic category tags", () => {
+  const earlyHistoryTag = { id: "early", name: "Early Beer History" };
+  const scienceTag = { id: "science", name: "Science" };
+  const current = createEvent({
+    id: "prehistoric",
+    historicalYear: -11000,
+    category: "Science",
+    tags: [earlyHistoryTag, scienceTag],
+  });
+  const relatedAncient = createEvent({
+    id: "related-ancient",
+    historicalYear: -8000,
+    category: "Events",
+    tags: [earlyHistoryTag],
+  });
+  const unrelatedModernScience = createEvent({
+    id: "modern-science",
+    historicalYear: 2018,
+    category: "Science",
+    tags: [scienceTag],
+  });
+
+  assert.deepEqual(
+    getRelatedEvents(current, [
+      current,
+      unrelatedModernScience,
+      relatedAncient,
+    ]).map((event) => event.id),
+    ["related-ancient"]
+  );
+});
+
+test("generic tags alone do not create related-event recommendations", () => {
+  const scienceTag = { id: "science", name: "Science" };
+  const current = createEvent({
+    id: "current",
+    historicalYear: 1900,
+    category: "Science",
+    tags: [scienceTag],
+  });
+  const candidate = createEvent({
+    id: "candidate",
+    historicalYear: 1901,
+    category: "Science",
+    tags: [scienceTag],
+  });
+
+  assert.deepEqual(getRelatedEvents(current, [current, candidate]), []);
 });

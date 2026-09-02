@@ -43,10 +43,15 @@ jobs:
                 "utf8"
               )
             );
-            const title = "Source link audit: unavailable citations";
+            const title = "Source link audit: citations requiring review";
+            const legacyTitle = "Source link audit: unavailable citations";
             const missing = report.results.filter(
               (result) => result.status === "missing"
             );
+            const needsReview = report.results.filter(
+              (result) => result.status === "needs-review"
+            );
+            const actionable = [...missing, ...needsReview];
             const issues = await github.paginate(
               github.rest.issues.listForRepo,
               {
@@ -57,21 +62,24 @@ jobs:
               }
             );
             const existing = issues.find(
-              (issue) => !issue.pull_request && issue.title === title
+              (issue) =>
+                !issue.pull_request &&
+                (issue.title === title || issue.title === legacyTitle)
             );
             const runUrl =
               `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}` +
               `/actions/runs/${context.runId}`;
 
-            if (missing.length === 0) {
+            if (actionable.length === 0) {
               if (existing && existing.state === "open") {
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: existing.number,
                   body:
-                    `The source-link audit completed without any definite ` +
-                    `404 or 410 responses. [View the workflow run](${runUrl}).`,
+                    `The source-link audit completed without definite ` +
+                    `404/410 responses or other HTTP statuses requiring manual review. ` +
+                    `[View the workflow run](${runUrl}).`,
                 });
                 await github.rest.issues.update({
                   owner: context.repo.owner,
@@ -83,21 +91,21 @@ jobs:
               return;
             }
 
-            const rows = missing.map((result) => {
+            const rows = actionable.map((result) => {
               const events = result.references
                 .map((reference) => reference.eventTitle)
                 .join("; ");
               const destination = result.finalUrl
                 ? `${result.url} → ${result.finalUrl}`
                 : result.url;
-              return `- HTTP ${result.httpStatus ?? "—"}: ${destination}\n  - Referenced by: ${events}`;
+              return `- ${result.status}, HTTP ${result.httpStatus ?? "—"}: ${destination}\n  - Referenced by: ${events}`;
             });
             const body = [
               "This issue is maintained automatically by the monthly, read-only source-link audit.",
               "",
-              `The latest run found **${missing.length}** unique citation URL(s) returning HTTP 404 or 410.`,
+              `The latest run found **${missing.length}** definite 404/410 response(s) and **${needsReview.length}** other HTTP response(s) requiring manual review.`,
               "",
-              "Automated-client blocks, rate limits, transient server errors, and network failures are excluded. Verify every link manually before making an editorial change.",
+              "Automated-client blocks, rate limits, transient server errors, and network failures are excluded from this issue and remain available in the uploaded advisory report. Redirects are also recorded there for planned maintenance. Verify every link manually before making an editorial change.",
               "",
               ...rows,
               "",
@@ -123,7 +131,7 @@ jobs:
             }
 
             core.warning(
-              `${missing.length} citation URL(s) returned HTTP 404 or 410. ` +
+              `${actionable.length} citation URL(s) require manual review. ` +
               `The tracking issue has been updated.`
             );
 
