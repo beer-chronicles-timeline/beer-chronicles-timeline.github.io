@@ -16,6 +16,7 @@ export type EventRow = {
   historical_year: number | null;
   image_url: string | null;
   created_at: string | null;
+  updated_at?: string | null;
   // Extend as your schema grows:
   category?: string | null;
   date_precision?: DatePrecision | null;

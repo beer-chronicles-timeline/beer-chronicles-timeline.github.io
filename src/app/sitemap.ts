@@ -3,6 +3,7 @@
 import type { MetadataRoute } from "next";
 import { getEventStaticParamSources } from "@/lib/eventPageData";
 import { getEventUrl } from "@/lib/eventUrls";
+import { getEventSitemapLastModified } from "@/lib/eventMetadata";
 import { getStorylineSitemapUrls } from "@/lib/storylines";
 
 export const dynamic = "force-static";
@@ -45,9 +46,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const eventPages: MetadataRoute.Sitemap = events.map((event) => ({
-    url: getEventUrl(event.id, event.title),
-  }));
+  const eventPages: MetadataRoute.Sitemap = events.map((event) => {
+    const lastModified = getEventSitemapLastModified(event);
+
+    return {
+      url: getEventUrl(event.id, event.title),
+      ...(lastModified ? { lastModified } : {}),
+    };
+  });
 
   const storylinePages: MetadataRoute.Sitemap =
     getStorylineSitemapUrls().map((url) => ({ url }));

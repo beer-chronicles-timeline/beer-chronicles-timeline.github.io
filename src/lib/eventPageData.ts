@@ -22,6 +22,8 @@ type EventPageDataset = {
 export type EventStaticParamSource = {
   id: string;
   title: string;
+  created_at: string | null;
+  updated_at?: string | null;
 };
 
 export type EventPageData = {
@@ -163,5 +165,7 @@ export async function getEventStaticParamSources(): Promise<
   return dataset.events.map((event) => ({
     id: event.id,
     title: event.title,
+    created_at: event.created_at,
+    updated_at: event.updated_at,
   }));
 }

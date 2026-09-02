@@ -2,6 +2,7 @@
 
 import type { TimelineEvent } from "@/lib/types";
 import { getEventUrl } from "@/lib/eventUrls";
+import { getEventPublicationDates } from "@/lib/eventMetadata";
 import { truncate } from "./timelineUtils";
 
 type EventStructuredDataProps = {
@@ -38,12 +39,7 @@ export default function EventStructuredData({
       url: "https://beer-chronicles.org",
     },
     keywords: (event.tags ?? []).map((tag) => tag.name),
-    ...(event.created_at
-      ? {
-          datePublished: event.created_at,
-          dateModified: event.created_at,
-        }
-      : {}),
+    ...getEventPublicationDates(event),
   };
 
   return (
