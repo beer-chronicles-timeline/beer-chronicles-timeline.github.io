@@ -43,13 +43,13 @@ export default function ChallengesPage() {
         "The timeline needs a verifiable source for the real end date of Schieffer Brewery in Trier, Germany.",
     },
     {
-      title: "George Hodgson",
+      title: "George Hodgson’s Birth Date",
       question: "What is his birth date?",
       context:
         "The timeline needs a verifiable source for the birth date of George Hodgson, the London brewer associated with the India Pale Ale storyline.",
     },
     {
-      title: "George Hodgson",
+      title: "George Hodgson’s Death Date",
       question: "What is his death date?",
       context:
         "The timeline needs a verifiable source for the death date of George Hodgson, the London brewer associated with the India Pale Ale storyline.",
