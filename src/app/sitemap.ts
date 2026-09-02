@@ -40,6 +40,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${BASE_URL}/imprint`,
     },
+    {
+      url: `${BASE_URL}/privacy`,
+    },
   ];
 
   const eventPages: MetadataRoute.Sitemap = events.map((event) => ({

@@ -146,6 +146,24 @@ export default function ImprintPage() {
               purchases.
             </p>
           </section>
+
+          <section>
+            <h3 className="text-lg font-semibold text-stone-900 mb-2">
+              Privacy information
+            </h3>
+
+            <p>
+              Information about website analytics and submission data is
+              available on the{" "}
+              <Link
+                href="/privacy"
+                className="rounded-sm underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+              >
+                Privacy Information page
+              </Link>
+              .
+            </p>
+          </section>
         </div>
 
         <div className="mt-10 pt-4 text-sm text-gray-600">

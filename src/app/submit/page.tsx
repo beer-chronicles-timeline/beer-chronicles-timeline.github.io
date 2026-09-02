@@ -418,7 +418,14 @@ export default function SubmitPage() {
               <p className="mt-2">
                 I will only add your name—and, if you wish, a link—to the
                 acknowledgements on the Sources page after asking for and
-                receiving your consent. Read Formspree&apos;s{" "}
+                receiving your consent. Read the site&apos;s{" "}
+                <Link
+                  href="/privacy"
+                  className="rounded-sm underline decoration-stone-300 underline-offset-2 transition hover:text-stone-900 hover:decoration-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+                >
+                  privacy information
+                </Link>{" "}
+                and Formspree&apos;s{" "}
                 <a
                   href="https://formspree.io/security/"
                   target="_blank"
