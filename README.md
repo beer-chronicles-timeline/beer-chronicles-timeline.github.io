@@ -40,7 +40,8 @@ The application reads published timeline data from Supabase. A production build 
 
 ```bash
 npm run lint
-node --test --experimental-strip-types tests/*.test.ts
+npm run typecheck
+npm test
 npm run build
 npm run check:timeline-payload
 git diff --check
@@ -51,17 +52,31 @@ git diff --check
 gzip-equivalent sizes, and compressed bytes per event. It fails when the
 generated payload exceeds its regression budgets.
 
+`npm run check:source-links` reads the currently published timeline data,
+checks its unique external citation URLs, and writes advisory Markdown and JSON
+reports to `artifacts/source-link-report/`. Link findings do not modify
+editorial data and do not cause the command to fail; automated blocking,
+rate-limiting, and transient errors are reported separately from definite
+`404` and `410` responses.
+
 ## Deployment
 
 Pushing to `main` triggers `.github/workflows/deploy.yml`, which:
 
 1. installs dependencies with `npm ci`;
-2. builds the static export with `npm run build`;
-3. checks the generated timeline payload against its size budgets;
-4. uploads `out/`; and
-5. deploys it to GitHub Pages.
+2. runs ESLint, TypeScript checks, and all tests;
+3. builds the static export with `npm run build`;
+4. checks the generated timeline payload against its size budgets;
+5. uploads `out/`; and
+6. deploys it to GitHub Pages.
 
 Do not push solely to test a change: verify locally first because a push to `main` publishes the site.
+
+The separate `.github/workflows/source-link-audit.yml` workflow runs on the
+first day of every month and can also be started manually. It checks the public
+timeline without Supabase credentials and uploads its reports as a workflow
+artifact retained for 90 days. It is independent of deployment and never
+changes or removes a citation.
 
 ## Editorial and contribution safeguards
 

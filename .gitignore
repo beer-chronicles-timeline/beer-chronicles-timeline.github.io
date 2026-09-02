@@ -51,6 +51,7 @@ supabase-backup/
 
 # Local Beer Chronicles audit reports
 /audits/
+/artifacts/source-link-report/
 
 # Local post-review task prompts
 /next-actions-prompts-after-review/

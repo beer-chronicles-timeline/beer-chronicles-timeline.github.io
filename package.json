@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "check:source-links": "tsx scripts/check-source-links.ts",
     "check:timeline-payload": "node scripts/check-timeline-payload.mjs",
     "start": "next start",
     "lint": "eslint",
