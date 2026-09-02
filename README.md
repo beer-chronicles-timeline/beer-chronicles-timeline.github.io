@@ -52,7 +52,9 @@ git diff --check
 `npm run build` creates the statically exported site in `out/`.
 `npm run test:e2e` builds the site and runs the accessibility interaction suite
 in Chromium and Firefox. Its local server uses port `4173` by default; set
-`PLAYWRIGHT_PORT` to a free port when needed.
+`PLAYWRIGHT_PORT` to a free port when needed. CI sets
+`PLAYWRIGHT_USE_EXISTING_BUILD=1` to test the export already created by its
+build step.
 `npm run check:timeline-payload` reports the timeline event count, raw and
 gzip-equivalent sizes, and compressed bytes per event. It fails when the
 generated payload exceeds its regression budgets.

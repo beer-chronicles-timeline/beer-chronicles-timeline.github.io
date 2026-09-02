@@ -46,6 +46,14 @@ jobs:
       - name: Check timeline payload budget
         run: npm run check:timeline-payload
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Browser accessibility tests
+        env:
+          PLAYWRIGHT_USE_EXISTING_BUILD: "1"
+        run: npm run test:e2e
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:

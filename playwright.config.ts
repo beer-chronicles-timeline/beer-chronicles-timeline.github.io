@@ -11,6 +11,11 @@ if (
 }
 
 const baseURL = `http://127.0.0.1:${requestedPort}`;
+const staticServerCommand = `python3 -m http.server ${requestedPort} --bind 127.0.0.1 --directory out`;
+const webServerCommand =
+  process.env.PLAYWRIGHT_USE_EXISTING_BUILD === "1"
+    ? staticServerCommand
+    : `npm run build && ${staticServerCommand}`;
 
 export default defineConfig({
   testDir: "./e2e",
@@ -21,7 +26,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: `npm run build && python3 -m http.server ${requestedPort} --bind 127.0.0.1 --directory out`,
+    command: webServerCommand,
     url: baseURL,
     reuseExistingServer: false,
     timeout: 180_000,
