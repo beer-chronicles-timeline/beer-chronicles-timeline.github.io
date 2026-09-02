@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const linkClassName =
-    "hover:text-stone-700 focus:text-stone-700 focus:outline-none transition";
+    "rounded-sm transition hover:text-stone-700 focus-visible:text-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2";
 
   return (
     <footer className="mt-12 pt-6 pb-6 border-t border-stone-200 text-center text-sm text-stone-500">

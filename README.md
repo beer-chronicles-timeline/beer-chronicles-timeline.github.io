@@ -42,10 +42,14 @@ The application reads published timeline data from Supabase. A production build 
 npm run lint
 node --test --experimental-strip-types tests/*.test.ts
 npm run build
+npm run check:timeline-payload
 git diff --check
 ```
 
 `npm run build` creates the statically exported site in `out/`.
+`npm run check:timeline-payload` reports the timeline event count, raw and
+gzip-equivalent sizes, and compressed bytes per event. It fails when the
+generated payload exceeds its regression budgets.
 
 ## Deployment
 
@@ -53,8 +57,9 @@ Pushing to `main` triggers `.github/workflows/deploy.yml`, which:
 
 1. installs dependencies with `npm ci`;
 2. builds the static export with `npm run build`;
-3. uploads `out/`; and
-4. deploys it to GitHub Pages.
+3. checks the generated timeline payload against its size budgets;
+4. uploads `out/`; and
+5. deploys it to GitHub Pages.
 
 Do not push solely to test a change: verify locally first because a push to `main` publishes the site.
 

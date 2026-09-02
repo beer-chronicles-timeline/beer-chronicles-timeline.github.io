@@ -260,6 +260,7 @@ export default function SubmitPage() {
               id="name"
               name="name"
               required
+              aria-describedby="submission-privacy-notice"
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
@@ -280,6 +281,7 @@ export default function SubmitPage() {
               id="email"
               name="email"
               required
+              aria-describedby="submission-privacy-notice"
               value={formData.email}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
@@ -401,8 +403,34 @@ export default function SubmitPage() {
             )}
           </div>
 
-          {/* Submit Button */}
-          <div>
+          {/* Submission privacy notice and button */}
+          <div className="space-y-3">
+            <div
+              id="submission-privacy-notice"
+              className="rounded-lg border border-stone-200 bg-stone-50 px-4 py-3 text-xs leading-5 text-stone-600"
+            >
+              <p>
+                Your name and email address are sent through Formspree so I
+                can clarify your submission and let you know if or when it is
+                published. Your email address will not be published.
+              </p>
+
+              <p className="mt-2">
+                I will only add your name—and, if you wish, a link—to the
+                acknowledgements on the Sources page after asking for and
+                receiving your consent. Read Formspree&apos;s{" "}
+                <a
+                  href="https://formspree.io/security/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-sm underline decoration-stone-300 underline-offset-2 transition hover:text-stone-900 hover:decoration-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+                >
+                  privacy and security information
+                </a>
+                .
+              </p>
+            </div>
+
             <button
               type="submit"
               disabled={isSubmitting}

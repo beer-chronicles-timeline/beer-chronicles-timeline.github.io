@@ -11,10 +11,11 @@ import {
 import { getStorylinesForEvent } from "@/lib/eventStorylines";
 import { getStorylineHref } from "@/lib/storylines";
 import {
-  formatEventDate,
-  normalizeUrl,
-  urlRegex,
-} from "./timelineUtils";
+  getSourceLinkLabel,
+  normalizeSourceUrl,
+  parseSourceCitations,
+} from "@/lib/sourceCitations";
+import { formatEventDate } from "./timelineUtils";
 
 type EventDetailContentProps = {
   event: TimelineEvent;
@@ -29,10 +30,7 @@ export default function EventDetailContent({
   titleAs = "h1",
   titleId,
 }: EventDetailContentProps) {
-  const rawSourceLines = (event.sources ?? "")
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
+  const sourceCitations = parseSourceCitations(event.sources);
 
   const storylines = getStorylinesForEvent(event);
   const Title = titleAs;
@@ -152,7 +150,7 @@ export default function EventDetailContent({
             : "contents"
         }
       >
-        {rawSourceLines.length > 0 && (
+        {sourceCitations.length > 0 && (
           <section
             aria-labelledby={`event-sources-${event.id}`}
             className={
@@ -173,30 +171,34 @@ export default function EventDetailContent({
               this entry.
             </p>
 
-            <ul className="mt-3 list-disc space-y-1.5 break-words pl-5 text-sm leading-6 text-stone-700">
-              {rawSourceLines.map((line, index) => {
-                const match = line.match(urlRegex);
+            <ul className="mt-3 space-y-2.5 text-sm leading-6 text-stone-700">
+              {sourceCitations.map((citation, index) => (
+                <li
+                  key={`${citation.text.join("-")}-${citation.urls.join("-")}-${index}`}
+                  className="rounded-lg border border-stone-200 bg-stone-50 px-3.5 py-3"
+                >
+                  {citation.text.length > 0 && (
+                    <p>{citation.text.join(" ")}</p>
+                  )}
 
-                if (!match) {
-                  return <li key={`${line}-${index}`}>{line}</li>;
-                }
-
-                const firstUrl = match[0];
-                const href = normalizeUrl(firstUrl);
-
-                return (
-                  <li key={`${line}-${index}`}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline decoration-stone-300 underline-offset-2 transition hover:decoration-stone-700"
-                    >
-                      {firstUrl}
-                    </a>
-                  </li>
-                );
-              })}
+                  {citation.urls.length > 0 && (
+                    <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
+                      {citation.urls.map((url, urlIndex) => (
+                        <a
+                          key={`${url}-${urlIndex}`}
+                          href={normalizeSourceUrl(url)}
+                          title={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="break-all rounded-sm text-xs font-medium text-stone-600 underline decoration-stone-300 underline-offset-2 transition hover:text-stone-900 hover:decoration-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+                        >
+                          {getSourceLinkLabel(url)}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </li>
+              ))}
             </ul>
           </section>
         )}
@@ -204,7 +206,7 @@ export default function EventDetailContent({
         <div
           className={
             isPermanentPage
-              ? rawSourceLines.length > 0
+              ? sourceCitations.length > 0
                 ? "mt-4"
                 : ""
               : "mt-6 border-t border-stone-200 pt-5"
