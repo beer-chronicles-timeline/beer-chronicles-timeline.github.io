@@ -422,7 +422,12 @@ export default function SubmitPage() {
 
           {/* Status Messages */}
           {submitStatus === "success" && (
-            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className="p-4 bg-green-50 border border-green-200 rounded-lg"
+            >
               <p className="text-green-800">
                 {isCorrection
                   ? "Thank you! Your suggestion has been submitted. I’ll review it soon."
@@ -432,7 +437,12 @@ export default function SubmitPage() {
           )}
 
           {submitStatus === "error" && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+              className="p-4 bg-red-50 border border-red-200 rounded-lg"
+            >
               <p className="text-red-800">
                 Sorry, there was an error sending your submission. Please try
                 again or email me directly.

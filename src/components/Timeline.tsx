@@ -410,33 +410,6 @@ export default function Timeline({
     setIsOldestFirst((currentValue) => !currentValue);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (selectedEventIndex === null || randomEvent) {
-        return;
-      }
-
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        handleNextEvent();
-      } else if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        handlePrevEvent();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [
-    selectedEventIndex,
-    randomEvent,
-    handleNextEvent,
-    handlePrevEvent,
-  ]);
-
   return (
     <>
       <section

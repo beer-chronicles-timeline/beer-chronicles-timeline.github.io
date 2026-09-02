@@ -1,7 +1,13 @@
 // components/TimelineFilters.tsx
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useId,
+  useRef,
+  useMemo,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import YearRangeSlider from "./YearRangeSlider";
 import type { Tag } from "@/lib/types";
@@ -61,7 +67,9 @@ export function TimelineFilters({
   maxYear,
 }: TimelineFiltersProps) {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
+  const tagDropdownId = useId();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const tagButtonRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const isFirstRender = useRef(true);
@@ -144,10 +152,38 @@ export function TimelineFilters({
       setIsTagDropdownOpen(false);
     };
 
+    const handleFocusOutside = (event: FocusEvent) => {
+      const target = event.target as Node | null;
+
+      if (!dropdownRef.current) {
+        return;
+      }
+
+      if (target && dropdownRef.current.contains(target)) {
+        return;
+      }
+
+      setIsTagDropdownOpen(false);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      event.preventDefault();
+      setIsTagDropdownOpen(false);
+      tagButtonRef.current?.focus();
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("focusin", handleFocusOutside);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("focusin", handleFocusOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isTagDropdownOpen]);
 
@@ -285,6 +321,7 @@ export function TimelineFilters({
               onClick={() =>
                 setActiveCategory(isAll ? null : cat)
               }
+              aria-pressed={isActive}
               className={`min-h-10 px-3 py-1 text-sm rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2
 ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
             >
@@ -298,10 +335,13 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
           ref={dropdownRef}
         >
           <button
+            ref={tagButtonRef}
             type="button"
             onClick={() =>
               setIsTagDropdownOpen((open) => !open)
             }
+            aria-expanded={isTagDropdownOpen}
+            aria-controls={tagDropdownId}
             className="inline-flex min-h-10 items-center gap-2 rounded-full border bg-white px-3 py-1 text-sm transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           >
             <span>Tags</span>
@@ -318,7 +358,10 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
           </button>
 
           {isTagDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-lg bg-white shadow-lg border z-20">
+            <div
+              id={tagDropdownId}
+              className="absolute right-0 mt-2 w-56 rounded-lg bg-white shadow-lg border z-20"
+            >
               <div className="max-h-64 overflow-auto py-2">
                 {dropdownTags.length === 0 && (
                   <div className="px-3 py-2 text-xs text-gray-500">
