@@ -329,6 +329,15 @@ export const STORYLINES: Storyline[] = [
     featuredEventId: "8c178785-e252-4f73-894f-37394eb62dd5",
   },
   {
+    slug: "colonial-power-and-informal-brewing",
+    sectionId: "industry-and-culture",
+    title: "Beer, Colonial Power, and Informal Brewing",
+    description:
+      "Trace how enslavement, colonial concessions, liquor taxes, racial administration, and industrial supply systems reshaped household and informal brewing—and how brewers, workers, and drinkers preserved or contested those traditions.",
+    tagNames: ["Colonial Power and Informal Brewing"],
+    featuredEventId: "4105917a-3d85-429a-ba3f-0a7e627e190c",
+  },
+  {
     slug: "women-in-beer-history",
     sectionId: "industry-and-culture",
     title: "Women in Beer History",
