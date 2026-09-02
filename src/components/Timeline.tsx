@@ -676,7 +676,7 @@ export default function Timeline({
       <button
         onClick={handleRandomEvent}
         disabled={events.length === 0 || isRollingRandom}
-        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-600 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
+        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-400 text-stone-900 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-500 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
         aria-label="Open random event"
         title="Open random event"
       >

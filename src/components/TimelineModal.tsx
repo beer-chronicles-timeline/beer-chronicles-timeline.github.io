@@ -101,7 +101,40 @@ export default function TimelineModal({
 
   useEffect(() => {
     const handleKeyDown = (keyboardEvent: KeyboardEvent) => {
-      if (keyboardEvent.key === "Escape") {
+      if (keyboardEvent.key === "Tab") {
+        const dialog = dialogRef.current;
+        const focusableElements = dialog
+          ? Array.from(
+              dialog.querySelectorAll<HTMLElement>(
+                'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+              )
+            ).filter(
+              (element) =>
+                !element.hasAttribute("hidden") &&
+                element.getClientRects().length > 0
+            )
+          : [];
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements.at(-1);
+
+        if (!firstElement || !lastElement) {
+          return;
+        }
+
+        if (
+          keyboardEvent.shiftKey &&
+          document.activeElement === firstElement
+        ) {
+          keyboardEvent.preventDefault();
+          lastElement.focus();
+        } else if (
+          !keyboardEvent.shiftKey &&
+          document.activeElement === lastElement
+        ) {
+          keyboardEvent.preventDefault();
+          firstElement.focus();
+        }
+      } else if (keyboardEvent.key === "Escape") {
         onClose();
       } else if (
         keyboardEvent.key === "ArrowRight" &&

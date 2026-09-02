@@ -47,12 +47,16 @@ jobs:
         run: npm run check:timeline-payload
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium firefox
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Browser accessibility tests
         env:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
         run: npm run test:e2e
+
+      - name: Measure mobile timeline performance
+        continue-on-error: true
+        run: npm run measure:timeline-mobile
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

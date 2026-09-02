@@ -255,7 +255,7 @@ function StorylineCard({
       </p>
 
       <div className="mt-5 border-t border-stone-100 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">
+        <p className="text-xs font-semibold uppercase tracking-wide text-stone-600">
           Featured entry
         </p>
 
@@ -271,7 +271,7 @@ function StorylineCard({
               {featuredEvent.title}
             </Link>
 
-            <p className="mt-1 text-xs text-stone-400">
+            <p className="mt-1 text-xs text-stone-600">
               {formatEventDate(featuredEvent)}
             </p>
           </div>

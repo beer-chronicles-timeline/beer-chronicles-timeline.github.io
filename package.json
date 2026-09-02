@@ -7,6 +7,7 @@
     "build": "next build",
     "check:source-links": "tsx scripts/check-source-links.ts",
     "check:timeline-payload": "node scripts/check-timeline-payload.mjs",
+    "measure:timeline-mobile": "node scripts/measure-timeline-mobile.mjs",
     "start": "next start",
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts",
@@ -21,6 +22,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

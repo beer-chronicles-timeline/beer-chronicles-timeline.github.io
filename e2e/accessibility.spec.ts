@@ -1,6 +1,13 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
 async function mockTimelineData(page: Page) {
+  const tags = [
+    {
+      id: "tag-history",
+      name: "History",
+    },
+  ];
   const events = Array.from({ length: 121 }, (_, index) => ({
     id: `event-${index}`,
     title: `Test event ${index}`,
@@ -12,7 +19,7 @@ async function mockTimelineData(page: Page) {
     category: index % 2 === 0 ? "Laws" : "Breweries",
     date_precision: "date",
     sources: null,
-    tags: [],
+    tags: index % 2 === 0 ? tags : [],
   }));
 
   await page.route("**/timeline-data.json*", (route) =>
@@ -20,13 +27,32 @@ async function mockTimelineData(page: Page) {
       contentType: "application/json",
       body: JSON.stringify({
         events,
-        tags: [],
-        visibleTags: [],
+        tags,
+        visibleTags: tags,
         minYear: 1927,
         maxYear: 2026,
       }),
     })
   );
+}
+
+async function expectNoSeriousAccessibilityViolations(page: Page) {
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+    .analyze();
+  const seriousViolations = results.violations.filter(
+    ({ impact }) => impact === "critical" || impact === "serious"
+  );
+
+  expect(
+    seriousViolations,
+    seriousViolations
+      .map(
+        ({ id, help, nodes }) =>
+          `${id}: ${help} (${nodes.length} affected node${nodes.length === 1 ? "" : "s"})`
+      )
+      .join("\n")
+  ).toEqual([]);
 }
 
 test("skip link moves focus past the repeated site header", async ({
@@ -161,4 +187,121 @@ test("scroll to top avoids smooth scrolling when reduced motion is requested", a
       )
     )
     .toBe("auto");
+});
+
+test("tag filters support a complete keyboard interaction", async ({
+  page,
+}) => {
+  await mockTimelineData(page);
+  await page.goto("/");
+
+  const tagsButton = page.getByRole("button", { name: /^Tags/ });
+  await tagsButton.focus();
+  await page.keyboard.press("Enter");
+  await expect(tagsButton).toHaveAttribute("aria-expanded", "true");
+
+  await page.keyboard.press("Tab");
+  const historyTag = page.getByRole("checkbox", { name: /History/ });
+  await expect(historyTag).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(historyTag).toBeChecked();
+
+  await page.keyboard.press("Escape");
+  await expect(tagsButton).toHaveAttribute("aria-expanded", "false");
+  await expect(tagsButton).toBeFocused();
+});
+
+test("event modal contains focus and restores it after closing", async ({
+  page,
+}) => {
+  await mockTimelineData(page);
+  await page.goto("/");
+
+  const activatingButton = page.getByRole("button", {
+    name: "Open event: Test event 0",
+  });
+  await activatingButton.focus();
+  await page.keyboard.press("Enter");
+
+  const dialog = page.getByRole("dialog");
+  const closeButton = dialog.getByRole("button", { name: "Close" });
+  await expect(dialog).toBeVisible();
+  await expect(closeButton).toBeFocused();
+
+  for (let index = 0; index < 12; index += 1) {
+    await page.keyboard.press("Tab");
+    await expect
+      .poll(() =>
+        dialog.evaluate(
+          (element) =>
+            document.activeElement !== null &&
+            element.contains(document.activeElement)
+        )
+      )
+      .toBe(true);
+  }
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(activatingButton).toBeFocused();
+});
+
+test("@a11y-scan representative pages have no serious axe violations", async ({
+  page,
+}) => {
+  await mockTimelineData(page);
+  await page.goto("/");
+  await expect(
+    page.getByRole("region", { name: "Timeline exploration controls" })
+  ).toBeVisible();
+  await expectNoSeriousAccessibilityViolations(page);
+
+  await page.goto("/storylines.html");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expectNoSeriousAccessibilityViolations(page);
+
+  await page.goto(
+    "/events/fc252325-4204-4381-b718-234fa91110dc/the-bavarian-beer-regulation-of-1516-is-issued.html"
+  );
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expectNoSeriousAccessibilityViolations(page);
+});
+
+test("@mobile timeline reflows at a 320 CSS-pixel viewport", async ({
+  page,
+}) => {
+  await mockTimelineData(page);
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto("/");
+  await expect(
+    page.getByRole("region", { name: "Timeline exploration controls" })
+  ).toBeVisible();
+
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth
+      )
+    )
+    .toBe(true);
+  await expect(
+    page.getByRole("button", { name: "Open event: Test event 0" })
+  ).toBeVisible();
+});
+
+test("@webkit core timeline controls and modal work", async ({ page }) => {
+  await mockTimelineData(page);
+  await page.goto("/");
+
+  const lawsFilter = page.getByRole("button", { name: "Laws" });
+  await lawsFilter.click();
+  await expect(lawsFilter).toHaveAttribute("aria-pressed", "true");
+
+  const eventButton = page.getByRole("button", {
+    name: "Open event: Test event 0",
+  });
+  await eventButton.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toBeHidden();
 });
