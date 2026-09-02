@@ -174,7 +174,10 @@ export default function SourcesPage() {
               CHRONICLES
             </Link>
           </p>
-          <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+          <p
+            aria-hidden="true"
+            className="text-stone-600 mt-2 tracking-wide uppercase text-sm"
+          >
             Sources
           </p>
         </div>
@@ -209,9 +212,9 @@ export default function SourcesPage() {
                   : ""
               }`}
             >
-              <h3 className="text-lg font-semibold font-serif text-stone-900 mb-2">
+              <h2 className="text-lg font-semibold font-serif text-stone-900 mb-2">
                 {family.title}
-              </h3>
+              </h2>
               <p className="max-w-3xl text-gray-700 leading-relaxed">
                 {family.description}
               </p>
@@ -300,9 +303,9 @@ export default function SourcesPage() {
 
         {/* Other Beer History Websites/Blogs/Timelines */}
         <div className="mt-12 pt-6 border-t border-stone-200">
-          <h3 className="text-xl font-semibold font-serif text-stone-900 mb-3">
+          <h2 className="text-xl font-semibold font-serif text-stone-900 mb-3">
             Other Beer History Websites, Blogs, or Timelines 
-          </h3>
+          </h2>
           <p className="text-gray-600 mb-4">
             For further exploration of beer history, here are some other
             excellent timeline resources:

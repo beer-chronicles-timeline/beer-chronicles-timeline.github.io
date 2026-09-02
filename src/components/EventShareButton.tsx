@@ -1,39 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { copyText } from "@/lib/copyText";
 import { shareEvent } from "@/lib/shareEvent";
 
 type EventShareButtonProps = {
   title: string;
   canonicalUrl: string;
 };
-
-async function copyCanonicalUrl(url: string): Promise<boolean> {
-  if (navigator.clipboard?.writeText) {
-    try {
-      await navigator.clipboard.writeText(url);
-      return true;
-    } catch {
-      // Continue to the lightweight legacy fallback.
-    }
-  }
-
-  const textarea = document.createElement("textarea");
-  textarea.value = url;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-  document.body.appendChild(textarea);
-  textarea.select();
-
-  try {
-    return document.execCommand("copy");
-  } catch {
-    return false;
-  } finally {
-    textarea.remove();
-  }
-}
 
 export default function EventShareButton({
   title,
@@ -63,7 +37,7 @@ export default function EventShareButton({
           typeof navigator.share === "function"
             ? (data) => navigator.share(data)
             : undefined,
-        copy: copyCanonicalUrl,
+        copy: copyText,
       }
     );
 

@@ -109,9 +109,10 @@ test("formats historical-year decade boundaries without year zero", () => {
 
 test("formats historical-year century boundaries", () => {
   const cases = [
-    [-11000, "110th century BCE"],
-    [-10901, "110th century BCE"],
-    [-10900, "109th century BCE"],
+    [-11000, "c. 11,000 BCE"],
+    [-10901, "c. 11,000 BCE"],
+    [-10900, "c. 10,900 BCE"],
+    [-9900, "99th century BCE"],
     [-100, "1st century BCE"],
     [-1, "1st century BCE"],
     [1, "1st century"],
@@ -134,6 +135,16 @@ test("formats historical-year century boundaries", () => {
       `Unexpected century for ${historicalYear}`
     );
   });
+});
+
+test("formats date-backed very ancient centuries as approximate years", () => {
+  const event = createEvent({
+    id: "date-backed-very-ancient-century",
+    eventDate: "10999-01-01 BC",
+    datePrecision: "century",
+  });
+
+  assert.equal(formatEventDate(event), "c. 11,000 BCE");
 });
 
 test("safely handles historical years with date or month precision", () => {

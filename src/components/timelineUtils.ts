@@ -122,6 +122,23 @@ function formatOrdinal(value: number): string {
   }
 }
 
+function formatCenturyLabel(
+  centuryNumber: number,
+  isBce: boolean
+): string {
+  if (isBce && centuryNumber >= 100) {
+    const approximateYear = (centuryNumber * 100).toLocaleString(
+      "en-US"
+    );
+
+    return `c. ${approximateYear} BCE`;
+  }
+
+  const centuryLabel = `${formatOrdinal(centuryNumber)} century`;
+
+  return isBce ? `${centuryLabel} BCE` : centuryLabel;
+}
+
 function formatHistoricalYear(historicalYear: number): string {
   const absoluteYear = Math.abs(historicalYear).toLocaleString(
     "en-US"
@@ -139,13 +156,8 @@ function formatHistoricalEventDate(
   if (event.date_precision === "century") {
     const centuryNumber =
       getHistoricalCenturyNumber(historicalYear);
-    const centuryLabel = `${formatOrdinal(
-      centuryNumber
-    )} century`;
 
-    return historicalYear < 0
-      ? `${centuryLabel} BCE`
-      : centuryLabel;
+    return formatCenturyLabel(centuryNumber, historicalYear < 0);
   }
 
   if (event.date_precision === "decade") {
@@ -250,11 +262,8 @@ export function formatEventDate(event: TimelineEvent): string {
       displayedYear,
       isBce
     );
-    const centuryLabel = `${formatOrdinal(
-      centuryNumber
-    )} century`;
 
-    return isBce ? `${centuryLabel} BCE` : centuryLabel;
+    return formatCenturyLabel(centuryNumber, isBce);
   }
 
   if (event.date_precision === "decade") {

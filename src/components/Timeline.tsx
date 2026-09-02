@@ -20,6 +20,7 @@ import {
   type TagFilterMode,
 } from "./timelineFiltering";
 import { getRelatedEvents } from "./timelineUtils";
+import { copyText } from "@/lib/copyText";
 import type { TimelineEvent, Tag } from "@/lib/types";
 
 const TimelineModal = dynamic(() => import("./TimelineModal"), {
@@ -114,8 +115,9 @@ export default function Timeline({
 }: TimelineProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const skipNextSearchUrlSyncRef = useRef(false);
+  const skipNextTimelineUrlSyncRef = useRef(false);
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const copyFeedbackTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const [selectedEventIndex, setSelectedEventIndex] = useState<
     number | null
@@ -136,14 +138,42 @@ export default function Timeline({
     useState<TagFilterMode>(() =>
       searchParams.get("tagMode") === "any" ? "any" : "all"
     );
-  const [isOldestFirst, setIsOldestFirst] = useState(false);
+  const [isOldestFirst, setIsOldestFirst] = useState(
+    () => searchParams.get("order") === "oldest"
+  );
   const [searchQuery, setSearchQuery] = useState(
     () => searchParams.get("string") ?? ""
   );
+  const [copyFeedback, setCopyFeedback] = useState("");
+
+  useEffect(
+    () => () => {
+      if (copyFeedbackTimerRef.current) {
+        clearTimeout(copyFeedbackTimerRef.current);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    if (skipNextSearchUrlSyncRef.current) {
-      skipNextSearchUrlSyncRef.current = false;
+    const restoreTimelineViewFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+
+      skipNextTimelineUrlSyncRef.current = true;
+      setSearchQuery(params.get("string") ?? "");
+      setIsOldestFirst(params.get("order") === "oldest");
+    };
+
+    window.addEventListener("popstate", restoreTimelineViewFromUrl);
+
+    return () => {
+      window.removeEventListener("popstate", restoreTimelineViewFromUrl);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (skipNextTimelineUrlSyncRef.current) {
+      skipNextTimelineUrlSyncRef.current = false;
       return;
     }
 
@@ -157,13 +187,19 @@ export default function Timeline({
       params.delete("string");
     }
 
+    if (isOldestFirst) {
+      params.set("order", "oldest");
+    } else {
+      params.delete("order");
+    }
+
     const queryString = params.toString();
     const newUrl = queryString ? `/?${queryString}` : "/";
 
     if (newUrl !== currentUrl) {
       router.replace(newUrl, { scroll: false });
     }
-  }, [searchQuery, router]);
+  }, [searchQuery, isOldestFirst, router]);
 
   const tagCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -348,9 +384,15 @@ export default function Timeline({
     setStartYear(Math.min(nextStartYear, nextEndYear));
     setEndYear(Math.max(nextStartYear, nextEndYear));
 
-    if (nextSearchQuery !== searchQuery) {
-      skipNextSearchUrlSyncRef.current = true;
+    const nextIsOldestFirst = params.get("order") === "oldest";
+
+    if (
+      nextSearchQuery !== searchQuery ||
+      nextIsOldestFirst !== isOldestFirst
+    ) {
+      skipNextTimelineUrlSyncRef.current = true;
       setSearchQuery(nextSearchQuery);
+      setIsOldestFirst(nextIsOldestFirst);
     }
 
     handleCloseModal();
@@ -410,6 +452,20 @@ export default function Timeline({
     setIsOldestFirst((currentValue) => !currentValue);
   };
 
+  const copyFilteredView = async () => {
+    const copied = await copyText(window.location.href);
+    setCopyFeedback(copied ? "Link copied" : "Unable to copy link");
+
+    if (copyFeedbackTimerRef.current) {
+      clearTimeout(copyFeedbackTimerRef.current);
+    }
+
+    copyFeedbackTimerRef.current = setTimeout(
+      () => setCopyFeedback(""),
+      2500
+    );
+  };
+
   return (
     <>
       <section
@@ -460,7 +516,7 @@ export default function Timeline({
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             <TimelineSearch
               value={searchQuery}
               onChange={setSearchQuery}
@@ -480,7 +536,21 @@ export default function Timeline({
                   : "Newest first"}
               </span>
             </button>
+
+            {(hasActiveFilters || isOldestFirst) && (
+              <button
+                type="button"
+                onClick={copyFilteredView}
+                className="flex min-h-10 items-center whitespace-nowrap rounded-full border border-stone-300 bg-white px-4 py-1 text-sm font-medium text-stone-600 transition hover:border-stone-400 hover:bg-stone-100 hover:text-stone-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+              >
+                Copy filtered view
+              </button>
+            )}
           </div>
+
+          <span aria-live="polite" className="text-sm text-stone-500">
+            {copyFeedback}
+          </span>
         </div>
       </section>
 

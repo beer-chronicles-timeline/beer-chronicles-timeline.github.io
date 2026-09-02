@@ -70,7 +70,10 @@ export default function EditorialPrinciplesPage() {
               CHRONICLES
             </Link>
           </p>
-          <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+          <p
+            aria-hidden="true"
+            className="text-stone-600 mt-2 tracking-wide uppercase text-sm"
+          >
             Editorial Principles
           </p>
         </div>
@@ -100,9 +103,9 @@ export default function EditorialPrinciplesPage() {
 
         <div className="mt-8">
           <section>
-            <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
+            <h2 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Source-Based Entries
-            </h3>
+            </h2>
 
             <p className="text-gray-700 leading-relaxed">
               Every entry is researched individually using reliable sources.
@@ -122,9 +125,9 @@ export default function EditorialPrinciplesPage() {
           </section>
 
           <section className="mt-8 border-t border-stone-200 pt-6">
-            <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
+            <h2 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Date Precision
-            </h3>
+            </h2>
 
             <div className="space-y-3 text-gray-700 leading-relaxed">
               <p>
@@ -184,9 +187,9 @@ export default function EditorialPrinciplesPage() {
           </section>
 
           <section className="mt-8 border-t border-stone-200 pt-6">
-            <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
+            <h2 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Uncertainty Is Part of the Story
-            </h3>
+            </h2>
 
             <p className="text-gray-700 leading-relaxed">
               Beer history is full of fascinating stories, but not every story
@@ -198,9 +201,9 @@ export default function EditorialPrinciplesPage() {
           </section>
 
           <section className="mt-8 border-t border-stone-200 pt-6">
-            <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
+            <h2 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               AI Assistance
-            </h3>
+            </h2>
 
             <div className="space-y-3 text-gray-700 leading-relaxed">
               <p>
@@ -238,9 +241,9 @@ export default function EditorialPrinciplesPage() {
           </section>
 
           <section className="mt-8 border-t border-stone-200 pt-6">
-            <h3 className="text-lg font-semibold font-serif text-stone-900 mb-3">
+            <h2 className="text-lg font-semibold font-serif text-stone-900 mb-3">
               Corrections and Open Questions
-            </h3>
+            </h2>
 
             <p className="text-gray-700 leading-relaxed">
               Mistakes can happen. If you find one, please let me know. If you

@@ -88,7 +88,10 @@ export default function ChallengesPage() {
           <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">CHRONICLES</Link>
           </p>
-          <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+          <p
+            aria-hidden="true"
+            className="text-stone-600 mt-2 tracking-wide uppercase text-sm"
+          >
             Open Research Challenges
           </p>
         </div>
@@ -126,9 +129,9 @@ export default function ChallengesPage() {
                 Challenge #{index + 1}
               </div>
 
-              <h3 className="text-lg font-semibold font-serif text-stone-900">
+              <h2 className="text-lg font-semibold font-serif text-stone-900">
                 {challenge.title}
-              </h3>
+              </h2>
 
               <p className="mt-2 font-serif text-base font-semibold leading-snug text-stone-800">
                 {challenge.question}

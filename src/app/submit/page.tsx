@@ -27,6 +27,45 @@ type CorrectionContext = {
   eventUrl: string;
 };
 
+type DatePrecision = "date" | "month" | "year" | "decade" | "century";
+
+const DATE_FIELD_CONFIG: Record<
+  DatePrecision,
+  {
+    label: string;
+    placeholder: string;
+    helpText: string;
+  }
+> = {
+  date: {
+    label: "Exact date",
+    placeholder: "e.g., April 23, 1516 or July 1, 449 BCE",
+    helpText:
+      "Include the day, month, and year only when all three are supported.",
+  },
+  month: {
+    label: "Month and year",
+    placeholder: "e.g., October 1990 or March 44 BCE",
+    helpText:
+      "Include the month and year when the exact day is not supported.",
+  },
+  year: {
+    label: "Year",
+    placeholder: "e.g., 1842 or 11000 BCE",
+    helpText: "Include BCE or CE when needed.",
+  },
+  decade: {
+    label: "Decade",
+    placeholder: "e.g., 1990s or 11000s BCE",
+    helpText: "Enter the decade as it should be understood historically.",
+  },
+  century: {
+    label: "Century",
+    placeholder: "e.g., 18th century or 110th century BCE",
+    helpText: "Include BCE or CE when needed.",
+  },
+};
+
 function getCorrectionContext(search: string): CorrectionContext | null {
   const searchParams = new URLSearchParams(search);
   const eventTitle = searchParams.get("eventTitle")?.trim() ?? "";
@@ -66,7 +105,8 @@ export default function SubmitPage() {
     title: null as string | null,
     description: "",
     eventDate: "",
-    datePrecision: "date",
+    datePrecision: "" as DatePrecision | "",
+    dateUncertainty: "",
     sources: "",
   });
 
@@ -84,7 +124,11 @@ export default function SubmitPage() {
     >
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+      ...(name === "datePrecision" ? { eventDate: "" } : {}),
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -105,6 +149,7 @@ export default function SubmitPage() {
           description: formData.description,
           eventDate: formData.eventDate,
           datePrecision: formData.datePrecision,
+          dateUncertainty: formData.dateUncertainty,
           sources: formData.sources,
           ...(isCorrection
             ? {
@@ -126,7 +171,8 @@ export default function SubmitPage() {
           title: "",
           description: "",
           eventDate: "",
-          datePrecision: "date",
+          datePrecision: "",
+          dateUncertainty: "",
           sources: "",
         });
       } else {
@@ -228,10 +274,9 @@ export default function SubmitPage() {
 
           <p className="mt-2">
             Entries may also be dated only to a month, year, decade, or
-            century. Prehistoric and BCE proposals are welcome. If the proposed
-            date lies outside the range supported by the browser&apos;s date
-            field, state the date and intended precision clearly in the
-            description.
+            century. Prehistoric and BCE proposals are welcome. Choose the
+            precision supported by the evidence and explain any uncertainty in
+            the dedicated date note.
           </p>
 
           <p className="mt-2">
@@ -329,25 +374,6 @@ export default function SubmitPage() {
             />
           </div>
 
-          {/* Event Date Field */}
-          <div>
-            <label
-              htmlFor="eventDate"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Event Date
-            </label>
-            <input
-              type="date"
-              id="eventDate"
-              name="eventDate"
-              required={!isCorrection}
-              value={formData.eventDate}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-            />
-          </div>
-
           {/* Date Precision Field */}
           <div>
             <label
@@ -359,17 +385,70 @@ export default function SubmitPage() {
             <select
               id="datePrecision"
               name="datePrecision"
-              required
+              required={!isCorrection}
               value={formData.datePrecision}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
             >
+              <option value="">
+                {isCorrection
+                  ? "Not part of this correction"
+                  : "Choose the supported precision"}
+              </option>
               <option value="date">Full date (year-month-day)</option>
-              <option value="year">Year only</option>
               <option value="month">Month (e.g., October 1990)</option>
+              <option value="year">Year only</option>
               <option value="decade">Decade (e.g., 1990s)</option>
               <option value="century">Century (e.g., 18th century)</option>
             </select>
+          </div>
+
+          {/* Event Date Field */}
+          {formData.datePrecision && (
+            <div>
+              <label
+                htmlFor="eventDate"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {DATE_FIELD_CONFIG[formData.datePrecision].label}
+              </label>
+              <input
+                type="text"
+                id="eventDate"
+                name="eventDate"
+                required={!isCorrection}
+                value={formData.eventDate}
+                onChange={handleChange}
+                placeholder={
+                  DATE_FIELD_CONFIG[formData.datePrecision].placeholder
+                }
+                aria-describedby="event-date-help"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+              />
+              <p id="event-date-help" className="mt-1 text-xs text-stone-500">
+                {DATE_FIELD_CONFIG[formData.datePrecision].helpText}
+              </p>
+            </div>
+          )}
+
+          {/* Date Uncertainty Field */}
+          <div>
+            <label
+              htmlFor="dateUncertainty"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Date uncertainty or explanation{" "}
+              <span className="font-normal text-stone-500">(optional)</span>
+            </label>
+            <textarea
+              id="dateUncertainty"
+              name="dateUncertainty"
+              rows={2}
+              value={formData.dateUncertainty}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+              placeholder="Explain an approximate date, conflicting sources, or the supported date range."
+            />
           </div>
 
           {/* Sources Field */}

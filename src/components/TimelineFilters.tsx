@@ -72,8 +72,7 @@ export function TimelineFilters({
   const tagButtonRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isFirstRender = useRef(true);
-  const isUpdatingFromUrl = useRef(false);
+  const isRestoringFromUrl = useRef(false);
 
   const toggleTag = (tagId: string) => {
     if (selectedTagIds.includes(tagId)) {
@@ -188,12 +187,7 @@ export function TimelineFilters({
   }, [isTagDropdownOpen]);
 
   useEffect(() => {
-    if (!isFirstRender.current) {
-      return;
-    }
-
-    isFirstRender.current = false;
-    isUpdatingFromUrl.current = true;
+    isRestoringFromUrl.current = true;
 
     const category = searchParams.get("category");
     const from = searchParams.get("from");
@@ -201,40 +195,27 @@ export function TimelineFilters({
     const tagNames = searchParams.get("tags");
     const tagMode = searchParams.get("tagMode");
 
-    if (category) {
-      setActiveCategory(category);
-    }
+    const parsedStartYear = Number.parseInt(from ?? "", 10);
+    const parsedEndYear = Number.parseInt(to ?? "", 10);
+    const nextStartYear = Number.isNaN(parsedStartYear)
+      ? minYear
+      : Math.max(minYear, Math.min(maxYear, parsedStartYear));
+    const nextEndYear = Number.isNaN(parsedEndYear)
+      ? maxYear
+      : Math.max(minYear, Math.min(maxYear, parsedEndYear));
+    const nextSelectedTagIds = tagNames
+      ? tagNames
+          .split(",")
+          .map((name) => tagNameToId.get(name))
+          .filter((id): id is string => id !== undefined)
+      : [];
 
-    if (from) {
-      const fromYear = Number.parseInt(from, 10);
-
-      if (!Number.isNaN(fromYear)) {
-        setStartYear(fromYear);
-      }
-    }
-
-    if (to) {
-      const toYear = Number.parseInt(to, 10);
-
-      if (!Number.isNaN(toYear)) {
-        setEndYear(toYear);
-      }
-    }
-
-    if (tagNames) {
-      const ids = tagNames
-        .split(",")
-        .map((name) => tagNameToId.get(name))
-        .filter((id): id is string => id !== undefined);
-
-      if (ids.length > 0) {
-        setSelectedTagIds(ids);
-      }
-    }
+    setActiveCategory(category);
+    setStartYear(Math.min(nextStartYear, nextEndYear));
+    setEndYear(Math.max(nextStartYear, nextEndYear));
+    setSelectedTagIds(nextSelectedTagIds);
 
     setTagFilterMode(tagMode === "any" ? "any" : "all");
-
-    isUpdatingFromUrl.current = false;
   }, [
     searchParams,
     setActiveCategory,
@@ -243,11 +224,14 @@ export function TimelineFilters({
     setSelectedTagIds,
     setTagFilterMode,
     tagNameToId,
+    minYear,
+    maxYear,
   ]);
 
   const currentUrlState = useMemo(() => {
     const params = new URLSearchParams();
     const searchString = searchParams.get("string");
+    const order = searchParams.get("order");
 
     if (activeCategory) {
       params.set("category", activeCategory);
@@ -279,6 +263,10 @@ export function TimelineFilters({
       params.set("string", searchString);
     }
 
+    if (order === "oldest") {
+      params.set("order", "oldest");
+    }
+
     return params.toString();
   }, [
     activeCategory,
@@ -293,7 +281,8 @@ export function TimelineFilters({
   ]);
 
   useEffect(() => {
-    if (isFirstRender.current || isUpdatingFromUrl.current) {
+    if (isRestoringFromUrl.current) {
+      isRestoringFromUrl.current = false;
       return;
     }
 
