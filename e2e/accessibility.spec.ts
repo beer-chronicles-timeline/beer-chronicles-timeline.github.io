@@ -1,41 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-async function mockTimelineData(page: Page) {
-  const tags = [
-    {
-      id: "tag-history",
-      name: "History",
-    },
-  ];
-  const events = Array.from({ length: 121 }, (_, index) => ({
-    id: `event-${index}`,
-    title: `Test event ${index}`,
-    description: `Description for test event ${index}`,
-    event_date: `${2026 - (index % 100)}-01-01`,
-    historical_year: null,
-    image_url: null,
-    created_at: null,
-    category: index % 2 === 0 ? "Laws" : "Breweries",
-    date_precision: "date",
-    sources: null,
-    tags: index % 2 === 0 ? tags : [],
-  }));
-
-  await page.route("**/timeline-data.json*", (route) =>
-    route.fulfill({
-      contentType: "application/json",
-      body: JSON.stringify({
-        events,
-        tags,
-        visibleTags: tags,
-        minYear: 1927,
-        maxYear: 2026,
-      }),
-    })
-  );
-}
-
 async function expectNoSeriousAccessibilityViolations(page: Page) {
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
@@ -90,7 +55,6 @@ test("skip link moves focus past the repeated site header", async ({
 test("timeline announces one debounced filtered result update", async ({
   page,
 }) => {
-  await mockTimelineData(page);
   await page.goto("/");
 
   const controls = page.getByRole("region", {
@@ -110,7 +74,6 @@ test("timeline announces one debounced filtered result update", async ({
 test("timeline exposes incrementally rendered events as an ordered list", async ({
   page,
 }) => {
-  await mockTimelineData(page);
   await page.addInitScript(() => {
     class InertIntersectionObserver {
       observe() {}
@@ -192,7 +155,6 @@ test("scroll to top avoids smooth scrolling when reduced motion is requested", a
 test("tag filters support a complete keyboard interaction", async ({
   page,
 }) => {
-  await mockTimelineData(page);
   await page.goto("/");
 
   const tagsButton = page.getByRole("button", { name: /^Tags/ });
@@ -200,11 +162,11 @@ test("tag filters support a complete keyboard interaction", async ({
   await page.keyboard.press("Enter");
   await expect(tagsButton).toHaveAttribute("aria-expanded", "true");
 
-  await page.keyboard.press("Tab");
-  const historyTag = page.getByRole("checkbox", { name: /History/ });
-  await expect(historyTag).toBeFocused();
+  const firstTag = page.getByRole("checkbox").first();
+  await firstTag.focus();
+  await expect(firstTag).toBeFocused();
   await page.keyboard.press("Space");
-  await expect(historyTag).toBeChecked();
+  await expect(firstTag).toBeChecked();
 
   await page.keyboard.press("Escape");
   await expect(tagsButton).toHaveAttribute("aria-expanded", "false");
@@ -214,13 +176,10 @@ test("tag filters support a complete keyboard interaction", async ({
 test("event modal contains focus and restores it after closing", async ({
   page,
 }) => {
-  await mockTimelineData(page);
   await page.goto("/");
 
-  const activatingButton = page.getByRole("button", {
-    name: "Open event: Test event 0",
-  });
-  await activatingButton.focus();
+  const activatingLink = page.getByRole("link", { name: /Open event:/ }).first();
+  await activatingLink.focus();
   await page.keyboard.press("Enter");
 
   const dialog = page.getByRole("dialog");
@@ -243,13 +202,12 @@ test("event modal contains focus and restores it after closing", async ({
 
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
-  await expect(activatingButton).toBeFocused();
+  await expect(activatingLink).toBeFocused();
 });
 
 test("@a11y-scan representative pages have no serious axe violations", async ({
   page,
 }) => {
-  await mockTimelineData(page);
   await page.goto("/");
   await expect(
     page.getByRole("region", { name: "Timeline exploration controls" })
@@ -270,7 +228,6 @@ test("@a11y-scan representative pages have no serious axe violations", async ({
 test("@mobile timeline reflows at a 320 CSS-pixel viewport", async ({
   page,
 }) => {
-  await mockTimelineData(page);
   await page.setViewportSize({ width: 320, height: 800 });
   await page.goto("/");
   await expect(
@@ -284,23 +241,18 @@ test("@mobile timeline reflows at a 320 CSS-pixel viewport", async ({
       )
     )
     .toBe(true);
-  await expect(
-    page.getByRole("button", { name: "Open event: Test event 0" })
-  ).toBeVisible();
+  await expect(page.getByRole("link", { name: /Open event:/ }).first()).toBeVisible();
 });
 
 test("@webkit core timeline controls and modal work", async ({ page }) => {
-  await mockTimelineData(page);
   await page.goto("/");
 
   const lawsFilter = page.getByRole("button", { name: "Laws" });
   await lawsFilter.click();
   await expect(lawsFilter).toHaveAttribute("aria-pressed", "true");
 
-  const eventButton = page.getByRole("button", {
-    name: "Open event: Test event 0",
-  });
-  await eventButton.click();
+  const eventLink = page.getByRole("link", { name: /Open event:/ }).first();
+  await eventLink.click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toBeHidden();

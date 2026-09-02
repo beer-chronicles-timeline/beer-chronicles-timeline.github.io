@@ -1,6 +1,7 @@
 import {
   compareEventsChronologicallyDescending,
   getEventTimelineYear,
+  truncate,
 } from "@/components/timelineUtils";
 import { supabase } from "@/lib/supabaseClient";
 import type { EventRow, Tag, TimelineEvent } from "@/lib/types";
@@ -17,6 +18,8 @@ export type HomeTimelineData = {
   minYear: number;
   maxYear: number;
 };
+
+export type HomeTimelineIndex = HomeTimelineData;
 
 const EVENT_TAG_PAGE_SIZE = 1000;
 const MIN_VISIBLE_TAG_EVENT_COUNT = 3;
@@ -140,5 +143,40 @@ export async function getHomeTimelineData(): Promise<HomeTimelineData> {
     tags,
     minYear,
     maxYear,
+  };
+}
+
+export function createHomeTimelineIndex(
+  timelineData: HomeTimelineData
+): HomeTimelineIndex {
+  return {
+    ...timelineData,
+    events: timelineData.events.map(
+      ({
+        id,
+        title,
+        description,
+        event_date,
+        historical_year,
+        category,
+        date_precision,
+        tags,
+      }) => ({
+        id,
+        title,
+        description: truncate(description, 170),
+        event_date,
+        historical_year,
+        category,
+        date_precision,
+        tags: tags?.map((tag) => ({
+          id: tag.id,
+          name: tag.name === "Milestone" ? tag.name : "",
+        })),
+        image_url: null,
+        created_at: null,
+        sources: null,
+      })
+    ),
   };
 }

@@ -1,23 +1,9 @@
 // components/TimelineFiltersWrapper.tsx
 "use client";
 
-import dynamic from "next/dynamic";
+import { TimelineFilters } from "./TimelineFilters";
 import type { Tag } from "@/lib/types";
 import type { TagFilterMode } from "./timelineFiltering";
-
-// Import the actual TimelineFilters component with SSR disabled
-const TimelineFilters = dynamic(
-  () => import("./TimelineFilters").then((mod) => mod.TimelineFilters),
-  {
-    ssr: false,
-    loading: () => (
-      <div
-        className="h-80 animate-pulse rounded-lg bg-stone-100 motion-reduce:animate-none md:h-40"
-        aria-hidden="true"
-      />
-    ),
-  }
-);
 
 type TimelineFiltersWrapperProps = {
   activeCategory: string | null;

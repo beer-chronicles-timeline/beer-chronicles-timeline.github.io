@@ -1,14 +1,14 @@
 // app/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
-import TimelineDataLoader from "@/components/TimelineDataLoader";
-import TimelinePreview from "@/components/TimelinePreview";
+import Timeline from "@/components/Timeline";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import HomepageStructuredData from "@/components/HomepageStructuredData";
 import MainContentStart from "@/components/MainContentStart";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
+import { createHomeTimelineIndex } from "@/lib/homeTimelineData";
 import type { TimelineEvent } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -36,7 +36,9 @@ function getTimelinePreviewEvents(
 }
 
 export default async function Home() {
-  const { events } = await getHomeTimelineData();
+  const timelineData = await getHomeTimelineData();
+  const timelineIndex = createHomeTimelineIndex(timelineData);
+  const { events } = timelineData;
   const previewEvents = getTimelinePreviewEvents(events);
 
   return (
@@ -124,9 +126,14 @@ export default async function Home() {
         </Link>
       </section>
 
-      <TimelineDataLoader>
-        <TimelinePreview events={previewEvents} />
-      </TimelineDataLoader>
+      <Timeline
+        events={timelineIndex.events.slice(0, 60)}
+        totalEventCount={timelineIndex.events.length}
+        allTags={timelineIndex.visibleTags}
+        urlTags={timelineIndex.tags}
+        minYear={timelineIndex.minYear}
+        maxYear={timelineIndex.maxYear}
+      />
 
       <Footer />
       <ScrollToTop />

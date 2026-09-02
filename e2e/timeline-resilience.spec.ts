@@ -1,46 +1,24 @@
-import { expect, test, type Page, type Route } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
-const timelineData = {
-  events: [
-    {
-      id: "resilience-event",
-      title: "Resilient timeline event",
-      description: "Timeline data loaded after the preview.",
-      event_date: "2026-01-01",
-      historical_year: null,
-      image_url: null,
-      created_at: null,
-      category: "Events",
-      date_precision: "date",
-      sources: null,
-      tags: [],
-    },
-  ],
-  tags: [],
-  visibleTags: [],
-  minYear: 2026,
-  maxYear: 2026,
-};
+test("server HTML exposes the real timeline before JavaScript runs", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
 
-function fulfillTimelineRequest(route: Route) {
-  return route.fulfill({
-    contentType: "application/json",
-    body: JSON.stringify(timelineData),
-  });
-}
+  await page.goto("/");
+  await expect(
+    page.getByRole("region", { name: "Timeline exploration controls" })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("list", { name: "Beer history timeline" }).getByRole("listitem")
+  ).toHaveCount(60);
+  await expect(page.getByText(/events in total/)).toBeVisible();
 
-async function expectPreviewToRemainVisible(page: Page) {
-  const preview = page.getByRole("region", {
-    name: "Explore beer history",
-  });
+  const firstEventLink = page.getByRole("link", { name: /Open event:/ }).first();
+  await expect(firstEventLink).toHaveAttribute("href", /^\/events\//);
+  await context.close();
+});
 
-  await expect(preview).toBeVisible();
-  await expect(preview.locator("article")).toHaveCount(6);
-}
-
-test("homepage preview remains visible until timeline data succeeds", async ({
-  page,
-}) => {
+test("timeline remains interactive while complete details preload", async ({ page }) => {
   let releaseRequest: (() => void) | undefined;
   const requestCanFinish = new Promise<void>((resolve) => {
     releaseRequest = resolve;
@@ -48,64 +26,28 @@ test("homepage preview remains visible until timeline data succeeds", async ({
 
   await page.route("**/timeline-data.json*", async (route) => {
     await requestCanFinish;
-    await fulfillTimelineRequest(route);
+    await route.continue();
   });
-
-  await page.goto("/", { waitUntil: "domcontentloaded" });
-  await expectPreviewToRemainVisible(page);
-  await expect(page.getByText("Loading the interactive timeline.")).toHaveCount(
-    1
-  );
-  await expect(
-    page.getByRole("region", { name: "Timeline exploration controls" })
-  ).toHaveCount(0);
-
-  releaseRequest?.();
-
-  await expect(
-    page.getByRole("region", { name: "Timeline exploration controls" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", {
-      name: "Open event: Resilient timeline event",
-    })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("region", { name: "Explore beer history" })
-  ).toHaveCount(0);
-});
-
-test("timeline failure keeps the preview and offers a working retry", async ({
-  page,
-}) => {
-  let requestCount = 0;
-
-  await page.route("**/timeline-data.json*", async (route) => {
-    requestCount += 1;
-
-    if (requestCount === 1) {
-      await route.fulfill({ status: 503, body: "Unavailable" });
-      return;
-    }
-
-    await fulfillTimelineRequest(route);
-  });
-
   await page.goto("/");
 
-  const failureMessage = page.getByRole("heading", {
-    name: "Interactive timeline unavailable",
+  const controls = page.getByRole("region", {
+    name: "Timeline exploration controls",
   });
-  await expect(failureMessage).toBeVisible();
-  await expectPreviewToRemainVisible(page);
+  await expect(controls).toHaveAttribute("data-timeline-ready", "true");
+  await controls.getByRole("button", { name: "Laws" }).click();
+  await expect(controls.getByText(/Showing \d+ of \d+ events/)).toBeVisible();
+  releaseRequest?.();
+});
 
-  await page.getByRole("button", { name: "Try again" }).click();
+test("a failed optional detail request follows the permanent event link", async ({ page }) => {
+  await page.route("**/timeline-data.json*", (route) =>
+    route.fulfill({ status: 503, body: "Unavailable" })
+  );
+  await page.goto("/");
 
-  await expect(failureMessage).toHaveCount(0);
-  await expect(
-    page.getByRole("button", {
-      name: "Open event: Resilient timeline event",
-    })
-  ).toBeVisible();
-  expect(requestCount).toBe(2);
+  const firstEventLink = page.getByRole("link", { name: /Open event:/ }).first();
+  const href = await firstEventLink.getAttribute("href");
+  expect(href).toMatch(/^\/events\//);
+  await firstEventLink.click();
+  await expect(page).toHaveURL(new RegExp(`${href}/?$`));
 });

@@ -14,6 +14,7 @@ const NETWORK_PROFILE = {
   uploadThroughput: 750_000 / 8,
 };
 const CPU_SLOWDOWN_RATE = 4;
+const PERFORMANCE_URL = process.env.TIMELINE_PERFORMANCE_URL;
 
 if (!Number.isInteger(RUN_COUNT) || RUN_COUNT < 1 || RUN_COUNT > 10) {
   throw new Error(
@@ -86,13 +87,15 @@ function formatKiB(value) {
   return `${(value / 1024).toFixed(1)} KiB`;
 }
 
-const port = await getAvailablePort();
-const baseUrl = `http://127.0.0.1:${port}`;
-const staticServer = spawn(
-  "python3",
-  ["-m", "http.server", String(port), "--bind", "127.0.0.1", "--directory", "out"],
-  { stdio: "ignore" }
-);
+const port = PERFORMANCE_URL ? null : await getAvailablePort();
+const baseUrl = PERFORMANCE_URL ?? `http://127.0.0.1:${port}`;
+const staticServer = PERFORMANCE_URL
+  ? null
+  : spawn(
+      "python3",
+      ["-m", "http.server", String(port), "--bind", "127.0.0.1", "--directory", "out"],
+      { stdio: "ignore" }
+    );
 let browser;
 
 try {
@@ -122,6 +125,7 @@ try {
     });
     await page.addInitScript(() => {
       window.__beerChroniclesLongTasks = [];
+      window.__beerChroniclesLargestContentfulPaint = 0;
 
       new PerformanceObserver((list) => {
         window.__beerChroniclesLongTasks.push(
@@ -131,18 +135,28 @@ try {
           }))
         );
       }).observe({ type: "longtask", buffered: true });
+
+      new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const latestEntry = entries.at(-1);
+        if (latestEntry) {
+          window.__beerChroniclesLargestContentfulPaint = latestEntry.startTime;
+        }
+      }).observe({ type: "largest-contentful-paint", buffered: true });
     });
 
     const navigationStartedAt = Date.now();
+    const timelineResponsePromise = page
+      .waitForResponse((response) => response.url().includes("/timeline-data.json"), {
+        timeout: 30_000,
+      })
+      .catch(() => null);
     await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
     await page
-      .getByRole("region", { name: "Explore beer history" })
-      .waitFor({ state: "visible" });
-    const previewReadyMilliseconds = Date.now() - navigationStartedAt;
-    await page
-      .getByRole("region", { name: "Timeline exploration controls" })
+      .locator('[aria-label="Timeline exploration controls"][data-timeline-ready="true"]')
       .waitFor({ state: "visible", timeout: 30_000 });
     const timelineReadyMilliseconds = Date.now() - navigationStartedAt;
+    await timelineResponsePromise;
 
     const browserMetrics = await page.evaluate(() => {
       const navigation = performance.getEntriesByType("navigation")[0];
@@ -153,12 +167,20 @@ try {
         .getEntriesByType("resource")
         .find((entry) => entry.name.includes("/timeline-data.json"));
       const longTasks = window.__beerChroniclesLongTasks ?? [];
+      const totalBlockingTime = longTasks.reduce(
+        (total, task) => total + Math.max(0, task.duration - 50),
+        0
+      );
 
       return {
         domContentLoadedMilliseconds:
           navigation?.domContentLoadedEventEnd ?? 0,
         firstContentfulPaintMilliseconds:
           firstContentfulPaint?.startTime ?? 0,
+        largestContentfulPaintMilliseconds:
+          window.__beerChroniclesLargestContentfulPaint ?? 0,
+        documentTransferBytes: navigation?.transferSize ?? 0,
+        documentDecodedBytes: navigation?.decodedBodySize ?? 0,
         timelineRequestMilliseconds: timelineResource?.duration ?? 0,
         timelineTransferBytes: timelineResource?.transferSize ?? 0,
         timelineDecodedBytes: timelineResource?.decodedBodySize ?? 0,
@@ -167,11 +189,11 @@ try {
           (total, task) => total + task.duration,
           0
         ),
+        totalBlockingTimeMilliseconds: totalBlockingTime,
       };
     });
 
     runs.push({
-      previewReadyMilliseconds,
       timelineReadyMilliseconds,
       ...browserMetrics,
     });
@@ -189,14 +211,17 @@ try {
     ["Viewport", "390 × 844 CSS px"],
     ["Network", "1.6 Mbps down, 750 Kbps up, 150 ms latency"],
     ["CPU slowdown", `${CPU_SLOWDOWN_RATE}×`],
-    ["Preview visible", formatMilliseconds(metrics.previewReadyMilliseconds)],
     ["First contentful paint", formatMilliseconds(metrics.firstContentfulPaintMilliseconds)],
+    ["Largest contentful paint", formatMilliseconds(metrics.largestContentfulPaintMilliseconds)],
     ["Timeline controls ready", formatMilliseconds(metrics.timelineReadyMilliseconds)],
+    ["Document transfer", formatKiB(metrics.documentTransferBytes)],
+    ["Document decoded body", formatKiB(metrics.documentDecodedBytes)],
     ["Timeline request", formatMilliseconds(metrics.timelineRequestMilliseconds)],
     ["Timeline transfer", formatKiB(metrics.timelineTransferBytes)],
     ["Timeline decoded body", formatKiB(metrics.timelineDecodedBytes)],
     ["Long tasks", String(Math.round(metrics.longTaskCount))],
     ["Total long-task time", formatMilliseconds(metrics.totalLongTaskMilliseconds)],
+    ["Approximate TBT", formatMilliseconds(metrics.totalBlockingTimeMilliseconds)],
   ];
 
   console.log("Mobile timeline performance (median):");
@@ -219,5 +244,5 @@ try {
   }
 } finally {
   await browser?.close();
-  staticServer.kill("SIGTERM");
+  staticServer?.kill("SIGTERM");
 }

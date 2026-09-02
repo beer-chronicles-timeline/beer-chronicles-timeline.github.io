@@ -1,4 +1,6 @@
 // components/EventCard.tsx
+import Link from "next/link";
+import { getEventPath } from "@/lib/eventUrls";
 import type { TimelineEvent } from "@/lib/types";
 import { formatEventDate, truncate } from "./timelineUtils";
 
@@ -88,9 +90,18 @@ export default function EventCard({ event, onClick }: EventCardProps) {
         </p>
       )}
 
-      <button
-        type="button"
-        onClick={onClick}
+      <Link
+        href={getEventPath(event.id, event.title)}
+        onClick={(clickEvent) => {
+          clickEvent.preventDefault();
+          onClick();
+        }}
+        onKeyDown={(keyboardEvent) => {
+          if (keyboardEvent.key === " ") {
+            keyboardEvent.preventDefault();
+            onClick();
+          }
+        }}
         aria-label={`Open event: ${event.title}`}
         className="absolute inset-0 cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
       />

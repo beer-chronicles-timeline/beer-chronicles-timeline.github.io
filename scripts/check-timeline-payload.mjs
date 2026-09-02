@@ -2,12 +2,15 @@ import { appendFile, readFile } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
 
 const TIMELINE_PATH = new URL("../out/timeline-data.json", import.meta.url);
+const HOMEPAGE_PATH = new URL("../out/index.html", import.meta.url);
 // These ceilings leave room for normal editorial growth while catching a
 // material, accidental jump before the static artifact is deployed.
 const MAX_RAW_BYTES = 1_150 * 1024;
 const MAX_GZIP_BYTES = 384 * 1024;
+const MAX_HOMEPAGE_GZIP_BYTES = 320 * 1024;
 
 const payload = await readFile(TIMELINE_PATH);
+const homepage = await readFile(HOMEPAGE_PATH);
 const timelineData = JSON.parse(payload);
 
 if (!Array.isArray(timelineData.events)) {
@@ -18,6 +21,7 @@ const rawBytes = payload.byteLength;
 const gzipBytes = gzipSync(payload).byteLength;
 const eventCount = timelineData.events.length;
 const gzipBytesPerEvent = eventCount === 0 ? 0 : gzipBytes / eventCount;
+const homepageGzipBytes = gzipSync(homepage).byteLength;
 
 const formatKiB = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`;
 
@@ -26,6 +30,27 @@ console.log(`  Events: ${eventCount}`);
 console.log(`  Raw: ${formatKiB(rawBytes)} / ${formatKiB(MAX_RAW_BYTES)}`);
 console.log(`  Gzip: ${formatKiB(gzipBytes)} / ${formatKiB(MAX_GZIP_BYTES)}`);
 console.log(`  Gzip per event: ${gzipBytesPerEvent.toFixed(0)} bytes`);
+console.log(`  Homepage raw: ${formatKiB(homepage.byteLength)}`);
+console.log(
+  `  Homepage gzip: ${formatKiB(homepageGzipBytes)} / ${formatKiB(MAX_HOMEPAGE_GZIP_BYTES)}`
+);
+
+const homepageHtml = homepage.toString("utf8");
+const renderedEventCount = homepageHtml.match(/aria-label="Open event:/g)?.length ?? 0;
+
+if (!homepageHtml.includes('aria-label="Timeline exploration controls"')) {
+  throw new Error("Homepage HTML does not contain the timeline controls.");
+}
+
+if (!homepageHtml.includes('aria-label="Beer history timeline"')) {
+  throw new Error("Homepage HTML does not contain timeline list semantics.");
+}
+
+if (renderedEventCount !== 60) {
+  throw new Error(
+    `Homepage HTML contains ${renderedEventCount} event cards instead of 60.`
+  );
+}
 
 if (process.env.GITHUB_STEP_SUMMARY) {
   await appendFile(
@@ -55,6 +80,12 @@ if (rawBytes > MAX_RAW_BYTES) {
 if (gzipBytes > MAX_GZIP_BYTES) {
   exceededBudgets.push(
     `gzip payload is ${formatKiB(gzipBytes)} (limit: ${formatKiB(MAX_GZIP_BYTES)})`
+  );
+}
+
+if (homepageGzipBytes > MAX_HOMEPAGE_GZIP_BYTES) {
+  exceededBudgets.push(
+    `homepage gzip is ${formatKiB(homepageGzipBytes)} (limit: ${formatKiB(MAX_HOMEPAGE_GZIP_BYTES)})`
   );
 }
 

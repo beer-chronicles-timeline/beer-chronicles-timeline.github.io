@@ -8,10 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import EventCard from "./EventCard";
@@ -20,8 +17,15 @@ import {
   type TagFilterMode,
 } from "./timelineFiltering";
 import { getRelatedEvents } from "./timelineUtils";
+import {
+  parseTimelineUrlState,
+  serializeTimelineUrlState,
+  type TimelineUrlState,
+} from "./timelineUrlState";
 import { copyText } from "@/lib/copyText";
+import { getEventPath } from "@/lib/eventUrls";
 import type { TimelineEvent, Tag } from "@/lib/types";
+import type { HomeTimelineData } from "@/lib/homeTimelineData";
 
 const TimelineModal = dynamic(() => import("./TimelineModal"), {
   ssr: false,
@@ -29,6 +33,7 @@ const TimelineModal = dynamic(() => import("./TimelineModal"), {
 
 type TimelineProps = {
   events: TimelineEvent[];
+  totalEventCount?: number;
 
   // Tags shown in the manual dropdown
   allTags: Tag[];
@@ -109,14 +114,13 @@ function TimelineSearch({ value, onChange }: TimelineSearchProps) {
 
 export default function Timeline({
   events,
+  totalEventCount = events.length,
   allTags,
   urlTags,
   minYear,
   maxYear,
 }: TimelineProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const skipNextTimelineUrlSyncRef = useRef(false);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const copyFeedbackTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -125,6 +129,10 @@ export default function Timeline({
   >(null);
   const [randomEvent, setRandomEvent] =
     useState<TimelineEvent | null>(null);
+  const [completeEvents, setCompleteEvents] = useState<TimelineEvent[] | null>(
+    null
+  );
+  const completeEventsPromiseRef = useRef<Promise<TimelineEvent[]> | null>(null);
   const [isRollingRandom, setIsRollingRandom] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState<
@@ -135,16 +143,10 @@ export default function Timeline({
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>(
     []
   );
-  const [tagFilterMode, setTagFilterMode] =
-    useState<TagFilterMode>(() =>
-      searchParams.get("tagMode") === "any" ? "any" : "all"
-    );
-  const [isOldestFirst, setIsOldestFirst] = useState(
-    () => searchParams.get("order") === "oldest"
-  );
-  const [searchQuery, setSearchQuery] = useState(
-    () => searchParams.get("string") ?? ""
-  );
+  const [tagFilterMode, setTagFilterMode] = useState<TagFilterMode>("all");
+  const [isOldestFirst, setIsOldestFirst] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [hasRestoredUrlState, setHasRestoredUrlState] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState("");
   const [resultsAnnouncement, setResultsAnnouncement] = useState("");
   const hasInitializedResultsAnnouncementRef = useRef(false);
@@ -158,51 +160,106 @@ export default function Timeline({
     []
   );
 
-  useEffect(() => {
-    const restoreTimelineViewFromUrl = () => {
-      const params = new URLSearchParams(window.location.search);
+  const loadCompleteEvents = useCallback(() => {
+    if (!completeEventsPromiseRef.current) {
+      completeEventsPromiseRef.current = fetch("/timeline-data.json")
+        .then((response) => {
+          if (!response.ok) throw new Error("Timeline detail request failed");
+          return response.json() as Promise<HomeTimelineData>;
+        })
+        .then((data) => {
+          setCompleteEvents(data.events);
+          return data.events;
+        })
+        .catch((error) => {
+          completeEventsPromiseRef.current = null;
+          throw error;
+        });
+    }
 
-      skipNextTimelineUrlSyncRef.current = true;
-      setSearchQuery(params.get("string") ?? "");
-      setIsOldestFirst(params.get("order") === "oldest");
+    return completeEventsPromiseRef.current;
+  }, []);
+
+  useEffect(() => {
+    void loadCompleteEvents().catch(() => {
+      // Permanent event links remain available if optional detail preloading fails.
+    });
+  }, [loadCompleteEvents]);
+
+  const timelineEvents = completeEvents ?? events;
+
+  const applyUrlState = useCallback((state: TimelineUrlState) => {
+    setActiveCategory(state.activeCategory);
+    setStartYear(state.startYear);
+    setEndYear(state.endYear);
+    setSelectedTagIds(state.selectedTagIds);
+    setTagFilterMode(state.tagFilterMode);
+    setSearchQuery(state.searchQuery);
+    setIsOldestFirst(state.isOldestFirst);
+  }, []);
+
+  const readUrlState = useCallback(
+    (search: string) =>
+      parseTimelineUrlState(search, { minYear, maxYear, urlTags }),
+    [minYear, maxYear, urlTags]
+  );
+
+  useEffect(() => {
+    const restoreInitialStateFrame = window.requestAnimationFrame(() => {
+      applyUrlState(readUrlState(window.location.search));
+      setHasRestoredUrlState(true);
+    });
+
+    const restoreTimelineViewFromUrl = () => {
+      applyUrlState(readUrlState(window.location.search));
     };
 
     window.addEventListener("popstate", restoreTimelineViewFromUrl);
 
     return () => {
+      window.cancelAnimationFrame(restoreInitialStateFrame);
       window.removeEventListener("popstate", restoreTimelineViewFromUrl);
     };
-  }, []);
+  }, [applyUrlState, readUrlState]);
 
   useEffect(() => {
-    if (skipNextTimelineUrlSyncRef.current) {
-      skipNextTimelineUrlSyncRef.current = false;
+    if (!hasRestoredUrlState) {
       return;
     }
 
-    const currentUrl =
-      window.location.pathname + window.location.search;
-    const params = new URLSearchParams(window.location.search);
-
-    if (searchQuery.trim() !== "") {
-      params.set("string", searchQuery.trim());
-    } else {
-      params.delete("string");
-    }
-
-    if (isOldestFirst) {
-      params.set("order", "oldest");
-    } else {
-      params.delete("order");
-    }
-
-    const queryString = params.toString();
+    const queryString = serializeTimelineUrlState(
+      {
+        activeCategory,
+        startYear,
+        endYear,
+        selectedTagIds,
+        tagFilterMode,
+        searchQuery,
+        isOldestFirst,
+      },
+      window.location.search,
+      { minYear, maxYear, urlTags }
+    );
     const newUrl = queryString ? `/?${queryString}` : "/";
+    const currentUrl = window.location.pathname + window.location.search;
 
     if (newUrl !== currentUrl) {
       router.replace(newUrl, { scroll: false });
     }
-  }, [searchQuery, isOldestFirst, router]);
+  }, [
+    activeCategory,
+    startYear,
+    endYear,
+    selectedTagIds,
+    tagFilterMode,
+    searchQuery,
+    isOldestFirst,
+    hasRestoredUrlState,
+    minYear,
+    maxYear,
+    urlTags,
+    router,
+  ]);
 
   const tagCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -211,19 +268,19 @@ export default function Timeline({
       counts.set(tag.id, 0);
     });
 
-    events.forEach((event) => {
+    timelineEvents.forEach((event) => {
       event.tags?.forEach((tag) => {
         counts.set(tag.id, (counts.get(tag.id) || 0) + 1);
       });
     });
 
     return counts;
-  }, [events, urlTags]);
+  }, [timelineEvents, urlTags]);
 
   const filteredEvents = useMemo(
     () =>
       filterTimelineEvents({
-        events,
+        events: timelineEvents,
         activeCategory,
         startYear,
         endYear,
@@ -233,7 +290,7 @@ export default function Timeline({
         searchQuery,
       }),
     [
-      events,
+      timelineEvents,
       activeCategory,
       startYear,
       endYear,
@@ -274,7 +331,9 @@ export default function Timeline({
       ? renderWindow.count
       : INITIAL_RENDERED_EVENT_COUNT;
   const renderedEvents = filteredEvents.slice(0, renderedEventCount);
-  const hasMoreEvents = renderedEvents.length < filteredEvents.length;
+  const hasMoreEvents = completeEvents
+    ? renderedEvents.length < filteredEvents.length
+    : renderedEvents.length < totalEventCount;
 
   const showMoreEvents = useCallback(() => {
     setRenderWindow((currentWindow) => ({
@@ -310,8 +369,10 @@ export default function Timeline({
     };
   }, [hasMoreEvents, renderedEvents.length, showMoreEvents]);
 
-  const totalEvents = events.length;
-  const showingCount = filteredEvents.length;
+  const totalEvents = totalEventCount;
+  const showingCount = completeEvents
+    ? filteredEvents.length
+    : totalEventCount;
 
   useEffect(() => {
     if (!hasInitializedResultsAnnouncementRef.current) {
@@ -337,20 +398,32 @@ export default function Timeline({
     selectedTagIds.length > 0 ||
     searchQuery.trim() !== "";
 
+  const completeEventById = useMemo(
+    () => new Map(completeEvents?.map((event) => [event.id, event]) ?? []),
+    [completeEvents]
+  );
   const selectedEvent =
     selectedEventIndex !== null
-      ? filteredEvents[selectedEventIndex]
+      ? completeEventById.get(filteredEvents[selectedEventIndex].id) ?? null
       : null;
 
   const modalEvent = randomEvent ?? selectedEvent;
   const isRandomDiscovery = randomEvent !== null;
   const relatedEvents = modalEvent
-    ? getRelatedEvents(modalEvent, events)
+    ? getRelatedEvents(modalEvent, timelineEvents)
     : [];
 
-  const handleOpenModal = (index: number) => {
+  const handleOpenModal = async (index: number) => {
     setRandomEvent(null);
-    setSelectedEventIndex(index);
+    try {
+      await loadCompleteEvents();
+      setSelectedEventIndex(index);
+    } catch {
+      window.location.assign(getEventPath(
+        filteredEvents[index].id,
+        filteredEvents[index].title
+      ));
+    }
   };
 
   const handleOpenRelatedEvent = (event: TimelineEvent) => {
@@ -365,55 +438,7 @@ export default function Timeline({
 
   const handleOpenFilterLink = (href: string) => {
     const url = new URL(href, window.location.origin);
-    const params = url.searchParams;
-
-    const selectedTagNames = params
-      .getAll("tags")
-      .flatMap((value) => value.split(","))
-      .map((value) => value.trim())
-      .filter(Boolean);
-
-    const nextSelectedTagIds = urlTags
-      .filter((tag) => selectedTagNames.includes(tag.name))
-      .map((tag) => tag.id);
-
-    const parsedStartYear = Number.parseInt(
-      params.get("from") ?? "",
-      10
-    );
-    const parsedEndYear = Number.parseInt(
-      params.get("to") ?? "",
-      10
-    );
-
-    const nextStartYear = Number.isFinite(parsedStartYear)
-      ? Math.max(minYear, Math.min(maxYear, parsedStartYear))
-      : minYear;
-
-    const nextEndYear = Number.isFinite(parsedEndYear)
-      ? Math.max(minYear, Math.min(maxYear, parsedEndYear))
-      : maxYear;
-
-    const nextSearchQuery = params.get("string") ?? "";
-
-    setActiveCategory(null);
-    setSelectedTagIds(nextSelectedTagIds);
-    setTagFilterMode(
-      params.get("tagMode") === "any" ? "any" : "all"
-    );
-    setStartYear(Math.min(nextStartYear, nextEndYear));
-    setEndYear(Math.max(nextStartYear, nextEndYear));
-
-    const nextIsOldestFirst = params.get("order") === "oldest";
-
-    if (
-      nextSearchQuery !== searchQuery ||
-      nextIsOldestFirst !== isOldestFirst
-    ) {
-      skipNextTimelineUrlSyncRef.current = true;
-      setSearchQuery(nextSearchQuery);
-      setIsOldestFirst(nextIsOldestFirst);
-    }
+    applyUrlState(readUrlState(url.search));
 
     handleCloseModal();
     router.push(href, { scroll: false });
@@ -451,19 +476,27 @@ export default function Timeline({
   }, [randomEvent]);
 
   const handleRandomEvent = () => {
-    if (events.length === 0 || isRollingRandom) {
+    if (timelineEvents.length === 0 || isRollingRandom) {
       return;
     }
 
     setIsRollingRandom(true);
 
-    window.setTimeout(() => {
+    window.setTimeout(async () => {
+      let discoveryEvents: TimelineEvent[];
+
+      try {
+        discoveryEvents = await loadCompleteEvents();
+      } catch {
+        setIsRollingRandom(false);
+        return;
+      }
       const randomIndex = Math.floor(
-        Math.random() * events.length
+        Math.random() * discoveryEvents.length
       );
 
       setSelectedEventIndex(null);
-      setRandomEvent(events[randomIndex]);
+      setRandomEvent(discoveryEvents[randomIndex]);
       setIsRollingRandom(false);
     }, 350);
   };
@@ -490,6 +523,7 @@ export default function Timeline({
     <>
       <section
         aria-label="Timeline exploration controls"
+        data-timeline-ready={hasRestoredUrlState ? "true" : "false"}
         className="mx-auto mb-4 w-full max-w-4xl border-y border-stone-200 py-2"
       >
         <p
@@ -675,7 +709,7 @@ export default function Timeline({
 
       <button
         onClick={handleRandomEvent}
-        disabled={events.length === 0 || isRollingRandom}
+        disabled={timelineEvents.length === 0 || isRollingRandom}
         className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-400 text-stone-900 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-500 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
         aria-label="Open random event"
         title="Open random event"
