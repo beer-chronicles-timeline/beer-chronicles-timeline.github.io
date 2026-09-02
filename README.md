@@ -43,11 +43,16 @@ npm run lint
 npm run typecheck
 npm test
 npm run build
+npx playwright install chromium firefox
+npm run test:e2e
 npm run check:timeline-payload
 git diff --check
 ```
 
 `npm run build` creates the statically exported site in `out/`.
+`npm run test:e2e` builds the site and runs the accessibility interaction suite
+in Chromium and Firefox. Its local server uses port `4173` by default; set
+`PLAYWRIGHT_PORT` to a free port when needed.
 `npm run check:timeline-payload` reports the timeline event count, raw and
 gzip-equivalent sizes, and compressed bytes per event. It fails when the
 generated payload exceeds its regression budgets.
