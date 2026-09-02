@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
 import EventCard from "./EventCard";
@@ -521,10 +522,44 @@ export default function Timeline({
 
   return (
     <>
+      <noscript>
+        <style>{`
+          .timeline-interactive-control {
+            display: none !important;
+          }
+        `}</style>
+
+        <section
+          className="mx-auto mb-4 w-full max-w-4xl rounded-xl border border-stone-200 bg-white px-6 py-5 text-center shadow-sm"
+          aria-labelledby="timeline-no-javascript-heading"
+        >
+          <h2
+            id="timeline-no-javascript-heading"
+            className="font-serif text-xl font-semibold text-stone-900"
+          >
+            Explore the timeline without JavaScript
+          </h2>
+
+          <p className="mt-2 text-sm leading-relaxed text-stone-600">
+            Interactive filters and additional timeline entries require
+            JavaScript. You can still explore the {renderedEvents.length}
+            {" "}entries below or browse{" "}
+            <Link href="/storylines" className="font-medium underline">
+              Beer Storylines
+            </Link>
+            .
+          </p>
+
+          <p className="mt-2 text-sm font-medium text-stone-700">
+            {totalEvents} events in total
+          </p>
+        </section>
+      </noscript>
+
       <section
         aria-label="Timeline exploration controls"
         data-timeline-ready={hasRestoredUrlState ? "true" : "false"}
-        className="mx-auto mb-4 w-full max-w-4xl border-y border-stone-200 py-2"
+        className="timeline-interactive-control mx-auto mb-4 w-full max-w-4xl border-y border-stone-200 py-2"
       >
         <p
           className="sr-only"
@@ -690,7 +725,7 @@ export default function Timeline({
           {hasMoreEvents && (
             <div
               ref={loadMoreRef}
-              className="relative z-10 flex justify-center bg-stone-50/90 py-6"
+              className="timeline-interactive-control relative z-10 flex justify-center bg-stone-50/90 py-6"
             >
               <button
                 type="button"
@@ -710,7 +745,7 @@ export default function Timeline({
       <button
         onClick={handleRandomEvent}
         disabled={timelineEvents.length === 0 || isRollingRandom}
-        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-400 text-stone-900 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-500 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
+        className="timeline-interactive-control fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-400 text-stone-900 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-500 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
         aria-label="Open random event"
         title="Open random event"
       >

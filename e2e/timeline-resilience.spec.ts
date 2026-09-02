@@ -5,13 +5,23 @@ test("server HTML exposes the real timeline before JavaScript runs", async ({ br
   const page = await context.newPage();
 
   await page.goto("/");
+  const noJavaScriptNotice = page.getByRole("region", {
+    name: "Explore the timeline without JavaScript",
+  });
+  await expect(noJavaScriptNotice).toBeVisible();
   await expect(
     page.getByRole("region", { name: "Timeline exploration controls" })
-  ).toBeVisible();
+  ).toBeHidden();
   await expect(
     page.getByRole("list", { name: "Beer history timeline" }).getByRole("listitem")
   ).toHaveCount(60);
-  await expect(page.getByText(/events in total/)).toBeVisible();
+  await expect(noJavaScriptNotice.getByText(/events in total/)).toBeVisible();
+  await expect(page.getByRole("button", { name: /Show more events/ })).toBeHidden();
+  await expect(page.getByRole("button", { name: "Open random event" })).toBeHidden();
+  await expect(page.getByRole("link", { name: "Beer Storylines" })).toHaveAttribute(
+    "href",
+    "/storylines"
+  );
 
   const firstEventLink = page.getByRole("link", { name: /Open event:/ }).first();
   await expect(firstEventLink).toHaveAttribute("href", /^\/events\//);
