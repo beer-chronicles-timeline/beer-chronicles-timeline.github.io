@@ -364,7 +364,8 @@ export default async function StorylinesPage() {
 
   return (
     <main
-      id="storylines-top"
+      id="main-content"
+      tabIndex={-1}
       className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col"
     >
       <header className="mb-8">
@@ -516,7 +517,7 @@ export default async function StorylinesPage() {
 
                   <div className="mt-6 flex justify-end">
                     <a
-                      href="#storylines-top"
+                      href="#main-content"
                       className="text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900"
                     >
                       Back to top ↑

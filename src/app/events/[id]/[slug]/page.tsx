@@ -138,7 +138,7 @@ export default async function EventPage({
   ).toString();
 
   return (
-    <main className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10">
+    <main id="main-content" tabIndex={-1} className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10">
       <EventStructuredData
         event={event}
         socialImageUrl={absoluteSocialImageUrl}

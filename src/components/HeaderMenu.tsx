@@ -70,23 +70,23 @@ export default function HeaderMenu() {
         ref={buttonRef}
         type="button"
         onClick={toggle}
-        className="inline-flex h-11 w-11 flex-col items-center justify-center rounded-full border bg-white shadow-sm transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+        className="inline-flex h-11 w-11 flex-col items-center justify-center rounded-full border bg-white shadow-sm transition motion-reduce:transition-none hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
         aria-label={open ? "Close navigation menu" : "Open navigation menu"}
         aria-expanded={open}
         aria-controls={navigationId}
       >
         <span
-          className={`h-0.5 w-5 bg-black rounded transition-transform ${
+          className={`h-0.5 w-5 bg-black rounded transition-transform motion-reduce:transition-none ${
             open ? "translate-y-1 rotate-45" : ""
           }`}
         />
         <span
-          className={`h-0.5 w-5 bg-black rounded my-0.5 transition-opacity ${
+          className={`h-0.5 w-5 bg-black rounded my-0.5 transition-opacity motion-reduce:transition-none ${
             open ? "opacity-0" : "opacity-100"
           }`}
         />
         <span
-          className={`h-0.5 w-5 bg-black rounded transition-transform ${
+          className={`h-0.5 w-5 bg-black rounded transition-transform motion-reduce:transition-none ${
             open ? "-translate-y-1 -rotate-45" : ""
           }`}
         />

@@ -6,6 +6,7 @@ import TimelinePreview from "@/components/TimelinePreview";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import HomepageStructuredData from "@/components/HomepageStructuredData";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import type { TimelineEvent } from "@/lib/types";
 
@@ -38,7 +39,9 @@ export default async function Home() {
   const previewEvents = getTimelinePreviewEvents(events);
 
   return (
-    <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+      <HomepageStructuredData previewEvents={previewEvents} />
+
       <h1 className="sr-only">
         Beer Chronicles: An Interactive Beer History Timeline
       </h1>

@@ -9,6 +9,7 @@ import {
 import type { TimelineEvent } from "@/lib/types";
 import EventDetailContent from "./EventDetailContent";
 import RelatedEvents from "./RelatedEvents";
+import { prefersReducedMotion } from "@/lib/motionPreferences";
 
 type TimelineModalProps = {
   event: TimelineEvent;
@@ -94,7 +95,7 @@ export default function TimelineModal({
   useEffect(() => {
     modalContentRef.current?.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
   }, [event.id]);
 
@@ -164,7 +165,7 @@ export default function TimelineModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="timeline-modal-title"
-      className="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-0 bg-black/50 p-4 transition-opacity duration-200 open:flex open:items-center open:justify-center"
+      className="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-0 bg-black/50 p-4 transition-opacity duration-200 motion-reduce:transition-none open:flex open:items-center open:justify-center"
       onClick={onClose}
       onCancel={(event) => {
         event.preventDefault();
@@ -173,7 +174,7 @@ export default function TimelineModal({
     >
       <div
         ref={modalContentRef}
-        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-stone-400 bg-white p-6 opacity-100 shadow-2xl ring-1 ring-black/10 transition-all duration-200"
+        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-stone-400 bg-white p-6 opacity-100 shadow-2xl ring-1 ring-black/10 transition-all duration-200 motion-reduce:transition-none"
         onClick={(mouseEvent) => mouseEvent.stopPropagation()}
         onClickCapture={handleContentClickCapture}
       >

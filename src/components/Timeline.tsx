@@ -41,6 +41,7 @@ type TimelineProps = {
 };
 
 const SEARCH_DEBOUNCE_MS = 250;
+const RESULTS_ANNOUNCEMENT_DEBOUNCE_MS = 500;
 const INITIAL_RENDERED_EVENT_COUNT = 60;
 const RENDERED_EVENT_BATCH_SIZE = 60;
 
@@ -145,6 +146,8 @@ export default function Timeline({
     () => searchParams.get("string") ?? ""
   );
   const [copyFeedback, setCopyFeedback] = useState("");
+  const [resultsAnnouncement, setResultsAnnouncement] = useState("");
+  const hasInitializedResultsAnnouncementRef = useRef(false);
 
   useEffect(
     () => () => {
@@ -310,6 +313,23 @@ export default function Timeline({
   const totalEvents = events.length;
   const showingCount = filteredEvents.length;
 
+  useEffect(() => {
+    if (!hasInitializedResultsAnnouncementRef.current) {
+      hasInitializedResultsAnnouncementRef.current = true;
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setResultsAnnouncement(
+        showingCount === 0
+          ? "No events match your filters."
+          : `Showing ${showingCount} of ${totalEvents} events.`
+      );
+    }, RESULTS_ANNOUNCEMENT_DEBOUNCE_MS);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [renderWindowKey, showingCount, totalEvents]);
+
   const hasActiveFilters =
     activeCategory !== null ||
     startYear !== minYear ||
@@ -472,6 +492,14 @@ export default function Timeline({
         aria-label="Timeline exploration controls"
         className="mx-auto mb-4 w-full max-w-4xl border-y border-stone-200 py-2"
       >
+        <p
+          className="sr-only"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {resultsAnnouncement}
+        </p>
         <TimelineFiltersWrapper
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
@@ -569,12 +597,15 @@ export default function Timeline({
         <div className="relative">
           <div className="absolute left-4 top-0 h-full w-1.5 -translate-x-1/2 bg-gray-300 md:left-1/2"></div>
 
-          <div className="flex flex-col gap-0">
+          <ol
+            className="m-0 flex list-none flex-col gap-0 p-0"
+            aria-label="Beer history timeline"
+          >
             {renderedEvents.map((event, index) => {
               const isLeft = index % 2 === 0;
 
               return (
-                <div
+                <li
                   key={event.id}
                   className="relative flex w-full items-start pb-5 last:pb-0 md:-mt-8 md:items-center md:pb-0 md:first:mt-0"
                 >
@@ -617,10 +648,10 @@ export default function Timeline({
                       />
                     )}
                   </div>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ol>
 
           {hasMoreEvents && (
             <div
@@ -645,13 +676,13 @@ export default function Timeline({
       <button
         onClick={handleRandomEvent}
         disabled={events.length === 0 || isRollingRandom}
-        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-600 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
+        className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-600 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
         aria-label="Open random event"
         title="Open random event"
       >
         <span
           className={`text-xl md:mr-2 ${
-            isRollingRandom ? "animate-spin" : ""
+            isRollingRandom ? "animate-spin motion-reduce:animate-none" : ""
           }`}
         >
           🎲

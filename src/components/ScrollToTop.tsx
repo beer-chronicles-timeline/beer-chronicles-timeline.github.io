@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { prefersReducedMotion } from "@/lib/motionPreferences";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,7 +24,7 @@ export default function ScrollToTop() {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
   };
 
@@ -32,7 +33,7 @@ export default function ScrollToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-40 rounded-full bg-stone-800 p-3 text-white shadow-lg transition-all duration-200 hover:bg-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+          className="fixed bottom-6 right-6 z-40 rounded-full bg-stone-800 p-3 text-white shadow-lg transition-all duration-200 hover:bg-stone-900 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           aria-label="Scroll to top"
         >
           <svg

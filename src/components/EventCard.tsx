@@ -40,7 +40,7 @@ export default function EventCard({ event, onClick }: EventCardProps) {
 
   return (
     <div
-      className={`${cardClasses} relative block max-w-sm w-full cursor-pointer rounded-lg p-3.5 text-left transition-all duration-150 hover:scale-[1.02]`}
+      className={`${cardClasses} relative block max-w-sm w-full cursor-pointer rounded-lg p-3.5 text-left transition-all duration-150 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:scale-100`}
     >
       <div className="flex items-start justify-between gap-2">
         <p className="text-xs font-medium leading-snug text-stone-500">
