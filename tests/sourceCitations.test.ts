@@ -48,6 +48,39 @@ test("removes a complete inline URL from the displayed citation text", () => {
   );
 });
 
+test("parses the legacy serialized source array into separate citations", () => {
+  assert.deepEqual(
+    parseSourceCitations(
+      JSON.stringify([
+        {
+          url: "https://example.com/first/",
+          title: 'Publisher. "First article."',
+        },
+        {
+          url: "https://archive.example.org/second/",
+          title: 'Archive. "Second article."',
+        },
+      ])
+    ),
+    [
+      {
+        text: ['Publisher. "First article."'],
+        urls: ["https://example.com/first/"],
+      },
+      {
+        text: ['Archive. "Second article."'],
+        urls: ["https://archive.example.org/second/"],
+      },
+    ]
+  );
+});
+
+test("falls back to free-form parsing for an invalid structured shape", () => {
+  assert.deepEqual(parseSourceCitations('[{"title":"Incomplete"}]'), [
+    { text: ['[{"title":"Incomplete"}]'], urls: [] },
+  ]);
+});
+
 test("preserves unlinked sources and URL-only sources", () => {
   assert.deepEqual(
     parseSourceCitations(

@@ -5,6 +5,46 @@ export type SourceCitation = {
 
 const sourceUrlRegex = /\b(?:https?:\/\/[^\s<>)]+|www\.[^\s<>)]+)/gi;
 
+type LegacyStructuredSource = {
+  title: string;
+  url: string;
+};
+
+function parseLegacyStructuredSources(
+  sources: string
+): SourceCitation[] | null {
+  if (!sources.startsWith("[")) {
+    return null;
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(sources);
+
+    if (
+      !Array.isArray(parsed) ||
+      parsed.length === 0 ||
+      !parsed.every(
+        (source): source is LegacyStructuredSource =>
+          typeof source === "object" &&
+          source !== null &&
+          typeof (source as LegacyStructuredSource).title === "string" &&
+          (source as LegacyStructuredSource).title.trim() !== "" &&
+          typeof (source as LegacyStructuredSource).url === "string" &&
+          (source as LegacyStructuredSource).url.trim() !== ""
+      )
+    ) {
+      return null;
+    }
+
+    return parsed.map((source) => ({
+      text: [source.title.trim()],
+      urls: [source.url.trim()],
+    }));
+  } catch {
+    return null;
+  }
+}
+
 function parseSourceParagraph(paragraph: string): SourceCitation[] {
   const citations: SourceCitation[] = [];
   let current: SourceCitation = { text: [], urls: [] };
@@ -45,8 +85,17 @@ function parseSourceParagraph(paragraph: string): SourceCitation[] {
 export function parseSourceCitations(
   sources: string | null | undefined
 ): SourceCitation[] {
-  const paragraphs = (sources ?? "")
+  const normalizedSources = (sources ?? "")
     .replaceAll("\r\n", "\n")
+    .trim();
+  const legacyStructuredSources =
+    parseLegacyStructuredSources(normalizedSources);
+
+  if (legacyStructuredSources) {
+    return legacyStructuredSources;
+  }
+
+  const paragraphs = normalizedSources
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean)
