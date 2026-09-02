@@ -61,9 +61,9 @@ export default function ChallengesPage() {
       <header className="mb-8">
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">BEER</Link>
-          </h1>
+          </p>
           <HeaderMenu />
         </div>
 
@@ -71,12 +71,12 @@ export default function ChallengesPage() {
         <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
           <div />
           <div className="text-center">
-            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
+            <p className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">BEER CHRONICLES</Link>
-            </h1>
-            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+            </p>
+            <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
-            </h2>
+            </p>
           </div>
           <div className="flex min-w-0 justify-end">
             <HeaderMenu />
@@ -85,19 +85,19 @@ export default function ChallengesPage() {
 
         {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
         <div className="block md:hidden mt-2">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">CHRONICLES</Link>
-          </h1>
-          <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+          </p>
+          <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
             Open Research Challenges
-          </h2>
+          </p>
         </div>
       </header>
 
       <section className="max-w-3xl mx-auto w-full">
-        <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
+        <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
           Open Research Challenges
-        </h2>
+        </h1>
 
         <div className="space-y-4 text-gray-800">
           <p>

@@ -40,6 +40,8 @@ type TimelineProps = {
 };
 
 const SEARCH_DEBOUNCE_MS = 250;
+const INITIAL_RENDERED_EVENT_COUNT = 60;
+const RENDERED_EVENT_BATCH_SIZE = 60;
 
 type TimelineSearchProps = {
   value: string;
@@ -113,6 +115,7 @@ export default function Timeline({
   const router = useRouter();
   const searchParams = useSearchParams();
   const skipNextSearchUrlSyncRef = useRef(false);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const [selectedEventIndex, setSelectedEventIndex] = useState<
     number | null
@@ -201,6 +204,72 @@ export default function Timeline({
       searchQuery,
     ]
   );
+
+  const renderWindowKey = useMemo(
+    () =>
+      JSON.stringify([
+        activeCategory,
+        startYear,
+        endYear,
+        selectedTagIds,
+        tagFilterMode,
+        isOldestFirst,
+        searchQuery,
+      ]),
+    [
+      activeCategory,
+      startYear,
+      endYear,
+      selectedTagIds,
+      tagFilterMode,
+      isOldestFirst,
+      searchQuery,
+    ]
+  );
+  const [renderWindow, setRenderWindow] = useState({
+    key: renderWindowKey,
+    count: INITIAL_RENDERED_EVENT_COUNT,
+  });
+  const renderedEventCount =
+    renderWindow.key === renderWindowKey
+      ? renderWindow.count
+      : INITIAL_RENDERED_EVENT_COUNT;
+  const renderedEvents = filteredEvents.slice(0, renderedEventCount);
+  const hasMoreEvents = renderedEvents.length < filteredEvents.length;
+
+  const showMoreEvents = useCallback(() => {
+    setRenderWindow((currentWindow) => ({
+      key: renderWindowKey,
+      count:
+        (currentWindow.key === renderWindowKey
+          ? currentWindow.count
+          : INITIAL_RENDERED_EVENT_COUNT) +
+        RENDERED_EVENT_BATCH_SIZE,
+    }));
+  }, [renderWindowKey]);
+
+  useEffect(() => {
+    const target = loadMoreRef.current;
+
+    if (!target || !hasMoreEvents || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          showMoreEvents();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasMoreEvents, renderedEvents.length, showMoreEvents]);
 
   const totalEvents = events.length;
   const showingCount = filteredEvents.length;
@@ -458,7 +527,7 @@ export default function Timeline({
           <div className="absolute left-4 top-0 h-full w-1.5 -translate-x-1/2 bg-gray-300 md:left-1/2"></div>
 
           <div className="flex flex-col gap-0">
-            {filteredEvents.map((event, index) => {
+            {renderedEvents.map((event, index) => {
               const isLeft = index % 2 === 0;
 
               return (
@@ -509,6 +578,24 @@ export default function Timeline({
               );
             })}
           </div>
+
+          {hasMoreEvents && (
+            <div
+              ref={loadMoreRef}
+              className="relative z-10 flex justify-center bg-stone-50/90 py-6"
+            >
+              <button
+                type="button"
+                onClick={showMoreEvents}
+                className="min-h-11 rounded-full border border-stone-300 bg-white px-5 py-2 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+              >
+                Show more events
+                <span className="sr-only">
+                  {`, ${filteredEvents.length - renderedEvents.length} remaining`}
+                </span>
+              </button>
+            </div>
+          )}
         </div>
       )}
 

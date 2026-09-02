@@ -1,11 +1,12 @@
 // components/HeaderMenu.tsx
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 
 export default function HeaderMenu() {
   const [open, setOpen] = useState(false);
+  const navigationId = useId();
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -70,9 +71,9 @@ export default function HeaderMenu() {
         type="button"
         onClick={toggle}
         className="inline-flex h-11 w-11 flex-col items-center justify-center rounded-full border bg-white shadow-sm transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
-        aria-label="Open menu"
+        aria-label={open ? "Close navigation menu" : "Open navigation menu"}
         aria-expanded={open}
-        aria-haspopup="menu"
+        aria-controls={navigationId}
       >
         <span
           className={`h-0.5 w-5 bg-black rounded transition-transform ${
@@ -93,15 +94,14 @@ export default function HeaderMenu() {
 
       {/* Dropdown menu */}
       {open && (
-        <div
-          role="menu"
-          aria-label="Main menu"
-          className="absolute right-0 mt-2 w-52 rounded-lg bg-white shadow-lg border z-30"
+        <nav
+          id={navigationId}
+          aria-label="Main navigation"
+          className="absolute right-0 z-30 mt-2 w-52 rounded-lg border bg-white py-1 text-sm shadow-lg"
         >
-          <nav className="py-1 text-sm">
+          <div>
             <Link
               href="/"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
@@ -110,7 +110,6 @@ export default function HeaderMenu() {
 
             <Link
               href="/storylines"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
@@ -119,7 +118,6 @@ export default function HeaderMenu() {
 
             <Link
               href="/about"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
@@ -128,7 +126,6 @@ export default function HeaderMenu() {
 
             <Link
               href="/tastings"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
@@ -137,7 +134,6 @@ export default function HeaderMenu() {
 
             <Link
               href="/editorial-principles"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
@@ -146,7 +142,6 @@ export default function HeaderMenu() {
 
             <Link
               href="/sources"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
@@ -155,7 +150,6 @@ export default function HeaderMenu() {
 
             <Link
               href="/challenges"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
@@ -164,14 +158,13 @@ export default function HeaderMenu() {
 
             <Link
               href="/submit"
-              role="menuitem"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
             >
               Submit an Entry
             </Link>
-          </nav>
-        </div>
+          </div>
+        </nav>
       )}
     </div>
   );

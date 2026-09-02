@@ -1,12 +1,13 @@
 // app/page.tsx
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import TimelineDataLoader from "@/components/TimelineDataLoader";
-import TimelineLoadingState from "@/components/TimelineLoadingState";
+import TimelinePreview from "@/components/TimelinePreview";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import { getHomeTimelineData } from "@/lib/homeTimelineData";
+import type { TimelineEvent } from "@/lib/types";
 
 export const metadata: Metadata = {
   alternates: {
@@ -14,17 +15,42 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+const TIMELINE_PREVIEW_COUNT = 6;
+
+function getTimelinePreviewEvents(
+  events: TimelineEvent[]
+): TimelineEvent[] {
+  if (events.length <= TIMELINE_PREVIEW_COUNT) {
+    return events;
+  }
+
+  return Array.from({ length: TIMELINE_PREVIEW_COUNT }, (_, index) => {
+    const eventIndex = Math.round(
+      (index * (events.length - 1)) / (TIMELINE_PREVIEW_COUNT - 1)
+    );
+
+    return events[eventIndex];
+  });
+}
+
+export default async function Home() {
+  const { events } = await getHomeTimelineData();
+  const previewEvents = getTimelinePreviewEvents(events);
+
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+      <h1 className="sr-only">
+        Beer Chronicles: An Interactive Beer History Timeline
+      </h1>
+
       <header className="mb-6">
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">
               BEER
             </Link>
-          </h1>
+          </p>
 
           <HeaderMenu />
         </div>
@@ -34,15 +60,15 @@ export default function Home() {
           <div />
 
           <div className="text-center">
-            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
+            <p className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
-            </h1>
+            </p>
 
-            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+            <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
-            </h2>
+            </p>
           </div>
 
           <div className="flex min-w-0 justify-end">
@@ -52,15 +78,15 @@ export default function Home() {
 
         {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
         <div className="block md:hidden mt-2">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">
               CHRONICLES
             </Link>
-          </h1>
+          </p>
 
-          <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+          <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
             An Interactive Beer History Timeline
-          </h2>
+          </p>
         </div>
       </header>
 
@@ -92,9 +118,9 @@ export default function Home() {
         </Link>
       </section>
 
-      <Suspense fallback={<TimelineLoadingState />}>
-        <TimelineDataLoader />
-      </Suspense>
+      <TimelineDataLoader>
+        <TimelinePreview events={previewEvents} />
+      </TimelineDataLoader>
 
       <Footer />
       <ScrollToTop />

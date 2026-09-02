@@ -1,11 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { HomeTimelineData } from "@/lib/homeTimelineData";
 import Timeline from "./Timeline";
-import TimelineLoadingState from "./TimelineLoadingState";
 
-export default function TimelineDataLoader() {
+type TimelineDataLoaderProps = {
+  children: ReactNode;
+};
+
+export default function TimelineDataLoader({
+  children,
+}: TimelineDataLoaderProps) {
   const [timelineData, setTimelineData] =
     useState<HomeTimelineData | null>(null);
   const [hasError, setHasError] = useState(false);
@@ -46,15 +51,17 @@ export default function TimelineDataLoader() {
 
   if (hasError) {
     return (
-      <section
-        className="mx-auto flex min-h-[60vh] w-full max-w-4xl items-center justify-center px-4 py-12"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        <div className="w-full max-w-md rounded-xl border border-stone-200 bg-white px-6 py-8 text-center shadow-sm">
+      <div>
+        {children}
+
+        <section
+          className="mx-auto mt-6 w-full max-w-4xl rounded-xl border border-stone-200 bg-white px-6 py-5 text-center shadow-sm"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="font-serif text-xl font-semibold text-stone-900">
-            Timeline unavailable
+            Interactive timeline unavailable
           </h2>
 
           <p className="mt-2 text-sm leading-relaxed text-stone-600">
@@ -72,13 +79,20 @@ export default function TimelineDataLoader() {
           >
             Try again
           </button>
-        </div>
-      </section>
+        </section>
+      </div>
     );
   }
 
   if (!timelineData) {
-    return <TimelineLoadingState />;
+    return (
+      <div aria-busy="true">
+        {children}
+        <p className="sr-only" role="status" aria-live="polite">
+          Loading the interactive timeline.
+        </p>
+      </div>
+    );
   }
 
   return (

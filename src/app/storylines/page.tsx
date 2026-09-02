@@ -369,11 +369,11 @@ export default async function StorylinesPage() {
     >
       <header className="mb-8">
         <div className="flex items-start justify-between gap-2 md:hidden">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">
               BEER
             </Link>
-          </h1>
+          </p>
 
           <HeaderMenu />
         </div>
@@ -382,15 +382,15 @@ export default async function StorylinesPage() {
           <div />
 
           <div className="text-center">
-            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
+            <p className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
-            </h1>
+            </p>
 
-            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+            <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
-            </h2>
+            </p>
           </div>
 
           <div className="flex min-w-0 justify-end">
@@ -399,26 +399,26 @@ export default async function StorylinesPage() {
         </div>
 
         <div className="block md:hidden mt-2">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">
               CHRONICLES
             </Link>
-          </h1>
+          </p>
 
-          <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+          <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
             Beer History Storylines
-          </h2>
+          </p>
         </div>
       </header>
 
       <section className="max-w-4xl mx-auto w-full">
         <div aria-labelledby="storylines-heading">
-          <h2
+          <h1
             id="storylines-heading"
             className="text-2xl font-semibold font-serif text-stone-900 mb-2"
           >
             Explore Beer Through Its Storylines
-          </h2>
+          </h1>
 
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-500 mb-4">
             {totalStorylines} connected histories

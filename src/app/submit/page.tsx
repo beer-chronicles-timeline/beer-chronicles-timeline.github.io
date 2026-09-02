@@ -1,9 +1,8 @@
 // app/submit/page.tsx
 "use client";
 
-import { Suspense, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import HeaderMenu from "@/components/HeaderMenu";
 import Footer from "@/components/Footer";
 
@@ -23,19 +22,48 @@ function isCanonicalEventUrl(value: string): boolean {
   }
 }
 
-function SubmitForm() {
-  const searchParams = useSearchParams();
+type CorrectionContext = {
+  eventTitle: string;
+  eventUrl: string;
+};
+
+function getCorrectionContext(search: string): CorrectionContext | null {
+  const searchParams = new URLSearchParams(search);
   const eventTitle = searchParams.get("eventTitle")?.trim() ?? "";
   const eventUrl = searchParams.get("eventUrl")?.trim() ?? "";
-  const isCorrection =
-    searchParams.get("submissionType") === "correction" &&
-    eventTitle !== "" &&
-    isCanonicalEventUrl(eventUrl);
+
+  if (
+    searchParams.get("submissionType") !== "correction" ||
+    eventTitle === "" ||
+    !isCanonicalEventUrl(eventUrl)
+  ) {
+    return null;
+  }
+
+  return { eventTitle, eventUrl };
+}
+
+function subscribeToLocationSearch() {
+  return () => {};
+}
+
+export default function SubmitPage() {
+  const locationSearch = useSyncExternalStore(
+    subscribeToLocationSearch,
+    () => window.location.search,
+    () => ""
+  );
+  const correctionContext = useMemo(
+    () => getCorrectionContext(locationSearch),
+    [locationSearch]
+  );
+  const isCorrection = correctionContext !== null;
+  const eventUrl = correctionContext?.eventUrl ?? "";
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    title: isCorrection ? eventTitle : "",
+    title: null as string | null,
     description: "",
     eventDate: "",
     datePrecision: "date",
@@ -46,6 +74,9 @@ function SubmitForm() {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+
+  const submittedTitle =
+    formData.title ?? correctionContext?.eventTitle ?? "";
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -70,7 +101,7 @@ function SubmitForm() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          title: formData.title,
+          title: submittedTitle,
           description: formData.description,
           eventDate: formData.eventDate,
           datePrecision: formData.datePrecision,
@@ -113,11 +144,11 @@ function SubmitForm() {
       <header className="mb-8">
         {/* Mobile layout: menu and BEER on same line */}
         <div className="flex items-start justify-between gap-2 md:hidden">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">
               BEER
             </Link>
-          </h1>
+          </p>
           <HeaderMenu />
         </div>
 
@@ -125,14 +156,14 @@ function SubmitForm() {
         <div className="hidden md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
           <div />
           <div className="text-center">
-            <h1 className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
+            <p className="whitespace-nowrap font-serif text-3xl font-semibold tracking-tight text-stone-900 lg:text-4xl">
               <Link href="/" className="hover:no-underline">
                 BEER CHRONICLES
               </Link>
-            </h1>
-            <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
+            </p>
+            <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm whitespace-nowrap">
               An Interactive Beer History Timeline
-            </h2>
+            </p>
           </div>
           <div className="flex min-w-0 justify-end">
             <HeaderMenu />
@@ -141,23 +172,23 @@ function SubmitForm() {
 
         {/* Subtitle - visible on both, but on mobile it appears below the BEER+menu line */}
         <div className="block md:hidden mt-2">
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
+          <p className="text-4xl font-semibold tracking-tight text-stone-900 font-serif">
             <Link href="/" className="hover:no-underline">
               CHRONICLES
             </Link>
-          </h1>
-          <h2 className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
+          </p>
+          <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
             An Interactive Beer History Timeline
-          </h2>
+          </p>
         </div>
       </header>
 
       <section className="max-w-2xl mx-auto">
-        <h2 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
+        <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
           {isCorrection
             ? "Suggest a Correction or Additional Source"
             : "Submit a New Beer History Entry"}
-        </h2>
+        </h1>
 
         <p className="text-gray-600 mb-4">
           {isCorrection ? (
@@ -269,7 +300,7 @@ function SubmitForm() {
               id="title"
               name="title"
               required
-              value={formData.title}
+              value={submittedTitle}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
               placeholder="e.g., Reinheitsgebot enacted in Bavaria"
@@ -419,13 +450,5 @@ function SubmitForm() {
 
       <Footer />
     </main>
-  );
-}
-
-export default function SubmitPage() {
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-stone-50" />}>
-      <SubmitForm />
-    </Suspense>
   );
 }

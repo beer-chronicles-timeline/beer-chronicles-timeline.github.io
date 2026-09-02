@@ -20,12 +20,14 @@ type EventDetailContentProps = {
   event: TimelineEvent;
   showPermanentLink?: boolean;
   titleAs?: "h1" | "h2";
+  titleId?: string;
 };
 
 export default function EventDetailContent({
   event,
   showPermanentLink = false,
   titleAs = "h1",
+  titleId,
 }: EventDetailContentProps) {
   const rawSourceLines = (event.sources ?? "")
     .split("\n")
@@ -44,6 +46,7 @@ export default function EventDetailContent({
         </p>
 
         <Title
+          id={titleId}
           className={`font-serif text-2xl font-semibold leading-tight text-stone-900 ${
             isPermanentPage ? "break-words md:text-3xl" : ""
           }`}

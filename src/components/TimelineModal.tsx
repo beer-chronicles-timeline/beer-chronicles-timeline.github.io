@@ -35,7 +35,34 @@ export default function TimelineModal({
   hasPrev,
   isRandomDiscovery = false,
 }: TimelineModalProps) {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
   const modalContentRef = useRef<HTMLDivElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    const activatingElement =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    if (!dialog) {
+      return;
+    }
+
+    dialog.showModal();
+    closeButtonRef.current?.focus();
+
+    return () => {
+      if (dialog.open) {
+        dialog.close();
+      }
+
+      if (activatingElement?.isConnected) {
+        activatingElement.focus({ preventScroll: true });
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const scrollY = window.scrollY;
@@ -132,9 +159,17 @@ export default function TimelineModal({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 transition-opacity duration-200"
+    <dialog
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="timeline-modal-title"
+      className="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-0 bg-black/50 p-4 transition-opacity duration-200 open:flex open:items-center open:justify-center"
       onClick={onClose}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
     >
       <div
         ref={modalContentRef}
@@ -143,6 +178,7 @@ export default function TimelineModal({
         onClickCapture={handleContentClickCapture}
       >
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
           className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-xl shadow-sm hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
@@ -164,6 +200,7 @@ export default function TimelineModal({
             event={event}
             showPermanentLink
             titleAs="h2"
+            titleId="timeline-modal-title"
           />
         </div>
 
@@ -202,6 +239,6 @@ export default function TimelineModal({
           </>
         )}
       </div>
-    </div>
+    </dialog>
   );
 }
