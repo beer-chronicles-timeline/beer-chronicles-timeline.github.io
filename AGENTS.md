@@ -57,6 +57,7 @@ Distinguish evidence, inference, and uncertainty. If reliable evidence is insuff
 - Instagram images and captions plus Bluesky content: `instagram-bluesky-content`.
 - Read-only taxonomy/tag audits, cleanup proposals, and SQL proposals: `tag-cleanup`.
 - Independent read-only audit of exactly one published Storyline: `storyline-audit`.
+- Creation and read-only verification of local Supabase database backups: `supabase-backup`.
 
 Task-specific skills may refine workflows and report formats but may never weaken this file's safety, factual-integrity, human-authority, or database rules.
 

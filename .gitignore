@@ -44,7 +44,7 @@ yarn-error.log*
 next-env.d.ts
 
 # Local Supabase backups
-supabase-backup/
+/supabase-backup/
 /ai-commandments/
 /insta-logo/
 /literature-to-crawl/

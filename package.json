@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "backup:supabase": "bash scripts/backup-supabase.sh",
     "dev": "next dev",
     "build": "next build",
     "check:source-links": "tsx scripts/check-source-links.ts",
