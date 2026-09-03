@@ -356,6 +356,24 @@ export const STORYLINES: Storyline[] = [
     featuredEventId: "e4cf71f5-d58f-48a0-9942-c2871e8b9f63",
   },
   {
+    slug: "beer-labor-and-workers",
+    sectionId: "industry-and-culture",
+    title: "Beer, Labor, and Workers",
+    description:
+      "Trace brewery and agricultural workers through union organizing, mechanization, strikes, beer-hall protests, and broad consumer boycotts.",
+    tagNames: ["Labor"],
+    featuredEventId: "c1ce64af-6429-48a5-b55b-52feddc86e04",
+  },
+  {
+    slug: "brewing-empires-and-industry-consolidation",
+    sectionId: "industry-and-culture",
+    title: "Brewing Empires and Industry Consolidation",
+    description:
+      "Follow brewery mergers, multinational combinations, major acquisitions, and corporate restructuring from regional consolidation to global brewing groups.",
+    tagNames: ["Industry Consolidation"],
+    featuredEventId: "80a420de-63c7-4295-8d36-7cf03bd37c13",
+  },
+  {
     slug: "advertising-branding-and-consumer-culture",
     sectionId: "industry-and-culture",
     title: "Advertising, Branding, and Consumer Culture",

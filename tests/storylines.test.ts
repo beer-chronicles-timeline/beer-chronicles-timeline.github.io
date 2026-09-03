@@ -64,6 +64,21 @@ test("every Storyline uses its existing editorial description as an introduction
   );
 });
 
+test("the Storyline collection includes the labor and consolidation narratives", () => {
+  assert.equal(STORYLINES.length, 40);
+
+  const labor = STORYLINES.find(
+    ({ slug }) => slug === "beer-labor-and-workers"
+  );
+  const consolidation = STORYLINES.find(
+    ({ slug }) =>
+      slug === "brewing-empires-and-industry-consolidation"
+  );
+
+  assert.deepEqual(labor?.tagNames, ["Labor"]);
+  assert.deepEqual(consolidation?.tagNames, ["Industry Consolidation"]);
+});
+
 test("existing filtered-Timeline Storyline URLs remain available", () => {
   const storyline = STORYLINES.find(
     ({ slug }) => slug === "porter-stout-and-guinness"
