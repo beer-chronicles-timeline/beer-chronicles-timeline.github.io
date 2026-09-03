@@ -444,8 +444,9 @@ export default async function StorylinesPage() {
 
         {!errorMessage && (
           <nav
+            id="storyline-sections"
             aria-labelledby="section-navigation-heading"
-            className="mt-10 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
+            className="mt-10 scroll-mt-6 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
           >
             <h2
               id="section-navigation-heading"
@@ -520,8 +521,15 @@ export default async function StorylinesPage() {
 
                   <div className="mt-6 flex justify-end">
                     <a
+                      href="#storyline-sections"
+                      className="text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900 md:hidden"
+                    >
+                      Back to sections ↑
+                    </a>
+
+                    <a
                       href="#storylines-top"
-                      className="text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900"
+                      className="hidden text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900 md:inline"
                     >
                       Back to top ↑
                     </a>

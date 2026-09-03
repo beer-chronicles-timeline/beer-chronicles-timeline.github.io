@@ -152,6 +152,33 @@ test("scroll to top avoids smooth scrolling when reduced motion is requested", a
     .toBe("auto");
 });
 
+test("@mobile Storyline sections link back to the section navigation", async ({
+  page,
+}) => {
+  await page.goto("/storylines.html");
+
+  const sectionNavigation = page.getByRole("navigation", {
+    name: "Browse by section",
+  });
+  const backToSectionsLinks = page.getByRole("link", {
+    name: "Back to sections ↑",
+  });
+
+  await expect(sectionNavigation).toHaveAttribute(
+    "id",
+    "storyline-sections"
+  );
+  await expect(backToSectionsLinks).toHaveCount(5);
+  await expect(backToSectionsLinks.first()).toHaveAttribute(
+    "href",
+    "#storyline-sections"
+  );
+  await expect(backToSectionsLinks.first()).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Back to top ↑" }).first()
+  ).toBeHidden();
+});
+
 test("tag filters support a complete keyboard interaction", async ({
   page,
 }) => {
