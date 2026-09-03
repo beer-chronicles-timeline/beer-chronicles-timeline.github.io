@@ -122,7 +122,7 @@ Do not save drafts or previews to a final approved path.
 
 After the user explicitly approves the **exact final image**, save it as:
 
-`insta-post-images/<filename>.png`
+`images/insta-post-images/<filename>.png`
 
 Create a human-readable filename in the established style:
 
