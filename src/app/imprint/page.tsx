@@ -89,9 +89,9 @@ export default function ImprintPage() {
 
         <div className="space-y-8 text-gray-700 leading-relaxed">
           <section>
-            <h3 className="text-lg font-semibold text-stone-900 mb-2">
+            <h2 className="text-lg font-semibold text-stone-900 mb-2">
               Information pursuant to § 5 DDG
-            </h3>
+            </h2>
 
             <address className="not-italic">
               Martin Schmidt
@@ -105,9 +105,9 @@ export default function ImprintPage() {
           </section>
 
           <section>
-            <h3 className="text-lg font-semibold text-stone-900 mb-2">
+            <h2 className="text-lg font-semibold text-stone-900 mb-2">
               Contact
-            </h3>
+            </h2>
 
             <p>
               Email:{" "}
@@ -121,9 +121,9 @@ export default function ImprintPage() {
           </section>
 
           <section>
-            <h3 className="text-lg font-semibold text-stone-900 mb-2">
+            <h2 className="text-lg font-semibold text-stone-900 mb-2">
               Responsible for editorial content
-            </h3>
+            </h2>
 
             <p>
               Responsible pursuant to § 18(2) MStV:
@@ -139,9 +139,9 @@ export default function ImprintPage() {
           </section>
 
           <section>
-            <h3 className="text-lg font-semibold text-stone-900 mb-2">
+            <h2 className="text-lg font-semibold text-stone-900 mb-2">
               Amazon Partner Programme
-            </h3>
+            </h2>
 
             <p>
               Beer Chronicles participates in the Amazon EU Associates
@@ -151,9 +151,9 @@ export default function ImprintPage() {
           </section>
 
           <section>
-            <h3 className="text-lg font-semibold text-stone-900 mb-2">
+            <h2 className="text-lg font-semibold text-stone-900 mb-2">
               Privacy information
-            </h3>
+            </h2>
 
             <p>
               Information about website analytics and submission data is
