@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import MapExplorer from "@/components/MapExplorer";
+import MapPlaceIndex from "@/components/MapPlaceIndex";
+import MapStructuredData from "@/components/MapStructuredData";
 import ScrollToTop from "@/components/ScrollToTop";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import { buildMapLocations } from "@/lib/mapLocations";
@@ -39,6 +41,7 @@ export default async function MapPage() {
       tabIndex={-1}
       className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10"
     >
+      <MapStructuredData locations={locations} />
       <header className="mb-8">
         <div className="flex items-start justify-between gap-2 md:hidden">
           <p className="font-serif text-4xl font-semibold tracking-tight text-stone-900">
@@ -98,6 +101,7 @@ export default async function MapPage() {
         </section>
 
         <MapExplorer locations={locations} />
+        <MapPlaceIndex locations={locations} />
         <Footer />
       </div>
 

@@ -38,6 +38,7 @@ type MapPlace = {
 type MapLocationAssignment = {
   eventId: string;
   placeId: keyof typeof MAP_PLACES;
+  locationRole?: string;
 };
 
 /**
@@ -57,6 +58,7 @@ const MAP_PLACES = {
   baltimore: { name: "Baltimore, Maryland, United States", latitude: 39.2908816, longitude: -76.610759, precision: "city", locationRole: "City stated in entry" },
   bamberg: { name: "Bamberg, Germany", latitude: 49.8916044, longitude: 10.8868478, precision: "city", locationRole: "City stated in entry" },
   bayreuth: { name: "Bayreuth, Germany", latitude: 49.9446345, longitude: 11.5743543, precision: "city", locationRole: "City stated in entry" },
+  boernicke: { name: "Gutshof Börnicke, Bernau bei Berlin, Germany", latitude: 52.6630156, longitude: 13.634126, precision: "exact", locationRole: "First brewing site stated in entry" },
   bavaria: {
     name: "Bavaria, Germany",
     latitude: 48.9467562,
@@ -172,6 +174,7 @@ const MAP_PLACES = {
   lurago_marinone: { name: "Lurago Marinone, Italy", latitude: 45.705775, longitude: 8.981338, precision: "city", locationRole: "Municipality stated in entry" },
   manila: { name: "Manila, Philippines", latitude: 14.5904492, longitude: 120.9803621, precision: "city", locationRole: "City stated in entry" },
   madison: { name: "Madison, Wisconsin, United States", latitude: 43.07469, longitude: -89.3841663, precision: "city", locationRole: "City stated in entry" },
+  malle: { name: "Malle, Belgium", latitude: 51.2968544, longitude: 4.693771, precision: "city", locationRole: "Seat of the International Trappist Association" },
   maxeville: { name: "Maxéville, France", latitude: 48.7119046, longitude: 6.1641314, precision: "city", locationRole: "Municipality stated in entry" },
   mexico: { name: "Mexico", latitude: 23.6585116, longitude: -102.0077097, precision: "country", locationRole: "Country scope stated in entry" },
   middelburg: { name: "Middelburg, Netherlands", latitude: 51.4996784, longitude: 3.6137371, precision: "city", locationRole: "City stated in entry" },
@@ -258,6 +261,7 @@ const MAP_PLACES = {
   tacuba: { name: "Tacuba, Mexico City, Mexico", latitude: 19.4553604, longitude: -99.1907173, precision: "city", locationRole: "Named locality stated in entry" },
   trumpington: { name: "Trumpington, Cambridge, England", latitude: 52.172142, longitude: 0.1126099, precision: "city", locationRole: "Named locality stated in entry" },
   temecula: { name: "Temecula, California, United States", latitude: 33.494, longitude: -117.148, precision: "city", locationRole: "City stated in entry" },
+  timmendorfer_strand: { name: "Timmendorfer Strand, Germany", latitude: 53.9981853, longitude: 10.7799016, precision: "city", locationRole: "Founding municipality supported by entry sources" },
   tokyo: { name: "Tokyo, Japan", latitude: 35.6764, longitude: 139.6500, precision: "city", locationRole: "City stated in entry" },
   tilburg: { name: "Tilburg, Netherlands", latitude: 51.5856185, longitude: 5.0660616, precision: "city", locationRole: "City stated in entry" },
   toledo: { name: "Toledo, Ohio, United States", latitude: 41.6529143, longitude: -83.5378173, precision: "city", locationRole: "City stated in entry" },
@@ -812,6 +816,14 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "2de4cb9a-3d70-4f44-bf4d-e0a77af36e3a", placeId: "adamstown" },
   { eventId: "b9a15e3a-56b5-43e6-b5f3-7cbf2c4255ad", placeId: "schwechat" },
   { eventId: "51cfd1be-6bb3-4187-8004-6de627ded7fc", placeId: "lower_yangzi" },
+  { eventId: "2f4c9537-d65e-431a-8247-1d139519bf3c", placeId: "boernicke" },
+  { eventId: "e2eec07c-37b5-4a69-af4e-314acba829d6", placeId: "timmendorfer_strand" },
+  {
+    eventId: "7f17d369-7120-4614-b6b6-8740a2f4e1cf",
+    placeId: "united_states",
+    locationRole: "Country of the organization issuing the guidelines",
+  },
+  { eventId: "2adad940-15db-4407-83dd-62383d2b93a5", placeId: "malle" },
 ];
 
 export function buildMapLocations(
@@ -838,7 +850,7 @@ export function buildMapLocations(
         longitude: place.longitude,
         placeId: assignment.placeId,
         placeName: place.name,
-        locationRole: place.locationRole,
+        locationRole: assignment.locationRole ?? place.locationRole,
         precision: place.precision,
       },
     ];
