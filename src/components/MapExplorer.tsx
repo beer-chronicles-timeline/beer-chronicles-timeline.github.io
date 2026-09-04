@@ -131,9 +131,12 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
             <p className="mt-1 text-sm text-stone-600" aria-live="polite">
               {visibleUniqueEntryCount} mapped{" "}
               {visibleUniqueEntryCount === 1 ? "entry" : "entries"}
-              {visibleLocations.length !== visibleUniqueEntryCount && (
-                <> · {visibleLocations.length} map locations</>
-              )}
+              {" · "}
+              {visibleLocations.length} geographic{" "}
+              {visibleLocations.length === 1 ? "connection" : "connections"}
+              {" · "}
+              {visibleGroups.length} reviewed{" "}
+              {visibleGroups.length === 1 ? "place" : "places"}
             </p>
           </div>
 
@@ -232,7 +235,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
           </div>
 
           <aside
-            className="rounded-xl border border-stone-200 bg-stone-50 p-5"
+            className="rounded-xl border border-stone-200 bg-stone-50 p-5 max-sm:pb-16 max-sm:pr-16"
             aria-label="Selected map entry"
           >
             {selectedGroup ? (
