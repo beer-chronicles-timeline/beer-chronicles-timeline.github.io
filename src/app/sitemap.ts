@@ -21,6 +21,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${BASE_URL}/storylines`,
     },
     {
+      url: `${BASE_URL}/map`,
+    },
+    {
       url: `${BASE_URL}/about`,
     },
     {

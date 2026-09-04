@@ -21,6 +21,10 @@ export default function Footer() {
           Storylines
         </Link>
 
+        <Link href="/map" className={linkClassName}>
+          Beer Map
+        </Link>
+
         <Link href="/about" className={linkClassName}>
           About
         </Link>

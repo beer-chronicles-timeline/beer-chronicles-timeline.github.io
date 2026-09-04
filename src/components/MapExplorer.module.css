@@ -1,0 +1,78 @@
+.mapFrame {
+  position: relative;
+  min-height: 34rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #e7e5e4;
+}
+
+.mapCanvas {
+  position: absolute;
+  inset: 0;
+}
+
+.mapCanvas :global(.maplibregl-map) {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-sans), sans-serif;
+}
+
+.mapCanvas :global(.maplibregl-ctrl-group) {
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 18%);
+}
+
+.mapCanvas :global(.maplibregl-ctrl-attrib) {
+  font-size: 0.6875rem;
+}
+
+.marker {
+  display: inline-grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  cursor: pointer;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 9999px;
+  background: #57534e;
+  color: white;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 35%);
+}
+
+.marker[data-precision="region"],
+.marker[data-precision="country"] {
+  border-style: dashed;
+  background: #a16207;
+}
+
+.marker[data-precision="cluster"] {
+  width: 3rem;
+  height: 3rem;
+  background: #292524;
+}
+
+.marker:focus-visible {
+  border-radius: 9999px;
+  outline: 3px solid #292524;
+  outline-offset: 2px;
+}
+
+.emptyState {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: min(28rem, calc(100% - 2rem));
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .mapFrame {
+    min-height: 26rem;
+    border-radius: 0.75rem;
+  }
+}
