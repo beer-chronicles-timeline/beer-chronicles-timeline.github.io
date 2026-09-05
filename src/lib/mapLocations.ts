@@ -55,6 +55,9 @@ const MAP_PLACES = {
   amsterdam: { name: "Amsterdam, Netherlands", latitude: 52.3730796, longitude: 4.8924534, precision: "city", locationRole: "City stated in entry" },
   augsburg: { name: "Augsburg, Germany", latitude: 48.3690341, longitude: 10.8979522, precision: "city", locationRole: "City stated in entry" },
   australia: { name: "Australia", latitude: -24.7761086, longitude: 134.755, precision: "country", locationRole: "Country scope stated in entry" },
+  // Settlement coordinates: UK PCGN Netherlands Toponymic Factfile (2025), p. 11.
+  // https://assets.publishing.service.gov.uk/media/68aee36c960e2d135b4c8e76/Netherlands_Toponymic_Factfile.pdf
+  baarle_hertog: { name: "Baarle-Hertog, Belgium", latitude: 51.445278, longitude: 4.929444, precision: "city", locationRole: "Municipality stated in entry" },
   baltimore: { name: "Baltimore, Maryland, United States", latitude: 39.2908816, longitude: -76.610759, precision: "city", locationRole: "City stated in entry" },
   bamberg: { name: "Bamberg, Germany", latitude: 49.8916044, longitude: 10.8868478, precision: "city", locationRole: "City stated in entry" },
   bayreuth: { name: "Bayreuth, Germany", latitude: 49.9446345, longitude: 11.5743543, precision: "city", locationRole: "City stated in entry" },
@@ -824,6 +827,10 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
     locationRole: "Country of the organization issuing the guidelines",
   },
   { eventId: "2adad940-15db-4407-83dd-62383d2b93a5", placeId: "malle" },
+  { eventId: "7a02e86e-7b4a-491c-9d6e-dd9c0e464903", placeId: "baarle_hertog" },
+  { eventId: "28e573d1-cc5f-4a4b-a8c7-f3eb5c32e5c2", placeId: "berlin" },
+  { eventId: "ab79b574-6844-4d0e-a1f6-5ad50520bc67", placeId: "berlin" },
+  { eventId: "5b1fddba-8460-42a7-91d1-72a7cc551b67", placeId: "berlin" },
 ];
 
 export function buildMapLocations(
