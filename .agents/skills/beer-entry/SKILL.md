@@ -1,6 +1,6 @@
 ---
 name: beer-entry
-description: Research and prepare a new or updated Beer Chronicles timeline entry, including evidence, date precision, category, tags, and an optional copy-paste SQL proposal for human review. Never execute SQL or mutate editorial data.
+description: Research and prepare a new or updated Beer Chronicles timeline entry, including research, conceptual duplicate checks, dates, tags, Beer Map integration, and copy-paste SQL proposals for human review. Never execute SQL or mutate editorial data.
 ---
 
 # Beer Chronicles Entry Research and Proposal
@@ -28,14 +28,15 @@ Never invent historical facts, sources, relationships, or significance. Distingu
 
 ### 2. Check duplicates and overlap
 
-Search the live site for:
+Before proposing any new entry, search the complete current published timeline, not just a search-results page, title list, or selected Storyline. Inspect the live timeline payload or another complete read-only source, check pagination/completeness, and record when it was retrieved. A database export is not required. If coverage is incomplete, disclose that limitation and do not label the candidate duplicate-cleared.
 
-- title and title variants;
-- central people, breweries, organizations, laws, competitions, publications, and places;
-- the proposed date and nearby dates;
-- entries that may describe the same historical event.
-
-Distinguish a true duplicate from overlapping subject matter or a separate related event. Prefer an update proposal over a duplicate when the evidence shows one event. Do not require a database export for routine duplicate checking.
+- Search titles, full descriptions, and sources for the event’s subject, mechanism, purpose, people, organizations, places, synonyms, translations, former names, and date variants. A different title, company, date precision, or vocabulary does not establish a distinct historical event.
+- Read the complete records of plausible matches and inspect relevant Storylines. Look for the proposed development already explained inside another event, even when it is not in that event’s title or tags.
+- Compare every candidate with the other entries in the proposed batch. Distinguish invention, patent grant, first practical installation, later adoption, and a product application only when sources establish genuinely different milestones. Do not split one development merely to increase the entry count.
+- Record each credible overlap by existing UUID/title and decide: leave unchanged, enrich/correct in place, retag/link if justified and within scope, merge proposed coverage, or create a demonstrably distinct entry. Explain the historical distinction for retained near-matches.
+- If an existing entry covers the essential event, do not insert another. Assess whether it should be extended; when SQL is requested, include the justified in-place update in that proposal, preserving verified text, sources, identity, and tags. If no extension is warranted, report why it stays unchanged.
+- Repeat the duplicate check after research changes the candidate’s date or scope, and refresh live state before final SQL if the corpus may have changed. SQL title/UUID guards prevent accidental reruns; they do not detect conceptual duplicates.
+- When a user identifies a missed duplicate, inspect both full records and correct the affected proposal before reusing it. If already published, prepare an explicit human-reviewed correction proposal; never silently delete or mutate records.
 
 ### 3. Research and evaluate sources
 
@@ -96,13 +97,13 @@ Clearly present:
 - Prefer an in-place update proposal when the record identity is verified.
 - Never propose deletion merely for convenience. A user request to consider deletion still requires evidence and human approval.
 
-## Beer Map is part of an entry batch
+## Beer Map is part of every new entry
 
-Treat a batch of new timeline entries and its Beer Map coverage as one editorial package; do not wait for a separate map request. For an individual entry, also check whether its existing map assignment needs to be added or revised. Research-only requests receive map recommendations rather than implementation.
+Treat every new timeline entry, whether requested individually or in a batch, and its Beer Map coverage as one package. When geographical evidence is sufficient, prepare the actual matching map assignment in the same task without waiting for a separate map request. For an updated entry, check whether its assignment needs revision. Research-only requests receive map recommendations rather than implementation.
 
 - Inspect `src/lib/mapLocations.ts` and the current map workflow. Reuse supported places and follow the existing coordinate, precision, and location-role conventions.
 - Research the location of the actual historical milestone. Distinguish invention, patent jurisdiction, supplier base, brewery installation, and later adoption. Never infer an installation site from a company’s modern headquarters. Use a supported city/region/country scope when exact-site evidence is unavailable; if even that is unsupported, report the unresolved map location instead of inventing a pin.
-- When preparing a publication batch with SQL, prepare reviewable local map-assignment changes using `website-development`, keyed to the same fixed event UUIDs as the unexecuted SQL. Preserve existing assignments unless the research justifies a change. This does not authorize editorial-data mutation, committing, pushing, or deployment.
+- When preparing any new entry with SQL, prepare reviewable local map-assignment changes using `website-development`, keyed to the same fixed event UUIDs as the unexecuted SQL. Preserve existing assignments unless the research justifies a change. Database execution remains exclusively human; use the publication completion steps below for authorized repository changes.
 - Verify that every retained new event produces its intended map assignment when supplied to the map builder, and that absent proposed events produce no markers. Check precision, location role, date label, and event link; run proportionate existing checks.
 - Report timeline, tags/Storylines, and map readiness together. State that publication requires the user’s manual SQL execution and a subsequent authorized build/deployment containing both the data and map code. SQL alone cannot publish map assignments.
 
@@ -138,13 +139,23 @@ Whenever SQL is produced, also save the complete proposal in the repository at `
 - Never execute the saved SQL.
 - Report the file path in the final response.
 
+## Publication completion: build, commit, and push
+
+For a publication task with map/code changes, use `website-development` and carry the authorized work through build, commit, and push rather than stopping at local edits. Honor build/commit/push authorization already given in the conversation; do not ask again. These instructions do not independently authorize Git publication when the user requested only research or a proposal, and never authorize SQL execution.
+
+- Prepare and validate the complete editorial and map package before publication. After the user manually applies SQL, read the resulting live records to confirm UUIDs, content, and tags; use observed state rather than assuming execution from elapsed time or a local file.
+- Run the relevant checks and `npm run build` before pushing code/map changes. When new data is present, verify the new entries in the generated timeline and map, and check the timeline payload budget. If data is still absent, report that the prepared map assignments cannot yet appear publicly; do not claim the entries are live.
+- If commit/push is authorized, stage only reviewed task files, commit, and push after the required checks pass. Preserve unrelated work and respect ignored local SQL proposals and editor backups. Report the commit hash and push outcome.
+- Inspect the GitHub Pages workflow triggered by the push. Distinguish pushed, deployment running, deployment successful, and live verification completed. When deployment succeeds, verify the expected entries on the published timeline and Beer Map before claiming publication is complete.
+- If this is only a skill/documentation change, validate the skill and diff; application builds are needed only when requested or relevant. Never report checks or publication steps that were not performed.
+
 ## Self-check and output
 
 Before answering, verify:
 
 - every factual claim is supported and fact is separated from inference;
 - source access and limitations are represented honestly;
-- duplicate checking was completed or its limitation disclosed;
+- complete-corpus and within-batch conceptual duplicate checks were completed, with explicit decisions for credible overlaps; incomplete coverage is disclosed;
 - title, description, category, and date precision do not overstate evidence;
 - tags are sparse, canonical where possible, and supported;
 - existing verified work is preserved;
@@ -152,6 +163,6 @@ Before answering, verify:
 - SQL, if included, matches verified schema, is complete, safe, and explicitly unexecuted;
 - Beer Map coverage, matching UUIDs, location evidence, and any unresolved map exclusions are included in the entry package.
 
-Return the editorial proposal, source assessment, separate related opportunities, and—when justified—the SQL proposal with a brief change summary. Then stop for human review.
+Return the editorial proposal, source assessment, separate related opportunities, and—when justified—the SQL proposal with a brief change summary. For a proposal-only request, then stop for human review. For an authorized publication task, complete the publication steps above and report any remaining data or deployment dependency.
 
 If evidence is insufficient, do not generate speculative entry text or SQL. State: “The available sources are insufficient to create or update a Beer Chronicles entry,” and explain what is missing.
