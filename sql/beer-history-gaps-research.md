@@ -1,6 +1,6 @@
 # Beer Chronicles: history gaps research and editorial proposal
 
-Prepared September 5, 2026. **UNEXECUTED editorial proposal: seven new entries, four enrichments, and one existing-date correction.** No editorial database changes have been executed. Matching local Beer Map assignments use the proposed fixed UUIDs. After human SQL execution, a subsequent build/deployment must export the new live data.
+Prepared September 5, 2026. **Execution update: the user explicitly approved the backup, exact SQL execution, verification, and rebuild/deployment bundle. The transaction subsequently committed seven new entries, four enrichments, and one existing-date correction.** The research and original proposal-stage verification below are retained as the review record; their unexecuted/pending statements describe that earlier stage. See the execution record at the end for the applied state.
 
 ## Complete-corpus duplicate audit
 
@@ -376,3 +376,18 @@ Verification completed before Git publication:
 - `git diff --check`: passed.
 
 The unrelated untracked editor backup `sql/modern-brewery-technology-proposal.sql~` was preserved. The local SQL proposal remains ignored and unexecuted.
+
+
+## Approved execution record — September 5, 2026
+
+The user approved the specific backup → exact SQL application → verification → timeline/map rebuild and deployment bundle in the conversation. This grants no standing permission for future backend actions. AGENTS.md and the beer-entry skill now require an explicit conversational request and affirmative answer before each described backend/Supabase action or bundle, including reads and data-reading builds. Once approved, only that scope may be executed.
+
+- Before execution, the SQL SHA-256 matched the reviewed file: `95ddc8fba08a4c01f086f3950fbd0a99011810243cc948e2e967825e8f26c0e0`. The original SQL file was not changed or rerun.
+- Created `supabase-backup/2026-09-05/beer-chronicles.dump` (543,123 bytes). Independently verified its checksum, PostgreSQL custom archive header, core tables, primary/foreign keys, and archived-versus-recorded-live counts: 549 events, 195 tags, 2,411 event-tag links. No restore was performed.
+- Used the existing credential for the same Supabase project in memory, without displaying, copying to a new credential file, or committing it. The pooler connection identity was verified before the backup.
+- `psql` returned success; the log confirms `INSERT 0 1` for Brazil, `INSERT 0 7` events, `UPDATE 5`, `INSERT 0 32` event-tag links, verification blocks, and `COMMIT`.
+- A fresh read-only Supabase retrieval returned 556 total events (544 active) and 196 tags. All twelve affected records matched the approved title, description, date, precision, category, sources, and historical-year fields exactly.
+- The initial incremental build generated 600 pages but retained an old 537-event static JSON route. Verification detected this before deployment; the generated `.next` cache was moved aside and the build repeated cleanly. The SQL transaction was not repeated.
+- Clean production build passed with 600 pages. The exported timeline contains 544 active events; all twelve affected records and exact tag sets match the approved proposal. The exported map contains all affected entries and the eight intended new location assignments.
+- Tests: 53 passed. ESLint, build TypeScript checks, skill validation, and `git diff --check` passed. The fresh timeline payload is 325.7 KiB gzip, below the 384 KiB budget.
+- The original proposal file and unrelated editor backup remain outside Git. The verified database backup remains ignored. The execution record and explicit-approval instructions are included in the repository publication accompanying this approved deployment.

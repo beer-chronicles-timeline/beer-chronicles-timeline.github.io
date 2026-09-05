@@ -1,6 +1,6 @@
 ---
 name: beer-entry
-description: Research and prepare a new or updated Beer Chronicles timeline entry, including research, conceptual duplicate checks, dates, tags, Beer Map integration, and copy-paste SQL proposals for human review. Never execute SQL or mutate editorial data.
+description: Research and prepare a new or updated Beer Chronicles timeline entry, including research, conceptual duplicate checks, dates, tags, Beer Map integration, and copy-paste SQL proposals for human review. Require explicit conversational approval before every backend/Supabase action; never act autonomously on editorial data.
 ---
 
 # Beer Chronicles Entry Research and Proposal
@@ -11,11 +11,17 @@ Follow all repository `AGENTS.md` instructions.
 
 ## Hard boundary
 
-This is a research-and-proposal workflow. Never execute SQL, call Supabase mutation APIs, or directly insert, update, delete, or publish Beer Chronicles data.
+Research and prepare proposals by default. Before any backend/Supabase action, ask the user here in the conversation, identify the exact action or bundle, and wait for an explicit affirmative answer. This covers read-only backend queries, backups, SQL/API writes, and builds or workflows that read Supabase. Prepare the concrete proposal and local validation before requesting execution approval. Public website research and local preparation do not themselves authorize backend access.
 
-Any SQL is an **unexecuted proposal for human review and manual execution by the user**. Generating it does not authorize running it.
+Any SQL starts as an **unexecuted proposal for human review**. After the user explicitly approves execution of that exact proposal and the stated supporting operations, perform only that approved bundle. Approval of content alone does not authorize backend execution, but one clear question may request both approvals together. Do not ask again for the same approved action. Never broaden approval, execute revised SQL without renewed approval, or automatically retry an uncertain mutation. If authentication or tooling is unavailable, report that limitation without requesting secrets in chat.
 
 Never invent historical facts, sources, relationships, or significance. Distinguish evidence, inference, and uncertainty. If reliable evidence is insufficient, stop rather than completing the entry speculatively.
+
+## Mandatory approval before adding entries
+
+Always explicitly ask for and receive the user's approval of the finished entry or clearly identified batch before any new timeline entries are added. First complete the research, duplicate checks, entry text, dates, sources, tags, SQL proposal, and matching Beer Map preparation so the user can review a concrete package. Preparation itself does not require this editorial approval.
+
+An initial request to research or add entries, standing permission for automation, or authorization to build, commit, push, or deploy is not approval of the resulting entries. Approval applies only to the reviewed proposal; ask again if editorial content changes or additional entries are included. Any future automation must stop at this approval gate. Execution still requires the explicit backend approval described above; content and execution approval may be requested together for the finished proposal.
 
 ## Workflow
 
@@ -103,9 +109,9 @@ Treat every new timeline entry, whether requested individually or in a batch, an
 
 - Inspect `src/lib/mapLocations.ts` and the current map workflow. Reuse supported places and follow the existing coordinate, precision, and location-role conventions.
 - Research the location of the actual historical milestone. Distinguish invention, patent jurisdiction, supplier base, brewery installation, and later adoption. Never infer an installation site from a company’s modern headquarters. Use a supported city/region/country scope when exact-site evidence is unavailable; if even that is unsupported, report the unresolved map location instead of inventing a pin.
-- When preparing any new entry with SQL, prepare reviewable local map-assignment changes using `website-development`, keyed to the same fixed event UUIDs as the unexecuted SQL. Preserve existing assignments unless the research justifies a change. Database execution remains exclusively human; use the publication completion steps below for authorized repository changes.
+- When preparing any new entry with SQL, prepare reviewable local map-assignment changes using `website-development`, keyed to the same fixed event UUIDs as the unexecuted SQL. Preserve existing assignments unless the research justifies a change. Database execution requires explicit conversational approval of the exact proposal; use the publication completion steps below for authorized repository changes.
 - Verify that every retained new event produces its intended map assignment when supplied to the map builder, and that absent proposed events produce no markers. Check precision, location role, date label, and event link; run proportionate existing checks.
-- Report timeline, tags/Storylines, and map readiness together. State that publication requires the user’s manual SQL execution and a subsequent authorized build/deployment containing both the data and map code. SQL alone cannot publish map assignments.
+- Report timeline, tags/Storylines, and map readiness together. State that publication requires manual SQL execution by the user or explicitly approved assistant execution, followed by an authorized build/deployment containing both the data and map code. Include backend reads and the build in the approval request when they form part of that bundle. SQL alone cannot publish map assignments.
 
 ## SQL proposal
 
@@ -113,7 +119,7 @@ Produce SQL only when the evidence is sufficient and the current schema and reco
 
 The proposal must:
 
-- be clearly labeled `UNEXECUTED SQL PROPOSAL — HUMAN REVIEW AND MANUAL EXECUTION REQUIRED`;
+- be clearly labeled `UNEXECUTED SQL PROPOSAL — HUMAN REVIEW AND EXPLICIT EXECUTION APPROVAL REQUIRED`;
 - be copy-paste-ready for the verified Supabase/PostgreSQL schema;
 - use an appropriate `BEGIN`/`COMMIT` transaction;
 - use precise identifiers and `WHERE` clauses;
@@ -125,7 +131,7 @@ The proposal must:
 - assign or safely retain a new event UUID and link by that UUID, never only by title;
 - ensure intended tags, including newly proposed tags, are linked within the transaction;
 - avoid SQL structures that assume newly inserted rows are visible through an unsafe separate scan inside the same data-modifying CTE;
-- include useful read-only verification queries for the user to run after manual execution.
+- include useful read-only verification queries after approved execution.
 
 Do not bundle unrelated corrections or related-entry opportunities into the transaction without explicit user scope.
 
@@ -134,16 +140,16 @@ Do not bundle unrelated corrections or related-entry opportunities into the tran
 Whenever SQL is produced, also save the complete proposal in the repository at `sql/<descriptive-name>-proposal.sql`.
 
 - Use a concise, lowercase, hyphenated name that identifies the entry or update.
-- Put `-- UNEXECUTED SQL PROPOSAL — HUMAN REVIEW AND MANUAL EXECUTION REQUIRED` at the top of the file.
+- Put `-- UNEXECUTED SQL PROPOSAL — HUMAN REVIEW AND EXPLICIT EXECUTION APPROVAL REQUIRED` at the top of the file.
 - Include the transaction and read-only verification queries in the saved file, not only in the response.
-- Never execute the saved SQL.
+- Execute the saved SQL only after the user explicitly approves that exact proposal through the conversational backend approval gate.
 - Report the file path in the final response.
 
 ## Publication completion: build, commit, and push
 
-For a publication task with map/code changes, use `website-development` and carry the authorized work through build, commit, and push rather than stopping at local edits. Honor build/commit/push authorization already given in the conversation; do not ask again. These instructions do not independently authorize Git publication when the user requested only research or a proposal, and never authorize SQL execution.
+For a publication task with map/code changes, use `website-development` and carry the authorized work through build, commit, and push rather than stopping at local edits. Honor build/commit/push authorization already given in the conversation; do not ask again. These instructions do not independently authorize Git publication when the user requested only research or a proposal, and do not authorize backend/Supabase access. Obtain explicit approval for the specific backend operations, including any data-reading build, before proceeding.
 
-- Prepare and validate the complete editorial and map package before publication. After the user manually applies SQL, read the resulting live records to confirm UUIDs, content, and tags; use observed state rather than assuming execution from elapsed time or a local file.
+- Prepare and validate the complete editorial and map package before publication. After manual or explicitly approved SQL execution, use the approved read-only verification step to inspect the resulting live records to confirm UUIDs, content, and tags; use observed state rather than assuming execution from elapsed time or a local file.
 - Run the relevant checks and `npm run build` before pushing code/map changes. When new data is present, verify the new entries in the generated timeline and map, and check the timeline payload budget. If data is still absent, report that the prepared map assignments cannot yet appear publicly; do not claim the entries are live.
 - If commit/push is authorized, stage only reviewed task files, commit, and push after the required checks pass. Preserve unrelated work and respect ignored local SQL proposals and editor backups. Report the commit hash and push outcome.
 - Inspect the GitHub Pages workflow triggered by the push. Distinguish pushed, deployment running, deployment successful, and live verification completed. When deployment succeeds, verify the expected entries on the published timeline and Beer Map before claiming publication is complete.
