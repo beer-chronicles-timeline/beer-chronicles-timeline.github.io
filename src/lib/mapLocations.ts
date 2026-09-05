@@ -141,6 +141,8 @@ const MAP_PLACES = {
   gundelfingen: { name: "Gundelfingen an der Donau, Germany", latitude: 48.5534351, longitude: 10.3678266, precision: "city", locationRole: "City stated in entry" },
   guyana: { name: "Guyana", latitude: 4.8417097, longitude: -58.6416891, precision: "country", locationRole: "Country scope stated in entry" },
   goslar: { name: "Goslar, Germany", latitude: 51.9059936, longitude: 10.4266284, precision: "city", locationRole: "City stated in entry" },
+  // Freising administrative centroid: OpenStreetMap Nominatim, 2026-09-05.
+  freising: { name: "Freising, Germany", latitude: 48.4008273, longitude: 11.7439565, precision: "city", locationRole: "City containing Weihenstephan" },
   gothenburg: { name: "Gothenburg, Sweden", latitude: 57.7072326, longitude: 11.9670171, precision: "city", locationRole: "City stated in entry" },
   giza: { name: "Giza, Egypt", latitude: 29.9870753, longitude: 31.2118063, precision: "city", locationRole: "City or settlement area stated in entry" },
   grodzisk: { name: "Grodzisk Wielkopolski, Poland", latitude: 52.2263198, longitude: 16.3628106, precision: "city", locationRole: "City stated in entry" },
@@ -851,6 +853,16 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "28e573d1-cc5f-4a4b-a8c7-f3eb5c32e5c2", placeId: "berlin" },
   { eventId: "ab79b574-6844-4d0e-a1f6-5ad50520bc67", placeId: "berlin" },
   { eventId: "5b1fddba-8460-42a7-91d1-72a7cc551b67", placeId: "berlin" },
+  // Editorial gap proposals: fixed UUIDs shared with sql/beer-history-gaps-proposal.sql.
+  // Assignments only produce markers once the human-reviewed events exist.
+  { eventId: "68a21222-c9dc-4217-a588-44e6cc1c5976", placeId: "gothenburg", locationRole: "City of the documented local porter production" },
+  { eventId: "926dd3d4-8c49-4cbf-b596-ac8399a4d44d", placeId: "freising", locationRole: "City containing Weihenstephan, where the brewing course was established" },
+  { eventId: "c2469926-c733-4e68-b104-87e3dfb51974", placeId: "tokyo", locationRole: "Head-office city of the newly combined brewing company" },
+  { eventId: "c172b78c-4ff2-4caa-8b7c-910259f20392", placeId: "japan", locationRole: "Country whose postwar deconcentration policy divided the brewing company" },
+  { eventId: "245a1d93-a98e-432f-b69a-eb56e33b3051", placeId: "united_states", locationRole: "Country of the society issuing the beer-analysis method" },
+  { eventId: "4dd99583-d78b-452f-995f-b9a71c1bf2a1", placeId: "united_states", locationRole: "Country of Meilgaard’s Stroh Brewery affiliation in the published paper" },
+  { eventId: "4dd99583-d78b-452f-995f-b9a71c1bf2a1", placeId: "united_kingdom", locationRole: "Country of Dalgliesh and Clapperton’s Brewing Research Foundation affiliation" },
+  { eventId: "895f440c-8e6d-4bbc-acb8-0891be88f35c", placeId: "brazil", locationRole: "Country of the Brahma–Antarctica combination" },
 ];
 
 export function buildMapLocations(
