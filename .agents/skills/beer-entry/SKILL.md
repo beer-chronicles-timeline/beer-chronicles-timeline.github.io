@@ -96,6 +96,16 @@ Clearly present:
 - Prefer an in-place update proposal when the record identity is verified.
 - Never propose deletion merely for convenience. A user request to consider deletion still requires evidence and human approval.
 
+## Beer Map is part of an entry batch
+
+Treat a batch of new timeline entries and its Beer Map coverage as one editorial package; do not wait for a separate map request. For an individual entry, also check whether its existing map assignment needs to be added or revised. Research-only requests receive map recommendations rather than implementation.
+
+- Inspect `src/lib/mapLocations.ts` and the current map workflow. Reuse supported places and follow the existing coordinate, precision, and location-role conventions.
+- Research the location of the actual historical milestone. Distinguish invention, patent jurisdiction, supplier base, brewery installation, and later adoption. Never infer an installation site from a company’s modern headquarters. Use a supported city/region/country scope when exact-site evidence is unavailable; if even that is unsupported, report the unresolved map location instead of inventing a pin.
+- When preparing a publication batch with SQL, prepare reviewable local map-assignment changes using `website-development`, keyed to the same fixed event UUIDs as the unexecuted SQL. Preserve existing assignments unless the research justifies a change. This does not authorize editorial-data mutation, committing, pushing, or deployment.
+- Verify that every retained new event produces its intended map assignment when supplied to the map builder, and that absent proposed events produce no markers. Check precision, location role, date label, and event link; run proportionate existing checks.
+- Report timeline, tags/Storylines, and map readiness together. State that publication requires the user’s manual SQL execution and a subsequent authorized build/deployment containing both the data and map code. SQL alone cannot publish map assignments.
+
 ## SQL proposal
 
 Produce SQL only when the evidence is sufficient and the current schema and record state have been verified. If necessary schema details are unavailable, identify what must be supplied instead of guessing.
@@ -139,7 +149,8 @@ Before answering, verify:
 - tags are sparse, canonical where possible, and supported;
 - existing verified work is preserved;
 - related opportunities are separate from requested SQL scope;
-- SQL, if included, matches verified schema, is complete, safe, and explicitly unexecuted.
+- SQL, if included, matches verified schema, is complete, safe, and explicitly unexecuted;
+- Beer Map coverage, matching UUIDs, location evidence, and any unresolved map exclusions are included in the entry package.
 
 Return the editorial proposal, source assessment, separate related opportunities, and—when justified—the SQL proposal with a brief change summary. Then stop for human review.
 

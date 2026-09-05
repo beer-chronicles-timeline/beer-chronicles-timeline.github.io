@@ -43,9 +43,16 @@ type MapLocationAssignment = {
 
 /**
  * Administrative centroids returned by OpenStreetMap Nominatim on
- * 2026-09-03. These locate the named area; they do not assert an exact site.
+ * 2026-09-03, except where individually dated below. These locate the named
+ * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Administrative/settlement coordinates: OpenStreetMap Nominatim, 2026-09-05.
+  // Named areas only; no exact brewery or equipment-installation coordinates asserted.
+  boras: { name: "Borås, Sweden", latitude: 57.7210839, longitude: 12.9407407, precision: "city", locationRole: "City stated in entry" },
+  denmark: { name: "Denmark", latitude: 55.6702490, longitude: 10.3333283, precision: "country", locationRole: "Country scope stated in entry" },
+  s_hertogenbosch: { name: "’s-Hertogenbosch, Netherlands", latitude: 51.6889387, longitude: 5.3031160, precision: "city", locationRole: "City stated in entry" },
+  seattle: { name: "Seattle, Washington, United States", latitude: 47.6038321, longitude: -122.3300620, precision: "city", locationRole: "City stated in entry" },
   addis_ababa: { name: "Addis Ababa, Ethiopia", latitude: 9.0358119, longitude: 38.7524315, precision: "city", locationRole: "City stated in entry" },
   adamstown: { name: "Adamstown, Pennsylvania, United States", latitude: 40.2412, longitude: -76.0577, precision: "city", locationRole: "Borough stated in entry" },
   achouffe: { name: "Achouffe, Belgium", latitude: 50.15, longitude: 5.745, precision: "city", locationRole: "Village stated in entry" },
@@ -299,11 +306,24 @@ const MAP_PLACES = {
 } satisfies Record<string, MapPlace>;
 
 /**
- * Conservative first set: every assignment is supported by the current
- * published entry title or description. Style and brand-name matches whose
- * event location is different or unclear are deliberately excluded.
+ * Assignments are supported by published entries or the explicitly identified
+ * reviewed proposals below. Unpublished event UUIDs produce no markers.
+ * Style and brand-name matches whose event location is different or unclear
+ * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Reviewed modern brewery technology batch: sql/modern-brewery-technology-proposal.sql.
+  // These assignments appear only when the matching manually approved events are supplied.
+  { eventId: "8940c34b-36f2-47de-8a71-b756769d478b", placeId: "denmark", locationRole: "Country of equipment manufacturer; first installation site is not established" },
+  { eventId: "90a0d491-a4cb-4996-bed6-043b7dd1b93f", placeId: "s_hertogenbosch", locationRole: "City of Heineken brewhouse installation" },
+  { eventId: "3b33597c-1f32-4dcb-8783-8f84b1821571", placeId: "germany", locationRole: "Country of equipment manufacturer; customer and installation site are not established" },
+  { eventId: "ef9375a2-1f88-4e1f-9cae-b310da867646", placeId: "japan", locationRole: "Country containing the three documented Asahi installations" },
+  { eventId: "1cd871dd-91e5-4a36-9dab-4b25ed03e4ab", placeId: "seattle", locationRole: "City of Rainier Brewery’s unitank development" },
+  { eventId: "db044422-0cf2-4cd7-abac-cc7c093a127a", placeId: "zatec", locationRole: "City of the hop-processing line at Chmelařské náměstí" },
+  { eventId: "8cba964a-f1b1-4e8e-85e7-241cfcd4abc7", placeId: "boras", locationRole: "City of the documented Sandwalls application" },
+  { eventId: "349d595e-7b3d-4df9-9b64-c474ea18736c", placeId: "australia", locationRole: "Country of Carlton and United’s commercial extraction plant; precise site is not established" },
+  { eventId: "851cb77b-3a24-43bb-9c56-dc813ba0652b", placeId: "germany", locationRole: "Country of automation supplier; no first customer installation is asserted" },
+  { eventId: "316dca4a-6c53-4488-a2ee-a3a49f177bc2", placeId: "germany", locationRole: "Country of filler manufacturer; first brewery customer is not established" },
   { eventId: "3eb25c66-13ce-4858-933b-180f75d215fa", placeId: "germany" },
   { eventId: "3acec2ea-0d3e-4bfb-adb5-78408bfff44a", placeId: "germany" },
   { eventId: "0ec40723-4540-4e7b-bb87-c7c98f966ebd", placeId: "munich" },
