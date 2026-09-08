@@ -47,6 +47,14 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Settlement coordinates: respective English Wikipedia place articles, 2026-09-08.
+  // Sources and historical location evidence: sql/slovenia-beer-history-research.md.
+  // City precision locates the settlement, not an exact historical brewery or hop garden.
+  senozece: { name: "Senožeče, Slovenia", latitude: 45.7186583, longitude: 14.0395028, precision: "city", locationRole: "Settlement stated in entry" },
+  lasko: { name: "Laško, Slovenia", latitude: 46.1563028, longitude: 15.2386167, precision: "city", locationRole: "Town stated in entry" },
+  ljubljana: { name: "Ljubljana, Slovenia", latitude: 46.05139, longitude: 14.50611, precision: "city", locationRole: "City stated in entry" },
+  zalec: { name: "Žalec, Slovenia", latitude: 46.2509972, longitude: 15.1639389, precision: "city", locationRole: "Town stated in entry" },
+  ajdovscina: { name: "Ajdovščina, Slovenia", latitude: 45.88611, longitude: 13.90972, precision: "city", locationRole: "Town stated in entry" },
   // Administrative/settlement coordinates: OpenStreetMap Nominatim, 2026-09-05.
   // Named areas only; no exact brewery or equipment-installation coordinates asserted.
   boras: { name: "Borås, Sweden", latitude: 57.7210839, longitude: 12.9407407, precision: "city", locationRole: "City stated in entry" },
@@ -314,6 +322,14 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Slovenia proposal: sql/slovenia-beer-history-proposal.sql.
+  // Assignments activate only when the matching manually imported events are supplied.
+  { eventId: "e5a21214-2ff3-47b5-a978-8da7c44ab85a", placeId: "senozece", locationRole: "Settlement where the brewery began operating" },
+  { eventId: "9441d930-2db3-4ea3-a5c2-7ebfdab10349", placeId: "lasko", locationRole: "Town where Geyer began brewing" },
+  { eventId: "a2d7ae39-1660-42ff-8263-4d938ca8f2ae", placeId: "ljubljana", locationRole: "City where the Kosler brewery was founded" },
+  { eventId: "b59ae14d-370c-4366-996b-2cfda918c204", placeId: "zalec", locationRole: "Town of the documented 1876 hop planting in the Lower Savinja Valley" },
+  { eventId: "c25fd91f-77d7-423a-ab7a-8d556ab267d8", placeId: "zalec", locationRole: "Town where the hop and brewing research institute was established" },
+  { eventId: "40d977f8-3eec-4f7e-b24e-6fef6314e73a", placeId: "ajdovscina", locationRole: "Town of Pelicon’s brewery and beer launch" },
   // Reviewed modern brewery technology batch: sql/modern-brewery-technology-proposal.sql.
   // These assignments appear only when the matching manually approved events are supplied.
   { eventId: "8940c34b-36f2-47de-8a71-b756769d478b", placeId: "denmark", locationRole: "Country of equipment manufacturer; first installation site is not established" },
