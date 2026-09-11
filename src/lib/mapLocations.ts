@@ -47,6 +47,13 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Croatia: city coordinates from the respective English Wikipedia articles,
+  // inspected 2026-09-11. Historical location evidence: sql/croatia-beer-history-research.md.
+  // These mark cities, not exact historical premises or modern brewery addresses.
+  osijek: { name: "Osijek, Croatia", latitude: 45.55556, longitude: 18.69444, precision: "city", locationRole: "City stated in entry" },
+  daruvar: { name: "Daruvar, Croatia", latitude: 45.592895, longitude: 17.223685, precision: "city", locationRole: "Town stated in entry" },
+  karlovac: { name: "Karlovac, Croatia", latitude: 45.483, longitude: 15.550, precision: "city", locationRole: "City stated in entry" },
+  zagreb: { name: "Zagreb, Croatia", latitude: 45.81306, longitude: 15.97750, precision: "city", locationRole: "City stated in entry" },
   // Settlement coordinates: respective English Wikipedia place articles, 2026-09-08.
   // Sources and historical location evidence: sql/slovenia-beer-history-research.md.
   // City precision locates the settlement, not an exact historical brewery or hop garden.
@@ -322,6 +329,15 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Croatia proposal: sql/croatia-beer-history-proposal.sql. IDs must match the SQL.
+  // Assignments remain dormant until these events are present in the supplied data.
+  { eventId: "c6f97e80-e344-4fc9-9c98-b69584b432eb", placeId: "osijek", locationRole: "City whose brewing is documented in the tax records" },
+  { eventId: "99c474ca-6874-4977-9d49-ab0a74a1fdd2", placeId: "daruvar", locationRole: "Town where the brewery was founded" },
+  { eventId: "cc8ccf03-7729-45d6-81e1-09ee160cdfd6", placeId: "karlovac", locationRole: "City where Vranyczany established the brewery" },
+  { eventId: "3e178693-656f-46ab-9cb0-dd6a7ba6a04f", placeId: "osijek", locationRole: "City where Šeper founded the brewery" },
+  { eventId: "f234c630-5c3c-4bfe-b847-9c6e14b431ad", placeId: "zagreb", locationRole: "City where the brewery company was founded" },
+  { eventId: "ec06bb3f-4743-467f-95cb-737f827708e0", placeId: "zagreb", locationRole: "City where Zmajska launched its first beers" },
+  { eventId: "e4b84784-c9b7-4552-8eb2-4554a53a2015", placeId: "zagreb", locationRole: "City where The Garden Brewery and taproom opened" },
   // Slovenia proposal: sql/slovenia-beer-history-proposal.sql.
   // Assignments activate only when the matching manually imported events are supplied.
   { eventId: "e5a21214-2ff3-47b5-a978-8da7c44ab85a", placeId: "senozece", locationRole: "Settlement where the brewery began operating" },
