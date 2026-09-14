@@ -47,6 +47,13 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Baltic porter proposal: sql/baltic-porter-proposal.sql.
+  // Area coordinates: respective English Wikipedia articles, inspected 2026-09-14:
+  // https://en.wikipedia.org/wiki/Żywiec, /wiki/Helsinki, /wiki/Russia.
+  // Historical location evidence is included in the SQL sources and comments.
+  zywiec: { name: "Żywiec, Poland", latitude: 49.68917, longitude: 19.20583, precision: "city", locationRole: "Town where the brewery introduced porter" },
+  helsinki: { name: "Helsinki, Finland", latitude: 60.17083, longitude: 24.93750, precision: "city", locationRole: "City where the modern porter was developed" },
+  russia: { name: "Russia", latitude: 66, longitude: 94, precision: "country", locationRole: "Country of the porter launch; exact historical plant not established" },
   // Seven-brewery proposal: sql/seven-breweries-proposal.sql.
   // Coordinates: Wikipedia place articles, inspected 2026-09-14; full links and
   // historical location evidence in sql/seven-breweries-research.md.
@@ -339,6 +346,14 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Baltic porter proposal: fixed UUIDs shared with sql/baltic-porter-proposal.sql.
+  // These assignments remain dormant until the corresponding events are supplied.
+  { eventId: "0e1cf876-c68e-4886-b594-547887334167", placeId: "zywiec" },
+  { eventId: "bddf826a-5248-4560-b2eb-293445e6356a", placeId: "helsinki" },
+  { eventId: "1df71d56-9c3b-4e35-8c68-30ad06813888", placeId: "russia" },
+  { eventId: "77b797dc-ea74-47d7-901f-28b52165d664", placeId: "poland", locationRole: "Country of the first distributed pub celebration" },
+  // 7c150f95-7d1b-4042-984e-3e702819118a: BJCP publication has no supported
+  // physical publication location in the consulted guideline; no pin assigned.
   // Seven-brewery proposal: fixed UUIDs shared with sql/seven-breweries-proposal.sql.
   // Dormant until the matching reviewed events are imported and supplied.
   { eventId: "d7b75096-bc6a-4df0-a2b8-81d9c4df532d", placeId: "dordrecht" },
