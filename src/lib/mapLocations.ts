@@ -47,6 +47,16 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Seven-brewery proposal: sql/seven-breweries-proposal.sql.
+  // Coordinates: Wikipedia place articles, inspected 2026-09-14; full links and
+  // historical location evidence in sql/seven-breweries-research.md.
+  // These locate settlements/countries, not exact brewery premises.
+  dordrecht: { name: "Dordrecht, Netherlands", latitude: 51.79583, longitude: 4.67833, precision: "city", locationRole: "Contract-brewing business base stated in entry" },
+  birenbach: { name: "Birenbach, Germany", latitude: 48.74750, longitude: 9.66333, precision: "city", locationRole: "Town of the brewery receiving organic certification" },
+  schmelz: { name: "Schmelz, Germany", latitude: 49.434422, longitude: 6.845341, precision: "city", locationRole: "Town where the Brauhaus was established" },
+  breukelen: { name: "Breukelen, Netherlands", latitude: 52.17167, longitude: 5.00167, precision: "city", locationRole: "Founding town of the contract-brewing business" },
+  bingen_am_rhein: { name: "Bingen am Rhein, Germany", latitude: 49.967, longitude: 7.900, precision: "city", locationRole: "Town hosting the festival appearance" },
+  portugal: { name: "Portugal", latitude: 39, longitude: -8, precision: "country", locationRole: "Country of the early homebrewing project" },
   // Croatia: city coordinates from the respective English Wikipedia articles,
   // inspected 2026-09-11. Historical location evidence: sql/croatia-beer-history-research.md.
   // These mark cities, not exact historical premises or modern brewery addresses.
@@ -329,6 +339,15 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Seven-brewery proposal: fixed UUIDs shared with sql/seven-breweries-proposal.sql.
+  // Dormant until the matching reviewed events are imported and supplied.
+  { eventId: "d7b75096-bc6a-4df0-a2b8-81d9c4df532d", placeId: "dordrecht" },
+  { eventId: "97a87262-6920-4f4c-9a0f-ef7ee5f22508", placeId: "germany", locationRole: "Country where commercial contract brewing began" },
+  { eventId: "6a0e3325-727a-4e6b-bb8d-9155e468206c", placeId: "birenbach" },
+  { eventId: "1fd26cc6-21c0-4e40-bf60-d4cf3b58883c", placeId: "schmelz" },
+  { eventId: "95971b79-0e71-4b7c-ab20-a8f9a89ea696", placeId: "portugal" },
+  { eventId: "8fead782-da2c-4ffe-add3-64b3f8f28ebf", placeId: "bingen_am_rhein" },
+  { eventId: "21ae7432-4368-4ca3-81b0-92aac1aa0d28", placeId: "breukelen" },
   // Croatia proposal: sql/croatia-beer-history-proposal.sql. IDs must match the SQL.
   // Assignments remain dormant until these events are present in the supplied data.
   { eventId: "c6f97e80-e344-4fc9-9c98-b69584b432eb", placeId: "osijek", locationRole: "City whose brewing is documented in the tax records" },
