@@ -47,6 +47,12 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Eremita and location-tag proposal: sql/eremita-and-brewery-locations-proposal.sql.
+  // Settlement coordinates: English Wikipedia articles /wiki/Mainz and
+  // /wiki/Esmoriz, inspected 2026-09-15. Historical evidence and the distinction
+  // between Tough Love's early homebrewing and later brewery are in the proposal.
+  mainz: { name: "Mainz, Germany", latitude: 49.99944, longitude: 8.27361, precision: "city", locationRole: "City of Schwarze Rose's early contract-brewing partner" },
+  esmoriz: { name: "Esmoriz, Portugal", latitude: 40.955, longitude: -8.627, precision: "city", locationRole: "Later brewery location described in entry; 2017 homebrewing site unconfirmed" },
   // Baltic porter proposal: sql/baltic-porter-proposal.sql.
   // Area coordinates: respective English Wikipedia articles, inspected 2026-09-14:
   // https://en.wikipedia.org/wiki/Żywiec, /wiki/Helsinki, /wiki/Russia.
@@ -346,6 +352,10 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Commercial start in 2016, following Benjamin Wezel's first brewing in 2014.
+  // Founder interview: Hochzeitsfieber, 2023, p. 30 (see SQL sources).
+  // Dormant until this proposed event is present in the supplied timeline data.
+  { eventId: "05d253b1-b069-43b7-ae8a-7d238df1a27b", placeId: "birenbach", locationRole: "Town of Eremita's brewing business" },
   // Baltic porter proposal: fixed UUIDs shared with sql/baltic-porter-proposal.sql.
   // These assignments remain dormant until the corresponding events are supplied.
   { eventId: "0e1cf876-c68e-4886-b594-547887334167", placeId: "zywiec" },
@@ -357,10 +367,14 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   // Seven-brewery proposal: fixed UUIDs shared with sql/seven-breweries-proposal.sql.
   // Dormant until the matching reviewed events are imported and supplied.
   { eventId: "d7b75096-bc6a-4df0-a2b8-81d9c4df532d", placeId: "dordrecht" },
-  { eventId: "97a87262-6920-4f4c-9a0f-ef7ee5f22508", placeId: "germany", locationRole: "Country where commercial contract brewing began" },
+  // Early production at Kuehn Kunz Rosen in Mainz: craftbeer-shop.com/schwarze-rose.
+  { eventId: "97a87262-6920-4f4c-9a0f-ef7ee5f22508", placeId: "mainz" },
   { eventId: "6a0e3325-727a-4e6b-bb8d-9155e468206c", placeId: "birenbach" },
   { eventId: "1fd26cc6-21c0-4e40-bf60-d4cf3b58883c", placeId: "schmelz" },
   { eventId: "95971b79-0e71-4b7c-ab20-a8f9a89ea696", placeId: "portugal" },
+  // toughlove.pt and kraft-braeu.de/bierfestival/tough-love/ establish the later
+  // brewery in Esmoriz, not the original homebrewing site. Retain Portugal above.
+  { eventId: "95971b79-0e71-4b7c-ab20-a8f9a89ea696", placeId: "esmoriz" },
   { eventId: "8fead782-da2c-4ffe-add3-64b3f8f28ebf", placeId: "bingen_am_rhein" },
   { eventId: "21ae7432-4368-4ca3-81b0-92aac1aa0d28", placeId: "breukelen" },
   // Croatia proposal: sql/croatia-beer-history-proposal.sql. IDs must match the SQL.
