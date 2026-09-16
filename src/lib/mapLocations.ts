@@ -430,6 +430,9 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "6ad45ce1-f9df-4d30-a1d5-43ada7d4db3b", placeId: "bavaria" },
   { eventId: "2fdb1cf0-c9d7-4568-8e31-93bed1db0d86", placeId: "munich" },
   { eventId: "2cb540fd-25c3-47df-8838-e79f68f5b8c3", placeId: "bavaria" },
+  // sql/bavarian-brewing-rules-1616-proposal.sql; Rupprecht and Liebhart identify
+  // the Duchy of Bavaria as the jurisdiction. Reuse the regional locator.
+  { eventId: "be2d2c28-eee8-4469-8f81-5e0be984140d", placeId: "bavaria", locationRole: "Regional locator for the Duchy of Bavaria's brewing regulation" },
   { eventId: "fc252325-4204-4381-b718-234fa91110dc", placeId: "bavaria" },
   { eventId: "6d12c65d-39a4-4ba6-a528-0e43c2496e37", placeId: "munich" },
   { eventId: "57f75266-58be-4629-b5f8-082be730255d", placeId: "south_africa" },
