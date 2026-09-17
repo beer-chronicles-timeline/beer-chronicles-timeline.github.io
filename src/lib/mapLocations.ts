@@ -47,6 +47,10 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Göbekli Tepe / HBCon proposal: sql/gobekli-tepe-and-hbcon-proposal.sql.
+  // UNESCO, https://whc.unesco.org/en/list/1572/, inspected 2026-09-17:
+  // N37 13 23.671 E38 55 20.51. Site reference point, not a vessel findspot.
+  gobekli_tepe: { name: "Göbekli Tepe, Turkey", latitude: 37.2232419, longitude: 38.9223639, precision: "exact", locationRole: "Archaeological site of the grain-processing and possible brewing evidence" },
   // Bremen proposal: sql/bremen-beer-history-proposal.sql. City reference point
   // from https://en.wikipedia.org/wiki/Bremen, inspected 2026-09-17. Historical
   // locations are supported by each entry's sources; this is not an exact site.
@@ -356,6 +360,10 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/gobekli-tepe-and-hbcon-proposal.sql.
+  // Dormant until the reviewed events are supplied to the map.
+  { eventId: "30c2c88a-a0af-4ddb-9c92-61726dd04126", placeId: "gobekli_tepe" },
+  { eventId: "f7b19453-1f7e-40ef-b149-bbf87de7afb5", placeId: "romrod", locationRole: "Town hosting the first Heimbrau Convention at Schloss Romrod" },
   // Bremen proposal: fixed UUIDs shared with sql/bremen-beer-history-proposal.sql.
   // Dormant until the corresponding reviewed events are supplied to the map.
   { eventId: "0c560802-d039-4324-85df-d6215d8ed955", placeId: "bremen", locationRole: "City where Haake established his brewery" },
