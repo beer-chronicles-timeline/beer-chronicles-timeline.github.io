@@ -337,7 +337,7 @@ export default function SourcesPage() {
         {/* Thank You Section */}
         <div className="mt-12 pt-6 border-t border-stone-200">
           <p className="text-gray-600 text-sm leading-relaxed">
-            Special thanks to{" "}
+            Special thanks to Jorge Leão da Silva,{" "}
             <a
               href="https://www.instagram.com/bierblogtrier/"
               target="_blank"

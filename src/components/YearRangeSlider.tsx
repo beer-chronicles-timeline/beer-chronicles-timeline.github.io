@@ -156,7 +156,7 @@ export default function YearRangeSlider({
             onChange={handleStartInputChange}
             onBlur={handleStartInputBlur}
             aria-label="Start year"
-            className="h-10 w-24 rounded-md border border-gray-300 px-2 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-stone-500"
+            className="h-10 w-24 rounded-md border border-gray-300 px-2 text-base md:text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-stone-500"
           />
         </div>
 
@@ -168,7 +168,7 @@ export default function YearRangeSlider({
             onChange={handleEndInputChange}
             onBlur={handleEndInputBlur}
             aria-label="End year"
-            className="h-10 w-24 rounded-md border border-gray-300 px-2 text-right text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-stone-500"
+            className="h-10 w-24 rounded-md border border-gray-300 px-2 text-right text-base md:text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-stone-500"
           />
 
           <span>To:</span>

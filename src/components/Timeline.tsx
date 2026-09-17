@@ -96,7 +96,7 @@ function TimelineSearch({ value, onChange }: TimelineSearchProps) {
             draftValue: event.target.value,
           })
         }
-        className="h-10 w-36 rounded-full border border-gray-300 bg-white px-3 py-1 pr-10 text-sm text-stone-700 outline-none placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-stone-500"
+        className="h-10 w-36 rounded-full border border-gray-300 bg-white px-3 py-1 pr-10 text-base md:text-sm text-stone-700 outline-none placeholder:text-gray-400 focus:border-transparent focus:ring-2 focus:ring-stone-500"
       />
 
       {draftValue && (
