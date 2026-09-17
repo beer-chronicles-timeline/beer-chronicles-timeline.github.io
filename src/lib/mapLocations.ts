@@ -47,6 +47,10 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Bremen proposal: sql/bremen-beer-history-proposal.sql. City reference point
+  // from https://en.wikipedia.org/wiki/Bremen, inspected 2026-09-17. Historical
+  // locations are supported by each entry's sources; this is not an exact site.
+  bremen: { name: "Bremen, Germany", latitude: 53.07583, longitude: 8.80722, precision: "city", locationRole: "City of the brewery milestone" },
   // Eremita and location-tag proposal: sql/eremita-and-brewery-locations-proposal.sql.
   // Settlement coordinates: English Wikipedia articles /wiki/Mainz and
   // /wiki/Esmoriz, inspected 2026-09-15. Historical evidence and the distinction
@@ -352,6 +356,16 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Bremen proposal: fixed UUIDs shared with sql/bremen-beer-history-proposal.sql.
+  // Dormant until the corresponding reviewed events are supplied to the map.
+  { eventId: "0c560802-d039-4324-85df-d6215d8ed955", placeId: "bremen", locationRole: "City where Haake established his brewery" },
+  { eventId: "af2711cd-7dd3-4198-a018-4dac729cf215", placeId: "bremen", locationRole: "City where Beck & May was founded" },
+  { eventId: "052dddfe-48d9-4d9c-874c-6cced052d10e", placeId: "bremen", locationRole: "City where innkeepers founded the original Union brewery" },
+  { eventId: "26462755-821c-4dc7-ab40-bf1d3d9c76f7", placeId: "bremen", locationRole: "City where the Schüttinger brewpub opened" },
+  { eventId: "ef157a5c-16c2-472d-8577-821502d9c6f9", placeId: "bremen", locationRole: "City where Schnoor Bräu was introduced as a house beer; not its contract brewing site" },
+  { eventId: "f0ecf113-8d04-4020-8776-a0013a6d531f", placeId: "bremen", locationRole: "Home city of the Ahoi 69 venture; early contract production was near Paderborn" },
+  { eventId: "416e2437-3334-453f-8e11-77b3000572a2", placeId: "bremen", locationRole: "City where brewing resumed at the historic Union brewery" },
+  { eventId: "61437282-1c6d-481a-82ed-4c4f78564484", placeId: "bremen", locationRole: "City of Hopfenfänger’s first own brewery on the former Kellogg grounds" },
   // Commercial start in 2016, following Benjamin Wezel's first brewing in 2014.
   // Founder interview: Hochzeitsfieber, 2023, p. 30 (see SQL sources).
   // Dormant until this proposed event is present in the supplied timeline data.
