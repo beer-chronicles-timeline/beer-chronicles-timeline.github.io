@@ -85,6 +85,11 @@ const MAP_PLACES = {
   daruvar: { name: "Daruvar, Croatia", latitude: 45.592895, longitude: 17.223685, precision: "city", locationRole: "Town stated in entry" },
   karlovac: { name: "Karlovac, Croatia", latitude: 45.483, longitude: 15.550, precision: "city", locationRole: "City stated in entry" },
   zagreb: { name: "Zagreb, Croatia", latitude: 45.81306, longitude: 15.97750, precision: "city", locationRole: "City stated in entry" },
+  // Settlement coordinates: https://en.wikipedia.org/wiki/Split,_Croatia and
+  // https://en.wikipedia.org/wiki/Hvar_(city), inspected 2026-09-18.
+  // Historical scope and sources: sql/tap-b-and-hvar-brewing-proposal.sql.
+  split: { name: "Split, Croatia", latitude: 43.51000, longitude: 16.44000, precision: "city", locationRole: "City where the brewery was founded" },
+  hvar: { name: "Hvar, Croatia", latitude: 43.17139, longitude: 16.44333, precision: "city", locationRole: "Town of the company's establishment; not an exact brewing site" },
   // Settlement coordinates: respective English Wikipedia place articles, 2026-09-08.
   // Sources and historical location evidence: sql/slovenia-beer-history-research.md.
   // City precision locates the settlement, not an exact historical brewery or hop garden.
@@ -408,6 +413,10 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "f234c630-5c3c-4bfe-b847-9c6e14b431ad", placeId: "zagreb", locationRole: "City where the brewery company was founded" },
   { eventId: "ec06bb3f-4743-467f-95cb-737f827708e0", placeId: "zagreb", locationRole: "City where Zmajska launched its first beers" },
   { eventId: "e4b84784-c9b7-4552-8eb2-4554a53a2015", placeId: "zagreb", locationRole: "City where The Garden Brewery and taproom opened" },
+  // Tap B and Hvar Brewing proposal: sql/tap-b-and-hvar-brewing-proposal.sql.
+  // Dormant until the corresponding approved events are present in supplied data.
+  { eventId: "f5700d69-3bd2-4623-be6c-9abd05385e94", placeId: "split" },
+  { eventId: "3cb71caa-3bfd-4345-9d80-381527118fcb", placeId: "hvar" },
   // Slovenia proposal: sql/slovenia-beer-history-proposal.sql.
   // Assignments activate only when the matching manually imported events are supplied.
   { eventId: "e5a21214-2ff3-47b5-a978-8da7c44ab85a", placeId: "senozece", locationRole: "Settlement where the brewery began operating" },
