@@ -67,6 +67,12 @@ const MAP_PLACES = {
   // Historical location evidence is included in the SQL sources and comments.
   zywiec: { name: "Żywiec, Poland", latitude: 49.68917, longitude: 19.20583, precision: "city", locationRole: "Town where the brewery introduced porter" },
   helsinki: { name: "Helsinki, Finland", latitude: 60.17083, longitude: 24.93750, precision: "city", locationRole: "City where the modern porter was developed" },
+  // Sahti update proposal: sql/sahti-heartlands-proposal.sql.
+  // The 2001 EU application names Suomen Sahtiseura ry at an address in Lammi:
+  // https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:C:2001:125:FULL
+  // Municipality reference coordinates: https://en.wikipedia.org/wiki/Lammi,
+  // inspected 2026-09-18; not the association's exact premises or the EU decision site.
+  lammi: { name: "Lammi, Kanta-Häme, Finland", latitude: 61.07917, longitude: 25.01111, precision: "city", locationRole: "Municipality of the applicant association within the Sahti heartlands" },
   russia: { name: "Russia", latitude: 66, longitude: 94, precision: "country", locationRole: "Country of the porter launch; exact historical plant not established" },
   // Seven-brewery proposal: sql/seven-breweries-proposal.sql.
   // Coordinates: Wikipedia place articles, inspected 2026-09-14; full links and
@@ -862,7 +868,7 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "207e5a72-b492-49d5-85d2-a1dc442e190a", placeId: "scotland" },
   { eventId: "ba0dc046-f09c-4650-a1d8-d2b2181706fe", placeId: "germany" },
   { eventId: "fea5964a-1d9d-4e22-b965-df5789d152dd", placeId: "united_kingdom" },
-  { eventId: "5179a898-46e1-4248-ab99-0a55925cd2bb", placeId: "finland" },
+  { eventId: "5179a898-46e1-4248-ab99-0a55925cd2bb", placeId: "lammi" },
   { eventId: "15086b28-c388-42fa-8879-6a9512fb11d0", placeId: "south_africa" },
   { eventId: "15086b28-c388-42fa-8879-6a9512fb11d0", placeId: "united_states" },
   { eventId: "7fb05743-23a0-428b-b309-322c9d0ee1e4", placeId: "belgium" },
