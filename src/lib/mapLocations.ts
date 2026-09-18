@@ -47,6 +47,16 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Zoigl proposal: sql/zoigl-history-proposal.sql. Reference coordinates from
+  // German Wikipedia: Neuhaus_(Windischeschenbach), Windischeschenbach,
+  // Falkenberg_(Oberpfalz); English Wikipedia: Mitterteich, Eslarn,
+  // Upper_Palatinate. Inspected 2026-09-18. Settlement/region scope only.
+  neuhaus_windischeschenbach: { name: "Neuhaus (Windischeschenbach), Germany", latitude: 49.8005222, longitude: 12.1654611, precision: "city", locationRole: "Community named in the recognition of Upper Palatinate Zoigl culture" },
+  windischeschenbach: { name: "Windischeschenbach, Germany", latitude: 49.80303, longitude: 12.15487, precision: "city", locationRole: "Community named in the recognition of Upper Palatinate Zoigl culture" },
+  falkenberg_oberpfalz: { name: "Falkenberg (Upper Palatinate), Germany", latitude: 49.8580556, longitude: 12.2244444, precision: "city", locationRole: "Community named in the recognition of Upper Palatinate Zoigl culture" },
+  mitterteich: { name: "Mitterteich, Germany", latitude: 49.933, longitude: 12.233, precision: "city", locationRole: "Community named in the recognition of Upper Palatinate Zoigl culture" },
+  eslarn: { name: "Eslarn, Germany", latitude: 49.58250, longitude: 12.52111, precision: "city", locationRole: "Community named in the recognition of Upper Palatinate Zoigl culture" },
+  upper_palatinate: { name: "Upper Palatinate, Germany", latitude: 49.3, longitude: 12.2, precision: "region", locationRole: "Region of the communal brewing tradition represented by the registered trademark" },
   // Göbekli Tepe / HBCon proposal: sql/gobekli-tepe-and-hbcon-proposal.sql.
   // UNESCO, https://whc.unesco.org/en/list/1572/, inspected 2026-09-17:
   // N37 13 23.671 E38 55 20.51. Site reference point, not a vessel findspot.
@@ -371,6 +381,15 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/zoigl-history-proposal.sql.
+  // Dormant until the corresponding reviewed entries are supplied to the map.
+  { eventId: "c9999fe1-a93c-497d-9423-168347b203f8", placeId: "neuhaus_windischeschenbach", locationRole: "Community granted brewing and serving rights in 1415" },
+  { eventId: "d3be5918-faa1-461e-a97c-dfd0f253e29e", placeId: "upper_palatinate" },
+  { eventId: "bd44f2f5-aaff-4557-82a2-266bd90e1e00", placeId: "neuhaus_windischeschenbach" },
+  { eventId: "bd44f2f5-aaff-4557-82a2-266bd90e1e00", placeId: "windischeschenbach" },
+  { eventId: "bd44f2f5-aaff-4557-82a2-266bd90e1e00", placeId: "falkenberg_oberpfalz" },
+  { eventId: "bd44f2f5-aaff-4557-82a2-266bd90e1e00", placeId: "mitterteich" },
+  { eventId: "bd44f2f5-aaff-4557-82a2-266bd90e1e00", placeId: "eslarn" },
   // Fixed UUIDs shared with sql/gobekli-tepe-and-hbcon-proposal.sql.
   // Dormant until the reviewed events are supplied to the map.
   { eventId: "30c2c88a-a0af-4ddb-9c92-61726dd04126", placeId: "gobekli_tepe" },
