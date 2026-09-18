@@ -125,6 +125,14 @@ export default function HeaderMenu() {
             </Link>
 
             <Link
+              href="/histogram"
+              onClick={close}
+              className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"
+            >
+              Histogram
+            </Link>
+
+            <Link
               href="/about"
               onClick={close}
               className="block px-4 py-2.5 hover:bg-gray-50 focus-visible:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-400"

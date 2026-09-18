@@ -25,6 +25,10 @@ export default function Footer() {
           Beer Map
         </Link>
 
+        <Link href="/histogram" className={linkClassName}>
+          Histogram
+        </Link>
+
         <Link href="/about" className={linkClassName}>
           About
         </Link>

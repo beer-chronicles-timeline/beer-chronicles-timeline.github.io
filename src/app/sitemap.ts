@@ -24,6 +24,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${BASE_URL}/map`,
     },
     {
+      url: `${BASE_URL}/histogram`,
+    },
+    {
       url: `${BASE_URL}/about`,
     },
     {
