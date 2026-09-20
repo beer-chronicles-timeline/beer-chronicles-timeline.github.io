@@ -370,6 +370,15 @@ export default function SourcesPage() {
             Daniel Metzler, 
             {" "}
             <a
+              href="https://www.instagram.com/hopfenjuenger.de/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
+              Johannes Meyer
+            </a>,
+            {" "}
+            <a
               href="https://www.instagram.com/panszpik/"
               target="_blank"
               rel="noopener noreferrer"
