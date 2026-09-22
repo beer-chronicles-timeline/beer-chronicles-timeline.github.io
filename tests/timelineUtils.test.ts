@@ -286,7 +286,7 @@ test("supports oldest and newest ordering", () => {
   ]);
 });
 
-test("related events favor shared Storylines over generic category tags", () => {
+test("shared specific tags rank ahead of same-category fallback entries", () => {
   const earlyHistoryTag = { id: "early", name: "Early Beer History" };
   const scienceTag = { id: "science", name: "Science" };
   const current = createEvent({
@@ -314,11 +314,11 @@ test("related events favor shared Storylines over generic category tags", () => 
       unrelatedModernScience,
       relatedAncient,
     ]).map((event) => event.id),
-    ["related-ancient"]
+    ["related-ancient", "modern-science"]
   );
 });
 
-test("generic tags alone do not create related-event recommendations", () => {
+test("generic tags alone do not match entries in different categories", () => {
   const scienceTag = { id: "science", name: "Science" };
   const current = createEvent({
     id: "current",
@@ -329,9 +329,98 @@ test("generic tags alone do not create related-event recommendations", () => {
   const candidate = createEvent({
     id: "candidate",
     historicalYear: 1901,
-    category: "Science",
+    category: "Events",
     tags: [scienceTag],
   });
 
   assert.deepEqual(getRelatedEvents(current, [current, candidate]), []);
+});
+
+test("shared tag count outranks Storyline membership, rarity, category, and date", () => {
+  const paleAle = { id: "pale", name: "Pale Ale" };
+  const local = { id: "local", name: "Local topic" };
+  const technique = { id: "technique", name: "Technique" };
+  const current = createEvent({ id: "current", historicalYear: 2000, category: "Breweries", tags: [paleAle, local, technique] });
+  const storylineMatch = createEvent({ id: "storyline", historicalYear: 2000, category: "Breweries", tags: [paleAle] });
+  const twoTags = createEvent({ id: "two-tags", historicalYear: 1800, category: "Science", tags: [local, technique] });
+  const commonTags = [1, 2, 3].map((n) => createEvent({ id: `common-${n}`, historicalYear: 1700, tags: [local] }));
+
+  assert.deepEqual(
+    getRelatedEvents(current, [storylineMatch, twoTags, ...commonTags]).map((event) => event.id),
+    ["two-tags", "storyline", "common-1"]
+  );
+});
+
+test("equal tag counts favor rarer shared tags before closer dates", () => {
+  const common = { id: "common", name: "Common topic" };
+  const rare = { id: "rare", name: "Rare topic" };
+  const current = createEvent({ id: "current", historicalYear: 2000, tags: [common, rare] });
+  const rareMatch = createEvent({ id: "rare-match", historicalYear: 1800, tags: [rare] });
+  const nearMatch = createEvent({ id: "near", historicalYear: 2001, tags: [common] });
+  const farMatch = createEvent({ id: "far", historicalYear: 1950, tags: [common] });
+
+  assert.deepEqual(
+    getRelatedEvents(current, [farMatch, nearMatch, rareMatch]).map((event) => event.id),
+    ["rare-match", "near", "far"]
+  );
+});
+
+test("fallback fills remaining places by category and date, with unknown dates last", () => {
+  const specific = { id: "specific", name: "Specific topic" };
+  const current = createEvent({ id: "current", historicalYear: 2000, category: "Events", tags: [specific] });
+  const match = createEvent({ id: "match", historicalYear: 1000, category: "Science", tags: [specific] });
+  const near = createEvent({ id: "near", eventDate: "2001-01-01", category: "Events" });
+  const far = createEvent({ id: "far", historicalYear: 1950, category: "Events" });
+  const undated = createEvent({ id: "undated", category: "Events" });
+  const other = createEvent({ id: "other", historicalYear: 2000, category: "Science" });
+
+  assert.deepEqual(
+    getRelatedEvents(current, [undated, far, other, near, match]).map((event) => event.id),
+    ["match", "near", "far"]
+  );
+  assert.deepEqual(
+    getRelatedEvents(current, [undated, other, near]).map((event) => event.id),
+    ["near", "undated"]
+  );
+  assert.deepEqual(getRelatedEvents({ ...current, category: null }, [other, near]), []);
+});
+
+test("three specific matches leave no slot for a same-category fallback", () => {
+  const topic = { id: "topic", name: "Specific topic" };
+  const current = createEvent({ id: "current", historicalYear: 2000, category: "Events", tags: [topic] });
+  const matches = [1800, 1850, 1900].map((year) => createEvent({ id: String(year), historicalYear: year, tags: [topic] }));
+  const fallback = createEvent({ id: "fallback", historicalYear: 2000, category: "Events" });
+
+  assert.deepEqual(
+    getRelatedEvents(current, [fallback, ...matches]).map((event) => event.id),
+    ["1900", "1850", "1800"]
+  );
+});
+
+test("ranking deduplicates tags and entries and stays stable without mutating inputs", () => {
+  const first = { id: "first", name: "First topic" };
+  const second = { id: "second", name: "Second topic" };
+  const current = createEvent({ id: "current", historicalYear: 2000, tags: [first, second] });
+  const repeatedTag = createEvent({ id: "repeated", historicalYear: 2000, tags: [first, first, first] });
+  const a = createEvent({ id: "a", tags: [first, second] });
+  const b = createEvent({ id: "b", tags: [second, first] });
+  const events = [current, repeatedTag, b, a, b];
+  const before = structuredClone(events);
+  const expected = ["a", "b", "repeated"];
+
+  assert.deepEqual(getRelatedEvents(current, events).map((event) => event.id), expected);
+  assert.deepEqual(getRelatedEvents(current, [...events].reverse()).map((event) => event.id), expected);
+  assert.deepEqual(events, before);
+  assert.deepEqual(getRelatedEvents(current, []), []);
+});
+
+test("date proximity crosses BCE and CE without introducing year zero", () => {
+  const current = createEvent({ id: "current", historicalYear: 1, category: "Events" });
+  const before = createEvent({ id: "before", historicalYear: -1, category: "Events" });
+  const after = createEvent({ id: "after", historicalYear: 2, category: "Events" });
+
+  assert.deepEqual(
+    getRelatedEvents(current, [after, before]).map((event) => event.id),
+    ["before", "after"]
+  );
 });

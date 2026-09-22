@@ -20,7 +20,7 @@ export default function RelatedEvents({
       </h3>
 
       <p className="text-xs text-gray-500 mt-1 mb-3">
-        Based on shared topics.
+        Suggestions based on shared topics, category, and date.
       </p>
 
       <div className="space-y-2">

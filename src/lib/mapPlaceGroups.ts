@@ -1,4 +1,6 @@
 import type { MapLocation } from "@/lib/mapLocations";
+import { compareEventsChronologicallyDescending } from "@/components/timelineUtils";
+import { normalizeSearchText } from "@/lib/searchText";
 
 export type MapPlaceGroup = {
   placeId: string;
@@ -6,7 +8,6 @@ export type MapPlaceGroup = {
   latitude: number;
   longitude: number;
   precision: MapLocation["precision"];
-  locationRole: string;
   locations: MapLocation[];
 };
 
@@ -28,7 +29,6 @@ export function buildMapPlaceGroups(
       latitude: location.latitude,
       longitude: location.longitude,
       precision: location.precision,
-      locationRole: location.locationRole,
       locations: [location],
     });
   });
@@ -38,11 +38,27 @@ export function buildMapPlaceGroups(
       ...group,
       locations: group.locations.sort(
         (first, second) =>
-          (second.historicalYear ?? Number.NEGATIVE_INFINITY) -
-          (first.historicalYear ?? Number.NEGATIVE_INFINITY)
+          compareEventsChronologicallyDescending(first.chronology, second.chronology)
       ),
     }))
     .sort((first, second) =>
       first.placeName.localeCompare(second.placeName)
     );
+}
+
+export function findMapPlaceGroups(
+  groups: readonly MapPlaceGroup[],
+  query: string
+): MapPlaceGroup[] {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return [];
+
+  const exactMatches = groups.filter(
+    (group) => normalizeSearchText(group.placeName) === normalizedQuery
+  );
+  if (exactMatches.length > 0) return exactMatches;
+
+  return groups.filter((group) =>
+    normalizeSearchText(group.placeName).includes(normalizedQuery)
+  );
 }

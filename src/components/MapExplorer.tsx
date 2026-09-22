@@ -6,7 +6,11 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { FormEvent, useCallback, useMemo, useState } from "react";
 import type { MapLocation } from "@/lib/mapLocations";
-import { buildMapPlaceGroups } from "@/lib/mapPlaceGroups";
+import {
+  buildMapPlaceGroups,
+  findMapPlaceGroups,
+  type MapPlaceGroup,
+} from "@/lib/mapPlaceGroups";
 import styles from "./MapExplorer.module.css";
 
 const MapCanvas = dynamic(() => import("@/components/MapCanvas"), {
@@ -43,6 +47,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
   const [category, setCategory] = useState("all");
   const [placeQuery, setPlaceQuery] = useState("");
   const [placeSearchMessage, setPlaceSearchMessage] = useState("");
+  const [placeSearchResults, setPlaceSearchResults] = useState<MapPlaceGroup[]>([]);
 
   const categories = useMemo(
     () =>
@@ -83,6 +88,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
         (candidate) => candidate.placeId === placeId
       );
       setSelectedPlaceId(placeId);
+      setPlaceSearchResults([]);
       setPlaceSearchMessage(
         group
           ? `${group.placeName} selected. ${group.locations.length} ${
@@ -94,26 +100,29 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
     [allGroups]
   );
 
+  function selectSearchResult(group: MapPlaceGroup) {
+    setPeriod("all");
+    setCategory("all");
+    setPlaceQuery(group.placeName);
+    handleSelectPlace(group.placeId);
+  }
+
   function handlePlaceSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const normalizedQuery = placeQuery.trim().toLocaleLowerCase();
-    const group = allGroups.find(
-      (candidate) =>
-        candidate.placeName.toLocaleLowerCase() === normalizedQuery
-    );
+    const matches = findMapPlaceGroups(allGroups, placeQuery);
 
-    if (!group) {
-      setPlaceSearchMessage("Choose a reviewed place from the suggestions.");
+    if (matches.length === 1) {
+      selectSearchResult(matches[0]);
       return;
     }
 
-    setPeriod("all");
-    setCategory("all");
-    setSelectedPlaceId(group.placeId);
+    setPlaceSearchResults(matches);
     setPlaceSearchMessage(
-      `${group.placeName} selected. ${group.locations.length} ${
-        group.locations.length === 1 ? "entry" : "entries"
-      } shown.`
+      !placeQuery.trim()
+        ? "Enter a city, region, or country to find a reviewed place."
+        : matches.length > 1
+          ? `${matches.length} reviewed places match. Choose a place below.`
+          : "No reviewed places match. Try another city, region, or country, or choose a suggestion."
     );
   }
 
@@ -188,7 +197,12 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
               type="search"
               list="beer-map-places"
               value={placeQuery}
-              onChange={(event) => setPlaceQuery(event.target.value)}
+              onChange={(event) => {
+                setPlaceQuery(event.target.value);
+                setPlaceSearchResults([]);
+                setPlaceSearchMessage("");
+              }}
+              aria-describedby="place-search-status"
               placeholder="Start typing a city, region, or country"
               autoComplete="off"
               className="min-h-11 rounded-lg border border-stone-300 bg-white px-3 text-stone-900 placeholder:text-stone-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-stone-500"
@@ -205,10 +219,31 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
           >
             Show place
           </button>
-          <p className="sr-only" role="status" aria-live="polite">
-            {placeSearchMessage}
-          </p>
         </form>
+
+        <p
+          id="place-search-status"
+          className={placeSearchMessage ? "text-sm text-stone-600" : "sr-only"}
+          role="status"
+          aria-live="polite"
+        >
+          {placeSearchMessage}
+        </p>
+        {placeSearchResults.length > 1 && (
+          <ul className="grid max-h-60 gap-2 overflow-y-auto sm:grid-cols-2" aria-label="Matching reviewed places">
+            {placeSearchResults.map((group) => (
+              <li key={group.placeId}>
+                <button
+                  type="button"
+                  onClick={() => selectSearchResult(group)}
+                  className="min-h-11 w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-left text-sm text-stone-900 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+                >
+                  {group.placeName}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_19rem]">
           <div className={styles.mapFrame}>
@@ -255,9 +290,6 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
                   <p className="text-xs capitalize text-stone-500">
                     {selectedGroup.precision} precision
                   </p>
-                  <p className="mt-1 text-xs text-stone-500">
-                    {selectedGroup.locationRole}
-                  </p>
                   <ul className="mt-4 space-y-4">
                     {selectedGroup.locations.map((location) => (
                       <li key={location.id}>
@@ -269,6 +301,9 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
                         </Link>
                         <p className="mt-1 text-xs text-stone-600">
                           {location.eventDateLabel}
+                        </p>
+                        <p className="mt-1 text-sm leading-5 text-stone-600">
+                          {location.locationRole}
                         </p>
                       </li>
                     ))}

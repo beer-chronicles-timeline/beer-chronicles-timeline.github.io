@@ -20,6 +20,39 @@ export function histogramRangeLabel(from: number, to: number): string {
     : `${histogramYearLabel(from)}–${histogramYearLabel(to)}`;
 }
 
+export const AUTOMATIC_HISTOGRAM_BIN_COUNT = 20;
+
+export function automaticHistogramBinSize(from: number, to: number): number {
+  if (
+    !Number.isSafeInteger(from) || !Number.isSafeInteger(to) ||
+    from === 0 || to === 0 || from > to
+  ) {
+    throw new RangeError("Use valid historical years.");
+  }
+
+  const span = yearCoordinate(to) - yearCoordinate(from) + 1;
+  let bestSize = 1;
+  let bestDifference = Number.POSITIVE_INFINITY;
+
+  // Compare actual aligned bin counts, including clipped ends, without
+  // allocating bins. Round sizes keep historical ranges easy to read.
+  for (let magnitude = 1; magnitude <= span; magnitude *= 10) {
+    for (const factor of [1, 2, 5]) {
+      const size = factor * magnitude;
+      if (!Number.isSafeInteger(size)) continue;
+      const count = Math.floor(to / size) - Math.floor(from / size) + 1 -
+        (size === 1 && from < 0 && to > 0 ? 1 : 0);
+      const difference = Math.abs(count - AUTOMATIC_HISTOGRAM_BIN_COUNT);
+      if (difference < bestDifference) {
+        bestSize = size;
+        bestDifference = difference;
+      }
+    }
+  }
+
+  return bestSize;
+}
+
 export function buildHistogram(
   years: readonly number[],
   from: number,

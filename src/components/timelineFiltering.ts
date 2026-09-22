@@ -5,6 +5,7 @@ import {
   getEventTimelineYear,
 } from "./timelineUtils";
 import type { TimelineEvent } from "@/lib/types";
+import { normalizeSearchText } from "@/lib/searchText";
 
 export type TagFilterMode = "all" | "any";
 
@@ -29,6 +30,7 @@ export function filterTimelineEvents({
   isOldestFirst,
   searchQuery,
 }: FilterTimelineEventsArgs): TimelineEvent[] {
+  const tokens = normalizeSearchText(searchQuery).split(/\s+/).filter(Boolean);
   const filtered = events.filter((event) => {
     if (activeCategory && event.category !== activeCategory) {
       return false;
@@ -57,24 +59,13 @@ export function filterTimelineEvents({
       }
     }
 
-    const trimmedQuery = searchQuery.trim();
+    if (tokens.length > 0) {
+      const title = normalizeSearchText(event.title || "");
+      const description = normalizeSearchText(event.description || "");
 
-    if (trimmedQuery !== "") {
-      const tokens = trimmedQuery
-        .split(/\s+/)
-        .filter((token) => token.length > 0);
-
-      const lowerTitle = (event.title || "").toLowerCase();
-      const lowerDescription = (event.description || "").toLowerCase();
-
-      const allTokensMatch = tokens.every((token) => {
-        const lowerToken = token.toLowerCase();
-
-        return (
-          lowerTitle.includes(lowerToken) ||
-          lowerDescription.includes(lowerToken)
-        );
-      });
+      const allTokensMatch = tokens.every(
+        (token) => title.includes(token) || description.includes(token)
+      );
 
       if (!allTokensMatch) {
         return false;

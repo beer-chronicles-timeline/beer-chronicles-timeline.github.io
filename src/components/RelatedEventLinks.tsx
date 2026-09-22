@@ -29,7 +29,7 @@ export default function RelatedEventLinks({
       </h2>
 
       <p className="mt-1 text-sm text-stone-500">
-        Related entries based on shared topics.
+        Suggestions based on shared topics, category, and date.
       </p>
 
       <div className="mt-4 space-y-3">

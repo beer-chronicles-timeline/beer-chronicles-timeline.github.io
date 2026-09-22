@@ -1,6 +1,5 @@
 // components/timelineUtils.ts
 import type { TimelineEvent } from "@/lib/types";
-import { STORYLINES } from "@/lib/storylines";
 
 export const urlRegex = /\b(https?:\/\/[^\s)]+|www\.[^\s)]+)\b/gi;
 
@@ -334,77 +333,61 @@ export function getRelatedEvents(
     "Science",
     "Styles",
   ]);
-  const currentTagIds = new Set(
-    (currentEvent.tags ?? [])
-      .filter((tag) => !genericRelationshipTags.has(tag.name))
-      .map((tag) => tag.id)
-  );
-
+  const getSpecificTagIds = (event: TimelineEvent) =>
+    new Set(
+      (event.tags ?? [])
+        .filter((tag) => !genericRelationshipTags.has(tag.name))
+        .map((tag) => tag.id)
+    );
+  const currentTagIds = getSpecificTagIds(currentEvent);
   const currentYear = getEventTimelineYear(currentEvent);
-  const getMatchingStorylineSlugs = (event: TimelineEvent) => {
-    const eventYear = getEventTimelineYear(event);
-    const tagNames = new Set((event.tags ?? []).map((tag) => tag.name));
+  const uniqueEvents = new Map(events.map((event) => [event.id, event]));
+  uniqueEvents.set(currentEvent.id, currentEvent);
+  const tagFrequencies = new Map<string, number>();
 
-    return STORYLINES.filter((storyline) => {
-      if (
-        eventYear === null ||
-        (storyline.fromYear !== undefined &&
-          eventYear < storyline.fromYear) ||
-        (storyline.toYear !== undefined && eventYear > storyline.toYear)
-      ) {
-        return false;
-      }
+  for (const event of uniqueEvents.values()) {
+    for (const tagId of getSpecificTagIds(event)) {
+      tagFrequencies.set(tagId, (tagFrequencies.get(tagId) ?? 0) + 1);
+    }
+  }
 
-      return storyline.tagMode === "any"
-        ? storyline.tagNames.some((tagName) => tagNames.has(tagName))
-        : storyline.tagNames.every((tagName) => tagNames.has(tagName));
-    }).map((storyline) => storyline.slug);
-  };
-  const currentStorylineSlugs = new Set(
-    getMatchingStorylineSlugs(currentEvent)
-  );
-
-  return events
+  return Array.from(uniqueEvents.values())
     .filter((event) => event.id !== currentEvent.id)
     .map((event) => {
-      const eventTagIds = (event.tags ?? [])
-        .filter((tag) => !genericRelationshipTags.has(tag.name))
-        .map((tag) => tag.id);
-      const sharedTagCount = eventTagIds.filter((id) =>
+      const sharedTagIds = Array.from(getSpecificTagIds(event)).filter((id) =>
         currentTagIds.has(id)
-      ).length;
-      const sharedStorylineCount = getMatchingStorylineSlugs(event).filter(
-        (slug) => currentStorylineSlugs.has(slug)
-      ).length;
-
-      const sameCategory =
-        event.category && event.category === currentEvent.category
-          ? 1
-          : 0;
+      );
+      const sharedTagCount = sharedTagIds.length;
+      // Rarity only breaks equal tag counts; it never overrides a stronger match.
+      const sharedTagRarity = sharedTagIds.sort().reduce(
+        (sum, id) => sum + 1 / tagFrequencies.get(id)!,
+        0
+      );
+      const sameCategory = Boolean(
+        currentEvent.category && event.category === currentEvent.category
+      );
 
       const eventYear = getEventTimelineYear(event);
 
       const yearDistance =
         currentYear !== null && eventYear !== null
-          ? Math.abs(currentYear - eventYear)
+          ? Math.abs(currentYear - eventYear) -
+            (currentYear * eventYear < 0 ? 1 : 0)
           : Number.POSITIVE_INFINITY;
 
-      const score =
-        sharedStorylineCount * 1_000 +
-        sharedTagCount * 100 +
-        sameCategory * 10 +
-        Math.max(0, 50 - Math.floor(yearDistance / 25));
-
-      return { event, score, sharedStorylineCount, sharedTagCount };
+      return { event, sharedTagCount, sharedTagRarity, yearDistance, sameCategory };
     })
     .filter(
       (item) =>
-        item.sharedStorylineCount > 0 || item.sharedTagCount > 0
+        item.sharedTagCount > 0 || item.sameCategory
     )
     .sort(
       (a, b) =>
-        b.score - a.score ||
-        compareEventsChronologicallyAscending(a.event, b.event)
+        b.sharedTagCount - a.sharedTagCount ||
+        b.sharedTagRarity - a.sharedTagRarity ||
+        a.yearDistance - b.yearDistance ||
+        compareEventsChronologicallyAscending(a.event, b.event) ||
+        a.event.id.localeCompare(b.event.id)
     )
     .slice(0, 3)
     .map((item) => item.event);

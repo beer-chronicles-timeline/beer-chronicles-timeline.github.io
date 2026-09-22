@@ -211,11 +211,13 @@ export default function YearRangeSlider({
         <Slider.Thumb
           className="block h-5 w-5 rounded-full border-2 border-black bg-white shadow transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           aria-label="Start year"
+          aria-valuetext={`${Math.abs(startYear)} ${startYear < 0 ? "BCE" : "CE"}`}
         />
 
         <Slider.Thumb
           className="block h-5 w-5 rounded-full border-2 border-black bg-white shadow transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           aria-label="End year"
+          aria-valuetext={`${Math.abs(endYear)} ${endYear < 0 ? "BCE" : "CE"}`}
         />
       </Slider.Root>
     </div>

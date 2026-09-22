@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import YearRangeSlider from "@/components/YearRangeSlider";
 import {
+  AUTOMATIC_HISTOGRAM_BIN_COUNT,
+  automaticHistogramBinSize,
   buildHistogram,
   histogramRangeLabel,
   histogramYearLabel,
@@ -16,8 +18,11 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
   const maxYear = Math.max(currentYear, ...years);
   const [from, setFrom] = useState(1800);
   const [to, setTo] = useState(currentYear);
-  const [binSize, setBinSize] = useState(10);
-  const [binDraft, setBinDraft] = useState("10");
+  const [customBinSize, setCustomBinSize] = useState(() => automaticHistogramBinSize(1800, currentYear));
+  const [customBinDraft, setCustomBinDraft] = useState<string | null>(null);
+  const automatic = customBinDraft === null;
+  const binSize = automatic ? automaticHistogramBinSize(from, to) : customBinSize;
+  const binDraft = customBinDraft ?? String(binSize);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [showTable, setShowTable] = useState(false);
   const [width, setWidth] = useState(900);
@@ -79,17 +84,33 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
                 aria-invalid={!binValid} aria-describedby="histogram-bin-help"
                 onChange={(event) => {
                   const raw = event.target.value;
-                  setBinDraft(raw);
+                  setCustomBinDraft(raw);
+                  setCustomBinSize(binSize);
                   if (/^\d+$/.test(raw) && Number.isSafeInteger(Number(raw)) && Number(raw) > 0) {
-                    setBinSize(Number(raw)); setSelectedIndex(null);
+                    setCustomBinSize(Number(raw)); setSelectedIndex(null);
                   }
                 }}
                 className="h-11 w-28 rounded-md border border-stone-300 px-3 text-base focus:outline-none focus:ring-2 focus:ring-stone-500"
               />
               <span className="text-sm text-stone-600">years</span>
             </div>
+            <div className="mt-3 flex items-center gap-3">
+              <button
+                type="button"
+                aria-pressed={automatic}
+                onClick={() => { setCustomBinDraft(null); setSelectedIndex(null); }}
+                className={`min-h-11 rounded-lg border px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 ${automatic ? "border-stone-900 bg-stone-900 text-white" : "border-stone-300 text-stone-900 hover:bg-stone-100"}`}
+              >
+                Automatic
+              </button>
+              {!automatic && <span className="text-sm text-stone-600">Custom</span>}
+            </div>
             <p id="histogram-bin-help" className={`mt-2 text-xs ${binValid ? "text-stone-500" : "text-red-700"}`}>
-              {binValid ? "Bins align to multiples of this number." : "Enter a positive whole number. The chart keeps the last valid value."}
+              {!binValid
+                ? "Enter a positive whole number. The chart keeps the last valid value."
+                : automatic
+                  ? `Bin size adjusts to show about ${AUTOMATIC_HISTOGRAM_BIN_COUNT} bins, using round year boundaries. Edit the size to use a custom value.`
+                  : "Custom bin size is kept when the date range changes. Bins align to multiples of this number."}
             </p>
           </div>
         </div>
@@ -144,7 +165,7 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
       {undatedCount > 0 && <p className="mt-2 text-sm text-stone-600">{undatedCount} {undatedCount === 1 ? "entry has" : "entries have"} no usable timeline year and {undatedCount === 1 ? "is" : "are"} excluded.</p>}
       <details className="mt-5 rounded-lg border border-stone-200 bg-white" onToggle={(event) => setShowTable(event.currentTarget.open)}>
         <summary className="cursor-pointer rounded-lg px-4 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">Entry counts as a table</summary>
-        {showTable && <div className="max-h-80 overflow-auto px-4 pb-4"><table className="w-full text-left text-sm">
+        {showTable && <div tabIndex={0} className="max-h-80 overflow-auto px-4 pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"><table className="w-full text-left text-sm">
           <caption className="sr-only">Entry counts by year range</caption>
           <thead className="sticky top-0 bg-white"><tr><th scope="col" className="py-2">Years</th><th scope="col" className="py-2 text-right">Entries</th></tr></thead>
           <tbody>{bins.map((bin) => <tr key={bin.from} className="border-t border-stone-100"><th scope="row" className="py-2 font-normal">{histogramRangeLabel(bin.from, bin.to)}</th><td className="py-2 text-right tabular-nums">{bin.count}</td></tr>)}</tbody>

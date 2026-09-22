@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildMapPlaceGroups } from "../src/lib/mapPlaceGroups.ts";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import MapPlaceIndex from "../src/components/MapPlaceIndex.tsx";
+import { buildMapPlaceGroups, findMapPlaceGroups } from "../src/lib/mapPlaceGroups.ts";
 import {
   buildMapLocations,
   type MapLocation,
@@ -16,6 +19,7 @@ const locations: MapLocation[] = [
     eventDateLabel: "1900",
     category: "Events",
     historicalYear: 1900,
+    chronology: { event_date: null, historical_year: 1900 },
     latitude: 1,
     longitude: 2,
     placeId: "place",
@@ -31,6 +35,7 @@ const locations: MapLocation[] = [
     eventDateLabel: "2000",
     category: "Events",
     historicalYear: 2000,
+    chronology: { event_date: null, historical_year: 2000 },
     latitude: 1,
     longitude: 2,
     placeId: "place",
@@ -46,6 +51,7 @@ const locations: MapLocation[] = [
     eventDateLabel: "1950",
     category: "Events",
     historicalYear: 1950,
+    chronology: { event_date: null, historical_year: 1950 },
     latitude: 3,
     longitude: 4,
     placeId: "alpha",
@@ -75,6 +81,86 @@ test("does not mutate the input location order", () => {
     locations.map((location) => location.eventId),
     ["older", "newer", "alpha"]
   );
+});
+
+test("map groups and the fallback index use full event dates within a year", () => {
+  // Synthetic date fixtures using two existing Bremen map assignment IDs.
+  const events: TimelineEvent[] = [
+    { id: "f0ecf113-8d04-4020-8776-a0013a6d531f", title: "May fixture", event_date: "2015-05-01" },
+    { id: "416e2437-3334-453f-8e11-77b3000572a2", title: "December fixture", event_date: "2015-12-01" },
+  ].map((event) => ({
+    ...event,
+    description: null,
+    historical_year: null,
+    date_precision: "month",
+    image_url: null,
+    created_at: null,
+  }));
+  const mapped = buildMapLocations(events);
+  const before = structuredClone(mapped);
+  const [group] = buildMapPlaceGroups(mapped);
+
+  assert.deepEqual(group.locations.map((location) => location.eventId), [events[1].id, events[0].id]);
+  assert.deepEqual(buildMapPlaceGroups([...mapped].reverse())[0].locations, group.locations);
+  assert.deepEqual(mapped, before);
+
+  const html = renderToStaticMarkup(createElement(MapPlaceIndex, { locations: mapped }));
+  assert.ok(html.includes(`href="${group.locations[0].eventHref}"`));
+  assert.ok(!html.includes(`href="${group.locations[1].eventHref}"`));
+});
+
+test("map chronology preserves day precision, historical years, BCE order, and undated entries", () => {
+  const fixtures = [
+    { id: "undated", event_date: null, historical_year: null },
+    { id: "earlier-day", event_date: "2015-12-02", historical_year: null },
+    { id: "later-day", event_date: "2015-12-20", historical_year: null },
+    { id: "year-only", event_date: null, historical_year: 2015 },
+    { id: "bce-date", event_date: "0000-12-01 BC", historical_year: null },
+    { id: "ancient", event_date: null, historical_year: -11000 },
+    { id: "historical-year-priority", event_date: "2026-01-01", historical_year: -500 },
+  ];
+  const mapped = fixtures.map(({ id, ...chronology }) => ({
+    ...locations[0],
+    id,
+    chronology,
+  }));
+
+  assert.deepEqual(
+    buildMapPlaceGroups(mapped)[0].locations.map((location) => location.id),
+    ["later-day", "earlier-day", "year-only", "bce-date", "historical-year-priority", "ancient", "undated"]
+  );
+});
+
+test("keeps distinct historical roles on entries rather than on the place group", () => {
+  const roles = ["Home city; production elsewhere", "Place of introduction"];
+  const [group] = buildMapPlaceGroups(
+    locations.slice(0, 2).map((location, index) => ({
+      ...location,
+      locationRole: roles[index],
+    }))
+  );
+
+  assert.equal(group.precision, "city");
+  assert.equal("locationRole" in group, false);
+  assert.deepEqual(group.locations.map((location) => location.locationRole), roles.toReversed());
+});
+
+test("place search accepts partial and accent-insensitive matches without resolving ambiguity", () => {
+  const groups = ["Bremen, Germany", "Laško, Slovenia", "Žalec, Slovenia"].map(
+    (placeName, index) => ({
+      ...buildMapPlaceGroups(locations)[0],
+      placeId: String(index),
+      placeName,
+    })
+  );
+  assert.deepEqual(findMapPlaceGroups(groups, " bremen "), [groups[0]]);
+  assert.deepEqual(findMapPlaceGroups(groups, "LASKO"), [groups[1]]);
+  assert.deepEqual(findMapPlaceGroups(groups, "Zalec"), [groups[2]]);
+  assert.deepEqual(findMapPlaceGroups(groups, "Slovenia"), groups.slice(1));
+  assert.deepEqual(findMapPlaceGroups(groups, ""), []);
+  assert.deepEqual(findMapPlaceGroups(groups, "unmatched"), []);
+  const longerName = { ...groups[0], placeId: "longer", placeName: "Near Bremen, Germany" };
+  assert.deepEqual(findMapPlaceGroups([...groups, longerName], "Bremen, Germany"), [groups[0]]);
 });
 
 test("maps the four reviewed location-tag entries with supported precision", () => {

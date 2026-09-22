@@ -19,6 +19,7 @@ export type MapLocation = {
   eventDateLabel: string;
   category: string | null;
   historicalYear: number | null;
+  chronology: Pick<TimelineEvent, "event_date" | "historical_year">;
   latitude: number;
   longitude: number;
   placeId: string;
@@ -1026,6 +1027,10 @@ export function buildMapLocations(
         eventDateLabel: formatEventDate(event),
         category: event.category ?? null,
         historicalYear: getEventTimelineYear(event),
+        chronology: {
+          event_date: event.event_date,
+          historical_year: event.historical_year,
+        },
         latitude: place.latitude,
         longitude: place.longitude,
         placeId: assignment.placeId,

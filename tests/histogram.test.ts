@@ -1,6 +1,40 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildHistogram, yearCoordinate } from "../src/lib/histogram";
+import { automaticHistogramBinSize, buildHistogram, yearCoordinate } from "../src/lib/histogram";
+
+test("automatic sizing keeps modern detail and makes all history readable", () => {
+  assert.equal(automaticHistogramBinSize(1800, 2026), 10);
+  assert.equal(buildHistogram([], 1800, 2026, automaticHistogramBinSize(1800, 2026)).length, 23);
+  assert.equal(automaticHistogramBinSize(-11000, 2026), 1000);
+  assert.equal(buildHistogram([], -11000, 2026, automaticHistogramBinSize(-11000, 2026)).length, 14);
+});
+
+test("automatic sizing refines short ranges down to single years", () => {
+  for (const [from, to] of [[1900, 1900], [1900, 1919], [-1, 1], [-20, -1]]) {
+    assert.equal(automaticHistogramBinSize(from, to), 1);
+    const bins = buildHistogram([from, to, 0], from, to, 1);
+    assert.equal(bins.length, yearCoordinate(to) - yearCoordinate(from) + 1);
+    assert.equal(bins.reduce((total, bin) => total + bin.count, 0), 2);
+  }
+});
+
+test("automatic bins keep counts and full range coverage across historical eras", () => {
+  for (const [from, to] of [[-11000, -1], [-11000, 2026], [-153, 192], [1853, 2026], [1, 2026]]) {
+    const size = automaticHistogramBinSize(from, to);
+    const bins = buildHistogram([from - 1, from, to, to + 1, 0], from, to, size);
+    assert.ok(bins.length >= 10 && bins.length <= 30);
+    assert.equal(bins[0].from, from);
+    assert.equal(bins.at(-1)!.to, to);
+    assert.equal(bins.reduce((total, bin) => total + bin.count, 0), 2);
+    assert.equal(bins.reduce((total, bin) => total + yearCoordinate(bin.to) - yearCoordinate(bin.from) + 1, 0), yearCoordinate(to) - yearCoordinate(from) + 1);
+  }
+});
+
+test("automatic sizing rejects invalid historical ranges", () => {
+  for (const [from, to] of [[0, 2026], [-20, 0], [2000, 1900], [1.5, 2026], [NaN, 2026], [1, Infinity]]) {
+    assert.throws(() => automaticHistogramBinSize(from, to), RangeError);
+  }
+});
 
 test("round boundaries, inclusive limits, empty bins and clipped ends", () => {
   assert.deepEqual(buildHistogram([1852, 1853, 1859, 1860, 1869, 1882, 1883], 1853, 1882, 10), [
