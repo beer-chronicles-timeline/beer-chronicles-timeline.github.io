@@ -102,6 +102,13 @@ const MAP_PLACES = {
   daruvar: { name: "Daruvar, Croatia", latitude: 45.592895, longitude: 17.223685, precision: "city", locationRole: "Town stated in entry" },
   karlovac: { name: "Karlovac, Croatia", latitude: 45.483, longitude: 15.550, precision: "city", locationRole: "City stated in entry" },
   zagreb: { name: "Zagreb, Croatia", latitude: 45.81306, longitude: 15.97750, precision: "city", locationRole: "City stated in entry" },
+  // Four Croatian breweries: sql/croatian-craft-breweries-proposal.sql.
+  // Settlement coordinates: https://en.wikipedia.org/wiki/Dubrovnik and
+  // https://en.wikipedia.org/wiki/Ku%C4%87an_Marof, inspected 2026-09-22.
+  // These locate settlements, not brewery premises; roles distinguish origin,
+  // contract production, and public launch. Historical evidence is in the SQL.
+  dubrovnik: { name: "Dubrovnik, Croatia", latitude: 42.64028, longitude: 18.10833, precision: "city", locationRole: "Home city of the brewer behind the commercial debut" },
+  kucan_marof: { name: "Kučan Marof, Croatia", latitude: 46.29056, longitude: 16.37250, precision: "city", locationRole: "Settlement of the initial contract brewing" },
   // Settlement coordinates: https://en.wikipedia.org/wiki/Split,_Croatia and
   // https://en.wikipedia.org/wiki/Hvar_(city), inspected 2026-09-18.
   // Historical scope and sources: sql/tap-b-and-hvar-brewing-proposal.sql.
@@ -382,6 +389,16 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/croatian-craft-breweries-proposal.sql.
+  // Dormant until the reviewed events exist; modern brewery addresses are not
+  // substituted for the historical production, origin, or launch locations.
+  { eventId: "7849aa7f-20a5-4165-8454-af67edf130a3", placeId: "dubrovnik", locationRole: "Home city of Niko Čučković and the Maskeron homebrewing project" },
+  { eventId: "7849aa7f-20a5-4165-8454-af67edf130a3", placeId: "split", locationRole: "City where LAB brewed Maskeron's first commercial beer, Aloha" },
+  { eventId: "31ebeddd-9b2c-453b-abf2-7845d2aa2b00", placeId: "zagreb", locationRole: "Business base of Pulfer at its founding in 2016" },
+  { eventId: "31ebeddd-9b2c-453b-abf2-7845d2aa2b00", placeId: "kucan_marof", locationRole: "Settlement where Pulfer's beer was brewed in its founding year" },
+  { eventId: "df8ac41f-f0bb-4f68-a5f9-8aa9ee246f62", placeId: "zagreb", locationRole: "City of Nova Runda APA's public launch at Tolkien's House" },
+  { eventId: "df8ac41f-f0bb-4f68-a5f9-8aa9ee246f62", placeId: "kucan_marof", locationRole: "Settlement where Kahli brewed Nova Runda's first commercial beer" },
+  { eventId: "77bb3ade-9523-4ba7-adc8-47a6d8db247f", placeId: "zagreb", locationRole: "City where Medvedgrad opened its original brewery and beer hall in 1994" },
   // Fixed UUIDs shared with sql/zoigl-history-proposal.sql.
   // Dormant until the corresponding reviewed entries are supplied to the map.
   { eventId: "c9999fe1-a93c-497d-9423-168347b203f8", placeId: "neuhaus_windischeschenbach", locationRole: "Community granted brewing and serving rights in 1415" },
