@@ -9,6 +9,8 @@ import Footer from "@/components/Footer";
 import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import RelatedEventLinks from "@/components/RelatedEventLinks";
+import ConnectedHistory from "@/components/ConnectedHistory";
+import { getConnectedEvents } from "@/lib/eventConnections";
 import ScrollToTop from "@/components/ScrollToTop";
 import {
   getRelatedEvents,
@@ -132,6 +134,7 @@ export default async function EventPage({
   }
 
   const relatedEvents = getRelatedEvents(event, events);
+  const connectedEvents = getConnectedEvents(event, events);
   const socialImage = event.image_url ?? DEFAULT_SOCIAL_IMAGE;
   const absoluteSocialImageUrl = new URL(
     socialImage,
@@ -195,6 +198,7 @@ export default async function EventPage({
         <article className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">
           <EventDetailContent event={event} titleAs="h1" />
 
+          <ConnectedHistory connections={connectedEvents} />
           <RelatedEventLinks relatedEvents={relatedEvents} />
         </article>
 

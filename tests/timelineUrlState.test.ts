@@ -23,13 +23,14 @@ test("timeline URL parser returns the server-rendered default state", () => {
     tagFilterMode: "all",
     searchQuery: "",
     isOldestFirst: false,
+    storylineSlug: null,
   });
 });
 
 test("timeline URL parser restores every supported parameter", () => {
   assert.deepEqual(
     parseTimelineUrlState(
-      "?category=Styles&from=1700&to=1900&tags=Porter%2CHidden+Tag&tagMode=any&string=dark+beer&order=oldest",
+      "?category=Styles&from=1700&to=1900&tags=Porter%2CHidden+Tag&tagMode=any&string=dark+beer&order=oldest&storyline=british-ale-beyond-ipa",
       options
     ),
     {
@@ -40,6 +41,7 @@ test("timeline URL parser restores every supported parameter", () => {
       tagFilterMode: "any",
       searchQuery: "dark beer",
       isOldestFirst: true,
+      storylineSlug: "british-ale-beyond-ipa",
     }
   );
 });
@@ -66,8 +68,9 @@ test("timeline URL serializer preserves unrelated parameters and normalizes stat
       tagFilterMode: "any",
       searchQuery: "  dark beer  ",
       isOldestFirst: true,
+      storylineSlug: null,
     },
-    "?ref=storyline&category=People&to=1900",
+    "?ref=storyline&category=People&to=1900&storyline=british-ale-beyond-ipa",
     options
   );
   const params = new URLSearchParams(query);
@@ -80,4 +83,16 @@ test("timeline URL serializer preserves unrelated parameters and normalizes stat
   assert.equal(params.get("tagMode"), "any");
   assert.equal(params.get("string"), "dark beer");
   assert.equal(params.get("order"), "oldest");
+  assert.equal(params.has("storyline"), false);
+});
+
+test("Storyline scope survives a URL round trip and unknown slugs are ignored", () => {
+  const state = parseTimelineUrlState(
+    "?storyline=british-ale-beyond-ipa&string=bitter&order=oldest",
+    options
+  );
+  const query = serializeTimelineUrlState(state, "?ref=shared", options);
+  assert.equal(new URLSearchParams(query).get("ref"), "shared");
+  assert.deepEqual(parseTimelineUrlState(query, options), state);
+  assert.equal(parseTimelineUrlState("?storyline=unknown", options).storylineSlug, null);
 });

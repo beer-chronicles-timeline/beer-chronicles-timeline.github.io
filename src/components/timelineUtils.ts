@@ -1,5 +1,6 @@
 // components/timelineUtils.ts
 import type { TimelineEvent } from "@/lib/types";
+import { getConnectedEvents } from "@/lib/eventConnections";
 
 export const urlRegex = /\b(https?:\/\/[^\s)]+|www\.[^\s)]+)\b/gi;
 
@@ -324,6 +325,9 @@ export function getRelatedEvents(
   currentEvent: TimelineEvent,
   events: TimelineEvent[]
 ) {
+  const connectedIds = new Set(
+    getConnectedEvents(currentEvent, events).map(({ event }) => event.id)
+  );
   const genericRelationshipTags = new Set([
     "Breweries",
     "Community",
@@ -352,7 +356,7 @@ export function getRelatedEvents(
   }
 
   return Array.from(uniqueEvents.values())
-    .filter((event) => event.id !== currentEvent.id)
+    .filter((event) => event.id !== currentEvent.id && !connectedIds.has(event.id))
     .map((event) => {
       const sharedTagIds = Array.from(getSpecificTagIds(event)).filter((id) =>
         currentTagIds.has(id)

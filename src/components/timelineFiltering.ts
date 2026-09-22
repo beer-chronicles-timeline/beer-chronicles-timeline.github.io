@@ -4,8 +4,10 @@ import {
   compareEventsChronologicallyDescending,
   getEventTimelineYear,
 } from "./timelineUtils";
-import type { TimelineEvent } from "@/lib/types";
+import type { Tag, TimelineEvent } from "@/lib/types";
 import { normalizeSearchText } from "@/lib/searchText";
+import { doesEventMatchStoryline } from "@/lib/eventStorylines";
+import { getStorylineBySlug } from "@/lib/storylines";
 
 export type TagFilterMode = "all" | "any";
 
@@ -18,6 +20,8 @@ type FilterTimelineEventsArgs = {
   tagFilterMode?: TagFilterMode;
   isOldestFirst: boolean;
   searchQuery: string;
+  storylineSlug?: string | null;
+  urlTags?: Tag[];
 };
 
 export function filterTimelineEvents({
@@ -29,9 +33,27 @@ export function filterTimelineEvents({
   tagFilterMode = "all",
   isOldestFirst,
   searchQuery,
+  storylineSlug,
+  urlTags = [],
 }: FilterTimelineEventsArgs): TimelineEvent[] {
+  const storyline = storylineSlug ? getStorylineBySlug(storylineSlug) : undefined;
+  const tagNamesById = new Map(urlTags.map((tag) => [tag.id, tag.name]));
   const tokens = normalizeSearchText(searchQuery).split(/\s+/).filter(Boolean);
   const filtered = events.filter((event) => {
+    if (storyline) {
+      // The initial homepage preview has tag IDs but omits most tag names.
+      const namedEvent = {
+        ...event,
+        tags: event.tags?.map((tag) => ({
+          ...tag,
+          name: tag.name || tagNamesById.get(tag.id) || "",
+        })),
+      };
+      if (!doesEventMatchStoryline(namedEvent, storyline)) {
+        return false;
+      }
+    }
+
     if (activeCategory && event.category !== activeCategory) {
       return false;
     }

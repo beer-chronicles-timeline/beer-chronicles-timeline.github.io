@@ -49,6 +49,14 @@ export function doesEventMatchStoryline(
     (event.tags ?? []).map((tag) => tag.name)
   );
 
+  if (
+    !(storyline.requiredTagNames ?? []).every((tagName) =>
+      eventTagNames.has(tagName)
+    )
+  ) {
+    return false;
+  }
+
   if (storyline.tagMode === "any") {
     return storyline.tagNames.some((tagName) =>
       eventTagNames.has(tagName)

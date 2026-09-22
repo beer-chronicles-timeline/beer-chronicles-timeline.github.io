@@ -20,6 +20,7 @@ export type Storyline = {
   description: string;
   tagNames: string[];
   tagMode?: "all" | "any";
+  requiredTagNames?: string[];
   fromYear?: number;
   toYear?: number;
   featuredEventId: string;
@@ -147,6 +148,7 @@ export const STORYLINES: Storyline[] = [
       "Explore pale ale, mild, bitter, ESB, cask conditioning, and the pub traditions that shaped everyday British beer beyond export IPA.",
     tagNames: ["Bitter", "Mild", "Pale Ale", "Cask Beer"],
     tagMode: "any",
+    requiredTagNames: ["United Kingdom"],
     featuredEventId: "7f774669-e8ba-42fe-a311-0457064be198",
   },
   {
@@ -464,6 +466,13 @@ export function getStorylineTimelineHref(
   storyline: Storyline
 ): string {
   const params = new URLSearchParams();
+
+  // A plain any/all tag query cannot express required tags plus alternatives.
+  // Keep the complete membership rule shared with the Storyline page.
+  if (storyline.requiredTagNames?.length) {
+    params.set("storyline", storyline.slug);
+    return `/?${params.toString()}`;
+  }
 
   params.set("tags", storyline.tagNames.join(","));
 

@@ -27,6 +27,8 @@ import { copyText } from "@/lib/copyText";
 import { getEventPath } from "@/lib/eventUrls";
 import type { TimelineEvent, Tag } from "@/lib/types";
 import type { HomeTimelineData } from "@/lib/homeTimelineData";
+import { getStorylineBySlug, getStorylineHref } from "@/lib/storylines";
+import { getConnectedEvents } from "@/lib/eventConnections";
 
 const TimelineModal = dynamic(() => import("./TimelineModal"), {
   ssr: false,
@@ -147,6 +149,10 @@ export default function Timeline({
   const [tagFilterMode, setTagFilterMode] = useState<TagFilterMode>("all");
   const [isOldestFirst, setIsOldestFirst] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [storylineSlug, setStorylineSlug] = useState<string | null>(null);
+  const activeStoryline = storylineSlug
+    ? getStorylineBySlug(storylineSlug)
+    : undefined;
   const [hasRestoredUrlState, setHasRestoredUrlState] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState("");
   const [resultsAnnouncement, setResultsAnnouncement] = useState("");
@@ -197,6 +203,7 @@ export default function Timeline({
     setTagFilterMode(state.tagFilterMode);
     setSearchQuery(state.searchQuery);
     setIsOldestFirst(state.isOldestFirst);
+    setStorylineSlug(state.storylineSlug);
   }, []);
 
   const readUrlState = useCallback(
@@ -237,6 +244,7 @@ export default function Timeline({
         tagFilterMode,
         searchQuery,
         isOldestFirst,
+        storylineSlug,
       },
       window.location.search,
       { minYear, maxYear, urlTags }
@@ -255,6 +263,7 @@ export default function Timeline({
     tagFilterMode,
     searchQuery,
     isOldestFirst,
+    storylineSlug,
     hasRestoredUrlState,
     minYear,
     maxYear,
@@ -289,6 +298,8 @@ export default function Timeline({
         tagFilterMode,
         isOldestFirst,
         searchQuery,
+        storylineSlug,
+        urlTags,
       }),
     [
       timelineEvents,
@@ -299,6 +310,8 @@ export default function Timeline({
       tagFilterMode,
       isOldestFirst,
       searchQuery,
+      storylineSlug,
+      urlTags,
     ]
   );
 
@@ -312,6 +325,7 @@ export default function Timeline({
         tagFilterMode,
         isOldestFirst,
         searchQuery,
+        storylineSlug,
       ]),
     [
       activeCategory,
@@ -321,6 +335,7 @@ export default function Timeline({
       tagFilterMode,
       isOldestFirst,
       searchQuery,
+      storylineSlug,
     ]
   );
   const [renderWindow, setRenderWindow] = useState({
@@ -393,6 +408,7 @@ export default function Timeline({
   }, [renderWindowKey, showingCount, totalEvents]);
 
   const hasActiveFilters =
+    activeStoryline !== undefined ||
     activeCategory !== null ||
     startYear !== minYear ||
     endYear !== maxYear ||
@@ -412,6 +428,9 @@ export default function Timeline({
   const isRandomDiscovery = randomEvent !== null;
   const relatedEvents = modalEvent
     ? getRelatedEvents(modalEvent, timelineEvents)
+    : [];
+  const connectedEvents = modalEvent
+    ? getConnectedEvents(modalEvent, completeEvents ?? [])
     : [];
 
   const handleOpenModal = async (index: number) => {
@@ -569,6 +588,26 @@ export default function Timeline({
         >
           {resultsAnnouncement}
         </p>
+        {activeStoryline && (
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-2 border-b border-stone-200 pb-3 text-sm text-stone-700">
+            <span>
+              Storyline:{" "}
+              <Link
+                href={getStorylineHref(activeStoryline)}
+                className="font-medium underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+              >
+                {activeStoryline.title}
+              </Link>
+            </span>
+            <button
+              type="button"
+              onClick={() => setStorylineSlug(null)}
+              className="min-h-11 rounded-full border border-stone-300 px-3 text-sm hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+            >
+              Clear Storyline
+            </button>
+          </div>
+        )}
         <TimelineFiltersWrapper
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
@@ -768,6 +807,7 @@ export default function Timeline({
         <TimelineModal
           event={modalEvent}
           relatedEvents={relatedEvents}
+          connectedEvents={connectedEvents}
           onOpenRelatedEvent={handleOpenRelatedEvent}
           onOpenFilterLink={handleOpenFilterLink}
           onClose={handleCloseModal}

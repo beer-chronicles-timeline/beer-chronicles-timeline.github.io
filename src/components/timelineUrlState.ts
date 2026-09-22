@@ -1,5 +1,6 @@
 import type { TagFilterMode } from "./timelineFiltering";
 import type { Tag } from "@/lib/types";
+import { getStorylineBySlug } from "@/lib/storylines";
 
 export type TimelineUrlState = {
   activeCategory: string | null;
@@ -9,6 +10,7 @@ export type TimelineUrlState = {
   tagFilterMode: TagFilterMode;
   searchQuery: string;
   isOldestFirst: boolean;
+  storylineSlug: string | null;
 };
 
 type TimelineUrlOptions = {
@@ -58,6 +60,7 @@ export function parseTimelineUrlState(
         : "all",
     searchQuery: params.get("string") ?? "",
     isOldestFirst: params.get("order") === "oldest",
+    storylineSlug: getStorylineBySlug(params.get("storyline") ?? "")?.slug ?? null,
   };
 }
 
@@ -72,7 +75,7 @@ export function serializeTimelineUrlState(
       : new URLSearchParams(currentSearch);
   const tagIdToName = new Map(options.urlTags.map((tag) => [tag.id, tag.name]));
 
-  for (const name of ["category", "from", "to", "tags", "tagMode", "string", "order"]) {
+  for (const name of ["category", "from", "to", "tags", "tagMode", "string", "order", "storyline"]) {
     params.delete(name);
   }
 
@@ -92,6 +95,9 @@ export function serializeTimelineUrlState(
   const trimmedSearchQuery = state.searchQuery.trim();
   if (trimmedSearchQuery) params.set("string", trimmedSearchQuery);
   if (state.isOldestFirst) params.set("order", "oldest");
+  if (state.storylineSlug && getStorylineBySlug(state.storylineSlug)) {
+    params.set("storyline", state.storylineSlug);
+  }
 
   return params.toString();
 }

@@ -46,7 +46,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
   const [period, setPeriod] = useState<PeriodFilter>("all");
   const [category, setCategory] = useState("all");
   const [placeQuery, setPlaceQuery] = useState("");
-  const [placeSearchMessage, setPlaceSearchMessage] = useState("");
+  const [placeSearchMessage, setPlaceSearchMessage] = useState<string | null>(null);
   const [placeSearchResults, setPlaceSearchResults] = useState<MapPlaceGroup[]>([]);
 
   const categories = useMemo(
@@ -78,27 +78,29 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
   const selectedGroup = visibleGroups.find(
     (group) => group.placeId === selectedPlaceId
   );
+  const selectedPlace = allGroups.find(
+    (group) => group.placeId === selectedPlaceId
+  );
+  const selectedEntryCount = selectedGroup?.locations.length ?? 0;
+  const selectionMessage = selectedPlace
+    ? selectedEntryCount === 0
+      ? `${selectedPlace.placeName} selected. No entries match the current filters.`
+      : `${selectedPlace.placeName} selected. ${selectedEntryCount} ${
+          selectedEntryCount === 1 ? "entry" : "entries"
+        } shown.`
+    : "";
+  // Search guidance overrides selection feedback only until the next selection
+  // or filter change. Selection counts always come from the visible group.
+  const statusMessage = placeSearchMessage ?? selectionMessage;
   const visibleUniqueEntryCount = new Set(
     visibleLocations.map((location) => location.eventId)
   ).size;
 
-  const handleSelectPlace = useCallback(
-    (placeId: string) => {
-      const group = allGroups.find(
-        (candidate) => candidate.placeId === placeId
-      );
-      setSelectedPlaceId(placeId);
-      setPlaceSearchResults([]);
-      setPlaceSearchMessage(
-        group
-          ? `${group.placeName} selected. ${group.locations.length} ${
-              group.locations.length === 1 ? "entry" : "entries"
-            } shown.`
-          : "Reviewed place selected."
-      );
-    },
-    [allGroups]
-  );
+  const handleSelectPlace = useCallback((placeId: string) => {
+    setSelectedPlaceId(placeId);
+    setPlaceSearchResults([]);
+    setPlaceSearchMessage(null);
+  }, []);
 
   function selectSearchResult(group: MapPlaceGroup) {
     setPeriod("all");
@@ -154,9 +156,11 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
               Period
               <select
                 value={period}
-                onChange={(event) =>
-                  setPeriod(event.target.value as PeriodFilter)
-                }
+                onChange={(event) => {
+                  setPeriod(event.target.value as PeriodFilter);
+                  setPlaceSearchResults([]);
+                  setPlaceSearchMessage(null);
+                }}
                 disabled={locations.length === 0}
                 className="min-h-11 rounded-lg border border-stone-300 bg-white px-3 text-stone-900 disabled:cursor-not-allowed disabled:bg-stone-100 disabled:text-stone-500"
               >
@@ -171,7 +175,11 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
               Category
               <select
                 value={category}
-                onChange={(event) => setCategory(event.target.value)}
+                onChange={(event) => {
+                  setCategory(event.target.value);
+                  setPlaceSearchResults([]);
+                  setPlaceSearchMessage(null);
+                }}
                 disabled={locations.length === 0}
                 className="min-h-11 rounded-lg border border-stone-300 bg-white px-3 text-stone-900 disabled:cursor-not-allowed disabled:bg-stone-100 disabled:text-stone-500"
               >
@@ -223,11 +231,11 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
 
         <p
           id="place-search-status"
-          className={placeSearchMessage ? "text-sm text-stone-600" : "sr-only"}
+          className={statusMessage ? "text-sm text-stone-600" : "sr-only"}
           role="status"
           aria-live="polite"
         >
-          {placeSearchMessage}
+          {statusMessage}
         </p>
         {placeSearchResults.length > 1 && (
           <ul className="grid max-h-60 gap-2 overflow-y-auto sm:grid-cols-2" aria-label="Matching reviewed places">
@@ -273,42 +281,49 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
             className="rounded-xl border border-stone-200 bg-stone-50 p-5 max-sm:pb-16 max-sm:pr-16"
             aria-label="Selected map entry"
           >
-            {selectedGroup ? (
+            {selectedPlace ? (
               <>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">
                   Selected map location
                 </p>
                 <h3 className="mt-3 font-serif text-2xl font-semibold leading-tight text-stone-900">
-                  {selectedGroup.placeName}
+                  {selectedPlace.placeName}
                 </h3>
                 <p className="mt-2 text-sm text-stone-600">
-                  {selectedGroup.locations.length}{" "}
-                  {selectedGroup.locations.length === 1 ? "entry" : "entries"}
+                  {selectedEntryCount}{" "}
+                  {selectedEntryCount === 1 ? "entry" : "entries"}
                 </p>
 
-                <div className="mt-5 max-h-96 overflow-y-auto border-t border-stone-200 pt-4">
-                  <p className="text-xs capitalize text-stone-500">
-                    {selectedGroup.precision} precision
+                {selectedGroup ? (
+                  <div className="mt-5 max-h-96 overflow-y-auto border-t border-stone-200 pt-4">
+                    <p className="text-xs capitalize text-stone-500">
+                      {selectedGroup.precision} precision
+                    </p>
+                    <ul className="mt-4 space-y-4">
+                      {selectedGroup.locations.map((location) => (
+                        <li key={location.id}>
+                          <Link
+                            href={location.eventHref}
+                            className="font-serif font-semibold leading-snug text-stone-900 underline decoration-stone-300 underline-offset-2 transition hover:decoration-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                          >
+                            {location.eventTitle}
+                          </Link>
+                          <p className="mt-1 text-xs text-stone-600">
+                            {location.eventDateLabel}
+                          </p>
+                          <p className="mt-1 text-sm leading-5 text-stone-600">
+                            {location.locationRole}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p className="mt-5 border-t border-stone-200 pt-4 text-sm leading-6 text-stone-600">
+                    No entries match the current filters. Change the period or
+                    category to see entries for this location.
                   </p>
-                  <ul className="mt-4 space-y-4">
-                    {selectedGroup.locations.map((location) => (
-                      <li key={location.id}>
-                        <Link
-                          href={location.eventHref}
-                          className="font-serif font-semibold leading-snug text-stone-900 underline decoration-stone-300 underline-offset-2 transition hover:decoration-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
-                        >
-                          {location.eventTitle}
-                        </Link>
-                        <p className="mt-1 text-xs text-stone-600">
-                          {location.eventDateLabel}
-                        </p>
-                        <p className="mt-1 text-sm leading-5 text-stone-600">
-                          {location.locationRole}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                )}
               </>
             ) : (
               <>

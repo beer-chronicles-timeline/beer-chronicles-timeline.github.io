@@ -9,11 +9,14 @@ import {
 import type { TimelineEvent } from "@/lib/types";
 import EventDetailContent from "./EventDetailContent";
 import RelatedEvents from "./RelatedEvents";
+import ConnectedHistory from "./ConnectedHistory";
+import type { ConnectedEvent } from "@/lib/eventConnections";
 import { prefersReducedMotion } from "@/lib/motionPreferences";
 
 type TimelineModalProps = {
   event: TimelineEvent;
   relatedEvents: TimelineEvent[];
+  connectedEvents: ConnectedEvent[];
   onOpenRelatedEvent: (event: TimelineEvent) => void;
   onClose: () => void;
   onNext: () => void;
@@ -27,6 +30,7 @@ type TimelineModalProps = {
 export default function TimelineModal({
   event,
   relatedEvents,
+  connectedEvents,
   onOpenRelatedEvent,
   onClose,
   onNext,
@@ -238,6 +242,15 @@ export default function TimelineModal({
           />
         </div>
 
+        <ConnectedHistory
+          connections={connectedEvents}
+          onOpenEvent={(connectedEvent) => {
+            // The selected card is replaced when navigating to its counterpart.
+            // Keep keyboard focus in the dialog on a control that survives.
+            closeButtonRef.current?.focus({ preventScroll: true });
+            onOpenRelatedEvent(connectedEvent);
+          }}
+        />
         <RelatedEvents
           relatedEvents={relatedEvents}
           onOpenRelatedEvent={onOpenRelatedEvent}
