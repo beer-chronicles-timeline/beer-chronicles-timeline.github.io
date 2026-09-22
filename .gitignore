@@ -56,3 +56,4 @@ next-env.d.ts
 
 # Temporary editorial SQL proposals
 /sql/*-proposal.sql
+/output/
