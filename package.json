@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "backup:supabase": "bash scripts/backup-supabase.sh",
+    "predev": "node scripts/prepare-maplibre.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/prepare-maplibre.mjs",
     "build": "next build",
     "check:source-links": "tsx scripts/check-source-links.ts",
     "check:timeline-payload": "node scripts/check-timeline-payload.mjs",
@@ -18,7 +20,7 @@
   "dependencies": {
     "@radix-ui/react-slider": "^1.3.6",
     "@supabase/supabase-js": "^2.105.1",
-    "maplibre-gl": "^5.24.0",
+    "maplibre-gl": "^6.11.0",
     "next": "16.3.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"

@@ -84,3 +84,38 @@ export function getEventsForStoryline(
     .filter((event) => doesEventMatchStoryline(event, storyline))
     .sort(compareEventsChronologicallyAscending);
 }
+
+export type StorylineView = {
+  storyline: Storyline;
+  entryCount: number;
+  featuredEvent: TimelineEvent | null;
+};
+
+export function buildStorylineViews({ events, tags, eventTags }: {
+  events: TimelineEvent[];
+  tags: { id: string; name: string }[];
+  eventTags: { event_id: string; tag_id: string }[];
+}): StorylineView[] {
+  const tagById = new Map(tags.map((tag) => [tag.id, tag]));
+  const tagsByEvent = new Map<string, typeof tags>();
+  for (const { event_id, tag_id } of eventTags) {
+    const tag = tagById.get(tag_id);
+    if (tag) {
+      const eventTags = tagsByEvent.get(event_id) ?? [];
+      eventTags.push(tag);
+      tagsByEvent.set(event_id, eventTags);
+    }
+  }
+  const taggedEvents = events.map((event) => ({
+    ...event, tags: tagsByEvent.get(event.id) ?? [],
+  }));
+  return STORYLINES.map((storyline) => {
+    const matches = getEventsForStoryline(taggedEvents, storyline);
+    return {
+      storyline,
+      entryCount: matches.length,
+      featuredEvent: matches.find((event) => event.id === storyline.featuredEventId)
+        ?? matches[0] ?? null,
+    };
+  });
+}

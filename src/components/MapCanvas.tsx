@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import maplibregl, {
+import {
+  Map,
+  NavigationControl,
+  AttributionControl,
+  Marker,
+  setWorkerUrl,
   type Map as MapLibreMap,
-  type Marker,
 } from "maplibre-gl";
+import { version as mapLibreVersion } from "maplibre-gl/package.json";
 import type { MapPlaceGroup } from "@/lib/mapPlaceGroups";
 import styles from "./MapExplorer.module.css";
 
@@ -70,26 +75,39 @@ export default function MapCanvas({
   const mapRef = useRef<MapLibreMap | null>(null);
   const markersRef = useRef<Marker[]>([]);
   const [mapReady, setMapReady] = useState(false);
+  const [mapUnavailable, setMapUnavailable] = useState(false);
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
-    const map = new maplibregl.Map({
-      container: mapContainerRef.current,
-      center: [8, 28],
-      zoom: 1.15,
-      minZoom: 1,
-      maxZoom: 12,
-      attributionControl: false,
-      style: "https://tiles.openfreemap.org/styles/positron",
-    });
+    // v6 uses a separate module worker with a shared module dependency.
+    // Both are copied from the locked package before dev/build for static hosting.
+    setWorkerUrl(`/maplibre/${mapLibreVersion}/maplibre-gl-worker.mjs`);
+    let map: MapLibreMap;
+    try {
+      map = new Map({
+        container: mapContainerRef.current,
+        center: [8, 28],
+        zoom: 1.15,
+        minZoom: 1,
+        maxZoom: 12,
+        attributionControl: false,
+        style: "https://tiles.openfreemap.org/styles/positron",
+      });
+    } catch {
+      // v6 requires WebGL2. Keep search and the server-rendered place index
+      // available when the browser cannot initialize the map renderer.
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Reflect the result of initializing an external renderer; this cannot run during render.
+      setMapUnavailable(true);
+      return;
+    }
 
     map.addControl(
-      new maplibregl.NavigationControl({ showCompass: false }),
+      new NavigationControl({ showCompass: false }),
       "top-right"
     );
     map.addControl(
-      new maplibregl.AttributionControl({ compact: true }),
+      new AttributionControl({ compact: true }),
       "bottom-right"
     );
     mapRef.current = map;
@@ -145,7 +163,7 @@ export default function MapCanvas({
             onSelectPlace(markerGroup.placeGroups[0].placeId);
           });
 
-          return new maplibregl.Marker({ element: button })
+          return new Marker({ element: button })
             .setLngLat([markerGroup.longitude, markerGroup.latitude])
             .addTo(map);
         }
@@ -175,10 +193,18 @@ export default function MapCanvas({
   }, [focusedPlaceId, groups, mapReady]);
 
   return (
-    <div
-      ref={mapContainerRef}
-      className={styles.mapCanvas}
-      aria-label="World map of Beer Chronicles entries"
-    />
+    <>
+      <div
+        ref={mapContainerRef}
+        className={styles.mapCanvas}
+        aria-label="World map of Beer Chronicles entries"
+      />
+      {mapUnavailable && (
+        <p className={`${styles.mapLoading} px-6 text-center`} role="status">
+          Interactive map unavailable. Use place search or browse the reviewed
+          places below.
+        </p>
+      )}
+    </>
   );
 }

@@ -26,7 +26,7 @@ import {
 import { copyText } from "@/lib/copyText";
 import { getEventPath } from "@/lib/eventUrls";
 import type { TimelineEvent, Tag } from "@/lib/types";
-import type { HomeTimelineData } from "@/lib/homeTimelineData";
+import { decodeTimelineData } from "@/lib/timelineTransport";
 import { getStorylineBySlug, getStorylineHref } from "@/lib/storylines";
 import { getConnectedEvents } from "@/lib/eventConnections";
 
@@ -136,6 +136,9 @@ export default function Timeline({
     null
   );
   const completeEventsPromiseRef = useRef<Promise<TimelineEvent[]> | null>(null);
+  const [completeEventsStatus, setCompleteEventsStatus] = useState<
+    "loading" | "ready" | "error"
+  >("loading");
   const [isRollingRandom, setIsRollingRandom] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState<
@@ -169,17 +172,21 @@ export default function Timeline({
 
   const loadCompleteEvents = useCallback(() => {
     if (!completeEventsPromiseRef.current) {
+      setCompleteEventsStatus("loading");
       completeEventsPromiseRef.current = fetch("/timeline-data.json")
         .then((response) => {
           if (!response.ok) throw new Error("Timeline detail request failed");
-          return response.json() as Promise<HomeTimelineData>;
+          return response.json();
         })
         .then((data) => {
-          setCompleteEvents(data.events);
-          return data.events;
+          const { events } = decodeTimelineData(data);
+          setCompleteEvents(events);
+          setCompleteEventsStatus("ready");
+          return events;
         })
         .catch((error) => {
           completeEventsPromiseRef.current = null;
+          setCompleteEventsStatus("error");
           throw error;
         });
     }
@@ -347,9 +354,7 @@ export default function Timeline({
       ? renderWindow.count
       : INITIAL_RENDERED_EVENT_COUNT;
   const renderedEvents = filteredEvents.slice(0, renderedEventCount);
-  const hasMoreEvents = completeEvents
-    ? renderedEvents.length < filteredEvents.length
-    : renderedEvents.length < totalEventCount;
+  const hasMoreEvents = renderedEvents.length < filteredEvents.length;
 
   const showMoreEvents = useCallback(() => {
     setRenderWindow((currentWindow) => ({
@@ -386,9 +391,11 @@ export default function Timeline({
   }, [hasMoreEvents, renderedEvents.length, showMoreEvents]);
 
   const totalEvents = totalEventCount;
-  const showingCount = completeEvents
-    ? filteredEvents.length
-    : totalEventCount;
+  const showingCount = filteredEvents.length;
+  const isSearchIncomplete = searchQuery.trim() !== "" && !completeEvents;
+  const searchStatusMessage = completeEventsStatus === "error"
+    ? "Full-text search is unavailable. Results only cover titles and short summaries."
+    : "Loading full-text search. Results may be incomplete.";
 
   useEffect(() => {
     if (!hasInitializedResultsAnnouncementRef.current) {
@@ -398,14 +405,14 @@ export default function Timeline({
 
     const timeoutId = window.setTimeout(() => {
       setResultsAnnouncement(
-        showingCount === 0
+        isSearchIncomplete ? searchStatusMessage : showingCount === 0
           ? "No events match your filters."
           : `Showing ${showingCount} of ${totalEvents} events.`
       );
     }, RESULTS_ANNOUNCEMENT_DEBOUNCE_MS);
 
     return () => window.clearTimeout(timeoutId);
-  }, [renderWindowKey, showingCount, totalEvents]);
+  }, [renderWindowKey, showingCount, totalEvents, isSearchIncomplete, searchStatusMessage]);
 
   const hasActiveFilters =
     activeStoryline !== undefined ||
@@ -631,7 +638,7 @@ export default function Timeline({
             <div className="whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700">
               {hasActiveFilters ? (
                 <>
-                  Showing{" "}
+                  {isSearchIncomplete ? "Found so far" : "Showing"}{" "}
                   <span className="font-semibold">
                     {showingCount}
                   </span>{" "}
@@ -690,15 +697,33 @@ export default function Timeline({
         </div>
       </section>
 
+      {(isSearchIncomplete || completeEventsStatus === "error") && (
+        <div className="my-4 rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
+          <p role="status">{searchStatusMessage}</p>
+          {completeEventsStatus === "error" && (
+            <button
+              type="button"
+              onClick={() => { void loadCompleteEvents().catch(() => {}); }}
+              className="mt-2 min-h-11 rounded-full border border-stone-400 bg-white px-4 font-medium hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+            >
+              Retry full-text search
+            </button>
+          )}
+        </div>
+      )}
+
       {filteredEvents.length === 0 ? (
         <div className="py-16 text-center">
-          <p className="text-lg text-gray-500">
-            No events match your filters.
+          <p className="text-lg text-stone-600">
+            {isSearchIncomplete
+              ? "No matches in the loaded summaries."
+              : "No events match your filters."}
           </p>
 
-          <p className="mt-2 text-sm text-gray-400">
-            Try adjusting the category, year range, tags, or
-            search term.
+          <p className="mt-2 text-sm text-stone-600">
+            {isSearchIncomplete
+              ? "Full entry text must load before the search is complete."
+              : "Try adjusting the category, year range, tags, or search term."}
           </p>
         </div>
       ) : (

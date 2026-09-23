@@ -37,7 +37,7 @@ export default function ConnectedHistory({
           const content = (
             <>
               <div className="text-xs font-medium text-stone-600">{label}</div>
-              <div className="mt-1 text-xs text-stone-500">{formatEventDate(event)}</div>
+              <div className="mt-1 text-xs text-stone-600">{formatEventDate(event)}</div>
               <div className={`mt-1 font-serif font-semibold text-stone-900 ${onOpenEvent ? "text-sm" : "text-base"}`}>
                 {event.title}
               </div>

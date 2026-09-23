@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { HomeTimelineData } from "@/lib/homeTimelineData";
+import { decodeTimelineData } from "@/lib/timelineTransport";
 import Timeline from "./Timeline";
 
 type TimelineDataLoaderProps = {
@@ -30,7 +31,7 @@ export default function TimelineDataLoader({
           throw new Error("Timeline request failed");
         }
 
-        const data = (await response.json()) as HomeTimelineData;
+        const data = decodeTimelineData(await response.json());
 
         setTimelineData(data);
         setHasError(false);

@@ -6,10 +6,9 @@ import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import {
-  compareEventsChronologicallyAscending,
   formatEventDate,
-  getEventTimelineYear,
 } from "@/components/timelineUtils";
+import { buildStorylineViews, type StorylineView } from "@/lib/eventStorylines";
 import { getEventPath } from "@/lib/eventUrls";
 import { supabase } from "@/lib/supabaseClient";
 import type { TimelineEvent } from "@/lib/types";
@@ -53,40 +52,7 @@ type TagRow = {
   name: string;
 };
 
-type StorylineView = {
-  storyline: Storyline;
-  entryCount: number;
-  featuredEvent: TimelineEvent | null;
-};
-
 const EVENT_TAG_PAGE_SIZE = 1000;
-
-function isEventInsideStorylineDateRange(
-  event: TimelineEvent,
-  storyline: Storyline
-): boolean {
-  const eventYear = getEventTimelineYear(event);
-
-  if (eventYear === null) {
-    return false;
-  }
-
-  if (
-    storyline.fromYear !== undefined &&
-    eventYear < storyline.fromYear
-  ) {
-    return false;
-  }
-
-  if (
-    storyline.toYear !== undefined &&
-    eventYear > storyline.toYear
-  ) {
-    return false;
-  }
-
-  return true;
-}
 
 function sortStorylinesAlphabetically(
   storylines: Storyline[]
@@ -140,91 +106,6 @@ async function fetchAllEventTags(): Promise<{
     data: allRows,
     errorMessage: null,
   };
-}
-
-function buildStorylineViews({
-  events,
-  tags,
-  eventTags,
-}: {
-  events: TimelineEvent[];
-  tags: TagRow[];
-  eventTags: EventTagRow[];
-}): StorylineView[] {
-  const eventById = new Map<string, TimelineEvent>();
-  const tagIdByName = new Map<string, string>();
-  const tagIdsByEventId = new Map<string, Set<string>>();
-
-  events.forEach((event) => {
-    eventById.set(event.id, event);
-  });
-
-  tags.forEach((tag) => {
-    tagIdByName.set(tag.name, tag.id);
-  });
-
-  eventTags.forEach(({ event_id, tag_id }) => {
-    if (!eventById.has(event_id)) {
-      return;
-    }
-
-    const tagIds =
-      tagIdsByEventId.get(event_id) ?? new Set<string>();
-
-    tagIds.add(tag_id);
-    tagIdsByEventId.set(event_id, tagIds);
-  });
-
-  return STORYLINES.map((storyline) => {
-    const storylineTagIds = storyline.tagNames
-      .map((tagName) => tagIdByName.get(tagName))
-      .filter((tagId): tagId is string => tagId !== undefined);
-
-    const matchingEvents = events
-      .filter((event) => {
-        if (!isEventInsideStorylineDateRange(event, storyline)) {
-          return false;
-        }
-
-        if (storylineTagIds.length === 0) {
-          return false;
-        }
-
-        const eventTagIds =
-          tagIdsByEventId.get(event.id) ?? new Set<string>();
-
-        if (storyline.tagMode === "any") {
-          return storylineTagIds.some((tagId) =>
-            eventTagIds.has(tagId)
-          );
-        }
-
-        return storylineTagIds.every((tagId) =>
-          eventTagIds.has(tagId)
-        );
-      })
-      .sort(compareEventsChronologicallyAscending);
-
-    const configuredFeaturedEvent = eventById.get(
-      storyline.featuredEventId
-    );
-
-    const configuredFeaturedEventMatches =
-      configuredFeaturedEvent !== undefined &&
-      matchingEvents.some(
-        (event) => event.id === configuredFeaturedEvent.id
-      );
-
-    const featuredEvent = configuredFeaturedEventMatches
-      ? configuredFeaturedEvent
-      : matchingEvents[0] ?? null;
-
-    return {
-      storyline,
-      entryCount: matchingEvents.length,
-      featuredEvent,
-    };
-  });
 }
 
 function StorylineCard({

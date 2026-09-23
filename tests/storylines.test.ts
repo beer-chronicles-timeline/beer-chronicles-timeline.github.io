@@ -207,3 +207,41 @@ test("British Ale requires UK context and at least one relevant style or traditi
   assert.ok(modernCraftBeer);
   assert.equal(getEventsForStoryline(fixtures, modernCraftBeer).length, 4);
 });
+
+test("overview counts and featured fallback use the same membership as every Storyline", async () => {
+  const { buildStorylineViews } = await import("../src/lib/eventStorylines.ts");
+  const british = STORYLINES.find((s) => s.slug === "british-ale-beyond-ipa")!;
+  const tags = [
+    { id: "ale", name: "Pale Ale" },
+    { id: "uk", name: "United Kingdom" },
+  ];
+  const makeEvent = (id: string, year: number): TimelineEvent => ({
+    id, title: id, historical_year: year, event_date: null,
+    description: null, image_url: null, created_at: null,
+  });
+  // Even a configured featured entry must satisfy the required geography tag.
+  const events = [makeEvent(british.featuredEventId, 1800), makeEvent("eligible", 1900)];
+  const eventTags = [
+    { event_id: british.featuredEventId, tag_id: "ale" },
+    { event_id: "eligible", tag_id: "ale" },
+    { event_id: "eligible", tag_id: "uk" },
+  ];
+  const taggedEvents = events.map((event) => ({ ...event,
+    tags: tags.filter((tag) => eventTags.some((relation) =>
+      relation.event_id === event.id && relation.tag_id === tag.id)),
+  }));
+  const views = buildStorylineViews({ events, tags, eventTags });
+  for (const view of views) {
+    const matches = getEventsForStoryline(taggedEvents, view.storyline);
+    assert.equal(view.entryCount, matches.length, view.storyline.slug);
+    const filtered = filterTimelineEvents({
+      events: taggedEvents, activeCategory: null, startYear: -13000, endYear: 2026,
+      selectedTagIds: [], tagFilterMode: "all", isOldestFirst: true,
+      searchQuery: "", storylineSlug: view.storyline.slug, urlTags: tags,
+    });
+    assert.deepEqual(filtered.map((e) => e.id), matches.map((e) => e.id));
+  }
+  const view = views.find((v) => v.storyline.slug === british.slug)!;
+  assert.equal(view.entryCount, 1);
+  assert.equal(view.featuredEvent?.id, "eligible");
+});

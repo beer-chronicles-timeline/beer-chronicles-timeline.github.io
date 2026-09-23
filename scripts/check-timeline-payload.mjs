@@ -3,8 +3,10 @@ import { gzipSync } from "node:zlib";
 
 const TIMELINE_PATH = new URL("../out/timeline-data.json", import.meta.url);
 const HOMEPAGE_PATH = new URL("../out/index.html", import.meta.url);
-// These ceilings leave room for normal editorial growth while catching a
-// material, accidental jump before the static artifact is deployed.
+// Compact transport measured on the 590-entry September 2026 snapshot:
+// ~893 KiB raw / ~317 KiB gzip, retaining full descriptions and sources.
+// Keep the existing ceilings: approximately 125 similarly sized entries
+// of headroom; report a growth forecast so this can be revisited in time.
 const MAX_RAW_BYTES = 1_150 * 1024;
 const MAX_GZIP_BYTES = 384 * 1024;
 const MAX_HOMEPAGE_GZIP_BYTES = 320 * 1024;
@@ -22,6 +24,10 @@ const gzipBytes = gzipSync(payload).byteLength;
 const eventCount = timelineData.events.length;
 const gzipBytesPerEvent = eventCount === 0 ? 0 : gzipBytes / eventCount;
 const homepageGzipBytes = gzipSync(homepage).byteLength;
+const estimatedAdditionalEvents = eventCount === 0 ? 0 : Math.floor(Math.min(
+  (MAX_RAW_BYTES - rawBytes) / (rawBytes / eventCount),
+  (MAX_GZIP_BYTES - gzipBytes) / gzipBytesPerEvent
+));
 
 const formatKiB = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`;
 
@@ -29,6 +35,7 @@ console.log("Timeline payload:");
 console.log(`  Events: ${eventCount}`);
 console.log(`  Raw: ${formatKiB(rawBytes)} / ${formatKiB(MAX_RAW_BYTES)}`);
 console.log(`  Gzip: ${formatKiB(gzipBytes)} / ${formatKiB(MAX_GZIP_BYTES)}`);
+console.log(`  Estimated growth headroom: ${estimatedAdditionalEvents} similarly sized events`);
 console.log(`  Gzip per event: ${gzipBytesPerEvent.toFixed(0)} bytes`);
 console.log(`  Homepage raw: ${formatKiB(homepage.byteLength)}`);
 console.log(
@@ -64,9 +71,14 @@ if (process.env.GITHUB_STEP_SUMMARY) {
       `| Raw size | ${formatKiB(rawBytes)} | ${formatKiB(MAX_RAW_BYTES)} |`,
       `| Gzip-equivalent size | ${formatKiB(gzipBytes)} | ${formatKiB(MAX_GZIP_BYTES)} |`,
       `| Gzip bytes per event | ${gzipBytesPerEvent.toFixed(0)} | — |`,
+      `| Estimated additional events | ${estimatedAdditionalEvents} | Review below 100 |`,
       "",
     ].join("\n")
   );
+}
+
+if (estimatedAdditionalEvents < 100) {
+  console.warn("Timeline growth headroom is below 100 similarly sized entries; review payload capacity.");
 }
 
 const exceededBudgets = [];
