@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 import { version } from "maplibre-gl/package.json";
 
 test("map worker assets are exported and the place index survives unavailable WebGL", async ({ page, request }) => {
@@ -16,9 +16,7 @@ test("map worker assets are exported and the place index survives unavailable We
       return original.apply(this, [type, ...args]);
     } as typeof original;
   });
-  // Python's fixture server does not resolve Pages-style extensionless URLs.
-  // Next also emits a /map/ directory containing RSC files, not an index.html.
-  await page.goto("/map.html");
+  await page.goto("/map");
   await expect(page.getByRole("status").filter({ hasText: "Interactive map unavailable" })).toBeVisible();
   const index = page.getByRole("region", { name: "Browse reviewed places" });
   await expect(index).toBeVisible();

@@ -23,7 +23,11 @@ import {
 import {
   createEventSlug,
   getEventUrl,
+  getEventPath,
 } from "@/lib/eventUrls";
+
+import { getEventRouteParams, isKnownEventSlug } from "@/lib/eventAliases";
+import EventAliasRedirect from "@/components/EventAliasRedirect";
 
 const BASE_URL = "https://beer-chronicles.org";
 const DEFAULT_SOCIAL_IMAGE =
@@ -39,10 +43,7 @@ type EventPageProps = {
 export async function generateStaticParams() {
   const events = await getEventStaticParamSources();
 
-  return events.map((event) => ({
-    id: event.id,
-    slug: createEventSlug(event.title),
-  }));
+  return getEventRouteParams(events);
 }
 
 export async function generateMetadata({
@@ -62,9 +63,7 @@ export async function generateMetadata({
   }
 
   const { event } = pageData;
-  const canonicalSlug = createEventSlug(event.title);
-
-  if (slug !== canonicalSlug) {
+  if (!isKnownEventSlug(id, slug, event.title)) {
     return {
       title: "Event Not Found | Beer Chronicles",
       robots: {
@@ -129,8 +128,25 @@ export default async function EventPage({
   const { event, events } = pageData;
   const canonicalSlug = createEventSlug(event.title);
 
-  if (slug !== canonicalSlug) {
+  if (!isKnownEventSlug(id, slug, event.title)) {
     notFound();
+  }
+
+  if (slug !== canonicalSlug) {
+    const href = getEventPath(event.id, event.title);
+    return (
+      <main className="min-h-screen bg-stone-50 p-4 md:p-10">
+        <MainContentStart />
+        <article className="mx-auto max-w-3xl rounded-2xl border border-stone-200 bg-white p-6">
+          <h1 className="font-serif text-2xl font-semibold">This entry has a new address</h1>
+          <p className="mt-4">The entry title has been updated.</p>
+          <Link href={href} className="mt-4 inline-block underline focus-visible:outline-2 focus-visible:outline-offset-4">
+            Continue to {event.title}
+          </Link>
+        </article>
+        <EventAliasRedirect href={href} />
+      </main>
+    );
   }
 
   const relatedEvents = getRelatedEvents(event, events);

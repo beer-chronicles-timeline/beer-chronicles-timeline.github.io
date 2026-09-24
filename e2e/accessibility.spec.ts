@@ -1,9 +1,10 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 async function expectNoSeriousAccessibilityViolations(page: Page) {
   const results = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();
   const seriousViolations = results.violations.filter(
     ({ impact }) => impact === "critical" || impact === "serious"
@@ -105,7 +106,7 @@ test("scroll to top avoids smooth scrolling when reduced motion is requested", a
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/storylines.html");
+  await page.goto("/storylines");
 
   const menuButton = page.getByRole("button", {
     name: "Open navigation menu",
@@ -155,7 +156,7 @@ test("scroll to top avoids smooth scrolling when reduced motion is requested", a
 test("@mobile Storyline sections link back to the section navigation", async ({
   page,
 }) => {
-  await page.goto("/storylines.html");
+  await page.goto("/storylines");
 
   const sectionNavigation = page.getByRole("navigation", {
     name: "Browse by section",
@@ -241,12 +242,12 @@ test("@a11y-scan representative pages have no serious axe violations", async ({
   ).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 
-  await page.goto("/storylines.html");
+  await page.goto("/storylines");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 
   await page.goto(
-    "/events/fc252325-4204-4381-b718-234fa91110dc/the-bavarian-beer-regulation-of-1516-is-issued.html"
+    "/events/fc252325-4204-4381-b718-234fa91110dc/the-bavarian-beer-regulation-of-1516-is-issued"
   );
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);

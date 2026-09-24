@@ -21,15 +21,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version-file: ".nvmrc"
           cache: "npm"
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Preserve published URL history
+        env:
+          BASE_SHA: ${{ github.event.before || github.sha }}
+        run: node scripts/check-event-path-history.mjs "$BASE_SHA"
 
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
@@ -57,9 +64,44 @@ jobs:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
         run: npm run test:e2e
 
-      - name: Measure mobile timeline performance
+      - name: Restore previous performance baseline
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/performance-baseline
+          key: performance-v1-${{ runner.os }}-${{ github.sha }}
+          restore-keys: performance-v1-${{ runner.os }}-
+
+      - name: Measure mobile route performance
+        id: performance
         continue-on-error: true
+        env:
+          PERFORMANCE_BASELINE_PATH: .cache/performance-baseline/performance.json
         run: npm run measure:timeline-mobile
+
+      - name: Retain release measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-${{ github.sha }}-${{ github.run_attempt }}
+          path: artifacts/performance
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Prepare next performance baseline
+        if: steps.performance.outcome == 'success'
+        run: |
+          mkdir -p .cache/performance-baseline
+          cp artifacts/performance/performance.json .cache/performance-baseline/performance.json
+
+      - name: Save performance baseline
+        if: steps.performance.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/performance-baseline
+          key: performance-v1-${{ runner.os }}-${{ github.sha }}
+
+      - name: Verify live publication
+        run: npm run check:publication -- --require-live
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
@@ -78,3 +120,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: ".nvmrc"
+      - name: Check published routes and historical aliases
+        run: node scripts/check-live-routes.mjs

@@ -50,8 +50,9 @@ git diff --check
 ```
 
 `npm run build` creates the statically exported site in `out/`.
-`npm run test:e2e` builds the site and runs the accessibility interaction suite
-in Chromium and Firefox. Its local server uses port `4173` by default; set
+`npm run test:e2e` builds synthetic offline fixtures and runs the regression
+suite in Chromium, Firefox, mobile Chromium and WebKit. No backend reads are
+performed by the default test command. Its local server uses port `4173` by default; set
 `PLAYWRIGHT_PORT` to a free port when needed. CI sets
 `PLAYWRIGHT_USE_EXISTING_BUILD=1` to test the export already created by its
 build step.
@@ -93,3 +94,57 @@ change or remove a citation or interrupt the live website.
 Beer Chronicles is curated. Historical entries, dates, sources, tags, Storylines, and relationships require human editorial review. Automated tooling must not directly create, change, delete, or publish editorial records in Supabase.
 
 For complete repository rules and task routing, read [`AGENTS.md`](./AGENTS.md). Relevant reusable workflows are maintained under [`.agents/skills/`](./.agents/skills/).
+
+## Consolidated publication and URL preservation
+
+Use Node 24 (`.nvmrc`). Both deployment and source audits use this supported LTS
+runtime. Pull requests run `.github/workflows/validate.yml`: offline validation
+and a synthetic export, with no Supabase access and no deployment.
+
+`npm run build` and `npm run dev` prepare a shared publication snapshot. They
+**read Supabase and require the explicit conversational approval described in
+AGENTS.md**. Preparation paginates events, tags and event_tags with exact counts
+and stable ordering, validates required records and references, then writes the
+ignored `.cache/publication.json`. Every exported route consumes that same file.
+A missing page, changed row count or validation error stops publication. This
+freezes the data used by the export; it is not a database transaction across
+three tables, so avoid simultaneous editorial edits during capture.
+
+`npm run build:offline -- 1500` creates a synthetic 1,500-event export without
+backend access (default: 750). A saved public timeline payload can be used via
+`npx tsx scripts/build-publication.ts --public-fixture /path/to/timeline-data.json`.
+Both are marked as fixtures; the deployment gate rejects fixture exports.
+Synthetic descriptions and dates must never be published as historical content.
+
+`npm run check:publication` verifies the payload, event routes, canonicals,
+Storyline event links and internal links against the prepared snapshot.
+`npm run check:publication -- --require-live` additionally rejects fixture mode.
+Browser tests serve extensionless routes like Pages, block external requests,
+and intercept contribution submissions. A short real-device / screen-reader
+pass remains useful before releasing interaction changes.
+
+`src/data/published-event-paths.json` is an append-only technical URL registry,
+seeded from the 590-event public release reviewed on 23 September 2026 plus three
+verified earlier paths. Keep every previous slug when a title changes. Existing
+aliases are statically exported with the current canonical, a visible link and
+a client-side replacement preserving query strings and fragments. They are not
+HTTP 301/308 responses; this is the portable GitHub Pages fallback. Canonical
+URLs alone appear in the sitemap.
+
+A newly published or renamed event must be registered before the next export.
+If an approved live preparation reports an unregistered path, its validated
+snapshot is retained. Review it, then run `npm run register:event-paths` to append
+paths **locally with no backend access**, review the diff and retain all old
+paths. A subsequent `npm run build` reads Supabase again and requires approval
+for that concrete read bundle. Registration never edits editorial records.
+
+The live workflow validates the export before upload and performs public URL
+smoke checks after deployment. Browser tests cover historical aliases, sharing,
+correction error/retry, search/history, map search, histogram keyboard use,
+separated year controls, and WCAG 2.2 scans of additional pages and open states.
+
+For release performance artifacts, baseline comparisons, scale fixtures and the
+monthly field-performance / Search Console / source-integrity routine, see
+[technical maintenance](docs/technical-maintenance.md). These procedures use
+existing telemetry; no new tracking is added. `npm run measure:timeline-mobile`
+now measures four representative routes, retaining its existing command name.

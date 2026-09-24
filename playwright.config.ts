@@ -11,15 +11,16 @@ if (
 }
 
 const baseURL = `http://127.0.0.1:${requestedPort}`;
-const staticServerCommand = `python3 -m http.server ${requestedPort} --bind 127.0.0.1 --directory out`;
+const staticServerCommand = `node scripts/serve-export.mjs ${requestedPort}`;
 const webServerCommand =
   process.env.PLAYWRIGHT_USE_EXISTING_BUILD === "1"
     ? staticServerCommand
-    : `npm run build && ${staticServerCommand}`;
+    : `npm run build:offline && ${staticServerCommand}`;
 
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
+  workers: process.env.CI ? 2 : 4,
   reporter: "line",
   use: {
     baseURL,
@@ -44,12 +45,12 @@ export default defineConfig({
     },
     {
       name: "mobile-chromium",
-      grep: /@mobile/,
+      grep: /@mobile|@journey|@a11y-scan/,
       use: { ...devices["Pixel 5"] },
     },
     {
       name: "webkit",
-      grep: /@webkit/,
+      grep: /@webkit|@journey/,
       use: { ...devices["Desktop Safari"] },
     },
   ],

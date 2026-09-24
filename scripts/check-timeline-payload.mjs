@@ -1,5 +1,6 @@
-import { appendFile, readFile } from "node:fs/promises";
+import { appendFile, readFile, mkdir, writeFile } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
+import { capacityForecast } from "./performance-report.mts";
 
 const TIMELINE_PATH = new URL("../out/timeline-data.json", import.meta.url);
 const HOMEPAGE_PATH = new URL("../out/index.html", import.meta.url);
@@ -24,10 +25,15 @@ const gzipBytes = gzipSync(payload).byteLength;
 const eventCount = timelineData.events.length;
 const gzipBytesPerEvent = eventCount === 0 ? 0 : gzipBytes / eventCount;
 const homepageGzipBytes = gzipSync(homepage).byteLength;
-const estimatedAdditionalEvents = eventCount === 0 ? 0 : Math.floor(Math.min(
-  (MAX_RAW_BYTES - rawBytes) / (rawBytes / eventCount),
-  (MAX_GZIP_BYTES - gzipBytes) / gzipBytesPerEvent
-));
+const forecast = capacityForecast(eventCount, rawBytes, gzipBytes, MAX_RAW_BYTES, MAX_GZIP_BYTES);
+const { estimatedAdditionalEvents } = forecast;
+await mkdir("artifacts/performance", { recursive: true });
+await writeFile("artifacts/performance/capacity.json", JSON.stringify({
+  generatedAt: new Date().toISOString(), eventCount, rawBytes, gzipBytes,
+  homepageGzipBytes, limits: { rawBytes: MAX_RAW_BYTES, gzipBytes: MAX_GZIP_BYTES, homepageGzipBytes: MAX_HOMEPAGE_GZIP_BYTES },
+  ...forecast,
+  method: "Linear projection from current average event bytes; not compressed synthetic datasets or a fixed event limit.",
+}, null, 2) + "\n");
 
 const formatKiB = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`;
 
@@ -72,6 +78,10 @@ if (process.env.GITHUB_STEP_SUMMARY) {
       `| Gzip-equivalent size | ${formatKiB(gzipBytes)} | ${formatKiB(MAX_GZIP_BYTES)} |`,
       `| Gzip bytes per event | ${gzipBytesPerEvent.toFixed(0)} | — |`,
       `| Estimated additional events | ${estimatedAdditionalEvents} | Review below 100 |`,
+      "", "### Capacity forecast (linear estimate)", "",
+      "| Events | Raw KiB | Gzip KiB | Exceeds current budget |",
+      "| ---: | ---: | ---: | --- |",
+      ...forecast.projections.map((p) => `| ${p.events} | ${(p.rawBytes / 1024).toFixed(1)} | ${(p.gzipBytes / 1024).toFixed(1)} | ${p.exceedsCurrentBudget ? "Yes" : "No"} |`),
       "",
     ].join("\n")
   );

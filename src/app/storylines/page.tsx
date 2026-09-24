@@ -10,8 +10,7 @@ import {
 } from "@/components/timelineUtils";
 import { buildStorylineViews, type StorylineView } from "@/lib/eventStorylines";
 import { getEventPath } from "@/lib/eventUrls";
-import { supabase } from "@/lib/supabaseClient";
-import type { TimelineEvent } from "@/lib/types";
+import { getPublicationSnapshot } from "@/lib/publicationSnapshot";
 import { getTwitterMetadata } from "@/lib/siteMetadata";
 import {
   STORYLINES,
@@ -42,18 +41,6 @@ export const metadata: Metadata = {
   ),
 };
 
-type EventTagRow = {
-  event_id: string;
-  tag_id: string;
-};
-
-type TagRow = {
-  id: string;
-  name: string;
-};
-
-const EVENT_TAG_PAGE_SIZE = 1000;
-
 function sortStorylinesAlphabetically(
   storylines: Storyline[]
 ): Storyline[] {
@@ -66,46 +53,6 @@ function sortStorylinesAlphabetically(
       }
     )
   );
-}
-
-async function fetchAllEventTags(): Promise<{
-  data: EventTagRow[];
-  errorMessage: string | null;
-}> {
-  const allRows: EventTagRow[] = [];
-  let from = 0;
-
-  while (true) {
-    const to = from + EVENT_TAG_PAGE_SIZE - 1;
-
-    const { data, error } = await supabase
-      .from("event_tags")
-      .select("event_id, tag_id")
-      .order("event_id", { ascending: true })
-      .order("tag_id", { ascending: true })
-      .range(from, to);
-
-    if (error) {
-      return {
-        data: [],
-        errorMessage: error.message,
-      };
-    }
-
-    const rows = (data ?? []) as EventTagRow[];
-    allRows.push(...rows);
-
-    if (rows.length < EVENT_TAG_PAGE_SIZE) {
-      break;
-    }
-
-    from += EVENT_TAG_PAGE_SIZE;
-  }
-
-  return {
-    data: allRows,
-    errorMessage: null,
-  };
 }
 
 function StorylineCard({
@@ -184,56 +131,9 @@ function StorylineCard({
   );
 }
 
-function StorylinesError({
-  message,
-}: {
-  message: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
-      <h2 className="font-serif text-2xl font-semibold text-red-900">
-        Storylines could not be loaded
-      </h2>
-
-      <p className="mt-2 text-sm leading-6 text-red-700">
-        {message}
-      </p>
-    </div>
-  );
-}
-
 export default async function StorylinesPage() {
-  const [
-    { data: eventData, error: eventsError },
-    { data: tagData, error: tagsError },
-    eventTagResult,
-  ] = await Promise.all([
-    supabase
-      .from("events")
-      .select("*")
-      .is("deleted_at", null),
-    supabase
-      .from("tags")
-      .select("id, name")
-      .order("name", { ascending: true }),
-    fetchAllEventTags(),
-  ]);
-
-  const errorMessage =
-    eventsError?.message ??
-    tagsError?.message ??
-    eventTagResult.errorMessage;
-
-  const events = (eventData ?? []) as TimelineEvent[];
-  const tags = (tagData ?? []) as TagRow[];
-
-  const storylineViews = errorMessage
-    ? []
-    : buildStorylineViews({
-        events,
-        tags,
-        eventTags: eventTagResult.data,
-      });
+  const { events, tags, eventTags } = getPublicationSnapshot();
+  const storylineViews = buildStorylineViews({ events, tags, eventTags });
 
   const viewBySlug = new Map(
     storylineViews.map((view) => [
@@ -323,103 +223,95 @@ export default async function StorylinesPage() {
           </p>
         </div>
 
-        {!errorMessage && (
-          <nav
-            id="storyline-sections"
-            aria-labelledby="section-navigation-heading"
-            className="mt-10 scroll-mt-6 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
+        <nav
+          id="storyline-sections"
+          aria-labelledby="section-navigation-heading"
+          className="mt-10 scroll-mt-6 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
+        >
+          <h2
+            id="section-navigation-heading"
+            className="font-serif text-xl font-semibold text-stone-900"
           >
-            <h2
-              id="section-navigation-heading"
-              className="font-serif text-xl font-semibold text-stone-900"
-            >
-              Browse by section
-            </h2>
+            Browse by section
+          </h2>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              {STORYLINE_SECTIONS.map((section) => (
-                <a
-                  key={section.id}
-                  href={`#${section.id}`}
-                  className="rounded-full border border-stone-300 bg-stone-50 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:border-stone-400 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
-                >
-                  {section.title}
-                </a>
-              ))}
-            </div>
-          </nav>
-        )}
-
-        {errorMessage ? (
-          <div className="mt-10">
-            <StorylinesError message={errorMessage} />
+          <div className="mt-4 flex flex-wrap gap-2">
+            {STORYLINE_SECTIONS.map((section) => (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                className="rounded-full border border-stone-300 bg-stone-50 px-3 py-1.5 text-sm font-medium text-stone-700 transition hover:border-stone-400 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
+              >
+                {section.title}
+              </a>
+            ))}
           </div>
-        ) : (
-          <div className="mt-14 space-y-20">
-            {STORYLINE_SECTIONS.map((section) => {
-              const sectionStorylines =
-                sortStorylinesAlphabetically(
-                  getStorylinesForSection(section.id)
-                );
+        </nav>
 
-              const sectionViews = sectionStorylines
-                .map((storyline) =>
-                  viewBySlug.get(storyline.slug)
-                )
-                .filter(
-                  (view): view is StorylineView =>
-                    view !== undefined
-                );
-
-              return (
-                <section
-                  id={section.id}
-                  key={section.id}
-                  aria-labelledby={`${section.id}-heading`}
-                  className="scroll-mt-6"
-                >
-                  <div>
-                    <h2
-                      id={`${section.id}-heading`}
-                      className="font-serif text-3xl font-semibold tracking-tight text-stone-900"
-                    >
-                      {section.title}
-                    </h2>
-
-                    <p className="mt-3 text-base leading-7 text-stone-600">
-                      {section.description}
-                    </p>
-                  </div>
-
-                  <div className="mt-8 grid gap-5 md:grid-cols-2">
-                    {sectionViews.map((view) => (
-                      <StorylineCard
-                        key={view.storyline.slug}
-                        view={view}
-                      />
-                    ))}
-                  </div>
-
-                  <div className="mt-6 flex justify-end">
-                    <a
-                      href="#storyline-sections"
-                      className="text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900 md:hidden"
-                    >
-                      Back to sections ↑
-                    </a>
-
-                    <a
-                      href="#storylines-top"
-                      className="hidden text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900 md:inline"
-                    >
-                      Back to top ↑
-                    </a>
-                  </div>
-                </section>
+        <div className="mt-14 space-y-20">
+          {STORYLINE_SECTIONS.map((section) => {
+            const sectionStorylines =
+              sortStorylinesAlphabetically(
+                getStorylinesForSection(section.id)
               );
-            })}
-          </div>
-        )}
+
+            const sectionViews = sectionStorylines
+              .map((storyline) =>
+                viewBySlug.get(storyline.slug)
+              )
+              .filter(
+                (view): view is StorylineView =>
+                  view !== undefined
+              );
+
+            return (
+              <section
+                id={section.id}
+                key={section.id}
+                aria-labelledby={`${section.id}-heading`}
+                className="scroll-mt-6"
+              >
+                <div>
+                  <h2
+                    id={`${section.id}-heading`}
+                    className="font-serif text-3xl font-semibold tracking-tight text-stone-900"
+                  >
+                    {section.title}
+                  </h2>
+
+                  <p className="mt-3 text-base leading-7 text-stone-600">
+                    {section.description}
+                  </p>
+                </div>
+
+                <div className="mt-8 grid gap-5 md:grid-cols-2">
+                  {sectionViews.map((view) => (
+                    <StorylineCard
+                      key={view.storyline.slug}
+                      view={view}
+                    />
+                  ))}
+                </div>
+
+                <div className="mt-6 flex justify-end">
+                  <a
+                    href="#storyline-sections"
+                    className="text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900 md:hidden"
+                  >
+                    Back to sections ↑
+                  </a>
+
+                  <a
+                    href="#storylines-top"
+                    className="hidden text-sm font-medium text-stone-500 transition hover:text-stone-900 focus:outline-none focus:text-stone-900 md:inline"
+                  >
+                    Back to top ↑
+                  </a>
+                </div>
+              </section>
+            );
+          })}
+        </div>
       </section>
 
       <Footer />

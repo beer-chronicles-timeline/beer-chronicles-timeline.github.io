@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 test("server HTML exposes the real timeline before JavaScript runs", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });

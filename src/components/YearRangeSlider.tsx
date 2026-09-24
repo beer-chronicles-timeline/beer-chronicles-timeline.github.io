@@ -186,40 +186,40 @@ export default function YearRangeSlider({
         </span>
       </div>
 
-      <Slider.Root
-        className="relative flex items-center select-none touch-none w-full h-5"
-        min={historicalYearToSliderValue(minYear)}
-        max={historicalYearToSliderValue(maxYear)}
-        step={1}
-        value={[
-          historicalYearToSliderValue(startYear),
-          historicalYearToSliderValue(endYear),
-        ]}
-        onValueChange={(value) => {
-          setStartYear(
-            sliderValueToHistoricalYear(value[0])
+      <div className="space-y-2">
+        {(["start", "end"] as const).map((boundary) => {
+          const isStart = boundary === "start";
+          const year = isStart ? startYear : endYear;
+          return (
+            <div key={boundary} className="flex items-center gap-3">
+              <span className="w-9 shrink-0 text-xs text-stone-600" aria-hidden="true">
+                {isStart ? "From" : "To"}
+              </span>
+              <Slider.Root
+                className="relative flex h-11 w-full touch-none select-none items-center"
+                min={historicalYearToSliderValue(minYear)}
+                max={historicalYearToSliderValue(maxYear)}
+                step={1}
+                value={[historicalYearToSliderValue(year)]}
+                onValueChange={([value]) => {
+                  const nextYear = sliderValueToHistoricalYear(value);
+                  if (isStart) setStartYear(Math.min(nextYear, endYear));
+                  else setEndYear(Math.max(nextYear, startYear));
+                }}
+              >
+                <Slider.Track className="relative h-2 grow rounded-full bg-gray-200" />
+                <Slider.Thumb
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                  aria-label={isStart ? "Start year" : "End year"}
+                  aria-valuetext={`${Math.abs(year)} ${year < 0 ? "BCE" : "CE"}`}
+                >
+                  <span aria-hidden="true" className="h-6 w-6 rounded-full border-2 border-black bg-white shadow" />
+                </Slider.Thumb>
+              </Slider.Root>
+            </div>
           );
-          setEndYear(
-            sliderValueToHistoricalYear(value[1])
-          );
-        }}
-      >
-        <Slider.Track className="bg-gray-200 relative grow rounded-full h-2">
-          <Slider.Range className="absolute bg-black rounded-full h-full" />
-        </Slider.Track>
-
-        <Slider.Thumb
-          className="block h-5 w-5 rounded-full border-2 border-black bg-white shadow transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
-          aria-label="Start year"
-          aria-valuetext={`${Math.abs(startYear)} ${startYear < 0 ? "BCE" : "CE"}`}
-        />
-
-        <Slider.Thumb
-          className="block h-5 w-5 rounded-full border-2 border-black bg-white shadow transition hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
-          aria-label="End year"
-          aria-valuetext={`${Math.abs(endYear)} ${endYear < 0 ? "BCE" : "CE"}`}
-        />
-      </Slider.Root>
+        })}
+      </div>
     </div>
   );
 }

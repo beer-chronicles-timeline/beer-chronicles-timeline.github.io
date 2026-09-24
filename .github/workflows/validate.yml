@@ -1,0 +1,40 @@
+name: Offline pull request validation
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - run: npm ci
+      - name: Preserve published URL history
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/check-event-path-history.mjs "$BASE_SHA"
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Build synthetic publication without backend access
+        run: npm run build:offline
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:e2e
+        env:
+          PLAYWRIGHT_USE_EXISTING_BUILD: "1"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failures
+          path: test-results
+          retention-days: 7

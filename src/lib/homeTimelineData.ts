@@ -1,15 +1,9 @@
 import {
-  compareEventsChronologicallyDescending,
   getEventTimelineYear,
   truncate,
 } from "@/components/timelineUtils";
-import { supabase } from "@/lib/supabaseClient";
-import type { EventRow, Tag, TimelineEvent } from "@/lib/types";
-
-type EventTagRow = {
-  event_id: string;
-  tag_id: string;
-};
+import { getPublicationSnapshot } from "@/lib/publicationSnapshot";
+import type { Tag, TimelineEvent } from "@/lib/types";
 
 export type HomeTimelineData = {
   events: TimelineEvent[];
@@ -21,95 +15,11 @@ export type HomeTimelineData = {
 
 export type HomeTimelineIndex = HomeTimelineData;
 
-const EVENT_TAG_PAGE_SIZE = 1000;
 const MIN_VISIBLE_TAG_EVENT_COUNT = 3;
 
-async function fetchAllEventTags(): Promise<EventTagRow[]> {
-  const allRows: EventTagRow[] = [];
-  let from = 0;
-
-  while (true) {
-    const to = from + EVENT_TAG_PAGE_SIZE - 1;
-
-    const { data, error } = await supabase
-      .from("event_tags")
-      .select("event_id, tag_id")
-      .order("event_id", { ascending: true })
-      .order("tag_id", { ascending: true })
-      .range(from, to);
-
-    if (error) {
-      throw new Error(
-        `Could not load event-tag relations: ${error.message}`
-      );
-    }
-
-    const rows = (data ?? []) as EventTagRow[];
-
-    allRows.push(...rows);
-
-    if (rows.length < EVENT_TAG_PAGE_SIZE) {
-      break;
-    }
-
-    from += EVENT_TAG_PAGE_SIZE;
-  }
-
-  return allRows;
-}
-
 export async function getHomeTimelineData(): Promise<HomeTimelineData> {
-  const [
-    { data: eventData, error: eventsError },
-    { data: tagData, error: tagsError },
-    eventTagRows,
-  ] = await Promise.all([
-    supabase
-      .from("events")
-      .select("*")
-      .is("deleted_at", null)
-      .order("id", { ascending: true }),
-    supabase
-      .from("tags")
-      .select("id, name")
-      .order("name", { ascending: true }),
-    fetchAllEventTags(),
-  ]);
-
-  if (eventsError) {
-    throw new Error(`Could not load events: ${eventsError.message}`);
-  }
-
-  if (tagsError) {
-    throw new Error(`Could not load tags: ${tagsError.message}`);
-  }
-
-  const eventRows = (eventData ?? []) as EventRow[];
-  const tags = (tagData ?? []) as Tag[];
-  const tagById = new Map(tags.map((tag) => [tag.id, tag]));
-  const tagsForEvent = new Map<string, Tag[]>();
-
-  eventTagRows.forEach(({ event_id, tag_id }) => {
-    const tag = tagById.get(tag_id);
-
-    if (!tag) {
-      return;
-    }
-
-    const existingTags = tagsForEvent.get(event_id) ?? [];
-
-    existingTags.push(tag);
-    tagsForEvent.set(event_id, existingTags);
-  });
-
-  const events: TimelineEvent[] = eventRows
-    .map((event) => ({
-      ...event,
-      tags: tagsForEvent.get(event.id) ?? [],
-    }))
-    .sort(compareEventsChronologicallyDescending);
-
-  const activeEventIds = new Set(eventRows.map((event) => event.id));
+  const { events, tags, eventTags: eventTagRows } = getPublicationSnapshot();
+  const activeEventIds = new Set(events.map((event) => event.id));
   const activeEventIdsByTag = new Map<string, Set<string>>();
 
   eventTagRows.forEach(({ event_id, tag_id }) => {

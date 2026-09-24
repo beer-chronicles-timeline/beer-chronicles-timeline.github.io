@@ -58,3 +58,7 @@ next-env.d.ts
 # Temporary editorial SQL proposals
 /sql/*-proposal.sql
 /output/
+
+# Shared build-time publication snapshot
+/.cache/
+/artifacts/performance/
