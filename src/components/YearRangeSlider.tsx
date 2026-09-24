@@ -211,10 +211,10 @@ export default function YearRangeSlider({
           );
         })}
       </Slider.Root>
-      {/* Markers sit midway between the two reserved endpoint hit areas. */}
-      <div aria-hidden="true" className="relative mx-11 h-7 text-[10px] text-gray-600 sm:text-xs">
+      {/* Match the visible track's margins so endpoint ticks align with its ends. */}
+      <div aria-hidden="true" className="relative mx-[22px] h-7 text-[10px] text-gray-600 sm:text-xs">
         {scale.markers.map((year) => (
-          <span key={year} className="absolute flex -translate-x-1/2 flex-col items-center whitespace-nowrap" style={{ left: `${scale.yearToFraction(year) * 100}%` }}>
+          <span key={year} className={`absolute flex flex-col whitespace-nowrap ${year === minYear ? "items-start" : year === maxYear ? "-translate-x-full items-end" : "-translate-x-1/2 items-center"}`} style={{ left: `${scale.yearToFraction(year) * 100}%` }}>
             <span className="mb-1 h-1.5 w-px bg-gray-400" />
             {formatHistoricalYear(year)}
           </span>
