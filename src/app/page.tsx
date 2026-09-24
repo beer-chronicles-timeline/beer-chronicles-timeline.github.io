@@ -1,5 +1,4 @@
 // app/page.tsx
-import type { Metadata } from "next";
 import Link from "next/link";
 import Timeline from "@/components/Timeline";
 import HeaderMenu from "@/components/HeaderMenu";
@@ -10,12 +9,6 @@ import MainContentStart from "@/components/MainContentStart";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import { createHomeTimelineIndex } from "@/lib/homeTimelineData";
 import type { TimelineEvent } from "@/lib/types";
-
-export const metadata: Metadata = {
-  alternates: {
-    canonical: "https://beer-chronicles.org/",
-  },
-};
 
 const TIMELINE_PREVIEW_COUNT = 6;
 
@@ -43,6 +36,9 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
+      {/* React hoists this to <head>, preserving the root slash that Next's
+          metadata resolver strips. All timeline query states share this URL. */}
+      <link rel="canonical" href="https://beer-chronicles.org/" />
       <HomepageStructuredData previewEvents={previewEvents} />
 
       <h1 className="sr-only">

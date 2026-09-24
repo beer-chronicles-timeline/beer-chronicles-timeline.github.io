@@ -3,6 +3,7 @@ import test from "node:test";
 import { verifyRelease } from "../scripts/release-verification.mjs";
 const publication = { commit: "a".repeat(40), mode: "live", eventCount: 590, generatedAt: "2026-09-24T11:46:07.348Z" };
 const routes = [
+  { path: "/", canonical: "https://beer-chronicles.org/", heading: "Homepage" },
   { path: "/map", canonical: "https://beer-chronicles.org/map", heading: "Beer Map" },
   { path: "/events/id/old", canonical: "https://beer-chronicles.org/events/id/new", heading: "This entry has a new address", continueTo: "/events/id/new" },
   { path: "/events/id/new", canonical: "https://beer-chronicles.org/events/id/new", heading: "Current title" },
@@ -45,4 +46,13 @@ test("release verification retries propagation and detects a mid-check release s
     if (url.includes("publication-status") && ++markers === 2) return new Response(JSON.stringify({ ...publication, commit: "b".repeat(40) }));
     return healthy(url);
   } }), /Publication commit/);
+});
+
+test("release verification rejects homepage canonicals with query state or a missing root slash", async () => {
+  for (const canonical of ["https://beer-chronicles.org", "https://beer-chronicles.org/?tags=Carlsberg", "https://beer-chronicles.org/?from=2012&to=2016&string=Maisel+Friends"]) {
+    await assert.rejects(verifyRelease(manifest, {
+      fetchPage: server({ transform: (body, path) => path === "/" ? body.replace('href="https://beer-chronicles.org/"', `href="${canonical}"`) : body }),
+      attempts: 1,
+    }), /expected canonical/);
+  }
 });

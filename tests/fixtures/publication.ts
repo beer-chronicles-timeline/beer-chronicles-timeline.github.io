@@ -13,7 +13,7 @@ export function createPublicationFixture(count = 750): PublicationRows {
   ])];
   if (!Number.isSafeInteger(count) || count < requiredIds.length) throw new Error(`Fixture requires at least ${requiredIds.length} events`);
   const ids = [...new Set([...requiredIds, ...Object.keys(publishedEventPaths)])].slice(0, count);
-  const names = [...new Set([...STORYLINES.flatMap((s) => [...s.tagNames, ...(s.requiredTagNames ?? [])]), "Milestone"])];
+  const names = [...new Set([...STORYLINES.flatMap((s) => [...s.tagNames, ...(s.requiredTagNames ?? [])]), "Milestone", "Carlsberg", "Germany"])];
   const tags = names.map((name, i) => ({ id: `fixture-tag-${i}`, name }));
   const events = Array.from({ length: count }, (_, index) => {
     const id = ids[index] ?? `fixture-event-${index}`;

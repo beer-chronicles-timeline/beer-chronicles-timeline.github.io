@@ -9,7 +9,7 @@ export async function prepareReleaseManifest() {
   const publication = JSON.parse(await readFile("out/publication-status.json", "utf8"));
   const routes = new Map<string, { path: string; canonical: string; continueTo?: string }>();
   for (const path of ["/", "/map", "/histogram", "/storylines", "/submit"]) {
-    routes.set(path, { path, canonical: PUBLIC_ORIGIN + (path === "/" ? "" : path) });
+    routes.set(path, { path, canonical: PUBLIC_ORIGIN + path });
   }
   const events = new Map(snapshot.events.map((event) => [event.id, event]));
   for (const { id, slug } of getEventRouteParams(snapshot.events)) {
