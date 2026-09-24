@@ -27,6 +27,17 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
   const [showTable, setShowTable] = useState(false);
   const [width, setWidth] = useState(900);
   const chartRef = useRef<HTMLDivElement>(null);
+  const pointerPosition = useRef<{ x: number; y: number } | null>(null);
+
+  useEffect(() => {
+    // Remember movement outside the chart too: focusing it may scroll it under
+    // a stationary mouse. The window listener runs after the chart's handler.
+    const rememberPointer = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") pointerPosition.current = { x: event.clientX, y: event.clientY };
+    };
+    window.addEventListener("pointermove", rememberPointer);
+    return () => window.removeEventListener("pointermove", rememberPointer);
+  }, []);
 
   useEffect(() => {
     const element = chartRef.current;
@@ -136,7 +147,10 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
             setSelectedIndex((index) => event.key === "Home" ? 0 : event.key === "End" ? bins.length - 1 : Math.max(0, Math.min(bins.length - 1, (index ?? (event.key === "ArrowRight" ? -1 : bins.length)) + (event.key === "ArrowRight" ? 1 : -1))));
           }}
         >
-          <svg width="100%" height="356" viewBox={`0 0 ${width} 356`} role="img" aria-labelledby="histogram-chart-title histogram-chart-description" onPointerMove={(event) => { if (event.pointerType === "mouse") selectAt(event.clientX); }} onClick={(event) => selectAt(event.clientX)}>
+          <svg width="100%" height="356" viewBox={`0 0 ${width} 356`} role="img" aria-labelledby="histogram-chart-title histogram-chart-description" onPointerMove={(event) => {
+            const previous = pointerPosition.current;
+            if (event.pointerType === "mouse" && (!previous || previous.x !== event.clientX || previous.y !== event.clientY)) selectAt(event.clientX);
+          }} onClick={(event) => selectAt(event.clientX)}>
             <title id="histogram-chart-title">{`Timeline entry counts, ${histogramRangeLabel(from, to)}`}</title>
             <desc id="histogram-chart-description">Time is on the horizontal axis. Number of entries is on the vertical axis, starting at zero. Exact counts are also available in the table below.</desc>
             <text x="0" y="14" fontSize="12" fill="#57534e">Number of entries</text>

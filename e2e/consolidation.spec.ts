@@ -75,8 +75,9 @@ test("@journey histogram supports keyboard selection, table and a shared range c
   await start.focus(); await page.keyboard.press("ArrowLeft");
   await expect(start).toHaveAttribute("aria-valuenow", String(startValue - 1));
   await page.getByRole("button", { name: "All history", exact: true }).click();
-  const chart = page.locator('[tabindex="0"]').filter({ has: page.locator("svg") }).first();
+  const chart = page.getByRole("group", { name: "Histogram: use left and right arrow keys to inspect bins", exact: true });
   await chart.focus(); await page.keyboard.press("Home");
+  await expect(chart).toBeFocused();
   await expect(page.locator("#histogram-selection")).not.toContainText("Select a bin");
   await page.keyboard.press("End");
   await expect(page.locator("#histogram-selection")).toContainText("2026");
@@ -89,6 +90,31 @@ test("@journey histogram supports keyboard selection, table and a shared range c
   await expect(end).toHaveAttribute("aria-valuetext", "1 BCE");
   await page.setViewportSize({ width: 320, height: 800 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test("@journey histogram keyboard selection survives stationary pointer events", async ({ page }) => {
+  await page.goto("/histogram");
+  const chart = page.getByRole("group", { name: "Histogram: use left and right arrow keys to inspect bins", exact: true });
+  const svg = chart.locator("svg");
+  const selection = page.locator("#histogram-selection");
+  await chart.scrollIntoViewIfNeeded();
+  const box = (await svg.boundingBox())!;
+  const pointer = { pointerType: "mouse", clientX: box.x + box.width / 4, clientY: box.y + 100 };
+  await svg.dispatchEvent("pointermove", pointer);
+  const hovered = await selection.textContent();
+  await chart.focus();
+  await page.keyboard.press("End");
+  const lastBin = await selection.textContent();
+  expect(lastBin).not.toBe(hovered);
+  // WebKit can emit a pointermove after layout/hit-target changes, even when
+  // the mouse hasn't moved. It must not undo the latest keyboard selection.
+  await svg.dispatchEvent("pointermove", pointer);
+  await expect(selection).toHaveText(lastBin!);
+  await svg.dispatchEvent("pointermove", { ...pointer, clientY: pointer.clientY + 1 });
+  await expect(selection).toHaveText(hovered!);
+  await page.keyboard.press("End");
+  await svg.dispatchEvent("click", pointer);
+  await expect(selection).toHaveText(hovered!);
 });
 
 test("@journey map search finds an accented place and reports an empty period", async ({ page }) => {
@@ -169,7 +195,9 @@ for (const path of ["/", "/histogram"]) {
     }
     await page.setViewportSize({ width: 320, height: 800 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await page.screenshot({ path: test.info().outputPath("invalid-year.png"), fullPage: true });
+    // The full timeline can exceed WebKit's 32767-pixel screenshot limit.
+    await input.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: test.info().outputPath("invalid-year.png") });
     await input.fill("1800"); await input.press("Enter");
     await endInput.fill("1900"); await input.focus();
     await expect(input).toHaveAttribute("aria-invalid", "false");
