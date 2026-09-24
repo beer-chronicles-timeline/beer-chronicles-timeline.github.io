@@ -235,32 +235,33 @@ for (const path of ["/", "/histogram"]) {
     }
     const box = (await start.boundingBox())!;
     const endBox = (await end.boundingBox())!;
-    expect(box.x + box.width).toBeLessThanOrEqual(endBox.x + 0.5);
-    const center = { x: box.x + box.width, y: box.y + box.height / 2 };
-    const dragTo = async (fromX: number, toX: number) => {
+    expect(box.x).toBeCloseTo(endBox.x, 0);
+    expect(endBox.y - box.y).toBeGreaterThan(22);
+    const center = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+    const dragTo = async (fromX: number, toX: number, y: number) => {
       if (isMobile) {
         const session = await page.context().newCDPSession(page);
         try {
-          await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: fromX, y: center.y }] });
-          for (let i = 1; i <= 5; i++) await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: fromX + (toX - fromX) * i / 5, y: center.y }] });
+          await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: fromX, y }] });
+          for (let i = 1; i <= 5; i++) await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: fromX + (toX - fromX) * i / 5, y }] });
           await session.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
         } finally { await session.detach(); }
       } else {
-        await page.mouse.move(fromX, center.y); await page.mouse.down();
-        await page.mouse.move(toX, center.y, { steps: 5 }); await page.mouse.up();
+        await page.mouse.move(fromX, y); await page.mouse.down();
+        await page.mouse.move(toX, y, { steps: 5 }); await page.mouse.up();
       }
     };
     // Dragging To past From must stop at From without moving it or swapping roles.
-    await dragTo(center.x + 8, center.x - 80);
+    await dragTo(center.x, center.x - 80, endBox.y + endBox.height / 2);
     await expect(start).toHaveAttribute("aria-valuetext", "1800 CE");
     await expect(end).toHaveAttribute("aria-valuetext", "1800 CE");
     // From can expand left, while To remains fixed.
-    await dragTo(center.x - 8, center.x - 80);
+    await dragTo(center.x, center.x - 80, center.y);
     expect(Number(await start.getAttribute("aria-valuenow"))).toBeLessThan(1799);
     await expect(end).toHaveAttribute("aria-valuetext", "1800 CE");
     // Drag From through To: both stop at 1800; the end must not jump forward.
     const moved = (await start.boundingBox())!;
-    await dragTo(moved.x + 22, center.x + 25);
+    await dragTo(moved.x + 22, center.x + 25, moved.y + moved.height / 2);
     await expect(start).toHaveAttribute("aria-valuetext", "1800 CE");
     await expect(end).toHaveAttribute("aria-valuetext", "1800 CE");
     await start.focus(); await page.keyboard.press("Tab"); await expect(end).toBeFocused();

@@ -1,7 +1,7 @@
 "use client";
 
 import * as Slider from "@radix-ui/react-slider";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { parseHistoricalYear } from "@/lib/yearInput";
 import { createYearRangeScale, historicalYearToSliderValue, sliderValueToHistoricalYear } from "@/lib/yearRangeScale";
 
@@ -43,6 +43,15 @@ export default function YearRangeSlider({
     endInputDraft ?? formatHistoricalYear(endYear);
 
   const helpId = useId();
+  const sliderRef = useRef<HTMLSpanElement>(null);
+  const [sliderWidth, setSliderWidth] = useState(0);
+  useEffect(() => {
+    const element = sliderRef.current;
+    if (!element) return;
+    const observer = new ResizeObserver(([entry]) => setSliderWidth(entry.contentRect.width));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
   const drag = useRef<{ isStart: boolean; x: number; fraction: number; width: number } | null>(null);
   const minimum = historicalYearToSliderValue(minYear);
   const maximum = historicalYearToSliderValue(maxYear);
@@ -51,6 +60,7 @@ export default function YearRangeSlider({
   const scale = createYearRangeScale(minYear, maxYear);
   const fromFraction = scale.yearToFraction(startYear);
   const toFraction = scale.yearToFraction(endYear);
+  const handlesClose = (toFraction - fromFraction) * Math.max(0, sliderWidth - 44) < 44;
   const commitBoundary = (isStart: boolean, value: number) => {
     const clamped = Math.max(isStart ? minimum : startValue, Math.min(value, isStart ? endValue : maximum));
     if (isStart) { setStartInputDraft(null); setStartYear(sliderValueToHistoricalYear(clamped)); }
@@ -118,20 +128,10 @@ export default function YearRangeSlider({
         </p>
       )}
 
-      {/* Historical year display below the labels and inputs */}
-      <div className="flex justify-between text-sm text-gray-600 mb-2">
-        <span className="font-medium">
-          {formatHistoricalYear(startYear)}
-        </span>
-
-        <span className="font-medium">
-          {formatHistoricalYear(endYear)}
-        </span>
-      </div>
-
       <Slider.Root
-        // Radix's unshifted wrappers must not intercept the adjacent handle.
-        className="relative flex h-11 w-full touch-none select-none items-center [&>span]:pointer-events-none"
+        ref={sliderRef}
+        // Leave room for vertical separation without moving the track or ticks.
+        className="relative flex h-[68px] w-full touch-none select-none items-center [&>span]:pointer-events-none"
         role="group"
         aria-label="Year range"
         min={0}
@@ -149,15 +149,15 @@ export default function YearRangeSlider({
           if (event.button !== 0) return;
           const root = event.currentTarget;
           const rect = root.getBoundingClientRect();
-          const width = Math.max(1, rect.width - 88);
+          const width = Math.max(1, rect.width - 44);
           const x = event.clientX - rect.left;
           const boundary = (event.target as HTMLElement).closest<HTMLElement>("[data-boundary]")?.dataset.boundary;
-          const isStart = boundary ? boundary === "start" : Math.abs(x - (22 + fromFraction * width)) <= Math.abs(x - (66 + toFraction * width));
+          const isStart = boundary ? boundary === "start" : Math.abs(x - (22 + fromFraction * width)) <= Math.abs(x - (22 + toFraction * width));
           root.querySelector<HTMLElement>(`[data-boundary="${isStart ? "start" : "end"}"]`)!.focus({ preventScroll: true });
           // Retain the grab offset on a thumb; clicking the track moves the
           // nearest endpoint. Separate hit areas use the same year scale.
           const value = boundary ? (isStart ? startValue : endValue) : commitBoundary(isStart,
-            historicalYearToSliderValue(scale.fractionToYear((x - (isStart ? 22 : 66)) / width)));
+            historicalYearToSliderValue(scale.fractionToYear((x - 22) / width)));
           drag.current = { isStart, x: event.clientX, fraction: scale.yearToFraction(sliderValueToHistoricalYear(value)), width };
           root.setPointerCapture(event.pointerId);
         }}
@@ -178,7 +178,7 @@ export default function YearRangeSlider({
         <Slider.Track className="relative mx-[22px] h-2 grow rounded-full bg-gray-200">
           <span
             className="absolute h-full rounded-full bg-stone-600"
-            style={{ left: `calc(${fromFraction * 100}% - ${fromFraction * 44}px)`, right: `calc(${(1 - toFraction) * 100}% - ${(1 - toFraction) * 44}px)` }}
+            style={{ left: `${fromFraction * 100}%`, right: `${(1 - toFraction) * 100}%` }}
           />
         </Slider.Track>
         {(["start", "end"] as const).map((boundary) => {
@@ -188,10 +188,10 @@ export default function YearRangeSlider({
             <Slider.Thumb
               key={boundary}
               data-boundary={boundary}
-              // Reserve one 44px hit area for each endpoint on the shared scale,
-              // so equal years still have two separately selectable handles.
+              // Separate nearby handles vertically, preserving their exact year
+              // positions and keeping each 44px target's center reachable.
               className="group pointer-events-auto relative flex h-11 w-11 items-center justify-center bg-transparent focus-visible:outline-none"
-              style={{ transform: `translateX(${isStart ? -44 * fromFraction : 44 * (1 - toFraction)}px)` }}
+              style={{ transform: `translateY(${handlesClose ? (isStart ? -12 : 12) : 0}px)` }}
               aria-label={isStart ? "Start year" : "End year"}
               aria-valuemin={isStart ? minimum : startValue}
               aria-valuemax={isStart ? endValue : maximum}
@@ -214,9 +214,11 @@ export default function YearRangeSlider({
       {/* Match the visible track's margins so endpoint ticks align with its ends. */}
       <div aria-hidden="true" className="relative mx-[22px] h-7 text-[10px] text-gray-600 sm:text-xs">
         {scale.markers.map((year) => (
-          <span key={year} className={`absolute flex flex-col whitespace-nowrap ${year === minYear ? "items-start" : year === maxYear ? "-translate-x-full items-end" : "-translate-x-1/2 items-center"}`} style={{ left: `${scale.yearToFraction(year) * 100}%` }}>
+          <span key={year} data-year-marker={year} className={`absolute flex flex-col whitespace-nowrap ${year === minYear ? "items-start" : year === maxYear ? "-translate-x-full items-end" : "-translate-x-1/2 items-center"}`} style={{ left: `${scale.yearToFraction(year) * 100}%` }}>
             <span className="mb-1 h-1.5 w-px bg-gray-400" />
-            {formatHistoricalYear(year)}
+            <span className={year === minYear ? "-translate-x-[22px]" : year === maxYear ? "translate-x-[22px]" : undefined}>
+              {formatHistoricalYear(year)}
+            </span>
           </span>
         ))}
       </div>
