@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import YearRangeSlider from "@/components/YearRangeSlider";
+import { useHydrated } from "@/lib/useHydrated";
 import {
   AUTOMATIC_HISTOGRAM_BIN_COUNT,
   automaticHistogramBinSize,
@@ -14,6 +15,7 @@ import {
 type Props = { years: number[]; currentYear: number; undatedCount: number };
 
 export default function HistogramExplorer({ years, currentYear, undatedCount }: Props) {
+  const isReady = useHydrated();
   const minYear = Math.min(1800, ...years);
   const maxYear = Math.max(currentYear, ...years);
   const [from, setFrom] = useState(1800);
@@ -81,7 +83,7 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
 
   return (
     <section aria-label="Timeline histogram" className="mt-8">
-      <div className="rounded-xl border border-stone-200 bg-white p-4 md:p-6">
+      <fieldset disabled={!isReady} inert={!isReady} className="min-w-0 rounded-xl border border-stone-200 bg-white p-4 md:p-6">
         <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_220px] md:items-center md:gap-10">
           <div className="min-w-0 [&>div]:px-0 max-[380px]:[&_input]:w-20">
             <h2 className="mb-4 text-sm font-semibold text-stone-900">Time range</h2>
@@ -129,7 +131,7 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
           <button type="button" onClick={() => { changeFrom(1800); changeTo(currentYear); }} className="min-h-10 rounded-full border border-stone-300 px-4 text-sm hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">1800–present</button>
           <button type="button" onClick={() => { changeFrom(minYear); changeTo(maxYear); }} className="min-h-10 rounded-full border border-stone-300 px-4 text-sm hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">All history</button>
         </div>
-      </div>
+      </fieldset>
 
       <div className="mt-6 rounded-xl border border-stone-200 bg-white p-4 md:p-6">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -138,9 +140,9 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
         </div>
         <p className="mt-1 text-sm text-stone-500">{histogramRangeLabel(from, to)}</p>
         <div
-          ref={chartRef} tabIndex={0} role="group" aria-label="Histogram: use left and right arrow keys to inspect bins"
+          ref={chartRef} tabIndex={isReady ? 0 : -1} aria-disabled={!isReady} role="group" aria-label="Histogram: use left and right arrow keys to inspect bins"
           aria-describedby="histogram-instructions histogram-selection"
-          className="mt-5 w-full rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+          className="mt-5 w-full rounded-md aria-disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
           onKeyDown={(event) => {
             if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
             event.preventDefault();
@@ -177,7 +179,7 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
 
       <p className="mt-4 text-sm leading-6 text-stone-600">Each entry is counted once at the year used on the timeline, including entries dated approximately. The first and last bins are clipped to your selected range. There is no year zero. These counts describe the coverage of Beer Chronicles.</p>
       {undatedCount > 0 && <p className="mt-2 text-sm text-stone-600">{undatedCount} {undatedCount === 1 ? "entry has" : "entries have"} no usable timeline year and {undatedCount === 1 ? "is" : "are"} excluded.</p>}
-      <details className="mt-5 rounded-lg border border-stone-200 bg-white" onToggle={(event) => setShowTable(event.currentTarget.open)}>
+      <details inert={!isReady} className="mt-5 rounded-lg border border-stone-200 bg-white" onToggle={(event) => setShowTable(event.currentTarget.open)}>
         <summary className="cursor-pointer rounded-lg px-4 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">Entry counts as a table</summary>
         {showTable && <div tabIndex={0} className="max-h-80 overflow-auto px-4 pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"><table className="w-full text-left text-sm">
           <caption className="sr-only">Entry counts by year range</caption>

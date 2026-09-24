@@ -1,6 +1,8 @@
 import { expect, test } from "./fixtures";
 
-for (const path of ["/", "/map"]) {
+const correctionPath = "/submit?submissionType=correction&eventTitle=Correction%20fixture&eventUrl=https%3A%2F%2Fbeer-chronicles.org%2Fevents%2Ffixture%2Ffixture";
+
+for (const path of ["/", "/map", "/histogram", "/submit", correctionPath]) {
   test(`@journey controls wait for their handlers during delayed startup: ${path}`, async ({ page }) => {
     let releaseScripts = () => {};
     const scriptsReady = new Promise<void>((resolve) => { releaseScripts = resolve; });
@@ -23,18 +25,55 @@ for (const path of ["/", "/map"]) {
         await expect(page.getByRole("complementary", { name: "Selected map entry" })).toContainText("Žatec");
         await page.getByRole("combobox", { name: /^Period/ }).selectOption("before-1800");
         await expect(page.locator("#place-search-status")).toContainText("No entries match");
+      } else if (path.startsWith("/submit")) {
+        const name = page.locator("#name");
+        await expect(name).toBeDisabled();
+        await expect(page.locator('button[type="submit"]')).toBeDisabled();
+        releaseScripts();
+        await name.fill("Startup test");
+        await page.locator("#email").fill("startup@example.invalid");
+        if (path === correctionPath) {
+          await expect(page.locator("#title")).toHaveValue("Correction fixture");
+        } else {
+          await page.locator("#title").fill("Offline test fixture");
+          await page.locator("#datePrecision").selectOption("year");
+          await page.locator("#eventDate").fill("1900");
+          await page.locator("#sources").fill("https://example.invalid/test");
+        }
+        await page.locator("#description").fill("Offline browser test; never submitted to a service.");
+        let submissions = 0;
+        await page.route("https://formspree.io/**", async (route) => {
+          const body = route.request().postDataJSON();
+          expect(body.name).toBe("Startup test");
+          if (path === correctionPath) expect(body.title).toBe("Correction fixture");
+          submissions++;
+          await route.fulfill({ status: submissions === 1 ? 503 : 200, json: { ok: submissions > 1 } });
+        });
+        const submit = page.getByRole("button", { name: path === correctionPath ? "Send Suggestion" : "Send Entry", exact: true });
+        await submit.click();
+        await expect(page.getByRole("alert").filter({ hasText: "Sorry, there was an error" })).toBeVisible();
+        await expect(name).toHaveValue("Startup test");
+        await submit.click();
+        await expect(page.getByRole("status")).toContainText("Thank you");
+        expect(submissions).toBe(2);
       } else {
         const input = page.locator("#startYearInput");
         await expect(input).toBeDisabled();
+        if (path === "/histogram") {
+          await expect(page.locator("#histogram-bin-size")).toBeDisabled();
+          await expect(page.getByRole("group", { name: /^Histogram:/ })).toBeDisabled();
+          await expect(page.locator("details")).toHaveAttribute("inert", "");
+        }
         releaseScripts();
-        await input.fill("1800");
+        const committedYear = path === "/histogram" ? "1900" : "1800";
+        await input.fill(committedYear);
         await input.press("Enter");
         const start = page.getByRole("slider", { name: "Start year", exact: true });
-        await expect(start).toHaveAttribute("aria-valuetext", "1800 CE");
-        await input.fill("1800junk");
+        await expect(start).toHaveAttribute("aria-valuetext", `${committedYear} CE`);
+        await input.fill(`${committedYear}junk`);
         await page.getByRole("textbox", { name: "End year", exact: true }).focus();
         await expect(input).toHaveAttribute("aria-invalid", "true");
-        await expect(start).toHaveAttribute("aria-valuetext", "1800 CE");
+        await expect(start).toHaveAttribute("aria-valuetext", `${committedYear} CE`);
       }
     } finally {
       releaseScripts();

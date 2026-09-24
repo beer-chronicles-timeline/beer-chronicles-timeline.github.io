@@ -8,7 +8,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { TimelineFiltersWrapper } from "./TimelineFiltersWrapper";
@@ -123,7 +122,6 @@ export default function Timeline({
   minYear,
   maxYear,
 }: TimelineProps) {
-  const router = useRouter();
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const copyFeedbackTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -256,11 +254,13 @@ export default function Timeline({
       window.location.search,
       { minYear, maxYear, urlTags }
     );
-    const newUrl = queryString ? `/?${queryString}` : "/";
-    const currentUrl = window.location.pathname + window.location.search;
+    const newUrl = (queryString ? `/?${queryString}` : "/") + window.location.hash;
+    const currentUrl = window.location.pathname + window.location.search + window.location.hash;
 
     if (newUrl !== currentUrl) {
-      router.replace(newUrl, { scroll: false });
+      // These filters use already-loaded data. Router navigation would fetch
+      // an RSC payload on every drag update and can interrupt the gesture.
+      window.history.replaceState(null, "", newUrl);
     }
   }, [
     activeCategory,
@@ -275,7 +275,6 @@ export default function Timeline({
     minYear,
     maxYear,
     urlTags,
-    router,
   ]);
 
   const tagCounts = useMemo(() => {
@@ -468,7 +467,9 @@ export default function Timeline({
     applyUrlState(readUrlState(url.search));
 
     handleCloseModal();
-    router.push(href, { scroll: false });
+    // A deliberate modal filter link creates a history entry; subsequent
+    // control edits replace it. Popstate restores the earlier filter state.
+    window.history.pushState(null, "", href);
   };
 
   const handleNextEvent = useCallback(() => {
@@ -691,6 +692,27 @@ export default function Timeline({
                   Copy filtered view
                 </button>
               )}
+              <button
+                onClick={handleRandomEvent}
+                disabled={timelineEvents.length === 0 || isRollingRandom}
+                className="timeline-interactive-control flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-400 text-stone-900 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-500 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:fixed md:bottom-24 md:right-6 md:z-40 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
+                aria-label="Open random event"
+                title="Open random event"
+              >
+                <span
+                  className={`text-xl md:mr-2 ${
+                    isRollingRandom ? "animate-spin motion-reduce:animate-none" : ""
+                  }`}
+                >
+                  🎲
+                </span>
+
+                <span className="hidden text-sm font-semibold md:inline">
+                  {isRollingRandom
+                    ? "Rolling..."
+                    : "Surprise Me"}
+                </span>
+              </button>
             </div>
 
             <span aria-live="polite" className="text-sm text-stone-500">
@@ -808,28 +830,6 @@ export default function Timeline({
           )}
         </div>
       )}
-
-      <button
-        onClick={handleRandomEvent}
-        disabled={timelineEvents.length === 0 || isRollingRandom}
-        className="timeline-interactive-control fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-amber-400 text-stone-900 shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-amber-500 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 md:h-auto md:min-h-11 md:w-auto md:rounded-full md:px-5 md:py-3"
-        aria-label="Open random event"
-        title="Open random event"
-      >
-        <span
-          className={`text-xl md:mr-2 ${
-            isRollingRandom ? "animate-spin motion-reduce:animate-none" : ""
-          }`}
-        >
-          🎲
-        </span>
-
-        <span className="hidden text-sm font-semibold md:inline">
-          {isRollingRandom
-            ? "Rolling..."
-            : "Surprise Me"}
-        </span>
-      </button>
 
       {modalEvent && (
         <TimelineModal

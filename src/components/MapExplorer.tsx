@@ -4,7 +4,8 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { FormEvent, useCallback, useMemo, useState, useSyncExternalStore } from "react";
+import { FormEvent, useCallback, useMemo, useState } from "react";
+import { useHydrated } from "@/lib/useHydrated";
 import type { MapLocation } from "@/lib/mapLocations";
 import {
   buildMapPlaceGroups,
@@ -28,10 +29,6 @@ type MapExplorerProps = {
 
 type PeriodFilter = "all" | "before-1800" | "1800-1945" | "after-1945";
 
-const subscribeToHydration = () => () => {};
-const clientReady = () => true;
-const serverReady = () => false;
-
 function isInsidePeriod(
   location: MapLocation,
   period: PeriodFilter
@@ -48,7 +45,7 @@ function isInsidePeriod(
 export default function MapExplorer({ locations }: MapExplorerProps) {
   // Static HTML must not accept edits before React can handle them. Map
   // rendering is independent: search becomes usable as soon as we hydrate.
-  const isReady = useSyncExternalStore(subscribeToHydration, clientReady, serverReady);
+  const isReady = useHydrated();
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
   const [period, setPeriod] = useState<PeriodFilter>("all");
   const [category, setCategory] = useState("all");

@@ -6,6 +6,7 @@ import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
+import { useHydrated } from "@/lib/useHydrated";
 
 const CORRECTION_SUBMISSION_TYPE =
   "Correction / additional source";
@@ -88,6 +89,7 @@ function subscribeToLocationSearch() {
 }
 
 export default function SubmitPage() {
+  const isReady = useHydrated();
   const locationSearch = useSyncExternalStore(
     subscribeToLocationSearch,
     () => window.location.search,
@@ -294,278 +296,280 @@ export default function SubmitPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Name Field */}
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Your Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              aria-describedby="submission-privacy-notice"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-              placeholder="e.g., John Smith"
-            />
-          </div>
-
-          {/* Email Field */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Your Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              aria-describedby="submission-privacy-notice"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-              placeholder="e.g., john@example.com"
-            />
-          </div>
-
-          {/* Title Field */}
-          <div>
-            <label
-              htmlFor="title"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              required
-              value={submittedTitle}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-              placeholder="e.g., Reinheitsgebot enacted in Bavaria"
-            />
-          </div>
-
-          {/* Description Field */}
-          <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              required
-              rows={5}
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-              placeholder="Describe the event, its significance, and any relevant details..."
-            />
-          </div>
-
-          {/* Date Precision Field */}
-          <div>
-            <label
-              htmlFor="datePrecision"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Date Precision
-            </label>
-            <select
-              id="datePrecision"
-              name="datePrecision"
-              required={!isCorrection}
-              value={formData.datePrecision}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-            >
-              <option value="">
-                {isCorrection
-                  ? "Not part of this correction"
-                  : "Choose the supported precision"}
-              </option>
-              <option value="date">Full date (year-month-day)</option>
-              <option value="month">Month (e.g., October 1990)</option>
-              <option value="year">Year only</option>
-              <option value="decade">Decade (e.g., 1990s)</option>
-              <option value="century">Century (e.g., 18th century)</option>
-            </select>
-          </div>
-
-          {/* Event Date Field */}
-          {formData.datePrecision && (
+        <form onSubmit={handleSubmit} aria-busy={!isReady}>
+          <fieldset disabled={!isReady} className="min-w-0 space-y-5">
+            {/* Name Field */}
             <div>
               <label
-                htmlFor="eventDate"
+                htmlFor="name"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                {DATE_FIELD_CONFIG[formData.datePrecision].label}
+                Your Name
               </label>
               <input
                 type="text"
-                id="eventDate"
-                name="eventDate"
-                required={!isCorrection}
-                value={formData.eventDate}
+                id="name"
+                name="name"
+                required
+                aria-describedby="submission-privacy-notice"
+                value={formData.name}
                 onChange={handleChange}
-                placeholder={
-                  DATE_FIELD_CONFIG[formData.datePrecision].placeholder
-                }
-                aria-describedby="event-date-help"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="e.g., John Smith"
               />
-              <p id="event-date-help" className="mt-1 text-xs text-stone-500">
-                {DATE_FIELD_CONFIG[formData.datePrecision].helpText}
-              </p>
             </div>
-          )}
 
-          {/* Date Uncertainty Field */}
-          <div>
-            <label
-              htmlFor="dateUncertainty"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Date uncertainty or explanation{" "}
-              <span className="font-normal text-stone-500">(optional)</span>
-            </label>
-            <textarea
-              id="dateUncertainty"
-              name="dateUncertainty"
-              rows={2}
-              value={formData.dateUncertainty}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-              placeholder="Explain an approximate date, conflicting sources, or the supported date range."
-            />
-          </div>
+            {/* Email Field */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Your Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                aria-describedby="submission-privacy-notice"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="e.g., john@example.com"
+              />
+            </div>
 
-          {/* Sources Field */}
-          <div>
-            <label
-              htmlFor="sources"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Sources
-            </label>
-            <textarea
-              id="sources"
-              name="sources"
-              required={!isCorrection}
-              rows={3}
-              value={formData.sources}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-              placeholder={
-                isCorrection
-                  ? "Relevant URLs or references, if available (one per line)"
-                  : "URLs or references that support this entry (one per line)"
-              }
-            />
+            {/* Title Field */}
+            <div>
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                required
+                value={submittedTitle}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="e.g., Reinheitsgebot enacted in Bavaria"
+              />
+            </div>
 
-            {isCorrection && (
-              <p className="mt-1 text-xs text-stone-500">
-                Optional. Reliable sources are encouraged when they are
-                relevant to the suggested change.
-              </p>
+            {/* Description Field */}
+            <div>
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                required
+                rows={5}
+                value={formData.description}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="Describe the event, its significance, and any relevant details..."
+              />
+            </div>
+
+            {/* Date Precision Field */}
+            <div>
+              <label
+                htmlFor="datePrecision"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Date Precision
+              </label>
+              <select
+                id="datePrecision"
+                name="datePrecision"
+                required={!isCorrection}
+                value={formData.datePrecision}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+              >
+                <option value="">
+                  {isCorrection
+                    ? "Not part of this correction"
+                    : "Choose the supported precision"}
+                </option>
+                <option value="date">Full date (year-month-day)</option>
+                <option value="month">Month (e.g., October 1990)</option>
+                <option value="year">Year only</option>
+                <option value="decade">Decade (e.g., 1990s)</option>
+                <option value="century">Century (e.g., 18th century)</option>
+              </select>
+            </div>
+
+            {/* Event Date Field */}
+            {formData.datePrecision && (
+              <div>
+                <label
+                  htmlFor="eventDate"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  {DATE_FIELD_CONFIG[formData.datePrecision].label}
+                </label>
+                <input
+                  type="text"
+                  id="eventDate"
+                  name="eventDate"
+                  required={!isCorrection}
+                  value={formData.eventDate}
+                  onChange={handleChange}
+                  placeholder={
+                    DATE_FIELD_CONFIG[formData.datePrecision].placeholder
+                  }
+                  aria-describedby="event-date-help"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                />
+                <p id="event-date-help" className="mt-1 text-xs text-stone-500">
+                  {DATE_FIELD_CONFIG[formData.datePrecision].helpText}
+                </p>
+              </div>
             )}
-          </div>
 
-          {/* Submission privacy notice and button */}
-          <div className="space-y-3">
-            <div
-              id="submission-privacy-notice"
-              className="rounded-lg border border-stone-200 bg-stone-50 px-4 py-3 text-xs leading-5 text-stone-600"
-            >
-              <p>
-                Your name and email address are sent through Formspree so I
-                can clarify your submission and let you know if or when it is
-                published. Your email address will not be published.
-              </p>
-
-              <p className="mt-2">
-                I will only add your name—and, if you wish, a link—to the
-                acknowledgements on the Sources page after asking for and
-                receiving your consent. Read the site&apos;s{" "}
-                <Link
-                  href="/privacy"
-                  className="rounded-sm underline decoration-stone-300 underline-offset-2 transition hover:text-stone-900 hover:decoration-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
-                >
-                  privacy information
-                </Link>{" "}
-                and Formspree&apos;s{" "}
-                <a
-                  href="https://formspree.io/security/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-sm underline decoration-stone-300 underline-offset-2 transition hover:text-stone-900 hover:decoration-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
-                >
-                  privacy and security information
-                </a>
-                .
-              </p>
+            {/* Date Uncertainty Field */}
+            <div>
+              <label
+                htmlFor="dateUncertainty"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Date uncertainty or explanation{" "}
+                <span className="font-normal text-stone-500">(optional)</span>
+              </label>
+              <textarea
+                id="dateUncertainty"
+                name="dateUncertainty"
+                rows={2}
+                value={formData.dateUncertainty}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="Explain an approximate date, conflicting sources, or the supported date range."
+              />
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3 px-4 rounded-lg font-medium text-white transition ${
-                isSubmitting
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-stone-800 hover:bg-stone-900"
-              }`}
-            >
-              {isSubmitting
-                ? "Sending..."
-                : isCorrection
-                  ? "Send Suggestion"
-                  : "Send Entry"}
-            </button>
-          </div>
+            {/* Sources Field */}
+            <div>
+              <label
+                htmlFor="sources"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Sources
+              </label>
+              <textarea
+                id="sources"
+                name="sources"
+                required={!isCorrection}
+                rows={3}
+                value={formData.sources}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder={
+                  isCorrection
+                    ? "Relevant URLs or references, if available (one per line)"
+                    : "URLs or references that support this entry (one per line)"
+                }
+              />
 
-          {/* Status Messages */}
-          {submitStatus === "success" && (
-            <div
-              role="status"
-              aria-live="polite"
-              aria-atomic="true"
-              className="p-4 bg-green-50 border border-green-200 rounded-lg"
-            >
-              <p className="text-green-800">
-                {isCorrection
-                  ? "Thank you! Your suggestion has been submitted. I’ll review it soon."
-                  : "Thank you! Your entry has been submitted. I’ll review it soon."}
-              </p>
+              {isCorrection && (
+                <p className="mt-1 text-xs text-stone-500">
+                  Optional. Reliable sources are encouraged when they are
+                  relevant to the suggested change.
+                </p>
+              )}
             </div>
-          )}
 
-          {submitStatus === "error" && (
-            <div
-              role="alert"
-              aria-live="assertive"
-              aria-atomic="true"
-              className="p-4 bg-red-50 border border-red-200 rounded-lg"
-            >
-              <p className="text-red-800">
-                Sorry, there was an error sending your submission. Please try
-                again or email me directly.
-              </p>
+            {/* Submission privacy notice and button */}
+            <div className="space-y-3">
+              <div
+                id="submission-privacy-notice"
+                className="rounded-lg border border-stone-200 bg-stone-50 px-4 py-3 text-xs leading-5 text-stone-600"
+              >
+                <p>
+                  Your name and email address are sent through Formspree so I
+                  can clarify your submission and let you know if or when it is
+                  published. Your email address will not be published.
+                </p>
+
+                <p className="mt-2">
+                  I will only add your name—and, if you wish, a link—to the
+                  acknowledgements on the Sources page after asking for and
+                  receiving your consent. Read the site&apos;s{" "}
+                  <Link
+                    href="/privacy"
+                    className="rounded-sm underline decoration-stone-300 underline-offset-2 transition hover:text-stone-900 hover:decoration-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+                  >
+                    privacy information
+                  </Link>{" "}
+                  and Formspree&apos;s{" "}
+                  <a
+                    href="https://formspree.io/security/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-sm underline decoration-stone-300 underline-offset-2 transition hover:text-stone-900 hover:decoration-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+                  >
+                    privacy and security information
+                  </a>
+                  .
+                </p>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-3 px-4 rounded-lg font-medium text-white transition ${
+                  isSubmitting
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-stone-800 hover:bg-stone-900"
+                }`}
+              >
+                {isSubmitting
+                  ? "Sending..."
+                  : isCorrection
+                    ? "Send Suggestion"
+                    : "Send Entry"}
+              </button>
             </div>
-          )}
+
+            {/* Status Messages */}
+            {submitStatus === "success" && (
+              <div
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+                className="p-4 bg-green-50 border border-green-200 rounded-lg"
+              >
+                <p className="text-green-800">
+                  {isCorrection
+                    ? "Thank you! Your suggestion has been submitted. I’ll review it soon."
+                    : "Thank you! Your entry has been submitted. I’ll review it soon."}
+                </p>
+              </div>
+            )}
+
+            {submitStatus === "error" && (
+              <div
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+                className="p-4 bg-red-50 border border-red-200 rounded-lg"
+              >
+                <p className="text-red-800">
+                  Sorry, there was an error sending your submission. Please try
+                  again or email me directly.
+                </p>
+              </div>
+            )}
+          </fieldset>
         </form>
 
         <div className="mt-8 pt-4 text-sm text-gray-600">

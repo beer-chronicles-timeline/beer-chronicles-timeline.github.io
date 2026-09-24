@@ -186,7 +186,10 @@ test("tag filters support a complete keyboard interaction", async ({
   await page.goto("/");
 
   const tagsButton = page.getByRole("button", { name: /^Tags/ });
+  // focus() does not wait for enabled state; startup deliberately gates controls.
+  await expect(tagsButton).toBeEnabled();
   await tagsButton.focus();
+  await expect(tagsButton).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(tagsButton).toHaveAttribute("aria-expanded", "true");
 
