@@ -43,7 +43,6 @@ for (const path of ["/", "/histogram"]) {
     await expect(to).toHaveValue("1914");
     await expect(end).toHaveAttribute("aria-valuenow", "1913");
     await expect(end).toHaveAttribute("aria-valuetext", "1914 CE");
-    await expect(page.getByText("Nonlinear time scale", { exact: false })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await track.locator("..").screenshot({ path: test.info().outputPath("nonlinear-slider.png") });
   });

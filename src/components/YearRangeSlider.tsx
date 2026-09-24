@@ -43,7 +43,6 @@ export default function YearRangeSlider({
     endInputDraft ?? formatHistoricalYear(endYear);
 
   const helpId = useId();
-  const scaleId = useId();
   const drag = useRef<{ isStart: boolean; x: number; fraction: number; width: number } | null>(null);
   const minimum = historicalYearToSliderValue(minYear);
   const maximum = historicalYearToSliderValue(maxYear);
@@ -198,7 +197,6 @@ export default function YearRangeSlider({
               aria-valuemax={isStart ? endValue : maximum}
               aria-valuenow={isStart ? startValue : endValue}
               aria-valuetext={`${Math.abs(year)} ${year < 0 ? "BCE" : "CE"}`}
-              aria-describedby={scaleId}
               onKeyDown={(event) => {
                 const direction = ["ArrowRight", "ArrowUp", "PageUp"].includes(event.key) ? 1 : ["ArrowLeft", "ArrowDown", "PageDown"].includes(event.key) ? -1 : 0;
                 if (!direction && event.key !== "Home" && event.key !== "End") return;
@@ -222,9 +220,6 @@ export default function YearRangeSlider({
           </span>
         ))}
       </div>
-      <p id={scaleId} className="mt-1 text-center text-xs text-gray-500">
-        Nonlinear time scale · Recent centuries have more space.
-      </p>
     </div>
   );
 }
