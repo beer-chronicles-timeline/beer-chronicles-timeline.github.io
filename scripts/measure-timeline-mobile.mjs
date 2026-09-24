@@ -1,3 +1,4 @@
+import { selectPerformanceBaseline } from "./performance-history.mjs";
 import { appendFile, access, mkdir, readFile, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import { spawn, execFileSync } from "node:child_process";
@@ -167,18 +168,30 @@ try {
 }
 let baseline = null;
 const baselinePath = process.env.PERFORMANCE_BASELINE_PATH;
+let historySelection = null;
 if (baselinePath) {
   try { baseline = JSON.parse(await readFile(baselinePath, "utf8")); }
   catch (error) { if (error.code !== "ENOENT") { report.errors.push(`Baseline could not be read: ${error.message}`); process.exitCode = 1; } }
 }
+if (!baselinePath && process.env.PERFORMANCE_HISTORY_PATH) {
+  try {
+    const history = JSON.parse(await readFile(process.env.PERFORMANCE_HISTORY_PATH, "utf8"));
+    historySelection = selectPerformanceBaseline(report, history);
+    baseline = historySelection.baseline;
+  } catch (error) {
+    historySelection = { source: null, reason: "Performance history gap: recovery file unavailable", notes: [error.message] };
+  }
+}
+report.baselineHistory = historySelection && { source: historySelection.source, reason: historySelection.reason, notes: historySelection.notes };
 report.comparison = comparePerformance(report, baseline);
+if (historySelection && !baseline) report.comparison.reason = historySelection.reason;
 const warnings = report.comparison.changes.filter((change) => change.warning);
 const lines = [
   "# Mobile performance diagnostics", "", report.notes, "",
   `Commit: ${report.commit}${report.workingTreeDirty ? " (working tree changes)" : ""}; ${report.eventCount} events; ${report.publicationMode} publication; ${count} runs per route.`,
   "", "| Route | LCP ms | CLS | JS gzip KiB | Ready ms | Sampled event max ms | Requests |", "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
   ...report.routes.filter((r) => Object.keys(r.metrics).length).map(({ name, metrics: m }) => `| ${name} | ${Math.round(m.lcpMs)} | ${m.cls.toFixed(3)} | ${(m.jsEncodedBytes / 1024).toFixed(1)} | ${Math.round(m.readyMs)} | ${m.interactionMaxMs} | ${m.requestCount} |`),
-  "", report.comparison.reason, "", ...warnings.map((w) => `- Review ${w.route} ${w.metric}: ${w.before.toFixed(2)} -> ${w.after.toFixed(2)}`),
+  "", report.comparison.reason, "", ...(historySelection ? [historySelection.reason, ...historySelection.notes.map((note) => `- History: ${note}`), ""] : []), ...warnings.map((w) => `- Review ${w.route} ${w.metric}: ${w.before.toFixed(2)} -> ${w.after.toFixed(2)}`),
   ...report.errors.map((error) => `- Measurement error: ${error}`), "",
 ];
 await writeFile(`${directory}/performance.json`, JSON.stringify(report, null, 2) + "\n");

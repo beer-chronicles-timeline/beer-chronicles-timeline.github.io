@@ -57,18 +57,20 @@ test("@journey search, filters and Storyline scope survive reload and browser hi
   await expect(page).toHaveURL(/storyline=british-ale-beyond-ipa/);
 });
 
-test("@journey histogram supports keyboard selection, table and separated range controls", async ({ page }) => {
+test("@journey histogram supports keyboard selection, table and a shared range control", async ({ page }) => {
   await page.goto("/histogram");
   const start = page.getByRole("slider", { name: "Start year", exact: true });
   const end = page.getByRole("slider", { name: "End year", exact: true });
   for (const slider of [start, end]) {
     const box = await slider.boundingBox();
-    expect(box!.width).toBeGreaterThanOrEqual(44);
+    // Fractional transforms can introduce subpixel bounding-box rounding.
+    expect(box!.width).toBeGreaterThanOrEqual(43.99);
     expect(box!.height).toBeGreaterThanOrEqual(44);
   }
   await page.screenshot({ path: test.info().outputPath("histogram.png"), fullPage: true });
   const a = (await start.boundingBox())!, b = (await end.boundingBox())!;
-  expect(a.y + a.height).toBeLessThanOrEqual(b.y);
+  expect(a.y).toBe(b.y);
+  await expect(page.locator('[aria-label="Year range"]')).toHaveCount(1);
   const startValue = Number(await start.getAttribute("aria-valuenow"));
   await start.focus(); await page.keyboard.press("ArrowLeft");
   await expect(start).toHaveAttribute("aria-valuenow", String(startValue - 1));
@@ -148,3 +150,91 @@ test("@a11y-scan timeline open filters and event modal", async ({ page }) => {
   await expect(page.getByRole("dialog")).toBeVisible();
   await scan();
 });
+
+for (const path of ["/", "/histogram"]) {
+  test(`@journey date drafts and dependent slider limits: ${path}`, async ({ page }) => {
+    await page.goto(path);
+    const input = page.getByRole("textbox", { name: "Start year", exact: true });
+    const endInput = page.getByRole("textbox", { name: "End year", exact: true });
+    const start = page.getByRole("slider", { name: "Start year", exact: true });
+    const end = page.getByRole("slider", { name: "End year", exact: true });
+    await input.fill("1800"); await input.press("Enter");
+    for (const invalid of ["1,800", "1800junk", "1800.5", "0", "9007199254740992"]) {
+      await input.fill("");
+      await input.pressSequentially(invalid);
+      await endInput.focus();
+      await expect(input).toHaveValue(invalid);
+      await expect(input).toHaveAttribute("aria-invalid", "true");
+      await expect(start).toHaveAttribute("aria-valuetext", "1800 CE");
+    }
+    await page.setViewportSize({ width: 320, height: 800 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.screenshot({ path: test.info().outputPath("invalid-year.png"), fullPage: true });
+    await input.fill("1800"); await input.press("Enter");
+    await endInput.fill("1900"); await input.focus();
+    await expect(input).toHaveAttribute("aria-invalid", "false");
+    await expect(start).toHaveAttribute("aria-valuemax", "1899");
+    await expect(end).toHaveAttribute("aria-valuemin", "1799");
+    await start.focus(); await page.keyboard.press("End");
+    await expect(start).toHaveAttribute("aria-valuetext", "1900 CE");
+    await expect(end).toHaveAttribute("aria-valuemin", "1899");
+    await end.focus(); await page.keyboard.press("Home");
+    await expect(end).toHaveAttribute("aria-valuetext", "1900 CE");
+    await input.fill("1 BCE"); await endInput.fill("1"); await end.focus();
+    await expect(start).toHaveAttribute("aria-valuemax", "0");
+    await expect(end).toHaveAttribute("aria-valuemin", "-1");
+    await page.keyboard.press("ArrowLeft");
+    await expect(end).toHaveAttribute("aria-valuetext", "1 BCE");
+    await expect(start).toHaveAttribute("aria-valuemax", "-1");
+  });
+}
+
+for (const path of ["/", "/histogram"]) {
+  test(`@journey shared year range pointer selection and fixed endpoints: ${path}`, async ({ page, isMobile }) => {
+    await page.goto(path);
+    const from = page.getByRole("textbox", { name: "Start year", exact: true });
+    const to = page.getByRole("textbox", { name: "End year", exact: true });
+    const start = page.getByRole("slider", { name: "Start year", exact: true });
+    const end = page.getByRole("slider", { name: "End year", exact: true });
+    await from.fill("1800"); await from.press("Enter");
+    await to.fill("1800"); await to.press("Enter");
+    if (isMobile) {
+      await start.tap(); await expect(start).toBeFocused();
+      await end.tap(); await expect(end).toBeFocused();
+    } else {
+      await start.click(); await expect(start).toBeFocused();
+      await end.click(); await expect(end).toBeFocused();
+    }
+    const box = (await start.boundingBox())!;
+    const endBox = (await end.boundingBox())!;
+    expect(box.x + box.width).toBeLessThanOrEqual(endBox.x + 0.5);
+    const center = { x: box.x + box.width, y: box.y + box.height / 2 };
+    const dragTo = async (fromX: number, toX: number) => {
+      if (isMobile) {
+        const session = await page.context().newCDPSession(page);
+        try {
+          await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: fromX, y: center.y }] });
+          for (let i = 1; i <= 5; i++) await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: fromX + (toX - fromX) * i / 5, y: center.y }] });
+          await session.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+        } finally { await session.detach(); }
+      } else {
+        await page.mouse.move(fromX, center.y); await page.mouse.down();
+        await page.mouse.move(toX, center.y, { steps: 5 }); await page.mouse.up();
+      }
+    };
+    // Dragging To past From must stop at From without moving it or swapping roles.
+    await dragTo(center.x + 8, center.x - 80);
+    await expect(start).toHaveAttribute("aria-valuetext", "1800 CE");
+    await expect(end).toHaveAttribute("aria-valuetext", "1800 CE");
+    // From can expand left, while To remains fixed.
+    await dragTo(center.x - 8, center.x - 80);
+    expect(Number(await start.getAttribute("aria-valuenow"))).toBeLessThan(1799);
+    await expect(end).toHaveAttribute("aria-valuetext", "1800 CE");
+    // Drag From through To: both stop at 1800; the end must not jump forward.
+    const moved = (await start.boundingBox())!;
+    await dragTo(moved.x + 22, center.x + 25);
+    await expect(start).toHaveAttribute("aria-valuetext", "1800 CE");
+    await expect(end).toHaveAttribute("aria-valuetext", "1800 CE");
+    await start.focus(); await page.keyboard.press("Tab"); await expect(end).toBeFocused();
+  });
+}

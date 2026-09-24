@@ -1,6 +1,7 @@
 // app/layout.tsx
 
 import type { Metadata } from "next";
+import { getPublicationSnapshot } from "@/lib/publicationSnapshot";
 import { Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
@@ -54,12 +55,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const publication = getPublicationSnapshot();
   return (
     <html
       lang="en"
       className={`${manrope.variable} ${playfairDisplay.variable} h-full antialiased`}
     >
       <head>
+        <meta name="bc-publication" content={`${publication.commit}:${publication.generatedAt}`} />
         {/* Cloudflare Web Analytics */}
         <script
           defer

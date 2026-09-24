@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { readAllPublicationRows, validatePublicationData, type PublicationRows } from "../src/lib/publicationData";
@@ -27,7 +28,8 @@ export async function preparePublication(args: string[]) {
     rows = { events, tags, eventTags };
   }
   const data = validatePublicationData(rows);
-  const snapshot = { ...data, mode: fixture ? "fixture" : "live", generatedAt: new Date().toISOString() };
+  const commit = process.env.GITHUB_SHA ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const snapshot = { ...data, commit, mode: fixture ? "fixture" : "live", generatedAt: new Date().toISOString() };
   await mkdir(resolve(".cache"), { recursive: true });
   await writeFile(resolve(".cache/publication.json"), JSON.stringify(snapshot));
   // Save the validated snapshot before reporting unknown paths so the registry

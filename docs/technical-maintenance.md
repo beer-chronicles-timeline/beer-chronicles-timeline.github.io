@@ -37,13 +37,22 @@ asset. Encoded JS sizes are response bodies, not complete wire sizes or the
 worker's complete memory/rendering cost. Approximate blocking time covers the
 load observation window and is not a Lighthouse score.
 
-The deploy workflow restores the preceding cached baseline, runs diagnostics,
-retains all reports as a commit-labelled artifact for 90 days, then saves the
-new baseline only after successful measurement. Comparisons require the same
-schema, full browser version, host/profile and publication mode. Changed
-profiles start a new baseline. `PERFORMANCE_BASELINE_PATH=/path/performance.json`
-selects an explicit comparison locally; `PERFORMANCE_OUTPUT_DIR` changes the
-report destination. Reports from dirty working trees are clearly labelled.
+The deploy workflow recovers retained measurement artifacts from earlier fully
+successful deployments on main. It searches the newest 300 successful runs and
+loads up to ten reports, excluding the current run and every run of the current
+commit. It uses the latest build artifact within each successful run, including
+when only the deploy job was rerun. Failed, dirty, fixture, missing and expired
+measurements are excluded. This replaces the evictable cache baseline.
+
+After measuring, select the newest compatible report: same schema, complete
+route metrics, full browser version, host/profile and publication mode. The
+report records the originating run, age and reasons other reports were skipped.
+No compatible retained report produces an explicit history-gap message, not a
+regression pass. Artifacts remain available for 90 days; a longer publication
+gap may require a separately retained report. PERFORMANCE_BASELINE_PATH selects
+an explicit local report; PERFORMANCE_HISTORY_PATH selects the recovered history
+JSON; PERFORMANCE_OUTPUT_DIR changes the report destination. Same-commit
+comparisons are rejected. Reports from dirty working trees are labelled.
 
 Timing warnings remain advisory. Review increases beyond both 20% and 300 ms
 for LCP/readiness; 20% and 32 ms for sampled event duration; 20% and 50 ms for
@@ -51,6 +60,29 @@ approximate blocking; 10% and 16 KiB for compressed JS; 10% and 64 KiB for decod
 JS; 15% and 3 requests; or a CLS increase over 0.02. These are review triggers,
 not user-experience guarantees. Retain the current hard payload ceilings.
 Do not automatically raise them to make a failing build pass.
+
+
+## Publication identity
+
+Every prepared snapshot and exported publication-status.json includes the build
+commit, generation timestamp, mode and event count. The build also creates
+.cache/release-manifest.json with those exact values and expected canonical/H1
+identities and per-page publication markers for main pages, all historical
+aliases and their current destinations.
+The deploy job downloads that manifest from the same workflow run. Its stable
+run-specific artifact name also supports deploy-only retries; a full build retry
+replaces that run's manifest.
+
+The public check requires the exact live publication before and after checking
+all route identities, embedded publication markers and alias continuation links.
+Thus an old HTML page cannot pass merely because its heading is unchanged.
+It retries the complete check
+up to six times, ten seconds apart (each HTTP request has a 20-second timeout),
+then fails with the expected and observed identity. It never queries Supabase.
+A generated fixture manifest is useful for offline validation but cannot pass
+the production check. The exact generation timestamp also distinguishes rebuilds
+of the same commit.
+
 
 ## Capacity and scale
 

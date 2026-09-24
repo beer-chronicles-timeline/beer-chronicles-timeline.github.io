@@ -1,0 +1,514 @@
+-- UNEXECUTED SQL PROPOSAL — HUMAN REVIEW AND EXPLICIT EXECUTION APPROVAL REQUIRED
+-- Beer Chronicles / E1-E5 / researched 2026-09-23.
+-- Five in-place editorial updates; zero new events; one existing tag link added.
+-- No existing events, sources records, tags, or tag links are deleted.
+-- Only events.title, events.description, events.sources and the stated tag link change.
+-- Dates, date precision, category, UUID, image, creation time, and other columns are preserved.
+-- Published baseline: complete public timeline-data.json, 590 events, refreshed 2026-09-23.
+-- Schema basis: local 2026-09-05 backup plus current application data model.
+-- No live backend was queried; intervening content/date/category/tag edits cause an abort.
+-- Read the companion research notes before approving this complete batch.
+-- E2 intentionally corrects the review's provisional assumption: the museum distinguishes
+-- the 1898 company foundation, 1902 brewing, and adoption of the Dreher name in 1926.
+-- E1-E3 title changes also change generated URL slugs at the next build/deployment.
+-- Existing map assignments are suitable; SQL does not build or publish the static website.
+-- Run the ENTIRE file together in the Supabase SQL editor only after human review.
+-- Preflight accepts each entry only in its exact reviewed before-state or complete after-state.
+-- An exact rerun is a no-op. A partial/manual revision is deliberately NOT overwritten.
+-- If an error occurs: the batch rolls back. Investigate and refresh the proposal; do not
+-- remove the safeguards. If the client leaves an aborted transaction open, issue ROLLBACK.
+-- Brief write locks protect the comparison/update; reads remain available. Lock timeout: 5s.
+
+BEGIN;
+SET LOCAL lock_timeout = '5s';
+SET LOCAL statement_timeout = '30s';
+
+CREATE TEMP TABLE bc_e1_e5_proposal (
+    finding text PRIMARY KEY,
+    event_id uuid UNIQUE NOT NULL,
+    expected jsonb NOT NULL,
+    proposed jsonb NOT NULL,
+    before_tags jsonb NOT NULL,
+    after_tags jsonb NOT NULL
+) ON COMMIT DROP;
+
+-- Complete old and proposed text is included for review and stale-state protection.
+INSERT INTO bc_e1_e5_proposal
+SELECT finding, event_id, expected, proposed, before_tags, after_tags
+FROM jsonb_to_recordset($bc_e1_e5_json$
+[
+  {
+    "finding": "E1",
+    "event_id": "0a5a3946-30db-4a61-8d4d-bc36cbda6a7b",
+    "expected": {
+      "id": "0a5a3946-30db-4a61-8d4d-bc36cbda6a7b",
+      "title": "Hofbräuhaus Sells Its First Einbeck-Style Beer",
+      "description": "In the early 17th century, the Munich Hofbräuhaus tried to reproduce the strong beer associated with Einbeck. By 1610, the beer was being sold not only to the ducal court but also to innkeepers and private customers, yet Bavarian beer-history sources state that it still did not fully match the Einbeck model.\n\nIn 1612, Maximilian I brought the Einbeck brewer Elias Pichler to Munich. This step connected the Hofbräuhaus directly to Einbeck brewing knowledge and prepared the way for the Hofbräuhaus to brew an Einbeck-style beer in 1614, a development later associated with the Bavarian bock tradition.",
+      "sources": "Bayerischer Brauerbund. \"Geschichte des Bockbiers.\"\n\nhttps://www.bayerisches-bier.de/bier-wissen/geschichte-des-bockbiers/\n\nHofbräu München. \"410 Jahre Maibock aus dem Hofbräuhaus.\"\n\nhttps://www.hofbraeu-muenchen.de/b2b/presse/410-jahre-maibock-aus-dem-hofbraeuhaus\n\nEinbecker Brauhaus. \"Bock Story.\"\n\nhttps://www.einbecker.de/echt-einbecker/bock-story\n\nJan Brücklmeier. \"Bier verstehen. Sorten, Verkostung, Rezepte.\" Verlag Eugen Ulmer, 2021.\n\nhttps://amzn.to/3RQaK82 (affiliate link)",
+      "event_date": "1612-01-01",
+      "historical_year": null,
+      "date_precision": "year",
+      "category": "Styles",
+      "deleted_at": null
+    },
+    "proposed": {
+      "id": "0a5a3946-30db-4a61-8d4d-bc36cbda6a7b",
+      "title": "Elias Pichler Is Recruited from Einbeck to Munich",
+      "description": "In 1612, Duke Maximilian I recruited the Einbeck brewer Elias Pichler to Munich to help the Hofbräuhaus reproduce the strong beer associated with Einbeck. Hofbräu München's historical account distinguishes his arrival from the first successful Einbeck-style brew in spring 1614, after two years of experimentation.\n\nThe Hofbräuhaus was already selling beer to innkeepers and private customers by 1610, according to the Bavarian Brewers' Association, but its beer had not yet matched the Einbeck model. Pichler's recruitment therefore marks a transfer of brewing knowledge, while 1614 marks the subsequent brewing milestone associated with Munich's bock tradition.",
+      "sources": "Hofbräu München. \"410 Jahre Maibock aus dem Hofbräuhaus.\" April 1, 2024.\nhttps://www.hofbraeu-muenchen.de/b2b/presse/410-jahre-maibock-aus-dem-hofbraeuhaus\n\nBayerischer Brauerbund. \"Geschichte des Bockbiers.\"\nhttps://www.bayerisches-bier.de/bier-wissen/geschichte-des-bockbiers/\n\nMünchen.de. \"Hofbräuhaus München: Geschichte, Architektur und Traditionen.\"\nhttps://www.muenchen.de/sehenswuerdigkeiten/bauwerke-und-denkmaeler/hofbraeuhaus",
+      "event_date": "1612-01-01",
+      "historical_year": null,
+      "date_precision": "year",
+      "category": "Styles",
+      "deleted_at": null
+    },
+    "before_tags": [
+      {
+        "id": "0faa8f01-7d68-46ed-ad56-9b1e5a03db5b",
+        "name": "Bock"
+      },
+      {
+        "id": "11f3aba5-cd69-4dc7-bb57-577fff845ddb",
+        "name": "Styles"
+      },
+      {
+        "id": "6301da56-242c-4d1a-90a8-afcef6d3b1b7",
+        "name": "Germany"
+      },
+      {
+        "id": "68e071b1-76fd-45a0-b489-7d9bdd9d37a2",
+        "name": "Einbeck"
+      },
+      {
+        "id": "692421ee-f3a6-4c09-85b7-7184c95fd89c",
+        "name": "Pils"
+      },
+      {
+        "id": "8ad7b3ee-aa67-4ba7-858d-f4820180c84a",
+        "name": "Lager"
+      },
+      {
+        "id": "c0cbd866-5c7c-4d7c-b745-bbe38698ca9b",
+        "name": "Bavaria"
+      },
+      {
+        "id": "dfb38998-7fca-40ae-bdd9-e06617528198",
+        "name": "Munich"
+      }
+    ],
+    "after_tags": [
+      {
+        "id": "0faa8f01-7d68-46ed-ad56-9b1e5a03db5b",
+        "name": "Bock"
+      },
+      {
+        "id": "11f3aba5-cd69-4dc7-bb57-577fff845ddb",
+        "name": "Styles"
+      },
+      {
+        "id": "6301da56-242c-4d1a-90a8-afcef6d3b1b7",
+        "name": "Germany"
+      },
+      {
+        "id": "68e071b1-76fd-45a0-b489-7d9bdd9d37a2",
+        "name": "Einbeck"
+      },
+      {
+        "id": "692421ee-f3a6-4c09-85b7-7184c95fd89c",
+        "name": "Pils"
+      },
+      {
+        "id": "8ad7b3ee-aa67-4ba7-858d-f4820180c84a",
+        "name": "Lager"
+      },
+      {
+        "id": "c0cbd866-5c7c-4d7c-b745-bbe38698ca9b",
+        "name": "Bavaria"
+      },
+      {
+        "id": "dfb38998-7fca-40ae-bdd9-e06617528198",
+        "name": "Munich"
+      }
+    ]
+  },
+  {
+    "finding": "E2",
+    "event_id": "3df5535f-0f59-463a-8e3e-ff80ec998e3a",
+    "expected": {
+      "id": "3df5535f-0f59-463a-8e3e-ff80ec998e3a",
+      "title": "Schwechat Brewery Becomes A Major Industrial Lager Brewery",
+      "description": "In 1898, the Dreher brewing business reached a new industrial scale when the Anton Dreher export brewery was founded in Saaz, now Žatec in the Czech Republic. According to the Mautner Markhof family history, the Dreher breweries then formed the world’s largest brewery group of a sole proprietorship.\n\nThis development was the long-term industrial consequence of Anton Dreher senior’s work at Klein Schwechat. The brewery had become famous through bottom-fermented Schwechater Lagerbier and Vienna Lager, but its later expansion turned that technical and stylistic achievement into a large Central European brewing enterprise with sites and influence across Austria, Bohemia, and Hungary.",
+      "sources": "Dynastie Mautner Markhof. \"Schwechat Brewery.\"\n\nhttps://www.dynastiemautnermarkhof.com/en/companies/breweries/schwechat/\n\nOxford Companion to Beer. \"Dreher, Anton.\"\n\nhttps://www.beerandbrewing.com/dictionary/ZasnlKM1YA\n\nSchwechater. \"Geschichte.\"\n\nhttps://www.schwechater.at/geschichte/\n\nAndreas Krennmair. \"Vienna Lager.\"\n\nhttps://amzn.to/4bG17Q3 (affiliate link)",
+      "event_date": "1898-01-01",
+      "historical_year": null,
+      "date_precision": "year",
+      "category": "Breweries",
+      "deleted_at": null
+    },
+    "proposed": {
+      "id": "3df5535f-0f59-463a-8e3e-ff80ec998e3a",
+      "title": "A New Brewery Company Is Founded in Žatec (Saaz)",
+      "description": "In 1898, the Saazer Genossenschaft Brauerei company was founded to develop a new brewery in Žatec, also known as Saaz, in present-day Czech Republic. The city's regional museum dates the approval of the building project to 1899 and the start of beer production to March 19, 1902. The company later became Export-Brauerei in 1916; the name Anton Drehers Exportbrauerei Gesellschaft appeared only at the end of 1926.\n\nThe brewery complex combined maltings, a brewhouse, boiler and engine rooms, lager cellars, and its own railway siding, illustrating the infrastructure needed for industrial brewing and distribution. Its later Dreher connection places it within the wider history of a brewing family associated with Schwechat and Vienna lager. The 1898 milestone, however, concerns the founding of the Žatec company, rather than the start of large-scale brewing at Schwechat.",
+      "sources": "Regionální muzeum K. A. Polánka v Žatci. \"Vývozní pivovar.\" Condensed account from Milada Krausová's Z dějin průmyslu v Žatci.\nhttps://www.muzeumzatec.cz/vyvozni-pivovar.html\n\nMěsto Žatec. \"Studie využití Dreherova pivovaru nabízí možnost rozvoje Žatce novým směrem.\"\nhttps://www.mesto-zatec.cz/mesto/aktualne/studie-vyuziti-dreherova-pivovaru-nabizi-moznost-rozvoje-zatce-novym-smerem-3620cs.html\n\nBrown, Pete. \"Dreher, Anton.\" The Oxford Companion to Beer, edited by Garrett Oliver.\nhttps://www.beerandbrewing.com/dictionary/ZasnlKM1YA",
+      "event_date": "1898-01-01",
+      "historical_year": null,
+      "date_precision": "year",
+      "category": "Breweries",
+      "deleted_at": null
+    },
+    "before_tags": [
+      {
+        "id": "52e1c703-daa0-41dc-94e1-3c1bd1029b73",
+        "name": "Breweries"
+      },
+      {
+        "id": "8ad7b3ee-aa67-4ba7-858d-f4820180c84a",
+        "name": "Lager"
+      },
+      {
+        "id": "9d18f030-d45f-4333-9cdc-fe46ef7c8604",
+        "name": "Vienna Lager"
+      },
+      {
+        "id": "cc6c28bc-3877-49b6-9d6c-c7df9c9414c1",
+        "name": "Austria"
+      }
+    ],
+    "after_tags": [
+      {
+        "id": "52e1c703-daa0-41dc-94e1-3c1bd1029b73",
+        "name": "Breweries"
+      },
+      {
+        "id": "8ad7b3ee-aa67-4ba7-858d-f4820180c84a",
+        "name": "Lager"
+      },
+      {
+        "id": "9d18f030-d45f-4333-9cdc-fe46ef7c8604",
+        "name": "Vienna Lager"
+      },
+      {
+        "id": "b2f9c183-e79c-4c1f-8b9b-dfb3ae408da0",
+        "name": "Czech Republic"
+      },
+      {
+        "id": "cc6c28bc-3877-49b6-9d6c-c7df9c9414c1",
+        "name": "Austria"
+      }
+    ]
+  },
+  {
+    "finding": "E3",
+    "event_id": "1c650d85-7d10-4e17-a7af-76a7a8c4556e",
+    "expected": {
+      "id": "1c650d85-7d10-4e17-a7af-76a7a8c4556e",
+      "title": "Balling Invents the Saccharimeter",
+      "description": "In 1843, Karl Josef Napoleon Balling, professor of chemistry at the Prague Polytechnic, introduced the Balling saccharimeter and corresponding tables for determining the concentration of sugar solutions from their density. Applied to brewing, the instrument gave brewers a practical and reproducible way to measure wort strength and beer extract.\n\nBalling also developed the saccharometric beer test, a mathematical framework connecting original extract, apparent extract, real extract, and alcohol content. His work helped transform brewing analysis from experience-based estimation into quantitative science. The Balling scale became widely used across Central Europe and provided the basis for the later Plato scale, which retained Balling’s underlying system with revised calibration.",
+      "sources": "Wikipedia. \"Karl Josef Napoleon Balling.\"\n\nhttps://de.wikipedia.org/wiki/Karl_Josef_Napoleon_Balling\n\nBeer Studies. \"Alcohol measurements for the brewery (Balling).\"\n\nhttps://beer-studies.com/en/world-history/Brewery-scientific-age/Alcohol-beer-measure\n\nDafteejit. \"The Battle of the Beer Analysis Methods.\"\n\nhttps://dafteejit.com/2022/07/the-battle-of-the-beer-analysis-methods/\n\nGeschichte des Weines. \"Balling, Karl Josef Napoleon (1805-1868).\"\n\nhttps://www.geschichte-des-weines.de/persoenlichkeiten-der-weinkultur/persoenlichkeiten-von-a-z/105-balling-karl-josef-napoleon-1805-1868.html\n\nÖsterreichisches Biographisches Lexikon. \"Balling, Karl Josef Napoleon.\"\nhttps://www.biographien.ac.at/oebl/oebl_B/Balling_Karl-Josef-Napoleon_1805_1868.xml\n\nThe Oxford Companion to Beer. \"Balling Scale.\"\nhttps://www.beerandbrewing.com/dictionary/uVvf5yhY50",
+      "event_date": "1843-01-01",
+      "historical_year": null,
+      "date_precision": "year",
+      "category": "Science",
+      "deleted_at": null
+    },
+    "proposed": {
+      "id": "1c650d85-7d10-4e17-a7af-76a7a8c4556e",
+      "title": "Balling Introduces His Saccharometric Scale and Tables",
+      "description": "In 1843, Karl Josef Napoleon Balling, a professor at the Prague Polytechnic, established tables relating the density of sucrose solutions to their sugar concentration by weight. His saccharometric system gave brewers a practical way to estimate the dissolved extract in wort from a density measurement. Wort contains other dissolved substances as well as sugars, so the measurement is not simply a direct sugar analysis.\n\nBalling's wider work connected original extract, apparent and real extract after fermentation, and alcohol content, helping develop systematic beer analysis. His tables were subsequently refined in the development of the Plato scale. Saccharometers already existed before Balling's work: the Science Museum Group holds a Richardson instrument dated 1780–1790. Balling's contribution was his particular scale, tables, and analytical system.",
+      "sources": "Basařová, Gabriela. \"Professor at the Prague Polytechnic Carl Joseph Napoleon Balling (1805–1868).\" Kvasný průmysl 51, no. 4 (2005): 130–135.\nhttps://doi.org/10.18832/kp2005007\n\nPhilliskirk, George. \"Balling Scale.\" The Oxford Companion to Beer, edited by Garrett Oliver.\nhttps://www.beerandbrewing.com/dictionary/uVvf5yhY50\n\nScience Museum Group. \"Brass Richardson's saccharometer by J. and E. Troughton.\" Object 1954-381; dated 1780–1790.\nhttps://collection.sciencemuseumgroup.org.uk/objects/co12692/brass-richardsons-saccharometer-by-j-and-e-troughton-hydrometer-saccharometer\n\nÖsterreichisches Biographisches Lexikon. \"Balling, Karl Josef Napoleon.\"\nhttps://www.biographien.ac.at/oebl/oebl_B/Balling_Karl-Josef-Napoleon_1805_1868.xml\n\nKrennmair, Andreas. \"The Battle of the Beer Analysis Methods.\" July 24, 2022.\nhttps://dafteejit.com/2022/07/the-battle-of-the-beer-analysis-methods/",
+      "event_date": "1843-01-01",
+      "historical_year": null,
+      "date_precision": "year",
+      "category": "Science",
+      "deleted_at": null
+    },
+    "before_tags": [
+      {
+        "id": "692421ee-f3a6-4c09-85b7-7184c95fd89c",
+        "name": "Pils"
+      },
+      {
+        "id": "6d4afed6-724b-4ec6-8a8e-f549d8d346e0",
+        "name": "Prague"
+      },
+      {
+        "id": "873eb49e-b9df-494c-8226-ae970b4e1cbd",
+        "name": "Quality Control"
+      },
+      {
+        "id": "8ad7b3ee-aa67-4ba7-858d-f4820180c84a",
+        "name": "Lager"
+      },
+      {
+        "id": "9deafeb3-5491-40ba-ab23-29e6e5978d84",
+        "name": "Measurement"
+      },
+      {
+        "id": "b2f9c183-e79c-4c1f-8b9b-dfb3ae408da0",
+        "name": "Czech Republic"
+      },
+      {
+        "id": "d86c7273-5690-4e60-99b1-4c0e3dc85904",
+        "name": "Brewing Science"
+      },
+      {
+        "id": "edbc38ec-738a-4962-857e-4f7099dd4418",
+        "name": "Science"
+      }
+    ],
+    "after_tags": [
+      {
+        "id": "692421ee-f3a6-4c09-85b7-7184c95fd89c",
+        "name": "Pils"
+      },
+      {
+        "id": "6d4afed6-724b-4ec6-8a8e-f549d8d346e0",
+        "name": "Prague"
+      },
+      {
+        "id": "873eb49e-b9df-494c-8226-ae970b4e1cbd",
+        "name": "Quality Control"
+      },
+      {
+        "id": "8ad7b3ee-aa67-4ba7-858d-f4820180c84a",
+        "name": "Lager"
+      },
+      {
+        "id": "9deafeb3-5491-40ba-ab23-29e6e5978d84",
+        "name": "Measurement"
+      },
+      {
+        "id": "b2f9c183-e79c-4c1f-8b9b-dfb3ae408da0",
+        "name": "Czech Republic"
+      },
+      {
+        "id": "d86c7273-5690-4e60-99b1-4c0e3dc85904",
+        "name": "Brewing Science"
+      },
+      {
+        "id": "edbc38ec-738a-4962-857e-4f7099dd4418",
+        "name": "Science"
+      }
+    ]
+  },
+  {
+    "finding": "E4",
+    "event_id": "e466350c-db9b-4c1d-9e9e-8016c7377998",
+    "expected": {
+      "id": "e466350c-db9b-4c1d-9e9e-8016c7377998",
+      "title": "Brewers at Mijiaya Use Barley, Millet, and Tubers",
+      "description": "Between approximately 3400 and 2900 BCE, people at Mijiaya in northern China used specialized pottery to brew a grain beverage. Starch, phytolith, and chemical residues indicate a recipe including broomcorn millet, barley, Job’s tears, and tubers, together with heating, mashing, fermentation, and filtration.\n\nThe evidence is the earliest direct archaeological demonstration currently identified for in-place beer production in China. The presence of barley is especially notable because the grain appears in this brewing context before it became an important regional food crop.",
+      "sources": "Wang, Jiajing, et al. “Revealing a 5,000-y-old Beer Recipe in China.” Proceedings of the National Academy of Sciences 113, no. 23 (2016): 6444–6448.\nhttps://doi.org/10.1073/pnas.1601465113",
+      "event_date": null,
+      "historical_year": -3200,
+      "date_precision": "century",
+      "category": "Science",
+      "deleted_at": null
+    },
+    "proposed": {
+      "id": "e466350c-db9b-4c1d-9e9e-8016c7377998",
+      "title": "Brewers at Mijiaya Use Barley, Millet, and Tubers",
+      "description": "Between approximately 3400 and 2900 BCE, people at Mijiaya in northern China used pottery that researchers interpret as equipment for brewing a grain beverage. A study published in 2016 identified starch, phytolith, and chemical residues consistent with broomcorn millet, barley, Job's tears, and tubers. Together with the vessels and associated stoves, the findings support a reconstruction involving heating, mashing, fermentation, and filtration.\n\nMijiaya provides evidence for a mixed-ingredient brewing process and an early use of barley in China. The researchers suggested that barley may have reached the region for brewing before becoming an important food crop. It is not the earliest evidence for brewing now reported from China: a study published in 2024 interpreted much older residues at Shangshan, approximately 8000–7000 BCE, as evidence of a rice-based fermented beverage. The two studies concern different sites, periods, ingredients, and archaeological assemblages.",
+      "sources": "Wang, Jiajing, et al. \"Revealing a 5,000-y-old Beer Recipe in China.\" Proceedings of the National Academy of Sciences 113, no. 23 (2016): 6444–6448.\nhttps://doi.org/10.1073/pnas.1601465113\n\nLiu, Li, et al. \"Identification of 10,000-Year-Old Rice Beer at Shangshan in the Lower Yangzi River Valley of China.\" Proceedings of the National Academy of Sciences 121, no. 51 (2024): e2412274121.\nhttps://doi.org/10.1073/pnas.2412274121",
+      "event_date": null,
+      "historical_year": -3200,
+      "date_precision": "century",
+      "category": "Science",
+      "deleted_at": null
+    },
+    "before_tags": [
+      {
+        "id": "1593fa3e-3cb2-4dbb-9f3a-b9c193f5f8e6",
+        "name": "Barley"
+      },
+      {
+        "id": "47ea14c2-144c-4577-8941-2289cce20119",
+        "name": "China"
+      },
+      {
+        "id": "edbc38ec-738a-4962-857e-4f7099dd4418",
+        "name": "Science"
+      },
+      {
+        "id": "f0df5e87-9a72-4e91-86f7-0581732b9621",
+        "name": "Malt"
+      }
+    ],
+    "after_tags": [
+      {
+        "id": "1593fa3e-3cb2-4dbb-9f3a-b9c193f5f8e6",
+        "name": "Barley"
+      },
+      {
+        "id": "47ea14c2-144c-4577-8941-2289cce20119",
+        "name": "China"
+      },
+      {
+        "id": "edbc38ec-738a-4962-857e-4f7099dd4418",
+        "name": "Science"
+      },
+      {
+        "id": "f0df5e87-9a72-4e91-86f7-0581732b9621",
+        "name": "Malt"
+      }
+    ]
+  },
+  {
+    "finding": "E5",
+    "event_id": "4d069020-b7df-48ca-a60e-e7f0c121074d",
+    "expected": {
+      "id": "4d069020-b7df-48ca-a60e-e7f0c121074d",
+      "title": "The \"Munich Beer Heart\" (Münchner Bierherz)",
+      "description": "The \"Munich Beer Heart\" is a historical medical term describing a pathological enlargement of the heart muscle — known today as cardiomyopathy — caused by extreme alcohol consumption in the late 19th century. The pathologist Otto von Bollinger coined the term after repeatedly observing fatal cardiac enlargements among brewery workers in Munich.\n\nHe first documented the phenomenon in the 1880s at Ludwig Maximilian University (LMU) Munich.\n\nThe reason for these crazy hearts are workers who were consuming staggering volumes of liquid — sometimes up to 15 liters of beer per day — which, combined with the alcohol itself, caused severe heart damage and ultimately heart failure.",
+      "sources": "https://hdbg.eu/presseportal/detail/ein-herz-fuers-bier/2320\n\nhttps://www.merkur.de/lokales/muenchen/hat-die-fuenf-haeufigsten-todesursachen-in-muenchen-was-es-mit-dem-bierherz-auf-sich-93657288.html",
+      "event_date": "1880-01-01",
+      "historical_year": null,
+      "date_precision": "decade",
+      "category": "Science",
+      "deleted_at": null
+    },
+    "proposed": {
+      "id": "4d069020-b7df-48ca-a60e-e7f0c121074d",
+      "title": "The \"Munich Beer Heart\" (Münchner Bierherz)",
+      "description": "In the 1880s, Munich pathologist Otto Bollinger described cardiac enlargement in people with histories of very heavy beer consumption. A later historical review identifies an 1886 series of 42 cases, many involving people employed by breweries or liquor stores. The condition became known as the \"Munich beer heart,\" or Münchner Bierherz, within contemporary discussions of cardiac hypertrophy and dilation.\n\nThe House of Bavarian History reports that some historical autopsy accounts described daily consumption of up to 15 liters among brewers, beer drivers, and servers, in a working culture where beer allowances could form part of pay. These are reports about particular occupational and clinical groups, not typical consumption figures for Munich's population. The term belongs to nineteenth-century medical language; the surviving reports do not establish a uniform diagnosis under modern clinical criteria.",
+      "sources": "Haus der Bayerischen Geschichte. \"Ein Herz fürs Bier.\" April 4, 2016.\nhttps://hdbg.eu/presseportal/detail/ein-herz-fuers-bier/2320\n\nDay, Ed, and James H. F. Rudd. \"Alcohol Use Disorders and the Heart.\" Addiction 114, no. 9 (2019): 1670–1678. Historical introduction.\nhttps://doi.org/10.1111/add.14703",
+      "event_date": "1880-01-01",
+      "historical_year": null,
+      "date_precision": "decade",
+      "category": "Science",
+      "deleted_at": null
+    },
+    "before_tags": [
+      {
+        "id": "6301da56-242c-4d1a-90a8-afcef6d3b1b7",
+        "name": "Germany"
+      },
+      {
+        "id": "c0cbd866-5c7c-4d7c-b745-bbe38698ca9b",
+        "name": "Bavaria"
+      },
+      {
+        "id": "dfb38998-7fca-40ae-bdd9-e06617528198",
+        "name": "Munich"
+      },
+      {
+        "id": "edbc38ec-738a-4962-857e-4f7099dd4418",
+        "name": "Science"
+      }
+    ],
+    "after_tags": [
+      {
+        "id": "6301da56-242c-4d1a-90a8-afcef6d3b1b7",
+        "name": "Germany"
+      },
+      {
+        "id": "c0cbd866-5c7c-4d7c-b745-bbe38698ca9b",
+        "name": "Bavaria"
+      },
+      {
+        "id": "dfb38998-7fca-40ae-bdd9-e06617528198",
+        "name": "Munich"
+      },
+      {
+        "id": "edbc38ec-738a-4962-857e-4f7099dd4418",
+        "name": "Science"
+      }
+    ]
+  }
+]
+$bc_e1_e5_json$::jsonb) AS p(
+    finding text, event_id uuid, expected jsonb, proposed jsonb,
+    before_tags jsonb, after_tags jsonb
+);
+
+-- Serialize editorial writes during this short batch, including concurrent tag changes.
+LOCK TABLE public.events, public.tags, public.event_tags IN SHARE ROW EXCLUSIVE MODE;
+
+DO $preflight$
+DECLARE
+    p record;
+    actual jsonb;
+    actual_tags jsonb;
+BEGIN
+    IF (SELECT count(*) FROM bc_e1_e5_proposal) <> 5 THEN
+        RAISE EXCEPTION 'E1-E5: expected exactly five reviewed records';
+    END IF;
+    IF NOT EXISTS (
+        SELECT 1 FROM public.tags
+        WHERE id = 'b2f9c183-e79c-4c1f-8b9b-dfb3ae408da0'::uuid
+          AND name = 'Czech Republic'
+    ) THEN
+        RAISE EXCEPTION 'E2: the reviewed Czech Republic tag is absent or renamed';
+    END IF;
+    FOR p IN SELECT * FROM bc_e1_e5_proposal ORDER BY finding LOOP
+        SELECT to_jsonb(e) INTO actual FROM public.events e WHERE e.id = p.event_id;
+        IF actual IS NULL THEN
+            RAISE EXCEPTION '%: reviewed event % is missing', p.finding, p.event_id;
+        END IF;
+        SELECT coalesce(jsonb_agg(jsonb_build_object('id', t.id, 'name', t.name)
+                                 ORDER BY t.id), '[]'::jsonb)
+        INTO actual_tags
+        FROM public.event_tags et JOIN public.tags t ON t.id = et.tag_id
+        WHERE et.event_id = p.event_id;
+        IF NOT ((actual @> p.expected AND actual_tags = p.before_tags)
+                OR (actual @> p.proposed AND actual_tags = p.after_tags)) THEN
+            RAISE EXCEPTION '%: content/date/category/publication state or tags changed for %. No changes applied; review a fresh baseline.',
+                            p.finding, p.event_id;
+        END IF;
+    END LOOP;
+END;
+$preflight$;
+
+UPDATE public.events AS e
+SET title = p.proposed->>'title',
+    description = p.proposed->>'description',
+    sources = p.proposed->>'sources'
+FROM bc_e1_e5_proposal AS p
+WHERE e.id = p.event_id
+  AND (e.title, e.description, e.sources) IS DISTINCT FROM
+      (p.proposed->>'title', p.proposed->>'description', p.proposed->>'sources');
+
+-- E2: add the already-existing geographical tag; retain all reviewed current links.
+INSERT INTO public.event_tags (event_id, tag_id)
+VALUES ('3df5535f-0f59-463a-8e3e-ff80ec998e3a'::uuid,
+        'b2f9c183-e79c-4c1f-8b9b-dfb3ae408da0'::uuid)
+ON CONFLICT (event_id, tag_id) DO NOTHING;
+
+DO $postflight$
+DECLARE
+    p record;
+    actual jsonb;
+    actual_tags jsonb;
+BEGIN
+    FOR p IN SELECT * FROM bc_e1_e5_proposal ORDER BY finding LOOP
+        SELECT to_jsonb(e) INTO actual FROM public.events e WHERE e.id = p.event_id;
+        SELECT coalesce(jsonb_agg(jsonb_build_object('id', t.id, 'name', t.name)
+                                 ORDER BY t.id), '[]'::jsonb)
+        INTO actual_tags
+        FROM public.event_tags et JOIN public.tags t ON t.id = et.tag_id
+        WHERE et.event_id = p.event_id;
+        IF actual IS NULL OR NOT (actual @> p.proposed) OR actual_tags <> p.after_tags THEN
+            RAISE EXCEPTION '%: post-update verification failed; rolling back the batch', p.finding;
+        END IF;
+    END LOOP;
+END;
+$postflight$;
+
+COMMIT;
+
+-- Read-only verification after successful execution. Expect five rows; all preserved
+-- dates/categories below, and Czech Republic among E2's five tags.
+SELECT e.id, e.title, e.event_date, e.historical_year, e.date_precision, e.category,
+       array_agg(t.name ORDER BY t.name) AS tags
+FROM public.events e
+LEFT JOIN public.event_tags et ON et.event_id = e.id
+LEFT JOIN public.tags t ON t.id = et.tag_id
+WHERE e.id IN (
+    '0a5a3946-30db-4a61-8d4d-bc36cbda6a7b'::uuid,
+    '3df5535f-0f59-463a-8e3e-ff80ec998e3a'::uuid,
+    '1c650d85-7d10-4e17-a7af-76a7a8c4556e'::uuid,
+    'e466350c-db9b-4c1d-9e9e-8016c7377998'::uuid,
+    '4d069020-b7df-48ca-a60e-e7f0c121074d'::uuid
+)
+GROUP BY e.id
+ORDER BY coalesce(e.historical_year, extract(year FROM e.event_date)::integer);

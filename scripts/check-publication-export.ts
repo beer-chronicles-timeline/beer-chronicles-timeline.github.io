@@ -12,7 +12,7 @@ export async function checkPublicationExport(requireLive = false) {
   if (requireLive && snapshot.mode !== "live") throw new Error("Refusing to deploy a fixture export");
   if (snapshot.mode === "live") assertPublishedEventPaths(snapshot.events);
   const status = JSON.parse(await readFile("out/publication-status.json", "utf8"));
-  if (status.mode !== snapshot.mode || status.generatedAt !== snapshot.generatedAt || status.eventCount !== snapshot.events.length) throw new Error("Export belongs to a different publication snapshot");
+  if (status.commit !== snapshot.commit || status.mode !== snapshot.mode || status.generatedAt !== snapshot.generatedAt || status.eventCount !== snapshot.events.length) throw new Error("Export belongs to a different publication snapshot");
   const payload = decodeTimelineData(JSON.parse(await readFile("out/timeline-data.json", "utf8")));
   const ids = (events: {id: string}[]) => events.map((e) => e.id).sort().join("\n");
   if (ids(payload.events) !== ids(snapshot.events)) throw new Error("Exported timeline does not match publication snapshot");

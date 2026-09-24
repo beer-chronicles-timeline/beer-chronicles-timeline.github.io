@@ -1,3 +1,4 @@
+import { prepareReleaseManifest } from "./prepare-release-manifest";
 import { spawnSync } from "node:child_process";
 import { preparePublication } from "./prepare-publication";
 import { checkPublicationExport } from "./check-publication-export";
@@ -26,6 +27,7 @@ async function main() {
   const built = Date.now();
   if (result.status !== 0) throw new Error(`Next build failed (${result.status ?? result.signal})`);
   await checkPublicationExport();
+  await prepareReleaseManifest();
   const publication = JSON.parse(await readFile("out/publication-status.json", "utf8"));
   await mkdir("artifacts/performance", { recursive: true });
   await writeFile("artifacts/performance/build.json", JSON.stringify({

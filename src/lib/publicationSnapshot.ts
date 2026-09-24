@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { PublicationData } from "./publicationData";
 
-export type PublicationSnapshot = PublicationData & { mode: "live" | "fixture"; generatedAt: string };
+export type PublicationSnapshot = PublicationData & { mode: "live" | "fixture"; generatedAt: string; commit: string };
 let snapshot: PublicationSnapshot | undefined;
 
 // Every Next worker reads the same prepared file; no page performs backend reads.

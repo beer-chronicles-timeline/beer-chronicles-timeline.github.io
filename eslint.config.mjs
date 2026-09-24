@@ -10,6 +10,7 @@ const eslintConfig = defineConfig([
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
+    "output/**", // Generated review artifacts, not application source.
     "build/**",
     "public/maplibre/**",
     "next-env.d.ts",

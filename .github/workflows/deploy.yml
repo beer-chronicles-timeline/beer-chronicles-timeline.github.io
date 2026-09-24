@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -64,18 +65,16 @@ jobs:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
         run: npm run test:e2e
 
-      - name: Restore previous performance baseline
-        uses: actions/cache/restore@v4
-        with:
-          path: .cache/performance-baseline
-          key: performance-v1-${{ runner.os }}-${{ github.sha }}
-          restore-keys: performance-v1-${{ runner.os }}-
+      - name: Recover successful release performance history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/restore-performance-history.mjs
 
       - name: Measure mobile route performance
         id: performance
         continue-on-error: true
         env:
-          PERFORMANCE_BASELINE_PATH: .cache/performance-baseline/performance.json
+          PERFORMANCE_HISTORY_PATH: .cache/performance-history.json
         run: npm run measure:timeline-mobile
 
       - name: Retain release measurements
@@ -87,21 +86,18 @@ jobs:
           retention-days: 90
           if-no-files-found: warn
 
-      - name: Prepare next performance baseline
-        if: steps.performance.outcome == 'success'
-        run: |
-          mkdir -p .cache/performance-baseline
-          cp artifacts/performance/performance.json .cache/performance-baseline/performance.json
-
-      - name: Save performance baseline
-        if: steps.performance.outcome == 'success'
-        uses: actions/cache/save@v4
-        with:
-          path: .cache/performance-baseline
-          key: performance-v1-${{ runner.os }}-${{ github.sha }}
-
       - name: Verify live publication
         run: npm run check:publication -- --require-live
+
+      - name: Retain expected release identity
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-manifest-${{ github.run_id }}
+          path: .cache/release-manifest.json
+          overwrite: true
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
@@ -125,5 +121,9 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-manifest-${{ github.run_id }}
+          path: .cache
       - name: Check published routes and historical aliases
         run: node scripts/check-live-routes.mjs

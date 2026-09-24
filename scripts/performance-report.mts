@@ -40,6 +40,7 @@ const thresholds: Record<string, { relative: number; absolute: number }> = {
 
 export function comparePerformance(current: PerformanceReport, baseline: PerformanceReport | null) {
   if (!baseline) return { comparable: false, reason: "No previous baseline", changes: [] };
+  if (current.commit === baseline.commit) return { comparable: false, reason: "Same commit; refusing a self-comparison", changes: [] };
   if (current.schemaVersion !== baseline.schemaVersion || current.profileKey !== baseline.profileKey || current.publicationMode !== baseline.publicationMode) {
     return { comparable: false, reason: "Different schema, browser/host/profile or publication mode", changes: [] };
   }
