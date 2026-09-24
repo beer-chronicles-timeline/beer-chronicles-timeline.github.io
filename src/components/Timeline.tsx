@@ -587,114 +587,117 @@ export default function Timeline({
         data-timeline-ready={hasRestoredUrlState ? "true" : "false"}
         className="timeline-interactive-control mx-auto mb-4 w-full max-w-4xl border-y border-stone-200 py-2"
       >
-        <p
-          className="sr-only"
-          role="status"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {resultsAnnouncement}
-        </p>
-        {activeStoryline && (
-          <div className="mb-3 flex flex-wrap items-center justify-center gap-2 border-b border-stone-200 pb-3 text-sm text-stone-700">
-            <span>
-              Storyline:{" "}
-              <Link
-                href={getStorylineHref(activeStoryline)}
-                className="font-medium underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
-              >
-                {activeStoryline.title}
-              </Link>
-            </span>
-            <button
-              type="button"
-              onClick={() => setStorylineSlug(null)}
-              className="min-h-11 rounded-full border border-stone-300 px-3 text-sm hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
-            >
-              Clear Storyline
-            </button>
-          </div>
-        )}
-        <TimelineFiltersWrapper
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-          startYear={startYear}
-          endYear={endYear}
-          setStartYear={setStartYear}
-          setEndYear={setEndYear}
-          allTags={allTags}
-          urlTags={urlTags}
-          selectedTagIds={selectedTagIds}
-          setSelectedTagIds={setSelectedTagIds}
-          tagFilterMode={tagFilterMode}
-          setTagFilterMode={setTagFilterMode}
-          tagCounts={tagCounts}
-          minYear={minYear}
-          maxYear={maxYear}
-        />
-
-        <div className="mt-3 flex flex-col items-center justify-center gap-2 border-t border-stone-200 pt-3 md:flex-row md:gap-3">
-          <div className="flex w-full justify-center md:w-auto">
-            <div className="whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700">
-              {hasActiveFilters ? (
-                <>
-                  {isSearchIncomplete ? "Found so far" : "Showing"}{" "}
-                  <span className="font-semibold">
-                    {showingCount}
-                  </span>{" "}
-                  of{" "}
-                  <span className="font-semibold">
-                    {totalEvents}
-                  </span>{" "}
-                  events
-                </>
-              ) : (
-                <>
-                  <span className="font-semibold">
-                    {totalEvents}
-                  </span>{" "}
-                  events in total
-                </>
-              )}
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <TimelineSearch
-              value={searchQuery}
-              onChange={setSearchQuery}
-            />
-
-            <button
-              onClick={toggleOrder}
-              className="flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700 transition hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
-              aria-label={
-                isOldestFirst ? "Oldest first" : "Newest first"
-              }
-            >
-              <span>{isOldestFirst ? "↑" : "↓"}</span>
+        {/* URL restoration must finish before any filter can accept edits. */}
+        <fieldset disabled={!hasRestoredUrlState} inert={!hasRestoredUrlState} className="min-w-0">
+          <p
+            className="sr-only"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {resultsAnnouncement}
+          </p>
+          {activeStoryline && (
+            <div className="mb-3 flex flex-wrap items-center justify-center gap-2 border-b border-stone-200 pb-3 text-sm text-stone-700">
               <span>
-                {isOldestFirst
-                  ? "Oldest first"
-                  : "Newest first"}
+                Storyline:{" "}
+                <Link
+                  href={getStorylineHref(activeStoryline)}
+                  className="font-medium underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+                >
+                  {activeStoryline.title}
+                </Link>
               </span>
-            </button>
-
-            {(hasActiveFilters || isOldestFirst) && (
               <button
                 type="button"
-                onClick={copyFilteredView}
-                className="flex min-h-10 items-center whitespace-nowrap rounded-full border border-stone-300 bg-white px-4 py-1 text-sm font-medium text-stone-600 transition hover:border-stone-400 hover:bg-stone-100 hover:text-stone-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                onClick={() => setStorylineSlug(null)}
+                className="min-h-11 rounded-full border border-stone-300 px-3 text-sm hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
               >
-                Copy filtered view
+                Clear Storyline
               </button>
-            )}
-          </div>
+            </div>
+          )}
+          <TimelineFiltersWrapper
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+            startYear={startYear}
+            endYear={endYear}
+            setStartYear={setStartYear}
+            setEndYear={setEndYear}
+            allTags={allTags}
+            urlTags={urlTags}
+            selectedTagIds={selectedTagIds}
+            setSelectedTagIds={setSelectedTagIds}
+            tagFilterMode={tagFilterMode}
+            setTagFilterMode={setTagFilterMode}
+            tagCounts={tagCounts}
+            minYear={minYear}
+            maxYear={maxYear}
+          />
 
-          <span aria-live="polite" className="text-sm text-stone-500">
-            {copyFeedback}
-          </span>
-        </div>
+          <div className="mt-3 flex flex-col items-center justify-center gap-2 border-t border-stone-200 pt-3 md:flex-row md:gap-3">
+            <div className="flex w-full justify-center md:w-auto">
+              <div className="whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700">
+                {hasActiveFilters ? (
+                  <>
+                    {isSearchIncomplete ? "Found so far" : "Showing"}{" "}
+                    <span className="font-semibold">
+                      {showingCount}
+                    </span>{" "}
+                    of{" "}
+                    <span className="font-semibold">
+                      {totalEvents}
+                    </span>{" "}
+                    events
+                  </>
+                ) : (
+                  <>
+                    <span className="font-semibold">
+                      {totalEvents}
+                    </span>{" "}
+                    events in total
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <TimelineSearch
+                value={searchQuery}
+                onChange={setSearchQuery}
+              />
+
+              <button
+                onClick={toggleOrder}
+                className="flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700 transition hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                aria-label={
+                  isOldestFirst ? "Oldest first" : "Newest first"
+                }
+              >
+                <span>{isOldestFirst ? "↑" : "↓"}</span>
+                <span>
+                  {isOldestFirst
+                    ? "Oldest first"
+                    : "Newest first"}
+                </span>
+              </button>
+
+              {(hasActiveFilters || isOldestFirst) && (
+                <button
+                  type="button"
+                  onClick={copyFilteredView}
+                  className="flex min-h-10 items-center whitespace-nowrap rounded-full border border-stone-300 bg-white px-4 py-1 text-sm font-medium text-stone-600 transition hover:border-stone-400 hover:bg-stone-100 hover:text-stone-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                >
+                  Copy filtered view
+                </button>
+              )}
+            </div>
+
+            <span aria-live="polite" className="text-sm text-stone-500">
+              {copyFeedback}
+            </span>
+          </div>
+        </fieldset>
       </section>
 
       {(isSearchIncomplete || completeEventsStatus === "error") && (

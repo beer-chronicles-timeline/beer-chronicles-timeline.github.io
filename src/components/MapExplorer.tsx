@@ -4,7 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { FormEvent, useCallback, useMemo, useState } from "react";
+import { FormEvent, useCallback, useMemo, useState, useSyncExternalStore } from "react";
 import type { MapLocation } from "@/lib/mapLocations";
 import {
   buildMapPlaceGroups,
@@ -28,6 +28,10 @@ type MapExplorerProps = {
 
 type PeriodFilter = "all" | "before-1800" | "1800-1945" | "after-1945";
 
+const subscribeToHydration = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
+
 function isInsidePeriod(
   location: MapLocation,
   period: PeriodFilter
@@ -42,6 +46,9 @@ function isInsidePeriod(
 }
 
 export default function MapExplorer({ locations }: MapExplorerProps) {
+  // Static HTML must not accept edits before React can handle them. Map
+  // rendering is independent: search becomes usable as soon as we hydrate.
+  const isReady = useSyncExternalStore(subscribeToHydration, clientReady, serverReady);
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
   const [period, setPeriod] = useState<PeriodFilter>("all");
   const [category, setCategory] = useState("all");
@@ -161,7 +168,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
                   setPlaceSearchResults([]);
                   setPlaceSearchMessage(null);
                 }}
-                disabled={locations.length === 0}
+                disabled={!isReady || locations.length === 0}
                 className="min-h-11 rounded-lg border border-stone-300 bg-white px-3 text-stone-900 disabled:cursor-not-allowed disabled:bg-stone-100 disabled:text-stone-500"
               >
                 <option value="all">All periods</option>
@@ -180,7 +187,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
                   setPlaceSearchResults([]);
                   setPlaceSearchMessage(null);
                 }}
-                disabled={locations.length === 0}
+                disabled={!isReady || locations.length === 0}
                 className="min-h-11 rounded-lg border border-stone-300 bg-white px-3 text-stone-900 disabled:cursor-not-allowed disabled:bg-stone-100 disabled:text-stone-500"
               >
                 <option value="all">All categories</option>
@@ -203,6 +210,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
             Find a reviewed place
             <input
               type="search"
+              disabled={!isReady}
               list="beer-map-places"
               value={placeQuery}
               onChange={(event) => {
@@ -223,6 +231,7 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
           </label>
           <button
             type="submit"
+            disabled={!isReady}
             className="min-h-11 rounded-lg bg-stone-900 px-5 text-sm font-medium text-white transition hover:bg-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
           >
             Show place
