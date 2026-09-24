@@ -1,5 +1,11 @@
 import type { TimelineEvent } from "@/lib/types";
 
+export function getEventDocumentTitle(
+  event: Pick<TimelineEvent, "title" | "seo_title">
+): string {
+  return `${event.seo_title?.trim() || event.title} | Beer Chronicles`;
+}
+
 function getValidTimestamp(value: string | null | undefined): string | undefined {
   if (!value) {
     return undefined;

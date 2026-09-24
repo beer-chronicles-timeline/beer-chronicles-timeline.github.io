@@ -1,10 +1,37 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  getEventDocumentTitle,
   getEventPublicationDates,
   getEventSitemapLastModified,
 } from "../src/lib/eventMetadata.ts";
 import type { TimelineEvent } from "../src/lib/types.ts";
+
+test("Raqefet's SEO override changes only its document title", () => {
+  const event = {
+    ...makeEvent({ created_at: null }),
+    id: "c96f798b-e46c-4b8b-83a7-6245aa1b795b",
+    title: "Raqefet Cave Preserves the Earliest Known Evidence of Cereal Beer Brewing",
+    seo_title: "Raqefet Cave: Earliest Known Evidence of Beer Brewing",
+  };
+  const before = structuredClone(event);
+  assert.equal(getEventDocumentTitle(event),
+    "Raqefet Cave: Earliest Known Evidence of Beer Brewing | Beer Chronicles");
+  assert.deepEqual(event, before);
+});
+
+test("events without a nonempty SEO override retain their exact document titles", () => {
+  for (const title of [
+    "Raqefet Cave Preserves the Earliest Known Evidence of Cereal Beer Brewing",
+    "Bavaria Prohibits Summer Brewing",
+    "The Hymn to Ninkasi Describes Mesopotamian Brewing",
+    "Large-Scale Brewing Develops at Hierakonpolis",
+  ]) {
+    for (const seo_title of [undefined, null, "", "  "]) {
+      assert.equal(getEventDocumentTitle({ title, seo_title }), `${title} | Beer Chronicles`);
+    }
+  }
+});
 
 function makeEvent(
   timestamps: Pick<TimelineEvent, "created_at" | "updated_at">

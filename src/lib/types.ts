@@ -11,6 +11,8 @@ export type DatePrecision =
 export type EventRow = {
   id: string;
   title: string;
+  // Optional document title (without the site suffix); never used for event content.
+  seo_title?: string | null;
   description: string | null;
   event_date: string | null; // ISO date string (DATE in Postgres)
   historical_year: number | null;

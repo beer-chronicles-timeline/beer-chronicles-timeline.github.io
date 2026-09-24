@@ -11,6 +11,7 @@ import MainContentStart from "@/components/MainContentStart";
 import RelatedEventLinks from "@/components/RelatedEventLinks";
 import ConnectedHistory from "@/components/ConnectedHistory";
 import { getConnectedEvents } from "@/lib/eventConnections";
+import { getEventDocumentTitle } from "@/lib/eventMetadata";
 import ScrollToTop from "@/components/ScrollToTop";
 import {
   getRelatedEvents,
@@ -82,7 +83,7 @@ export async function generateMetadata({
   const socialImage = event.image_url ?? DEFAULT_SOCIAL_IMAGE;
 
   return {
-    title: `${event.title} | Beer Chronicles`,
+    title: getEventDocumentTitle(event),
     description,
     alternates: {
       canonical: canonicalUrl,

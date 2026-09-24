@@ -78,7 +78,7 @@ export function validatePublicationData(rows: PublicationRows, storylines: Story
     }
     if (!["Laws", "Breweries", "Events", "People", "Science", "Styles", "Community"].includes(String(row.category))) throw new Error(`event ${row.id}: invalid category`);
     if (!["date", "month", "year", "decade", "century"].includes(String(row.date_precision))) throw new Error(`event ${row.id}: invalid date precision`);
-    for (const field of ["image_url", "created_at", "updated_at"]) {
+    for (const field of ["image_url", "created_at", "updated_at", "seo_title"]) {
       if (row[field] != null && typeof row[field] !== "string") throw new Error(`event ${row.id}: invalid ${field}`);
     }
     const urls = String(row.sources).match(/https?:\/\/[^\s<>]*/g) ?? [];

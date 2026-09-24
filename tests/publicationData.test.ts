@@ -25,7 +25,7 @@ test("pagination rejects missing, failed, truncated and changing batches", async
 });
 test("publication rejects structural corruption before rendering", () => {
   const corruptions = [
-    { title: "" }, { sources: "" }, { sources: "https://" }, { description: "" },
+    { title: "" }, { sources: "" }, { sources: "https://" }, { description: "" }, { seo_title: 42 },
     { historical_year: 0 }, { historical_year: 1.5 }, { category: "Unknown" },
     { date_precision: "approximate" }, { event_date: "2026-02-30", historical_year: null },
     { event_date: "2026-01-01", historical_year: 2026 },
