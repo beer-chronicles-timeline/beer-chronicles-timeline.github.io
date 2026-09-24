@@ -3,6 +3,7 @@
 import * as Slider from "@radix-ui/react-slider";
 import { useId, useRef, useState } from "react";
 import { parseHistoricalYear } from "@/lib/yearInput";
+import { createYearRangeScale, historicalYearToSliderValue, sliderValueToHistoricalYear } from "@/lib/yearRangeScale";
 
 type Props = {
   startYear: number;
@@ -19,14 +20,6 @@ function formatHistoricalYear(year: number): string {
   }
 
   return String(year);
-}
-
-function historicalYearToSliderValue(year: number): number {
-  return year < 0 ? year : year - 1;
-}
-
-function sliderValueToHistoricalYear(value: number): number {
-  return value < 0 ? value : value + 1;
 }
 
 export default function YearRangeSlider({
@@ -50,13 +43,15 @@ export default function YearRangeSlider({
     endInputDraft ?? formatHistoricalYear(endYear);
 
   const helpId = useId();
-  const drag = useRef<{ isStart: boolean; x: number; value: number; width: number } | null>(null);
+  const scaleId = useId();
+  const drag = useRef<{ isStart: boolean; x: number; fraction: number; width: number } | null>(null);
   const minimum = historicalYearToSliderValue(minYear);
   const maximum = historicalYearToSliderValue(maxYear);
   const startValue = historicalYearToSliderValue(startYear);
   const endValue = historicalYearToSliderValue(endYear);
-  const fromFraction = maximum === minimum ? 0 : (startValue - minimum) / (maximum - minimum);
-  const toFraction = maximum === minimum ? 1 : (endValue - minimum) / (maximum - minimum);
+  const scale = createYearRangeScale(minYear, maxYear);
+  const fromFraction = scale.yearToFraction(startYear);
+  const toFraction = scale.yearToFraction(endYear);
   const commitBoundary = (isStart: boolean, value: number) => {
     const clamped = Math.max(isStart ? minimum : startValue, Math.min(value, isStart ? endValue : maximum));
     if (isStart) { setStartInputDraft(null); setStartYear(sliderValueToHistoricalYear(clamped)); }
@@ -136,18 +131,19 @@ export default function YearRangeSlider({
       </div>
 
       <Slider.Root
-        className="relative flex h-11 w-full touch-none select-none items-center"
+        // Radix's unshifted wrappers must not intercept the adjacent handle.
+        className="relative flex h-11 w-full touch-none select-none items-center [&>span]:pointer-events-none"
         role="group"
         aria-label="Year range"
-        min={minimum}
-        max={maximum}
-        step={1}
-        value={[startValue, endValue]}
+        min={0}
+        max={1}
+        step={0.0000001}
+        value={[fromFraction, toFraction]}
         onValueChange={([from, to]) => {
           setStartInputDraft(null);
           setEndInputDraft(null);
-          setStartYear(sliderValueToHistoricalYear(from));
-          setEndYear(sliderValueToHistoricalYear(to));
+          setStartYear(scale.fractionToYear(from));
+          setEndYear(scale.fractionToYear(to));
         }}
         onPointerDown={(event) => {
           event.preventDefault();
@@ -161,15 +157,16 @@ export default function YearRangeSlider({
           root.querySelector<HTMLElement>(`[data-boundary="${isStart ? "start" : "end"}"]`)!.focus({ preventScroll: true });
           // Retain the grab offset on a thumb; clicking the track moves the
           // nearest endpoint. Separate hit areas use the same year scale.
-          const value = boundary ? (isStart ? startValue : endValue) : commitBoundary(isStart, Math.round(minimum + (x - (isStart ? 22 : 66)) / width * (maximum - minimum)));
-          drag.current = { isStart, x: event.clientX, value, width };
+          const value = boundary ? (isStart ? startValue : endValue) : commitBoundary(isStart,
+            historicalYearToSliderValue(scale.fractionToYear((x - (isStart ? 22 : 66)) / width)));
+          drag.current = { isStart, x: event.clientX, fraction: scale.yearToFraction(sliderValueToHistoricalYear(value)), width };
           root.setPointerCapture(event.pointerId);
         }}
         onPointerMove={(event) => {
           event.preventDefault();
           if (!drag.current || !event.currentTarget.hasPointerCapture(event.pointerId)) return;
-          const { isStart, x, value, width } = drag.current;
-          commitBoundary(isStart, Math.round(value + (event.clientX - x) / width * (maximum - minimum)));
+          const { isStart, x, fraction, width } = drag.current;
+          commitBoundary(isStart, historicalYearToSliderValue(scale.fractionToYear(fraction + (event.clientX - x) / width)));
         }}
         onPointerUp={(event) => {
           event.preventDefault();
@@ -194,12 +191,14 @@ export default function YearRangeSlider({
               data-boundary={boundary}
               // Reserve one 44px hit area for each endpoint on the shared scale,
               // so equal years still have two separately selectable handles.
-              className="group relative flex h-11 w-11 items-center justify-center bg-transparent focus-visible:outline-none"
+              className="group pointer-events-auto relative flex h-11 w-11 items-center justify-center bg-transparent focus-visible:outline-none"
               style={{ transform: `translateX(${isStart ? -44 * fromFraction : 44 * (1 - toFraction)}px)` }}
               aria-label={isStart ? "Start year" : "End year"}
               aria-valuemin={isStart ? minimum : startValue}
               aria-valuemax={isStart ? endValue : maximum}
+              aria-valuenow={isStart ? startValue : endValue}
               aria-valuetext={`${Math.abs(year)} ${year < 0 ? "BCE" : "CE"}`}
+              aria-describedby={scaleId}
               onKeyDown={(event) => {
                 const direction = ["ArrowRight", "ArrowUp", "PageUp"].includes(event.key) ? 1 : ["ArrowLeft", "ArrowDown", "PageDown"].includes(event.key) ? -1 : 0;
                 if (!direction && event.key !== "Home" && event.key !== "End") return;
@@ -214,6 +213,18 @@ export default function YearRangeSlider({
           );
         })}
       </Slider.Root>
+      {/* Markers sit midway between the two reserved endpoint hit areas. */}
+      <div aria-hidden="true" className="relative mx-11 h-7 text-[10px] text-gray-600 sm:text-xs">
+        {scale.markers.map((year) => (
+          <span key={year} className="absolute flex -translate-x-1/2 flex-col items-center whitespace-nowrap" style={{ left: `${scale.yearToFraction(year) * 100}%` }}>
+            <span className="mb-1 h-1.5 w-px bg-gray-400" />
+            {formatHistoricalYear(year)}
+          </span>
+        ))}
+      </div>
+      <p id={scaleId} className="mt-1 text-center text-xs text-gray-500">
+        Nonlinear time scale · Recent centuries have more space.
+      </p>
     </div>
   );
 }
