@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beer Chronicles · Trier 2026"
+  short_description: "Create the approved brewery feed + Story package"
+  default_prompt: "Use $trier-festival-instagram to prepare one Beer Chronicles Trier 2026 feature. Collect only missing inputs, verify its selected entry and ticket status, then follow the approved serif design."

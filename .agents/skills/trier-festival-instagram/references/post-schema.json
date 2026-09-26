@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Beer Chronicles Trier festival post manifest",
+  "type": "object",
+  "required": ["schema_version", "subject", "entry", "personal_connection", "logo", "publication_date", "tickets", "copy", "render", "approvals", "status"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "subject": {"type": "string", "minLength": 1},
+    "entry": {
+      "type": "object",
+      "required": ["title", "search_url", "display_date", "hook", "sources"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "search_url": {"type": "string", "pattern": "^https://beer-chronicles\\.org/\\?"},
+        "display_date": {"type": "string"},
+        "hook": {"type": "string"},
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["location", "claims"],
+            "properties": {
+              "location": {"type": "string"},
+              "claims": {"type": "array", "items": {"type": "string"}},
+              "observed_at": {"type": ["string", "null"]}
+            }
+          }
+        }
+      }
+    },
+    "personal_connection": {
+      "type": "object",
+      "required": ["answer", "public_use"],
+      "properties": {
+        "answer": {"type": "string", "minLength": 1},
+        "public_use": {"enum": ["explicit", "tone_only", "none"]}
+      }
+    },
+    "logo": {
+      "type": "object",
+      "required": ["source_path", "sha256", "crop", "credit"],
+      "properties": {
+        "source_path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "crop": {"type": ["array", "null"], "items": {"type": "integer"}, "minItems": 4, "maxItems": 4},
+        "credit": {"type": ["string", "null"]}
+      }
+    },
+    "publication_date": {"type": ["string", "null"], "description": "YYYY-MM-DD in Europe/Berlin; null while timing is unresolved."},
+    "tickets": {
+      "type": "object",
+      "required": ["status", "checked_at", "source_url", "evidence"],
+      "properties": {
+        "status": {"enum": ["available_both_days", "available_friday_only", "available_saturday_only", "sold_out", "sales_closed", "unknown"]},
+        "checked_at": {"type": ["string", "null"], "description": "Actual ISO-8601 timestamp with timezone; null if not checked."},
+        "source_url": {"type": "string"},
+        "evidence": {"type": "string"}
+      }
+    },
+    "copy": {
+      "type": "object",
+      "required": ["series_title", "caption", "story_text", "alt_text"],
+      "properties": {
+        "series_title": {"const": "The Stories Behind the Trier Beer Festival 2026"},
+        "caption": {"type": "string"},
+        "story_text": {"type": "string"},
+        "alt_text": {"type": "string"}
+      }
+    },
+    "render": {
+      "type": "object",
+      "required": ["mode", "template_version", "renderer", "fonts", "reference_hashes", "outputs"],
+      "properties": {
+        "mode": {"enum": ["rendered", "reused_master"]},
+        "template_version": {"type": "string"},
+        "renderer": {"type": "string"},
+        "fonts": {"type": "array", "items": {"type": "object", "required": ["family", "sha256"]}},
+        "reference_hashes": {"type": "object"},
+        "outputs": {
+          "type": "object",
+          "required": ["feed.png", "story.png"],
+          "additionalProperties": {
+            "type": "object",
+            "required": ["sha256", "pixel_sha256"],
+            "properties": {
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "pixel_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            }
+          }
+        }
+      }
+    },
+    "approvals": {"type": "object", "required": ["copy", "visual"], "properties": {"copy": {"type": "boolean"}, "visual": {"type": "boolean"}}},
+    "status": {"enum": ["needs_review", "blocked", "ready_to_publish", "historical_reproduction"]}
+  }
+}

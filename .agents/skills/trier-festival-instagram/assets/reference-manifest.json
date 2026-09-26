@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "campaign": "The Stories Behind the Trier Beer Festival 2026",
+  "prepared_on": "2026-09-25",
+  "files": [
+    {
+      "path": "assets/references/blech-brut-feed-serif.png",
+      "sha256": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "role": "style_reference_do_not_publish",
+      "publication_approved": false,
+      "notes": "Contains the historical year 2019 in error; selected entry states 2018. Generated reference logo is not authoritative source artwork."
+    },
+    {
+      "path": "assets/references/blech-brut-story-serif.png",
+      "sha256": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "role": "style_reference_do_not_publish",
+      "publication_approved": false,
+      "notes": "Contains the historical year 2019 in error; selected entry states 2018. Generated reference logo is not authoritative source artwork."
+    },
+    {
+      "path": "assets/originals/blech-brut-and-atelier-vrai.png",
+      "sha256": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764",
+      "dimensions": [
+        400,
+        400
+      ],
+      "role": "user_supplied_original_logo_sheet",
+      "publication_approved": false,
+      "notes": "Use only the full upper-left Blech.Brut mark for that feature. User supplied this original and confirmed permission for campaign use."
+    }
+  ],
+  "factual_correction": {
+    "subject": "Blech.Brut",
+    "incorrect_prototype_year": "2019",
+    "selected_entry_year": "2018",
+    "source_url": "https://beer-chronicles.org/?string=Blech.Brut",
+    "observed_on": "2026-09-25"
+  },
+  "reproduction_status": "No approved deterministic editable template yet. Existing PNGs are the final serif design references; calibrate once using verified facts and original logo, then freeze the approved renderer."
+}
