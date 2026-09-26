@@ -551,8 +551,8 @@ export default function SubmitPage() {
               >
                 <p className="text-green-800">
                   {isCorrection
-                    ? "Thank you! Your suggestion has been submitted. I’ll review it soon."
-                    : "Thank you! Your entry has been submitted. I’ll review it soon."}
+                    ? "Thank you! Your suggestion has been submitted. I’ll review it and get back to you within a few days."
+                    : "Thank you! Your entry has been submitted. I’ll review it and get back to you within a few days."}
                 </p>
               </div>
             )}
