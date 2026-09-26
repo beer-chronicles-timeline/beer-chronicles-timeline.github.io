@@ -7,6 +7,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import { useHydrated } from "@/lib/useHydrated";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 const CORRECTION_SUBMISSION_TYPE =
   "Correction / additional source";
@@ -565,7 +566,14 @@ export default function SubmitPage() {
               >
                 <p className="text-red-800">
                   Sorry, there was an error sending your submission. Please try
-                  again or email me directly.
+                  again or{" "}
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="underline hover:no-underline"
+                  >
+                    email me directly
+                  </a>
+                  .
                 </p>
               </div>
             )}

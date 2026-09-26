@@ -6,6 +6,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import { getTwitterMetadata } from "@/lib/siteMetadata";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "About Beer Chronicles | Beer Chronicles",
@@ -158,7 +159,7 @@ export default function AboutPage() {
             comprehensive. Moreover, although I tried to be as careful as
             possible, there can be mistakes! If you detect any bug:{" "}
             <a
-              href="mailto:schmaidt@web.de?subject=Mistake%20in%20the%20beer%20history%20timeline"
+              href={`mailto:${CONTACT_EMAIL}?subject=Mistake%20in%20the%20beer%20history%20timeline`}
               className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
             >
               just let me know

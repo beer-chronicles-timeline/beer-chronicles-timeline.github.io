@@ -5,6 +5,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import { getTwitterMetadata } from "@/lib/siteMetadata";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Imprint | Beer Chronicles",
@@ -112,10 +113,10 @@ export default function ImprintPage() {
             <p>
               Email:{" "}
               <a
-                href="mailto:schmaidt@web.de"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="underline hover:text-stone-900"
               >
-                schmaidt@web.de
+                {CONTACT_EMAIL}
               </a>
             </p>
           </section>

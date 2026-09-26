@@ -5,6 +5,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import { getTwitterMetadata } from "@/lib/siteMetadata";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Beer Tastings with History | Beer Chronicles",
@@ -271,7 +272,7 @@ export default function TastingsPage() {
             </p>
 
             <a
-              href="mailto:schmaidt@web.de?subject=Beer%20tasting%20request"
+              href={`mailto:${CONTACT_EMAIL}?subject=Beer%20tasting%20request`}
               className="inline-flex rounded-md bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
             >
               Request a Tasting
