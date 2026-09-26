@@ -389,6 +389,11 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/oktoberfest-brewery-restriction-and-wiesn-edelstoff-proposal.sql.
+  // Municipal ruling account and Augustiner chronology establish Munich;
+  // city reference point only. Dormant until the reviewed events are supplied.
+  { eventId: "a2f5b9bc-36ea-4118-8b7e-928f80d563e0", placeId: "munich", locationRole: "City of the court ruling and the festival whose brewery admission policy it upheld" },
+  { eventId: "debac075-7a70-4f04-952b-417c8e6ad9db", placeId: "munich", locationRole: "City where Augustiner introduced its Wiesn-Edelstoff festival beer" },
   // Fixed UUIDs shared with sql/croatian-craft-breweries-proposal.sql.
   // Dormant until the reviewed events exist; modern brewery addresses are not
   // substituted for the historical production, origin, or launch locations.
