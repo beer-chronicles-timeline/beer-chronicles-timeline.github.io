@@ -48,6 +48,11 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Bruges museum research proposal: city reference points from
+  // https://en.wikipedia.org/wiki/Utrecht and /wiki/Menen, inspected 2026-09-27.
+  // The entry sources establish the historical cities, not exact premises.
+  utrecht: { name: "Utrecht, Netherlands", latitude: 52.09083, longitude: 5.12167, precision: "city", locationRole: "City that regulated the sale of kuit and Hamburg beer" },
+  menen: { name: "Menen, Belgium", latitude: 50.8, longitude: 3.117, precision: "city", locationRole: "Flemish city whose sixteenth-century brewing industry is documented" },
   // Zoigl proposal: sql/zoigl-history-proposal.sql. Reference coordinates from
   // German Wikipedia: Neuhaus_(Windischeschenbach), Windischeschenbach,
   // Falkenberg_(Oberpfalz); English Wikipedia: Mitterteich, Eslarn,
@@ -389,6 +394,11 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/bruges-museum-kuit-and-menen-proposal.sql.
+  // Utrecht's 1397 ordinance and the Menen municipal/scholarly histories
+  // establish the cities. Dormant until the proposed events are supplied.
+  { eventId: "9311b710-80b4-4c23-82b8-f946eaedfdb3", placeId: "utrecht" },
+  { eventId: "2fa09077-213c-49a9-8cbe-d84a0c4ba9ea", placeId: "menen" },
   // Fixed UUID shared with sql/oktoberfest-early-local-beer-rule-proposal.sql.
   // Eymold's Oktoberfest history and the EU application establish Munich.
   // City precision; dormant until the proposed event exists.
