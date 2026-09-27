@@ -389,6 +389,10 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUID shared with sql/oktoberfest-early-local-beer-rule-proposal.sql.
+  // Eymold's Oktoberfest history and the EU application establish Munich.
+  // City precision; dormant until the proposed event exists.
+  { eventId: "d3718567-2b7c-4cad-a8c7-5fcb67eae41e", placeId: "munich", locationRole: "City that regulated beer service at its Oktoberfest" },
   // Fixed UUIDs shared with sql/oktoberfest-brewery-restriction-and-wiesn-edelstoff-proposal.sql.
   // Municipal ruling account and Augustiner chronology establish Munich;
   // city reference point only. Dormant until the reviewed events are supplied.
