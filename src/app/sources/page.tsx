@@ -388,8 +388,24 @@ export default function SourcesPage() {
             </a>, 
             Nicole Renken, 
             Simon Stevens, 
-            and Johannes Thürauf
-            for their valuable feedback during the development of this
+            Johannes Thürauf, and{" "}
+            <a
+              href="http://www.brauerstern.de/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
+              Matthias Trum
+            </a>{" "}
+            (<a
+              href="http://www.schlenkerla.de/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
+              Schlenkerla
+            </a>)
+            {" "}for their valuable feedback during the development of this
             website.
           </p>
         </div>
