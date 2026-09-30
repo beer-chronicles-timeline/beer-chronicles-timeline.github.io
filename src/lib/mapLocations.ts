@@ -48,6 +48,11 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Prümer Brauhaus proposal: sql/pruemer-brauhaus-proposal.sql.
+  // City reference coordinates: https://en.wikipedia.org/wiki/Pr%C3%BCm,
+  // inspected 2026-09-30. Tourist-Information Prümer Land establishes the
+  // brewpub's location in Prüm; this reference point is not its exact premises.
+  pruem: { name: "Prüm, Germany", latitude: 50.20806, longitude: 6.42444, precision: "city", locationRole: "Town where Prümer Brauhaus opened" },
   // Bruges museum research proposal: city reference points from
   // https://en.wikipedia.org/wiki/Utrecht and /wiki/Menen, inspected 2026-09-27.
   // The entry sources establish the historical cities, not exact premises.
@@ -394,6 +399,9 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUID shared with sql/pruemer-brauhaus-proposal.sql.
+  // Dormant until the proposed event is supplied to the map builder.
+  { eventId: "e2ae6534-fa48-4b5e-90ab-bba733ac3d6c", placeId: "pruem" },
   // Fixed UUIDs shared with sql/bruges-museum-kuit-and-menen-proposal.sql.
   // Utrecht's 1397 ordinance and the Menen municipal/scholarly histories
   // establish the cities. Dormant until the proposed events are supplied.
