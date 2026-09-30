@@ -66,11 +66,11 @@ jobs:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
         run: npm run test:e2e
 
-      - name: Retain browser failure diagnostics
-        if: failure() && steps.browser_tests.outcome == 'failure'
+      - name: Retain browser diagnostics, including recovered failures
+        if: always() && (steps.browser_tests.outcome == 'failure' || steps.browser_tests.outcome == 'success')
         uses: actions/upload-artifact@v4
         with:
-          name: browser-failures-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: browser-diagnostics-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: test-results/
           retention-days: 7
           if-no-files-found: warn

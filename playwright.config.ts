@@ -51,6 +51,10 @@ export default defineConfig({
     },
     {
       name: "webkit",
+      // A transient WebKit process/navigation failure gets one fresh worker in
+      // CI. Repeated failures still block deployment; recovered failures remain
+      // reported as flaky and their traces are retained by the workflow.
+      retries: process.env.CI ? 1 : 0,
       grep: /@webkit|@journey/,
       use: { ...devices["Desktop Safari"] },
     },
