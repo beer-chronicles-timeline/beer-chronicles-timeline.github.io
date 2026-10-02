@@ -9,7 +9,10 @@ import MapStructuredData from "@/components/MapStructuredData";
 import ScrollToTop from "@/components/ScrollToTop";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import { buildMapLocations } from "@/lib/mapLocations";
-import { getTwitterMetadata } from "@/lib/siteMetadata";
+import {
+  getOpenGraphImageMetadata,
+  getTwitterMetadata,
+} from "@/lib/siteMetadata";
 
 export const metadata: Metadata = {
   title: "Beer Map | Beer Chronicles",
@@ -24,6 +27,7 @@ export const metadata: Metadata = {
       "Explore beer history through reviewed places and geographic connections.",
     url: "/map",
     type: "website",
+    ...getOpenGraphImageMetadata(),
   },
   twitter: getTwitterMetadata(
     "Beer Map | Beer Chronicles",

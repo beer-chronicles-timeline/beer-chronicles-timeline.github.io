@@ -9,7 +9,10 @@ import StorylineStructuredData from "@/components/StorylineStructuredData";
 import { formatEventDate } from "@/components/timelineUtils";
 import { getEventPath } from "@/lib/eventUrls";
 import { getStorylinePageData } from "@/lib/storylinePageData";
-import { getTwitterMetadata } from "@/lib/siteMetadata";
+import {
+  getOpenGraphImageMetadata,
+  getTwitterMetadata,
+} from "@/lib/siteMetadata";
 import {
   getStorylineBySlug,
   getStorylinePageTitle,
@@ -53,6 +56,7 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "Beer Chronicles",
       type: "website",
+      ...getOpenGraphImageMetadata(),
     },
     twitter: getTwitterMetadata(title, storyline.description),
   };

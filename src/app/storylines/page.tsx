@@ -11,7 +11,10 @@ import {
 import { buildStorylineViews, type StorylineView } from "@/lib/eventStorylines";
 import { getEventPath } from "@/lib/eventUrls";
 import { getPublicationSnapshot } from "@/lib/publicationSnapshot";
-import { getTwitterMetadata } from "@/lib/siteMetadata";
+import {
+  getOpenGraphImageMetadata,
+  getTwitterMetadata,
+} from "@/lib/siteMetadata";
 import {
   STORYLINES,
   STORYLINE_SECTIONS,
@@ -34,6 +37,7 @@ export const metadata: Metadata = {
       "Explore connected stories across thousands of years of beer history.",
     url: "/storylines",
     type: "website",
+    ...getOpenGraphImageMetadata(),
   },
   twitter: getTwitterMetadata(
     "Beer History Storylines | Beer Chronicles",

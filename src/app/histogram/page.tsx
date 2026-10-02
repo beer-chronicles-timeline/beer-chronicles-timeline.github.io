@@ -7,7 +7,10 @@ import ScrollToTop from "@/components/ScrollToTop";
 import HistogramExplorer from "@/components/HistogramExplorer";
 import { getEventTimelineYear } from "@/components/timelineUtils";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
-import { getTwitterMetadata } from "@/lib/siteMetadata";
+import {
+  getOpenGraphImageMetadata,
+  getTwitterMetadata,
+} from "@/lib/siteMetadata";
 
 const description = "Explore the distribution of Beer Chronicles timeline entries over time, with an adjustable date range and bin size.";
 
@@ -15,7 +18,13 @@ export const metadata: Metadata = {
   title: "Histogram | Beer Chronicles",
   description,
   alternates: { canonical: "/histogram" },
-  openGraph: { title: "Histogram | Beer Chronicles", description, url: "/histogram", type: "website" },
+  openGraph: {
+    title: "Histogram | Beer Chronicles",
+    description,
+    url: "/histogram",
+    type: "website",
+    ...getOpenGraphImageMetadata(),
+  },
   twitter: getTwitterMetadata("Histogram | Beer Chronicles", description),
 };
 

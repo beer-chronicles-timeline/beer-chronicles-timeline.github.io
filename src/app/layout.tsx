@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import { getPublicationSnapshot } from "@/lib/publicationSnapshot";
+import { getOpenGraphImageMetadata } from "@/lib/siteMetadata";
 import { Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
@@ -14,9 +15,6 @@ const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
 });
-
-const SOCIAL_IMAGE_PATH =
-  "/images/beer-chronicles-social.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://beer-chronicles.org"),
@@ -31,14 +29,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Beer Chronicles",
     type: "website",
-    images: [
-      {
-        url: SOCIAL_IMAGE_PATH,
-        width: 1731,
-        height: 909,
-        alt: "Beer Chronicles — A Timeline of Beer History",
-      },
-    ],
+    ...getOpenGraphImageMetadata(),
   },
   twitter: {
     card: "summary_large_image",
@@ -46,7 +37,7 @@ export const metadata: Metadata = {
       "Beer Chronicles | Interactive Beer History Timeline",
     description:
       "Explore beer history from prehistoric brewing to the present through a curated interactive timeline and connected storylines.",
-    images: [SOCIAL_IMAGE_PATH],
+    images: ["/images/beer-chronicles-social.png"],
   },
 };
 
