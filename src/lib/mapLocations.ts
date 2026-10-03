@@ -53,6 +53,11 @@ const MAP_PLACES = {
   // inspected 2026-09-30. Tourist-Information Prümer Land establishes the
   // brewpub's location in Prüm; this reference point is not its exact premises.
   pruem: { name: "Prüm, Germany", latitude: 50.20806, longitude: 6.42444, precision: "city", locationRole: "Town where Prümer Brauhaus opened" },
+  // St. Scholastica proposal: sql/oxford-st-scholastica-riot-proposal.sql.
+  // City reference coordinates: https://en.wikipedia.org/wiki/Oxford,
+  // inspected 2026-09-29. Museum of Oxford and I. G. Philip establish the
+  // historical town; this does not mark the tavern or the charter's issue site.
+  oxford: { name: "Oxford, England", latitude: 51.75194, longitude: -1.25778, precision: "city", locationRole: "Town of the riot and the subsequent university oversight of ale" },
   // Bruges museum research proposal: city reference points from
   // https://en.wikipedia.org/wiki/Utrecht and /wiki/Menen, inspected 2026-09-27.
   // The entry sources establish the historical cities, not exact premises.
@@ -402,6 +407,9 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   // Fixed UUID shared with sql/pruemer-brauhaus-proposal.sql.
   // Dormant until the proposed event is supplied to the map builder.
   { eventId: "e2ae6534-fa48-4b5e-90ab-bba733ac3d6c", placeId: "pruem" },
+  // Fixed UUID shared with sql/oxford-st-scholastica-riot-proposal.sql.
+  // Dormant until the proposed event is supplied to the map builder.
+  { eventId: "d1dd5116-41d1-462c-bdc1-7b9947bc6cc2", placeId: "oxford" },
   // Fixed UUIDs shared with sql/bruges-museum-kuit-and-menen-proposal.sql.
   // Utrecht's 1397 ordinance and the Menen municipal/scholarly histories
   // establish the cities. Dormant until the proposed events are supplied.
