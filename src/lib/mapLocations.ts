@@ -48,6 +48,13 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Barley Wine proposal: sql/barley-wine-history-proposal.sql.
+  // City reference coordinates inspected 2026-10-10: OpenStreetMap Nominatim
+  // search for Sheffield, United Kingdom, and
+  // https://en.wikipedia.org/wiki/Dorchester,_Dorset. Entry sources establish
+  // the historical cities; these reference points do not mark brewery sites.
+  sheffield: { name: "Sheffield, England", latitude: 53.3806626, longitude: -1.4702278, precision: "city", locationRole: "City where Gold Label was first brewed" },
+  dorchester: { name: "Dorchester, England", latitude: 50.7154, longitude: -2.4367, precision: "city", locationRole: "City of the original Eldridge Pope release" },
   // Prümer Brauhaus proposal: sql/pruemer-brauhaus-proposal.sql.
   // City reference coordinates: https://en.wikipedia.org/wiki/Pr%C3%BCm,
   // inspected 2026-09-30. Tourist-Information Prümer Land establishes the
@@ -404,6 +411,15 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/barley-wine-history-proposal.sql.
+  // BMJ's 1870 table identifies the London sample outlet, not an invention
+  // site. The remaining entry sources establish each historical brewery city.
+  // Dormant until the corresponding proposed events are supplied to the map.
+  { eventId: "7da8149f-5242-47ee-abfe-2ee53f955320", placeId: "london", locationRole: "City where the analyzed beer sample was obtained" },
+  { eventId: "83278605-c447-4c75-8d18-65b2be869c3e", placeId: "sheffield" },
+  { eventId: "cba73a8f-a4a1-4d1c-98db-47871c10e869", placeId: "dorchester" },
+  { eventId: "08e16cae-a75c-4296-a594-402b511c880b", placeId: "san_francisco", locationRole: "City where Old Foghorn was first brewed" },
+  { eventId: "faa23103-701b-4939-b854-20e04414f554", placeId: "chico", locationRole: "City where Bigfoot was introduced" },
   // Fixed UUID shared with sql/pruemer-brauhaus-proposal.sql.
   // Dormant until the proposed event is supplied to the map builder.
   { eventId: "e2ae6534-fa48-4b5e-90ab-bba733ac3d6c", placeId: "pruem" },
