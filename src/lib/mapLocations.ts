@@ -411,6 +411,17 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/doppelbock-history-proposal.sql.
+  // Paulaner records and Munich's municipal history establish the Au and
+  // Nockherberg milestones; Schneider's history and BJCP establish Munich
+  // for Aventinus in 1907, before production moved to Kelheim. The DPMA
+  // identifies Berlin as the Salvator trademark's registration jurisdiction.
+  // Existing city reference points only; dormant until these events exist.
+  { eventId: "a9c87fd5-3ba7-484f-a169-871daf352345", placeId: "munich", locationRole: "City of the documented Paulaner brewing and beer sales at Neudeck ob der Au" },
+  { eventId: "d8a69e86-d5eb-4762-870a-fb3a2e283201", placeId: "munich", locationRole: "City of the monastery granted permission to serve its festival beer" },
+  { eventId: "2bd3b6ab-84b0-4513-a801-b14a7ec3acb5", placeId: "munich", locationRole: "City where Salvator service moved to the Nockherberg festival venue" },
+  { eventId: "7848dbc0-39d9-4555-b062-bb79a04b9ef6", placeId: "berlin", locationRole: "City of the Imperial Patent Office that registered the Salvator trademark" },
+  { eventId: "9b5802fc-3287-4b18-9546-a70cc951849e", placeId: "munich", locationRole: "City of Schneider's brewery when Aventinus was introduced in 1907" },
   // Fixed UUIDs shared with sql/barley-wine-history-proposal.sql.
   // BMJ's 1870 table identifies the London sample outlet, not an invention
   // site. The remaining entry sources establish each historical brewery city.
