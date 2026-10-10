@@ -48,6 +48,13 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Schwarzbier proposal: sql/schwarzbier-history-proposal.sql.
+  // Settlement reference coordinates inspected 2026-10-10:
+  // https://wiki.openstreetmap.org/wiki/Bad_K%C3%B6stritz and
+  // https://en.wikipedia.org/wiki/Neuzelle. Entry sources establish the
+  // historical towns; these reference points do not mark brewery premises.
+  bad_koestritz: { name: "Bad Köstritz, Germany", latitude: 50.93, longitude: 12.01, precision: "city", locationRole: "Town of the Köstritzer brewery milestone" },
+  neuzelle: { name: "Neuzelle, Germany", latitude: 52.083, longitude: 14.633, precision: "city", locationRole: "Town of the brewery whose Schwarzbier was the subject of the judgment" },
   // Barley Wine proposal: sql/barley-wine-history-proposal.sql.
   // City reference coordinates inspected 2026-10-10: OpenStreetMap Nominatim
   // search for Sheffield, United Kingdom, and
@@ -411,6 +418,16 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/schwarzbier-history-proposal.sql.
+  // Bad Köstritz's municipal history and Köstritzer/Bitburger establish the
+  // brewery town. The 2005 judgment and contemporary reporting establish
+  // Neuzelle as the brewery town and Leipzig as the court city.
+  // City reference points only; dormant until the proposed events exist.
+  { eventId: "41030366-b113-423b-a6a9-d23d99ce39d6", placeId: "bad_koestritz", locationRole: "Town where commercial brewing and beer-selling rights were documented" },
+  { eventId: "23b9aa58-d18f-4d03-8bb0-f6b7d816b475", placeId: "bad_koestritz", locationRole: "Town of the brewery transferred to public ownership" },
+  { eventId: "6ec3d07d-e039-4a6d-b0a8-9cf4d1efbcd9", placeId: "bad_koestritz", locationRole: "Town of the brewery behind the nationwide Schwarzbier relaunch" },
+  { eventId: "e7146e26-aff0-439d-96bd-51ed1bd9a11c", placeId: "neuzelle" },
+  { eventId: "e7146e26-aff0-439d-96bd-51ed1bd9a11c", placeId: "leipzig", locationRole: "City of the Federal Administrative Court judgment" },
   // Fixed UUIDs shared with sql/doppelbock-history-proposal.sql.
   // Paulaner records and Munich's municipal history establish the Au and
   // Nockherberg milestones; Schneider's history and BJCP establish Munich
