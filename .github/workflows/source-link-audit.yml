@@ -7,7 +7,10 @@ on:
 
 permissions:
   contents: read
-  issues: write
+
+concurrency:
+  group: source-link-audit
+  cancel-in-progress: false
 
 jobs:
   audit:
@@ -27,113 +30,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check published source links
+      - name: Check audit regression tests (offline)
+        run: npx tsx --test tests/sourceCitations.test.ts tests/sourceLinkAudit.test.ts tests/siteLinkAudit.test.ts
+
+      # Public HTTP only: no Supabase credentials, database queries, mutations,
+      # source repairs, issue updates, commits, or deployments.
+      - name: Audit published citations and site hyperlinks (read-only)
         run: npm run check:source-links
-
-      - name: Notify through a GitHub issue
-        if: success()
-        continue-on-error: true
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require("node:fs");
-            const report = JSON.parse(
-              fs.readFileSync(
-                "artifacts/source-link-report/source-link-report.json",
-                "utf8"
-              )
-            );
-            const title = "Source link audit: citations requiring review";
-            const legacyTitle = "Source link audit: unavailable citations";
-            const missing = report.results.filter(
-              (result) => result.status === "missing"
-            );
-            const needsReview = report.results.filter(
-              (result) => result.status === "needs-review"
-            );
-            const actionable = [...missing, ...needsReview];
-            const issues = await github.paginate(
-              github.rest.issues.listForRepo,
-              {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                state: "all",
-                per_page: 100,
-              }
-            );
-            const existing = issues.find(
-              (issue) =>
-                !issue.pull_request &&
-                (issue.title === title || issue.title === legacyTitle)
-            );
-            const runUrl =
-              `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}` +
-              `/actions/runs/${context.runId}`;
-
-            if (actionable.length === 0) {
-              if (existing && existing.state === "open") {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: existing.number,
-                  body:
-                    `The source-link audit completed without definite ` +
-                    `404/410 responses or other HTTP statuses requiring manual review. ` +
-                    `[View the workflow run](${runUrl}).`,
-                });
-                await github.rest.issues.update({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: existing.number,
-                  state: "closed",
-                });
-              }
-              return;
-            }
-
-            const rows = actionable.map((result) => {
-              const events = result.references
-                .map((reference) => reference.eventTitle)
-                .join("; ");
-              const destination = result.finalUrl
-                ? `${result.url} → ${result.finalUrl}`
-                : result.url;
-              return `- ${result.status}, HTTP ${result.httpStatus ?? "—"}: ${destination}\n  - Referenced by: ${events}`;
-            });
-            const body = [
-              "This issue is maintained automatically by the monthly, read-only source-link audit.",
-              "",
-              `The latest run found **${missing.length}** definite 404/410 response(s) and **${needsReview.length}** other HTTP response(s) requiring manual review.`,
-              "",
-              "Automated-client blocks, rate limits, transient server errors, and network failures are excluded from this issue and remain available in the uploaded advisory report. Redirects are also recorded there for planned maintenance. Verify every link manually before making an editorial change.",
-              "",
-              ...rows,
-              "",
-              `[View the workflow run and download the complete report](${runUrl}).`,
-            ].join("\n");
-
-            if (existing) {
-              await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: existing.number,
-                title,
-                body,
-                state: "open",
-              });
-            } else {
-              await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title,
-                body,
-              });
-            }
-
-            core.warning(
-              `${actionable.length} citation URL(s) require manual review. ` +
-              `The tracking issue has been updated.`
-            );
 
       - name: Upload source-link report
         if: always()
@@ -141,5 +44,5 @@ jobs:
         with:
           name: source-link-report-${{ github.run_id }}
           path: artifacts/source-link-report
-          if-no-files-found: warn
+          if-no-files-found: error
           retention-days: 90

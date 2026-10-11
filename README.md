@@ -60,12 +60,30 @@ build step.
 gzip-equivalent sizes, and compressed bytes per event. It fails when the
 generated payload exceeds its regression budgets.
 
-`npm run check:source-links` reads the currently published timeline data,
-checks its unique external citation URLs, and writes advisory Markdown and JSON
-reports to `artifacts/source-link-report/`. Link findings do not modify
-editorial data and do not cause the command to fail; automated blocking,
-rate-limiting, and transient errors are reported separately from definite
-`404` and `410` responses.
+`npm run check:source-links` audits citation URLs from the published timeline
+and hyperlinks in published HTML. It seeds the crawl from the public sitemap,
+follows internal pages, and checks internal/external destinations and fragment
+targets. Source and page references remain distinguishable in the Markdown and
+JSON reports written to `artifacts/source-link-report/`.
+
+The audit uses read-only public HTTP GETs with bounded content reads, per-host
+throttling, and up to two retries for temporary failures. It flags apparent
+error/login/challenge pages, missing PDF headers, and article-to-homepage
+redirects for human review. Blocked and unresolved checks stay visible in both
+the report and GitHub run summary. JavaScript-only links, client query behavior,
+form submissions, and non-HTTP schemes are not executed. Cloudflare-protected
+email placeholders are recognized as mailto links, without crawling their
+client-only placeholder route. External fragments
+that cannot be verified remain advisory findings.
+
+Publication identity, event count, sitemap coverage, and crawl completeness are
+validated. Link findings remain advisory, while missing input, a changed
+publication, truncated pages, or incomplete coverage cause the command to fail
+and retain its partial report. `SOURCE_LINK_MAX_URLS` and `SOURCE_LINK_MAX_PAGES`
+can limit a local investigation, but any applied limit is explicitly reported
+as incomplete. CI applies neither limit. The default audit deadline is 22
+minutes within the workflow's 30-minute budget. It never repairs links or
+changes sources, editorial records, the backend, or existing GitHub issues.
 
 ## Deployment
 
@@ -81,13 +99,13 @@ Pushing to `main` triggers `.github/workflows/deploy.yml`, which:
 Do not push solely to test a change: verify locally first because a push to `main` publishes the site.
 
 The separate `.github/workflows/source-link-audit.yml` workflow runs on the
-first day of every month and can also be started manually. It checks the public
-timeline without Supabase credentials and uploads its reports as a workflow
-artifact retained for 90 days. When definite `404` or `410` responses are
-present, it creates or updates one GitHub issue; a later clean run closes that
-issue. Other response categories remain in the report only. The notification
-step is non-blocking, the audit is independent of deployment, and neither can
-change or remove a citation or interrupt the live website.
+first day of every month and can also be started manually. It has only
+`contents: read` permission, tests the audit offline, and reads the public site
+without Supabase credentials. Findings appear in the run summary and in
+workflow artifacts retained for 90 days, including partial reports from failed
+audits. It does not create, update, comment on, or close GitHub issues. This
+workflow is independent of deployment and cannot change or remove a citation
+or interrupt the live website.
 
 ## Editorial and contribution safeguards
 
