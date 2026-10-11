@@ -2,10 +2,12 @@ import { appendFile, mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { auditPublishedSite } from "./site-link-audit.ts";
 import { makeMarkdown, makeSummary } from "./source-link-report.ts";
+import { applyManualReviews, readReviewRegister, requiresReview } from "./source-link-review.ts";
 
 async function main() {
   const outputDir = process.env.SOURCE_LINK_REPORT_DIR ?? "artifacts/source-link-report";
-  const audit = await auditPublishedSite({
+  const register = await readReviewRegister(process.env.SOURCE_LINK_REVIEW_FILE ?? new URL("./source-link-review-register.json", import.meta.url));
+  const observed = await auditPublishedSite({
     siteUrl: process.env.SOURCE_LINK_SITE_URL ?? "https://beer-chronicles.org",
     dataUrl: process.env.SOURCE_LINK_DATA_URL,
     sitemapUrl: process.env.SOURCE_LINK_SITEMAP_URL,
@@ -20,6 +22,7 @@ async function main() {
     maxPageBytes: Number(process.env.SOURCE_LINK_MAX_PAGE_BYTES ?? 4 * 1024 * 1024),
     onProgress: console.log,
   });
+  const audit = { ...observed, ...applyManualReviews(observed.results, register, observed.generatedAt) };
   const summary = makeSummary(audit.results);
   await mkdir(outputDir, { recursive: true });
   await Promise.all([
@@ -29,11 +32,13 @@ async function main() {
       limited: audit.coverage.limited, summary,
       sourceSummary: makeSummary(audit.results.filter((result) => result.references.length)),
       pageSummary: makeSummary(audit.results.filter((result) => result.pageReferences?.length)),
+      attentionSummary: makeSummary(audit.results.filter(requiresReview)),
     }, null, 2) + "\n"),
   ]);
   if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, makeMarkdown(audit, true));
   console.log(`Coverage: ${audit.coverage.complete ? "complete" : "INCOMPLETE"}; checked ${audit.coverage.checkedUrls}/${audit.coverage.discoveredUrls} URLs.`);
   console.log(JSON.stringify(summary));
+  console.log(`Warnings requiring review: ${audit.reviewSummary.warningsRequiringReview}; matching manually verified warnings: ${audit.reviewSummary.acknowledgedWarnings}.`);
   console.log(`Read-only reports written to ${outputDir}. No existing content or records were changed.`);
   // Broken external links remain advisory. Incomplete collection/validation is
   // an audit failure, with partial findings still uploaded for inspection.

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
@@ -206,13 +206,16 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
     const path = new URL(request.url!, origin).pathname;
     response.setHeader("Content-Type", "application/json");
     if (path === "/publication-status.json") response.end(JSON.stringify(publication));
-    else if (path === "/timeline-data.json") response.end(JSON.stringify({ events: incomplete ? [] : [{ ...event, sources: `Fixture PDF\n${origin}/fixture.pdf` }] }));
+    else if (path === "/timeline-data.json") response.end(JSON.stringify({ events: incomplete ? [] : [{ ...event, sources: `Fixture PDF\n${origin}/fixture.pdf\n\nManually checked\n${origin}/blocked-source` }] }));
     else if (path === "/sitemap.xml") {
       response.setHeader("Content-Type", "application/xml");
       response.end(`<urlset><url><loc>${origin}/</loc></url><url><loc>${origin}/events/fixture/entry</loc></url></urlset>`);
     } else if (path === "/fixture.pdf") {
       response.setHeader("Content-Type", "application/pdf");
       response.end("%PDF-1.7\nfixture");
+    } else if (path === "/blocked-source") {
+      response.statusCode = 403;
+      response.end("Denied");
     } else {
       response.setHeader("Content-Type", "text/html");
       response.end(page('<a href="/fixture.pdf">Fixture source</a><a href="#main">Main</a><div id="main"></div>'));
@@ -228,6 +231,15 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
     incomplete = brokenInput;
     const directory = await mkdtemp(join(tmpdir(), "bc-link-audit-test-"));
     const summaryPath = join(directory, "summary.md");
+    const reviewPath = join(directory, "manual-reviews.json");
+    const reviewedOn = new Date().toISOString().slice(0, 10);
+    const reviewAfter = new Date(Date.parse(`${reviewedOn}T00:00:00.000Z`) + 180 * 86_400_000).toISOString().slice(0, 10);
+    const reviewContents = JSON.stringify({ schemaVersion: 1, reviews: [{
+      url: `${origin}/blocked-source`, reviewedOn, reviewAfter,
+      reviewedBy: "fixture reviewer", note: "User-confirmed current state; synthetic fixture.",
+      expectedFinding: { status: "blocked", httpStatus: 403, finalUrl: null, detail: null, fragmentStatus: "not-applicable" },
+    }] });
+    await writeFile(reviewPath, reviewContents);
     let exitCode = 0;
     try {
       await execute(process.execPath, ["--import", "tsx", "scripts/check-source-links.ts"], {
@@ -235,6 +247,7 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
         env: { ...process.env,
           SOURCE_LINK_SITE_URL: origin, SOURCE_LINK_DATA_URL: `${origin}/timeline-data.json`, SOURCE_LINK_SITEMAP_URL: `${origin}/sitemap.xml`,
           SOURCE_LINK_REPORT_DIR: directory, GITHUB_STEP_SUMMARY: summaryPath,
+          SOURCE_LINK_REVIEW_FILE: reviewPath,
           SOURCE_LINK_HOST_INTERVAL_MS: "0", SOURCE_LINK_RETRIES: "0", SOURCE_LINK_MAX_URLS: "0", SOURCE_LINK_MAX_PAGES: "0", SOURCE_LINK_TIMEOUT_MS: "2000",
         },
         timeout: 10_000,
@@ -249,6 +262,13 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
     assert.equal(report.schemaVersion, 2);
     assert.equal(report.coverage.complete, !brokenInput);
     assert.equal(report.checkedUrls, report.results.length);
+    if (!brokenInput) {
+      assert.equal(report.summary.blocked, 1, "Raw HTTP status must remain visible");
+      assert.equal(report.attentionSummary.blocked, 0);
+      assert.equal(report.reviewSummary.acknowledgedWarnings, 1);
+      assert.ok(report.results.some((result: { url: string; manualReview?: { state: string } }) => result.url === `${origin}/blocked-source` && result.manualReview?.state === "acknowledged"));
+    }
+    assert.equal(await readFile(reviewPath, "utf8"), reviewContents, "CLI must never write or renew reviews");
     assert.match(await readFile(summaryPath, "utf8"), brokenInput ? /INCOMPLETE/ : /COMPLETE/);
     assert.match(await readFile(join(directory, "source-link-report.md"), "utf8"), /read-only/);
   }

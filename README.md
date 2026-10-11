@@ -70,7 +70,9 @@ The audit uses read-only public HTTP GETs with bounded content reads, per-host
 throttling, and up to two retries for temporary failures. It flags apparent
 error/login/challenge pages, missing PDF headers, and article-to-homepage
 redirects for human review. Blocked and unresolved checks stay visible in both
-the report and GitHub run summary. JavaScript-only links, client query behavior,
+the report and GitHub run summary. The results table distinguishes warnings
+requiring review from unchanged warnings already checked manually.
+JavaScript-only links, client query behavior,
 form submissions, and non-HTTP schemes are not executed. Cloudflare-protected
 email placeholders are recognized as mailto links, without crawling their
 client-only placeholder route. External fragments
@@ -84,6 +86,20 @@ can limit a local investigation, but any applied limit is explicitly reported
 as incomplete. CI applies neither limit. The default audit deadline is 22
 minutes within the workflow's 30-minute budget. It never repairs links or
 changes sources, editorial records, the backend, or existing GitHub issues.
+
+Manual confirmations are recorded by a human-authorized repository edit in
+`scripts/source-link-review-register.json`. Each record contains the exact URL,
+reviewer, review date, expiry (at most 180 days), note, and the expected `status`,
+`httpStatus`, `finalUrl`, `detail`, and `fragmentStatus` from the JSON report.
+The note must identify the manual confirmation; it does not certify that the
+automated checker inspected the content. Every URL is still fetched on every
+run, and the original statuses, counts, and references remain in the reports.
+Only an unchanged, unexpired warning moves out of the action lists into the
+manually verified section. A new 404/410, missing fragment, changed destination
+or warning, or expired review requires attention again. The `missing` and
+`missing-fragment` categories cannot be acknowledged. Reviews are never created or renewed by the
+workflow. `SOURCE_LINK_REVIEW_FILE` may select a different local register for
+offline fixtures or investigations; CI uses the committed register.
 
 ## Deployment
 

@@ -1,6 +1,7 @@
 import { parseSourceCitations, normalizeSourceUrl } from "../src/lib/sourceCitations.ts";
 import { setTimeout as delay } from "node:timers/promises";
 import { parseAuditHtml, type HtmlAuditData } from "./link-audit-html.ts";
+import type { ReviewAnnotation } from "./source-link-review.ts";
 
 export type LinkStatus =
   | "working"
@@ -33,6 +34,7 @@ export type LinkResult = SourceLink & {
   contentType: string | null;
   bodyTruncated: boolean;
   fragmentStatus: "not-applicable" | "valid" | "missing" | "unverified";
+  manualReview?: ReviewAnnotation;
 };
 
 export type SourceEvent = {
