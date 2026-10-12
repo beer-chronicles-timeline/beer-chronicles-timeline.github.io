@@ -1,0 +1,129 @@
+{
+  "feed.png": {
+    "sha256": "3266da165ea09ee473276654b66fb16a5bbade21d83f5ebaf32bdac65a318a1e",
+    "pixel_sha256": "e020e0718699b37e2ee5833c7ac8859b101563d77b524081a43653d4e911f952",
+    "dimensions": [
+      1080,
+      1350
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 84,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 165,
+        "height": 61.0,
+        "width": 729.0,
+        "font_size": 86
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 253,
+        "height": 74.0,
+        "width": 943.1427083333333,
+        "font_size": 104.75
+      },
+      {
+        "text": "2021",
+        "top": 982,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Zum W\u00d8L BrauArt is founded in Saarbr\u00fccken.",
+        "top": 1063,
+        "height": 37.666666666666664,
+        "width": 937.5197916666666,
+        "font_size": 52.0
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1220,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1277,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  },
+  "story.png": {
+    "sha256": "3655f337711b3f4ad2d29c1be593bb1fca710d54ed3034a4ffd1e3301d7c8a6f",
+    "pixel_sha256": "bf8688668da34a572e7fa46db169b057cfafdd269534590116c8d2fb461eb5ac",
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 170,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 267,
+        "height": 65.33333333333333,
+        "width": 784.0,
+        "font_size": 92
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 373,
+        "height": 74.66666666666667,
+        "width": 949.4760416666667,
+        "font_size": 105.5
+      },
+      {
+        "text": "2021",
+        "top": 1170,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Zum W\u00d8L BrauArt is founded in Saarbr\u00fccken.",
+        "top": 1290,
+        "height": 38.0,
+        "width": 952.5197916666666,
+        "font_size": 52.75
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1592,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "Tickets still available \u2014 see feed caption",
+        "top": 1654,
+        "height": 31.666666666666668,
+        "width": 574.96875,
+        "font_size": 35
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1724,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "feed.png": {
+    "sha256": "cc51a7ad08b12e611233a63395f2e77a3c68f756c19b141b2abfde0e12408d3f",
+    "pixel_sha256": "7221bb80004c444ee8ab6cc3bbce6c0aea3cf6cee72cb7987fba8984f7ab281f",
+    "dimensions": [
+      1080,
+      1350
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 84,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 165,
+        "height": 61.0,
+        "width": 729.0,
+        "font_size": 86
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 253,
+        "height": 74.0,
+        "width": 943.1427083333333,
+        "font_size": 104.75
+      },
+      {
+        "text": "2008",
+        "top": 982,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Camba begins as a BrauKon showroom.",
+        "top": 1063,
+        "height": 54.666666666666664,
+        "width": 929.2666666666668,
+        "font_size": 60
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1220,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1277,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  },
+  "story.png": {
+    "sha256": "93b527f36ef50bffe99cc1dd14beb3a09e9c6171d02e88e489c29bf064f7da31",
+    "pixel_sha256": "b78538c9375c4ee73ede4bbd8303c891c8a99e6b3a53279fb294314d7d3b5326",
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 170,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 267,
+        "height": 65.33333333333333,
+        "width": 784.0,
+        "font_size": 92
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 373,
+        "height": 74.66666666666667,
+        "width": 949.4760416666667,
+        "font_size": 105.5
+      },
+      {
+        "text": "2008",
+        "top": 1170,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Camba begins as a BrauKon showroom.",
+        "top": 1290,
+        "height": 54.666666666666664,
+        "width": 929.2666666666668,
+        "font_size": 60
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1592,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "Tickets still available \u2014 see feed caption",
+        "top": 1654,
+        "height": 31.666666666666668,
+        "width": 574.96875,
+        "font_size": 35
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1724,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  }
+}

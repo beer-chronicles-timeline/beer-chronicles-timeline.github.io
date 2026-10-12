@@ -1,0 +1,129 @@
+{
+  "feed.png": {
+    "sha256": "7c47d9cc49431d87a6e0275edb1ed314df1313a63c715d4be871c859a3c84499",
+    "pixel_sha256": "cdaf20a5b9f3891708d348b25a61bc81ab3df866da58ac9814ac80a0a1e33aa4",
+    "dimensions": [
+      1080,
+      1350
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 84,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 165,
+        "height": 61.0,
+        "width": 729.0,
+        "font_size": 86
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 253,
+        "height": 74.0,
+        "width": 943.1427083333333,
+        "font_size": 104.75
+      },
+      {
+        "text": "2018",
+        "top": 982,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "From homebrewing to commercial contract brewing.",
+        "top": 1063,
+        "height": 42.333333333333336,
+        "width": 936.3000000000001,
+        "font_size": 46.75
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1220,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1277,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  },
+  "story.png": {
+    "sha256": "3b02536744428fa9f85a5ed0cb570c3b283facf97997549b81f9effbda61886d",
+    "pixel_sha256": "c3db4f3a9fc94b3b01cf48c51159fabad641c221f6f9ee9b9aa07f14b15c197f",
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 170,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 267,
+        "height": 65.33333333333333,
+        "width": 784.0,
+        "font_size": 92
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 373,
+        "height": 74.66666666666667,
+        "width": 949.4760416666667,
+        "font_size": 105.5
+      },
+      {
+        "text": "2018",
+        "top": 1170,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "From homebrewing to commercial contract brewing.",
+        "top": 1290,
+        "height": 43.0,
+        "width": 948.9666666666667,
+        "font_size": 47.5
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1592,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "Tickets still available \u2014 see feed caption",
+        "top": 1654,
+        "height": 31.666666666666668,
+        "width": 574.96875,
+        "font_size": 35
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1724,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "factual_review": "passed",
+  "visual_inspection": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "package_validation": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/kraft-braeu/v001",
+    "exit_code": 0,
+    "warnings": [
+      "Publication is not confirmed for today",
+      "User visual approval is pending"
+    ],
+    "checked_at_recorded": "2026-10-01T08:52:34+02:00"
+  },
+  "preflight": {
+    "engine_lock": "passed",
+    "font_hashes": "passed",
+    "template_source_hashes": "passed",
+    "supplied_logo_inspected": "passed",
+    "reference_images_inspected": "passed in the preceding feature; same frozen references reused",
+    "live_entry_read_and_title_matched": "passed",
+    "opening_date_founders_and_launch_beers_confirmed_by_primary_source": "passed",
+    "ticket_selectors_both_days": "passed"
+  },
+  "scope": "One feed image and one Story planned; no website, database, Git or social publishing operations.",
+  "pending": [
+    "User review of newly delivered images",
+    "Confirm publication day and recheck tickets if publishing later",
+    "Native Instagram sticker and mention placement"
+  ],
+  "recorded_at": "2026-10-01T08:51:55+02:00",
+  "exports": {
+    "feed.png": {
+      "dimensions": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "srgb_intent": 0,
+      "opaque": true,
+      "sha256": "939efc34bf7f64683fd1bbfc0461825a188b17c6694881b074f81e9a311e7981",
+      "pixel_sha256": "960010841c6e52d89fbe7e6439811390f45ce85b80eddcfdeb6451470f2ce578"
+    },
+    "story.png": {
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "srgb_intent": 0,
+      "opaque": true,
+      "sha256": "f5136b06c102e3f066f72ad9f14ac51f1b8b9f38f35c19d5b17bdedede28e3bc",
+      "pixel_sha256": "e0a11bf1f408b18f2d71996da9093add09f7772ceb46dc4c4650a5578ba0d38c"
+    }
+  },
+  "repeatability_evidence": {
+    "status": "passed",
+    "comparison_directory": "/private/tmp/bc-kraftbraeu-reproduction-v001",
+    "decoded_pixels_identical": true,
+    "file_bytes_identical": true
+  },
+  "visual_evidence": {
+    "reviewer": "assistant",
+    "actual_final_files_opened": [
+      "feed.png",
+      "story.png"
+    ],
+    "full_resolution": true,
+    "phone_preview_width": 390,
+    "phone_preview_files": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ],
+    "checks": [
+      "Exact series heading and approved hook",
+      "1998 year agrees with the opening on 28 September 1998",
+      "Full supplied logo, black background, and green lettering preserved",
+      "No clipped or overlapping text",
+      "Phone-size copy and footer legibility",
+      "Opaque cream background and copper rules",
+      "Story blank sticker area remains clear",
+      "Story ticket note directs to the feed caption"
+    ],
+    "native_instagram_interface_check": "pending at publication"
+  }
+}

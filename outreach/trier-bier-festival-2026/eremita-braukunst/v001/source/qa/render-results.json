@@ -1,0 +1,129 @@
+{
+  "feed.png": {
+    "sha256": "6262af60949862f7f2409b0347d36c18e5520dcb100e97c11b33b67aedb62b0a",
+    "pixel_sha256": "51bbf9e906b0a1b918950d4df5b15f99b1af5b8a5e957fa3880e2bcbd1caa521",
+    "dimensions": [
+      1080,
+      1350
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 84,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 165,
+        "height": 61.0,
+        "width": 729.0,
+        "font_size": 86
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 253,
+        "height": 74.0,
+        "width": 943.1427083333333,
+        "font_size": 104.75
+      },
+      {
+        "text": "2016",
+        "top": 982,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Eremita Braukunst begins selling beer.",
+        "top": 1063,
+        "height": 54.666666666666664,
+        "width": 890.9145833333333,
+        "font_size": 60
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1220,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1277,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  },
+  "story.png": {
+    "sha256": "d2ef5a0fc768cbb19b79c2237b804866a0ff03d3e8e1c50d4333dedd74e68c81",
+    "pixel_sha256": "c439ca83c648262a4a355e5ce35ccd5772c188ca543a765158291ffdb5265b21",
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 170,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 267,
+        "height": 65.33333333333333,
+        "width": 784.0,
+        "font_size": 92
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 373,
+        "height": 74.66666666666667,
+        "width": 949.4760416666667,
+        "font_size": 105.5
+      },
+      {
+        "text": "2016",
+        "top": 1170,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Eremita Braukunst begins selling beer.",
+        "top": 1290,
+        "height": 54.666666666666664,
+        "width": 890.9145833333333,
+        "font_size": 60
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1592,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "Tickets still available \u2014 see feed caption",
+        "top": 1654,
+        "height": 31.666666666666668,
+        "width": 574.96875,
+        "font_size": 35
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1724,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  }
+}

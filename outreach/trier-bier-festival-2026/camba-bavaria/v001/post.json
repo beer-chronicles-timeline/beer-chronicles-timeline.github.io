@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "subject": "Camba Bavaria",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Camba Bavaria Is Founded As A BrauKon Showroom",
+    "search_url": "https://beer-chronicles.org/?string=Camba+Bavaria",
+    "id": "297a903d-192a-486c-ba57-3f8b9ec4b8fb",
+    "display_date": "2008",
+    "date_precision": "year",
+    "hook": "Camba begins as a BrauKon showroom.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/297a903d-192a-486c-ba57-3f8b9ec4b8fb/camba-bavaria-is-founded-as-a-braukon-showroom",
+        "claims": [
+          "Founded in 2008 by Markus Lohner in an old mill on the Alz in Truchtlaching",
+          "Working BrauKon showroom demonstrated equipment and beer variety",
+          "Test beers helped develop a brewery producing Bavarian and international styles"
+        ],
+        "observed_at": "2026-09-27T17:33:05+02:00"
+      },
+      {
+        "location": "https://camba-bavaria.de/pages/ueber-uns",
+        "claims": [
+          "Corroborates 2008 founding, founder, mill location, showroom purpose and subsequent diversity"
+        ],
+        "observed_at": "2026-09-27T17:33:05+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "Camba listed among 2026 participants",
+          "2–3 October 2026 at Blesius Garten"
+        ],
+        "observed_at": "2026-09-27T17:33:05+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "They are very good friends of the Trier craft beer scene!",
+    "public_use": "explicit",
+    "source": "User supplied in this conversation"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.png",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Camba-Bavaria-pw6zbnvatu9bvrxbp1viukdnwng1k1vo0roysq31cw.png",
+    "sha256": "14a3049adc1af26e16e4b89210fc598fce5e1a5b4e76307c0fc64efa4f8dc0dd",
+    "crop": null,
+    "credit": "Camba Bavaria; user-supplied organiser-hosted logo.",
+    "mode": "RGBA",
+    "dimensions": [
+      400,
+      400
+    ],
+    "treatment": "Original RGBA file retained unchanged, including full logo and supplied transparency. Proportional enlargement and alpha compositing on the existing cream canvas; no cropping, background removal, recolouring or redraw."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-27T17:31:22+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both public booking pages expose enabled standing-ticket selectors with options 0–8. No ticket selected, reserved or purchased.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "Good friends of Trier’s craft-beer scene, Camba Bavaria have a special place in this edition of The Stories Behind the Trier Beer Festival 2026.\n\nTheir story began in 2008, when Markus Lohner founded Camba Bavaria in an old mill beside the Alz in Truchtlaching. It started as a working showroom for his brewery-equipment company, BrauKon. Customers could see the systems in action and taste the variety of beers they could produce. Those test brews helped the showroom grow into a brewery making both traditional Bavarian beers and international styles.\n\nMeet @camba_bavaria at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nFollow the accompanying Story’s link to explore Camba’s beginnings and more entries on Beer Chronicles.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #CambaBavaria #BavarianBeer #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nCamba Bavaria\n2008\nCamba begins as a BrauKon showroom.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original circular Camba logo has red and cream rings, a red bird, blue “CAMBA” lettering and the words “BRAUEREI”, “Bayern” and “HANDWERK”. Below: “2008” in copper and “Camba begins as a BrauKon showroom.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "participant_handle": {
+    "handle": "@camba_bavaria",
+    "source_url": "https://camba-bavaria.de/",
+    "linked_url": "https://www.instagram.com/camba_bavaria/",
+    "verified_at": "2026-09-27T17:33:05+02:00"
+  },
+  "render": {
+    "state": "rendered_and_verified",
+    "mode": "rendered",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "renderer_patch": "rgba-logo-compositing-v1: preserve supplied alpha, composite onto existing cream canvas. Layout and font lock unchanged.",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "cc51a7ad08b12e611233a63395f2e77a3c68f756c19b141b2abfde0e12408d3f",
+        "pixel_sha256": "7221bb80004c444ee8ab6cc3bbce6c0aea3cf6cee72cb7987fba8984f7ab281f",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2008",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Camba begins as a BrauKon showroom.",
+            "top": 1063,
+            "height": 54.666666666666664,
+            "width": 929.2666666666668,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "93b527f36ef50bffe99cc1dd14beb3a09e9c6171d02e88e489c29bf064f7da31",
+        "pixel_sha256": "b78538c9375c4ee73ede4bbd8303c891c8a99e6b3a53279fb294314d7d3b5326",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2008",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Camba begins as a BrauKon showroom.",
+            "top": 1290,
+            "height": 54.666666666666664,
+            "width": 929.2666666666668,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "approved_template_source": "social/trier-2026/white-dog-brewery/v001/source",
+    "source_files": {
+      "render.py": "412ea7fd531970c29ee0313503b7eab846dc793519f9f8a33724749570cd8194",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "072b1daca184ba9a3186c391702ab0f770b67fab2c50b4bbd5ed8c4fa8fdbf92"
+    },
+    "font_approval": "Previously approved Times New Roman files reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_basis": "Existing approved campaign layout, fonts and colours retained.",
+    "approved_at": "2026-09-27T17:36:45+02:00",
+    "user_statement": "Go",
+    "visual_basis": "User approved proposed hook/caption and rendering with supplied logo in existing template. Final exports inspected by assistant."
+  },
+  "status": "needs_review",
+  "status_reason": "Approved artwork and copy complete. Publication date unspecified; recheck tickets on actual publication day and inspect native sticker placement.",
+  "notes": [
+    "User mentions multiple Camba entries. Selected founding entry is the sole historical core; exact supplied search URL retained to expose additional entries.",
+    "Separate relocation date discrepancy: indexed Beer Chronicles timeline says 2016; official Camba history says 2017. Not used in caption; reported to user. No editorial records modified.",
+    "Organiser participant subpage carries an older edition breadcrumb and potentially old tap list; neither tap list nor awards used. Current participant overview confirms 2026 participation.",
+    "Do not interpret community friendship as a claim of a private friendship or official partnership."
+  ],
+  "copy_hashes": {
+    "caption.txt": "8ba645bc9c4171c26ab22bf546db87728676646dbd6faf9fa876a1a2023f36a7",
+    "story-text.txt": "beca35814964a0158ce38854e326ce35f012b483af7c627c97fc620126c93fdc",
+    "alt-text.txt": "08b67d33da9a130f6798753b7fd5c47df62d8c27feda77e33cdc5527163c86cc"
+  }
+}

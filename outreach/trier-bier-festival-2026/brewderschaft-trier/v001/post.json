@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "subject": "Brewderschaft Trier",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Brewderschaft Trier Is Founded",
+    "search_url": "https://beer-chronicles.org/?string=Brewderschaf+Trier",
+    "id": "652ee827-42c9-48e9-8bf6-b0c782809a52",
+    "display_date": "2022",
+    "date_precision": "year",
+    "hook": "Brewderschaft Trier is founded.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/652ee827-42c9-48e9-8bf6-b0c782809a52/brewderschaft-trier-is-founded",
+        "claims": [
+          "Founded in 2022 by homebrewers in Trier",
+          "Sharing ingredients/equipment, tasting beers and exchanging feedback",
+          "Festival beer proceeds support charitable causes"
+        ],
+        "observed_at": "2026-09-25T15:45:10+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/brewderschaft/",
+        "claims": [
+          "Level 2 Monk listed as Dubbel under Schmaidt's Nerd Brewing",
+          "Brewderschaft participates and donates festival proceeds"
+        ],
+        "observed_at": "2026-09-25T15:45:10+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "2026 participant list and 2–3 October at Blesius Garten"
+        ],
+        "observed_at": "2026-09-25T15:45:10+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "I am one of the brewers of this home brew club from Trier and I will also have my own beer there at the festival: \"Level 2 Monk\"; a Belgian Dubbel from my brewery \"Schmaidt's Nerd Brewing\".",
+    "public_use": "explicit",
+    "source": "User message in this conversation"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.png",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Brewderschaft-Logo-2000-x-2000-px-qd17onj5jqtu8o9dw94y1pplx5kaa92kktiojiz8gw.png",
+    "sha256": "b2a5c3267fd26e888e6397682ac7f2763056e8aadaccde865cda7341ea04827b",
+    "crop": [
+      0,
+      0,
+      400,
+      400
+    ],
+    "credit": "Brewderschaft Trier; exact logo supplied by user via organiser-hosted URL.",
+    "treatment": "Full 400 × 400 image; opaque original black background retained; proportional enlargement only.",
+    "crop_pixel_sha256": "5afee596d21bc69fe1a50317f9ccaa2dceacd5f2a1c63917c31c86ca1469c76f"
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-25T15:45:10+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date pages display enabled quantity selectors offering 0–8 tickets; nothing selected or reserved.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "This one is personal: I’m one of the brewers in Brewderschaft Trier, our local homebrewing club. At this year’s festival, you’ll also find my own beer: Level 2 Monk, a Belgian Dubbel from Schmaidt's Nerd Brewing.\n\nThe Stories Behind the Trier Beer Festival 2026 continues with a story close to home.\n\nFounded in 2022, Brewderschaft Trier brings local homebrewers together to share ingredients and equipment, taste each other’s beers and exchange feedback. Proceeds from the group’s festival beers go to charitable causes.\n\nCome and discover Brewderschaft Trier at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore our story on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #BrewderschaftTrier #Homebrewing #BelgianDubbel",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nBrewderschaft Trier\n2022\nBrewderschaft Trier is founded.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and thin copper rules. “BEER CHRONICLES” appears above “The Stories Behind the Trier Beer Festival 2026”. The supplied Brewderschaft logo has a green hop cone on a black square with cream lettering: “BREWDERSCHAFT”, “HOMEMADE BEER”, “TRIER GERMANY” and “EST. 2022”. Below it: “2022” in copper and “Brewderschaft Trier is founded.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "render": {
+    "mode": "rendered",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "83b17efa3de2b81507c35d650c0d22f1bff545f1f76cf68d51f8a08e0e019636",
+        "pixel_sha256": "f7d67b94a086a9b51abc27504c2275892d20cfff0a015679cc7d7e08b447d343",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2022",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Brewderschaft Trier is founded.",
+            "top": 1063,
+            "height": 42.333333333333336,
+            "width": 733.6197916666666,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "f7ddb9ab17f97b5ec4caa676bdb14bc0853729823f9b6c365ae100f59eb9ef6e",
+        "pixel_sha256": "f873c5ca777e5b04588825ad02ce6e74b277c2997e17b97501011f9c8b5d8896",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2022",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Brewderschaft Trier is founded.",
+            "top": 1290,
+            "height": 42.333333333333336,
+            "width": 733.6197916666666,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "state": "rendered_and_verified",
+    "approved_template_source": "/Users/schmidt/beer-history-website/social/trier-2026/blech-brut/v001/source",
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "6c4941c9f77894b46b55e3b3bed29986902bb9a4ff144f3ddb613f46ac79e9a2"
+    },
+    "font_approval": "Previously approved Times New Roman files and renderer reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_approval": "User approved Blech.Brut package earlier in this conversation; unchanged layout/fonts/renderer reused.",
+    "new_copy_approval_required": false,
+    "approved_at": "2026-09-25T15:47:55+02:00",
+    "user_statement": "Go",
+    "visual_basis": "Previously approved template, fonts and layout plus explicit go-ahead to render this approved hook/caption with the supplied logo. No new design or template substitution.",
+    "locked_source_hashes": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "6c4941c9f77894b46b55e3b3bed29986902bb9a4ff144f3ddb613f46ac79e9a2"
+    }
+  },
+  "status": "needs_review",
+  "participant_handle": {
+    "handle": "@brewderschaft_trier",
+    "source_url": "https://kraft-braeu.de/bierfestival/brewderschaft/",
+    "linked_url": "https://www.instagram.com/brewderschaft_trier/",
+    "verified_at": "2026-09-25T15:45:10+02:00"
+  },
+  "notes": [
+    "User-supplied search URL preserved verbatim, including Brewderschaf without final t.",
+    "Organiser page has stale 11th-edition breadcrumb; current main festival listing and user confirm 2026 participation.",
+    "No information about other beers from the organiser list added to the caption."
+  ],
+  "status_reason": "Artwork and copy complete and approved; publication date is not specified. Recheck ticket availability on the chosen publication day and inspect native sticker placement in Instagram.",
+  "copy_hashes": {
+    "caption.txt": "b7c5fa7e683dbcf16bad5dffd622c3f3b39fa0f6da612c03f4c41c6eb2f76620",
+    "story-text.txt": "5b39838621be0af835413ecabcc892cbb0a8a77dac9d9baffb72547f6e4d9596",
+    "alt-text.txt": "e68dfc7d4ad648432bcd373ff8c024cc05ed59ae764c69fcdf8bcc00e5779c8f"
+  }
+}

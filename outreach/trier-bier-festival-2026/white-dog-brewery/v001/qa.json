@@ -1,0 +1,65 @@
+{
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "checked_at": "2026-09-27T16:49:21+02:00",
+  "outputs": {
+    "feed.png": {
+      "size": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    },
+    "story.png": {
+      "size": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    }
+  },
+  "approved_template_unchanged": true,
+  "copy_unchanged_from_approval": true,
+  "visual_evidence": {
+    "full_resolution": [
+      "feed.png",
+      "story.png"
+    ],
+    "phone_preview_width": 390,
+    "phone_previews": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ]
+  },
+  "visual_findings": [
+    "Full series title, date, logo, approved hook and footer visible without clipping.",
+    "Entire 400 × 400 original logo retained with white background and proportional enlargement; no redraw or unrelated mark.",
+    "Approved hook fits one line via existing controlled fitting; legible at 390px preview width.",
+    "Typography, colours, rules, coordinates, fonts and renderer match existing template.",
+    "Story sticker space remains clear; native Instagram preview remains manual."
+  ],
+  "repeatability_method": "Two independent final renders; decoded pixel hashes and PNG byte hashes match.",
+  "public_image_count": 2,
+  "package_check": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/white-dog-brewery/v001",
+    "warnings": [
+      "Publication is not confirmed for today"
+    ]
+  },
+  "pending": [
+    "Recheck ticket availability on publication day; publication date not specified.",
+    "Add native Story link sticker and verify placement in Instagram."
+  ],
+  "app_database_git_mutations": "None; only local White Dog social package created."
+}

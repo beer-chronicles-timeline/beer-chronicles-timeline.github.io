@@ -1,0 +1,66 @@
+{
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "checked_at": "2026-09-25T15:47:55+02:00",
+  "outputs": {
+    "feed.png": {
+      "size": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_png_bytes_identical": true
+    },
+    "story.png": {
+      "size": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_png_bytes_identical": true
+    }
+  },
+  "approved_template_unchanged": true,
+  "copy_unchanged_from_approval": true,
+  "visual_evidence": {
+    "full_resolution": [
+      "feed.png",
+      "story.png"
+    ],
+    "phone_preview_width": 390,
+    "phone_previews": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ]
+  },
+  "visual_findings": [
+    "Title, 2022 and approved hook complete and legible; no clipping.",
+    "Full original logo and its black square retained; no removal, redraw or unrelated mark.",
+    "Logo source enlarged proportionally from 400 × 400; no claim of added source detail.",
+    "Cream, charcoal, copper, typography and coordinates match the approved template.",
+    "Footer compact but readable at inspected phone scale.",
+    "Single modest blank sticker area clear of hook/footer; actual app overlay check remains manual."
+  ],
+  "repeatability_method": "Second independent invocation with locked inputs; decoded RGB hashes and PNG file hashes identical for both outputs.",
+  "public_image_count": 2,
+  "package_check": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/brewderschaft-trier/v001",
+    "warnings": [
+      "Publication is not confirmed for today"
+    ]
+  },
+  "pending": [
+    "Publication date not specified; recheck tickets on that date",
+    "Native Instagram sticker placement and final interface preview"
+  ],
+  "app_database_git_mutations": "None. Only the new Brewderschaft social package updated."
+}

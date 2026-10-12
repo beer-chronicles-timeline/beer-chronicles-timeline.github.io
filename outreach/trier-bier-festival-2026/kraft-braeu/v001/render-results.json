@@ -1,0 +1,129 @@
+{
+  "feed.png": {
+    "sha256": "939efc34bf7f64683fd1bbfc0461825a188b17c6694881b074f81e9a311e7981",
+    "pixel_sha256": "960010841c6e52d89fbe7e6439811390f45ce85b80eddcfdeb6451470f2ce578",
+    "dimensions": [
+      1080,
+      1350
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 84,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 165,
+        "height": 61.0,
+        "width": 729.0,
+        "font_size": 86
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 253,
+        "height": 74.0,
+        "width": 943.1427083333333,
+        "font_size": 104.75
+      },
+      {
+        "text": "1998",
+        "top": 982,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Kraft Br\u00e4u opens in Trier.",
+        "top": 1063,
+        "height": 54.666666666666664,
+        "width": 597.4010416666666,
+        "font_size": 60
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1220,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1277,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  },
+  "story.png": {
+    "sha256": "f5136b06c102e3f066f72ad9f14ac51f1b8b9f38f35c19d5b17bdedede28e3bc",
+    "pixel_sha256": "e0a11bf1f408b18f2d71996da9093add09f7772ceb46dc4c4650a5578ba0d38c",
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "mode": "RGB",
+    "text_bounds": [
+      {
+        "text": "BEER CHRONICLES",
+        "top": 170,
+        "height": 20.666666666666668,
+        "width": 384.6666666666667,
+        "font_size": 30
+      },
+      {
+        "text": "The Stories Behind the",
+        "top": 267,
+        "height": 65.33333333333333,
+        "width": 784.0,
+        "font_size": 92
+      },
+      {
+        "text": "Trier Beer Festival 2026",
+        "top": 373,
+        "height": 74.66666666666667,
+        "width": 949.4760416666667,
+        "font_size": 105.5
+      },
+      {
+        "text": "1998",
+        "top": 1170,
+        "height": 41.0,
+        "width": 141.0,
+        "font_size": 60
+      },
+      {
+        "text": "Kraft Br\u00e4u opens in Trier.",
+        "top": 1290,
+        "height": 54.666666666666664,
+        "width": 597.4010416666666,
+        "font_size": 60
+      },
+      {
+        "text": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+        "top": 1592,
+        "height": 16.0,
+        "width": 847.7114583333333,
+        "font_size": 23
+      },
+      {
+        "text": "Tickets still available \u2014 see feed caption",
+        "top": 1654,
+        "height": 31.666666666666668,
+        "width": 574.96875,
+        "font_size": 35
+      },
+      {
+        "text": "beer-chronicles.org",
+        "top": 1724,
+        "height": 26.666666666666668,
+        "width": 242.09166666666667,
+        "font_size": 29
+      }
+    ]
+  }
+}

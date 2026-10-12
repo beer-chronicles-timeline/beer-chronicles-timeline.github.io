@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "2016",
+  "hook_lines": [
+    "Atelier VRAI begins as Atelier der Braukünste."
+  ],
+  "footer": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available — see feed caption",
+  "logo_path": "assets/selected-logo-crop.png",
+  "logo_sha256": "ce3bbf3addc666d8b050154b272249bc14c41fa37e230100e8fd60a8cd43ce67",
+  "logo_crop": [
+    0,
+    0,
+    185,
+    185
+  ]
+}

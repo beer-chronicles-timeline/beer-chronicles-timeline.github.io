@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "2026",
+  "hook_lines": [
+    "Still Brewing Society appears at the Bingen Bier Festival."
+  ],
+  "footer": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available — see feed caption",
+  "logo_path": "assets/original-logo.jpeg",
+  "logo_sha256": "6f5e01c8c37b14bbf61d7d8044d0632fc25d14b1dd161d76c062eca2c067c6e3",
+  "logo_crop": [
+    0,
+    0,
+    400,
+    400
+  ]
+}

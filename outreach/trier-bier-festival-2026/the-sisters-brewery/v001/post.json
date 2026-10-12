@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "subject": "The Sisters Brewery",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "The Sisters Brewery Is Founded in Breukelen",
+    "search_url": "https://beer-chronicles.org/?string=Sisters+Brewery",
+    "id": "21ae7432-4368-4ca3-81b0-92aac1aa0d28",
+    "display_date": "2015",
+    "date_precision": "year",
+    "hook": "Two sisters give a family brewery its name.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/21ae7432-4368-4ca3-81b0-92aac1aa0d28/the-sisters-brewery-is-founded-in-breukelen",
+        "claims": [
+          "2015 founding in Breukelen",
+          "Homebrewing by Annamijn, Josefien and father Wilfran Beijeman; brewery named for sisters",
+          "Queen Bee IPA and Drone porter on sale and crowdfunding by August 2015",
+          "Contract production at De Fontein"
+        ],
+        "observed_at": "2026-09-28T13:20:18+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "2026 participation",
+          "2–3 October 2026 at Blesius Garten"
+        ],
+        "observed_at": "2026-09-28T13:20:18+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "No personal connection.",
+    "public_use": "none"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.jpg",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/brauerei_sister-pw7d2i0kpznjxl5a6y4zhp1i34gdrqcldzj60sdtpc.jpg",
+    "sha256": "8e3572f5223062b93637b3749a40494356347aa1bdcf597d300e5c5f0376e10c",
+    "crop": null,
+    "credit": "The Sisters Brewery; supplied organiser-hosted logo.",
+    "treatment": "Retain full 400 × 400 original, aspect ratio, lettering and white background."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-28T13:20:18+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date booking pages show enabled standing-ticket selectors with quantities 0–8. No selections, reservations or purchases.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "participant_handle": {
+    "handle": "@the_sisters_brewery",
+    "source_url": "https://thesistersbrewery.com/",
+    "linked_url": "https://www.instagram.com/the_sisters_brewery/",
+    "verified_at": "2026-09-28T13:20:18+02:00"
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "Two sisters gave this brewery its name. Meet The Sisters Brewery in The Stories Behind the Trier Beer Festival 2026.\n\nFounded in Breukelen in 2015, the Dutch project grew out of homebrewing by Annamijn and Josefien and their father, Wilfran Beijeman. By August that year, Queen Bee IPA and Drone porter were already on sale, while the family was crowdfunding to expand the business. Production took place at De Fontein, bringing the family's beers to market through contract brewing.\n\nMeet @the_sisters_brewery at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore their story on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #TheSistersBrewery #DutchBeer #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nThe Sisters Brewery\n2015\nTwo sisters give a family brewery its name.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original black-and-white logo shows two facing profiles within a bee-like emblem, encircled by “The Sisters Brewery” and “CRAFT BEER”; its white background is retained. Below: “2015” in copper and “Two sisters give a family brewery its name.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "render": {
+    "state": "rendered_and_verified",
+    "approved_template_source": "social/trier-2026/white-dog-brewery/v001/source",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "mode": "rendered",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "outputs": {
+      "feed.png": {
+        "sha256": "55281d377c4f7cc932f6a8d75d61beb367cb5058733b8e22c345bef0cb508658",
+        "pixel_sha256": "7786ac4e811735294c3f5bba23c013f55567187fffce8e072205f51891f57cb0",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2015",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Two sisters give a family brewery its name.",
+            "top": 1063,
+            "height": 51.333333333333336,
+            "width": 939.4041666666667,
+            "font_size": 56.25
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "270a03d66801df6e4fbfe0989cde9742f26a878b79fdb1519314f14e3a6ae493",
+        "pixel_sha256": "136cbb04d659a23eaef3cca3ed5683603b3ac76ad37faf219d0d25b550bfd726",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2015",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Two sisters give a family brewery its name.",
+            "top": 1290,
+            "height": 52.333333333333336,
+            "width": 956.0708333333333,
+            "font_size": 57.5
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "90484beefcea7a46cd791633b46407ea54fe08ca6d6ef8cbc348b49275871390"
+    },
+    "font_approval": "Previously approved Times New Roman font files reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_basis": "Existing campaign manifests record approval; reuse unchanged renderer, layout and fonts.",
+    "approved_at": "2026-09-28T13:22:32+02:00",
+    "user_statement": "Go",
+    "visual_basis": "User authorized rendering the approved copy with the existing approved campaign template; final output inspection by assistant follows."
+  },
+  "status": "needs_review",
+  "notes": [
+    "Final artwork rendered using approved copy, intact supplied logo, and existing approved campaign template.",
+    "Organiser page retains obsolete October 10–11 block; 2026 heading and dated booking pages confirm October 2–3.",
+    "Founding location Breukelen; current organiser listing says Utrecht. These describe different times.",
+    "Recheck ticket availability on publication day."
+  ],
+  "status_reason": "Approved artwork and copy complete. Publication date not specified; recheck tickets on publication day and check native Instagram sticker placement.",
+  "copy_hashes": {
+    "caption.txt": "cdfb9cf3364baf552c6cf2e1f27596a9baf568d8a9a57d4a30973090bbe1b959",
+    "story-text.txt": "c5bc3131c7b2bb6114447b6a9d00c525c54b597035b187f499e2791407cc3bf3",
+    "alt-text.txt": "9f5d9c9172be8a97c13b35e7d995b5081be66be46d9da91ffe81953851142bb5"
+  }
+}

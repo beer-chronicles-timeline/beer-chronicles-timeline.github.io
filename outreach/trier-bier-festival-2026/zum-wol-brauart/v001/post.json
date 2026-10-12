@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "subject": "Zum WØL BrauArt",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Founding Of Zum WØL BrauArt",
+    "search_url": "https://beer-chronicles.org/?string=Zum+W%C3%B8L",
+    "id": "541bc456-96b0-4274-8795-72bde60940bf",
+    "display_date": "2021",
+    "date_precision": "year",
+    "event_kind": "Founding",
+    "hook": "Zum WØL BrauArt is founded in Saarbrücken.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/541bc456-96b0-4274-8795-72bde60940bf/founding-of-zum-w-l-brauart",
+        "claims": [
+          "Exact selected title matched",
+          "Founded in Saarbrücken in 2021 by Laura and Lennart",
+          "Craft beer and design combined during pandemic",
+          "Modern international beer styles and creative branding from the start"
+        ],
+        "observed_at": "2026-09-30T10:02:56+02:00",
+        "local_evidence": "source/evidence/entry.html"
+      },
+      {
+        "location": "https://alm-events.de/bierfestival/",
+        "claims": [
+          "2021 founding in Saarbrücken",
+          "Laura Weber and Lennart Köhl combine beer and design"
+        ],
+        "observed_at": "2026-09-30T10:02:56+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "Zum WØL BrauArt listed as 2026 participant",
+          "2–3 October 2026 at Blesius Garten, Trier"
+        ],
+        "observed_at": "2026-09-30T09:58:08+02:00",
+        "local_evidence": "source/evidence/festival.html"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "Good friends from near Saarbrücken.",
+    "public_use": "explicit",
+    "source": "User input in this conversation"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.png",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Woel_Insta-Post_Logo_Trier_02-qv7pfz31tolxygk7gg8daihsfos3miux4gns25t09s.png",
+    "sha256": "9b178ee92e006d809b6a105737d1f200caa94c72f873fdbb1c0e2828065b30e7",
+    "crop": [
+      0,
+      0,
+      400,
+      400
+    ],
+    "credit": "Zum WØL BrauArt; exact user-supplied organiser-hosted logo.",
+    "treatment": "Full original image, navy background, colours, marks and aspect ratio retained. RGBA source is fully opaque. Proportional enlargement only.",
+    "crop_pixel_sha256": "b59ccbb12f6b6394ed84bce4c5a17cb0b07a79d18d7fe6793cecfe44f31b391d"
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-30T09:58:08+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date-specific booking pages have enabled Stehplatz quantity selectors 0–8. Friday 2 October 2026 16:00; Saturday 3 October 2026 15:00. Public read-only GETs; nothing selected, reserved or bought.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ],
+    "local_evidence": [
+      "source/evidence/friday.html",
+      "source/evidence/saturday.html"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "I’m especially happy to feature Zum WØL BrauArt: Laura and Lennart are good friends from the Saarbrücken area.\n\nThey founded Zum WØL BrauArt in Saarbrücken in 2021, bringing their passion for craft beer and design together during the pandemic. Modern international beer styles and creative branding have been part of the project from the start.\n\nTheir founding story is the next feature in The Stories Behind the Trier Beer Festival 2026.\n\nMeet Zum WØL BrauArt at the festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore their story on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #ZumWøl #SaarlandBeer #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nZum WØL BrauArt\n2021\nZum WØL BrauArt is founded in Saarbrücken.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original Zum WØL BrauArt logo has a white cartoon face shaped like a hop cone, white “ZUM WØL BRAU ART” lettering and a small pink accent on a dark navy square. Below: “2021” in copper and “Zum WØL BrauArt is founded in Saarbrücken.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "render": {
+    "mode": "rendered",
+    "state": "rendered_and_verified",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "3266da165ea09ee473276654b66fb16a5bbade21d83f5ebaf32bdac65a318a1e",
+        "pixel_sha256": "e020e0718699b37e2ee5833c7ac8859b101563d77b524081a43653d4e911f952",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2021",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Zum WØL BrauArt is founded in Saarbrücken.",
+            "top": 1063,
+            "height": 37.666666666666664,
+            "width": 937.5197916666666,
+            "font_size": 52.0
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "3655f337711b3f4ad2d29c1be593bb1fca710d54ed3034a4ffd1e3301d7c8a6f",
+        "pixel_sha256": "bf8688668da34a572e7fa46db169b057cfafdd269534590116c8d2fb461eb5ac",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2021",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Zum WØL BrauArt is founded in Saarbrücken.",
+            "top": 1290,
+            "height": 38.0,
+            "width": 952.5197916666666,
+            "font_size": 52.75
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "approved_template_source": "/Users/schmidt/beer-history-website/social/trier-2026/blech-brut/v001/source",
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "10b40f08d96e3b5f5a9ca1f418816eb659a6c869c0bacb420dd832a2795ffb36"
+    },
+    "font_approval": "Previously approved Times New Roman and locked renderer reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_approval": "Approved template and font identity recorded in Blech.Brut v001 manifest; no design changes.",
+    "new_copy_approval_required": false,
+    "approved_at": "2026-09-30T10:06:43+02:00",
+    "user_statement": "Approve and render",
+    "visual_basis": "User authorised rendering the approved hook/caption with the supplied logo through the previously approved unchanged template. No new template or font introduced.",
+    "locked_source_hashes": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "10b40f08d96e3b5f5a9ca1f418816eb659a6c869c0bacb420dd832a2795ffb36"
+    }
+  },
+  "participant_handle": {
+    "handle": "@woel.art",
+    "source_url": "https://www.woel.art/",
+    "linked_url": "https://www.instagram.com/woel.art/",
+    "verified_at": "2026-09-30T09:58:08+02:00",
+    "use": "Optional native participant tag"
+  },
+  "status": "needs_review",
+  "status_reason": "Approved copy and unchanged approved template rendered and verified. Publication date unspecified; recheck tickets on actual publication day and inspect native Instagram sticker/interface placement.",
+  "notes": [
+    "Year precision; do not claim January 1 as a known founding day.",
+    "No award claims, specific beers or attendance plans added.",
+    "Fresh organiser page is consistent with 2–3 October; web cached lower date block was stale.",
+    "Live entry current cited source is Alm Events; older web crawl showed craft-festival.de. Facts used agree; fresh static public HTML retained as current evidence."
+  ],
+  "copy_hashes": {
+    "caption.txt": "80172e0049f61dcaaff87e2c1e5f9d82038b6917d643125b3769d170345e505f",
+    "story-text.txt": "68acac510d9bab71de795d08bc0c81f6045bec92cb890067c1f0fc3a9d7a8526",
+    "alt-text.txt": "c01931ddc692485e6bcd2bc2fd02411d549e0286794b06f00bfe21f5e8df9392"
+  }
+}

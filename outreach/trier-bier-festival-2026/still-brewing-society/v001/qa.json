@@ -1,0 +1,64 @@
+{
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "checked_at": "2026-09-29T09:20:11.971133+02:00",
+  "outputs": {
+    "feed.png": {
+      "size": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    },
+    "story.png": {
+      "size": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    }
+  },
+  "approved_template_unchanged": true,
+  "copy_unchanged_from_approval": true,
+  "visual_evidence": {
+    "full_resolution": [
+      "feed.png",
+      "story.png"
+    ],
+    "phone_preview_width": 390,
+    "phone_previews": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ]
+  },
+  "visual_findings": [
+    "Exact supplied logo retained with charcoal background; proportional resizing only.",
+    "Approved hook fits one line using existing controlled fitting; no clipping.",
+    "Full series title and date checked at full resolution and 390px phone width.",
+    "Existing compact footer retained.",
+    "Story sticker area x=270–810, y=1394–1514 remains blank and clear of text."
+  ],
+  "public_image_count": 2,
+  "pending": [
+    "Recheck tickets on publication day if later than 29 September 2026",
+    "Add native Story link sticker and check placement in Instagram"
+  ],
+  "app_database_git_mutations": "None; only local social package files created or updated.",
+  "package_check": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/still-brewing-society/v001",
+    "warnings": [
+      "Publication is not confirmed for today"
+    ]
+  }
+}

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang='de'>
+<head>
+	<title>Hotel Trier | Blesius Garten | 4-Sterne</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<meta name="author" content="click around GmbH, Trier" />
+	<meta name="copyright" content="click around GmbH" />
+	<meta name="language" content="" />
+	<meta name="robots" content="index, follow" />
+	<meta name="revisit-after" content="1 day" />
+	<meta name="description" content="Das Hotel Blesius Garten in Trier bietet eine Kombination aus familiengeführtem 4-Sterne-Hotel mit Wellnessbereich, Restaurants und eigener Hausbrauerei." />
+	<meta name="keywords" content="" />
+
+	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+	<!--	hoteliers booking	-->
+	<link rel="stylesheet" type="text/css" href="../css/hoteliers-main.css" />
+	<link rel="stylesheet" type="text/css" href="../css/main.css?v20250627-1">
+	<link rel="stylesheet" type="text/css" href="../css/nav.css?v20250627-1">
+	<link rel="stylesheet" type="text/css" href="../css/responsiveslides.css?v20250627-1">
+	<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css?v20250627-1">
+
+
+	<script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+
+</head>
+<body>
+    <div class="skipToMainContent">
+        <a href="#main-content">Zum Hauptinhalt springen</a>
+    </div>
+<nav>
+
+
+<!-- desktop_nav -->
+<div id="desktop_nav">
+	<button id="burger" aria-controls="side_nav" aria-label="Menu ">&#8801;</button>
+	<div id="nav_logo">
+		<a href="home" aria-label="Startseite">
+			<img src="https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/dateien_pic_5.png" alt="Logo Blesius Garten" />
+		</a>
+	</div>
+
+	<div id="navg">
+		<ul class="nav">
+
+			
+			<li><a href="#" class="sub_menu_link" id="hotel">Hotel</a>
+				<ul>
+					<li><a href="rooms">Rooms</a></li>
+					<li><a href="offers">Offers</a></li>
+					<li><a href="wellness">Wellness</a></li>
+				</ul>
+			</li>
+			<li><a id="restaurants" href="restaurants">Gastronomy</a></li>
+			<li><a id="brewery" href="brewery">Brewery</a></li>
+
+			<li><a href="#" class="sub_menu_link" id="service">Service</a>
+				<ul>
+					<li><a href="good_to_know">Good to Know</a></li>
+					<li><a href="contact">Contact</a></li>
+
+					
+				</ul>
+			</li>
+			<li><a id="how_to_find_us" href="how_to_find_us">How to find us</a></li>
+			<li><a id="reservations" href="reservations">Reservations</a></li>
+		</ul>
+
+		<!-- get language	-->
+		<div id="footer_nav_lang">
+			<form action="" method="post">
+				<select onchange="this.form.submit()" name="lang" aria-label="Select language">
+					<option value='de' aria-label='Deutsch'>DE</option><option value='en' selected='selected' aria-label='English'>EN</option><option value='fr' aria-label='Français'>FR</option><option value='nl' aria-label='Nederlands'>NL</option>				</select>
+			</form>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- mobile_nav	-->
+
+<div id="side_nav" style="display: none;">
+	<ul class="sidenav">
+		<li><a href="#" id="closebtn" aria-label="Close menu" >&times;</a></li>
+
+				<li class="sidenav_level1"><a class="nosub" href="home">Home</a></li>
+		<li class="sidenav_level1"><a href="#" class="active">Hotel</a>
+			<ul class="sidenav_level2">
+				<li><a href="rooms">Rooms</a></li>
+				<li><a href="offers">Offers</a></li>
+				<li><a href="wellness">Wellness</a></li>
+			</ul>
+		</li>
+
+		<li class="sidenav_level1"><a class="nosub" href="restaurants">Gastronomy</a></li>
+		<li class="sidenav_level1"><a class="nosub" href="brewery">Brewery</a></li>
+
+		<li class="sidenav_level1"><a href="#" class="active">Service</a>
+			<ul class="sidenav_level2">
+				<li><a href="contact">Contact</a></li>
+				<li><a href="how_to_find_us">How to find us</a></li>
+				<li><a href="good_to_know">Good to Know</a></li>
+
+				
+			</ul>
+		</li>
+		<li class="sidenav_level1"><a href="reservations">Reservations</a></li>
+
+		
+		<li class="sidenav_level1"><a class="nosub" href="certificates">Certificates</a></li>
+		<li class="sidenav_level1"><a class="nosub" href="../impressum">Publisher</a></li>
+		<li class="sidenav_level1"><a class="nosub" href="../datenschutz">Datenschutz</a></li>
+		<li class="sidenav_level1">
+			<form action="" method="post">
+				<select onchange="this.form.submit()" name="lang" aria-label="Select language">
+					<option value='de' aria-label='Deutsch'>DE</option><option value='en' selected='selected' aria-label='English'>EN</option><option value='fr' aria-label='Français'>FR</option><option value='nl' aria-label='Nederlands'>NL</option>				</select>
+			</form>
+		</li>
+	</ul>
+</div>
+</nav>
+
+
+<!--		///***	set page selected in nav	***///		-->
+    
+
+<script type="text/javascript">
+
+	//keep topnav selected if subnav exists
+	window.onload = function(e){
+
+		var page = window.location.href.split('?')[0];
+		page = page.substr((page.lastIndexOf('/') + 1));
+		page = page.split('.');
+		page = page[0];
+
+		var alias_array = ["home","hotel","rooms","offers","wellness","restaurants","tonkas","brewery_room","","brewery","beertasting","bierprobe","biergefluester","brewery","","news","events","service","contact","how_to_find_us","good_to_know","","","reservations","","certificates","..\/impressum","..\/datenschutz",""];
+
+		var hotel = "hotel";
+		var arr_hotel = ["rooms","offers","wellness"];
+
+		var aktuelles = "";
+		var arr_aktuelles = ["news","events"];
+
+		var service = "service";
+		var arr_service = ["contact","how_to_find_us","good_to_know","",""];
+
+
+
+		if(alias_array.indexOf(page) >= 0){
+
+			if(arr_hotel.indexOf(page) >= 0){
+				$(function(){$('#' + hotel).addClass('selected_page');})
+			}
+			else if(arr_aktuelles.indexOf(page) >= 0){
+				$(function(){$('#' + aktuelles).addClass('selected_page');})
+			}
+			else if(arr_service.indexOf(page) >= 0){
+				$(function(){$('#' + service).addClass('selected_page');})
+			}
+			else{
+				$(function(){$('#' + page).addClass('selected_page');});
+			}
+		}
+
+        document.querySelectorAll('.sub_menu_link').forEach((el) => {
+          el?.addEventListener('click', (e) => {
+            e.preventDefault();
+            return false;
+          });
+        });
+	}
+
+	function openTemplate(pID) {
+		$( '#book_div .hf_room_id' ).val(pID);
+		document.getElementById("ht_bt").click();
+	}
+
+</script>
+
+<script type="text/javascript">
+
+	jQuery(document).ready(function(){
+		hoteliers_object = new hoteliers_form("2674", "en");
+
+	});
+
+</script>
+<div id="main-content"></div>
+
+<div id="kb" class="template">
+	
+	<div class="site_h">
+		<h1>Brewery</h1>
+	</div>
+	
+	
+	<div class="site_h_sub">
+		<p>Trier&rsquo;s first microbrewery opened at Blesius Garten in 1998. Our &ldquo;Kraft-Br&auml;u&rdquo; beer, brewed in the traditional fashion as an unfiltered beer, lives up to its name &ndash; give it a taste at the brewery restaurant, a beer tasting or our annual beerfestival.</p>
+	</div>
+		
+	<div class='cat_row'>
+
+		<div class='cat_row_left'>
+		<div class='callbacks_container'>
+			<ul class='rslides' id='biertasting_slider'>
+				<li><img class='arr_sld' src='https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/kategorie_bilder_src_70.jpg' alt='biertasting_0' /></li>
+			</ul>
+		</div>
+			<div class='cat_bt_row'>
+				<a href=https://www.ticket-regional.de/events.php?mysearchEventtype=Blesius&lang=en target='_blank'>
+					<div class='cat_bt'><span>BOOK</span></div>
+				</a>
+			</div>
+		</div>
+		<div class='cat_row_right'>
+		<div class='cat_row_right_inner'>
+			<h1>Beer tasting</h1>
+			<p>A dark beer tastes different to a wheat beer. A wheat beer from bavaria tastes as well different to a wheat beer from belgium. The world of beer is as variegated as the world of wine. Get your own idea about the various types and possibilities of beers and how great they can be combined with amazing food. Our beer tasings are usually arranged&nbsp; <br />twice per month with changing themes.</p>
+			<div class='cat_bt_row'>
+				<a href=https://www.ticket-regional.de/events.php?mysearchEventtype=Blesius&lang=en target='_blank'>
+					<div class='cat_bt'><span>BOOK</span></div>
+				</a>
+			</div>
+		</div>
+		</div>
+
+	</div>
+<div class='cat_row'>
+
+		<div class='cat_row_left'>
+		<div class='callbacks_container'>
+			<ul class='rslides' id='biergefluester_slider'>
+				<li><img class='arr_sld' src='https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/kategorie_bilder_src_18.jpg' alt='biergefluester_0' /></li>
+			</ul>
+		</div>
+			<div class='cat_bt_row'>
+				<a href=https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/kategorie_text_en_bt1_16.pdf target='_blank'>
+					<div class='cat_bt'><span>INQUIRY</span></div>
+				</a>
+			</div>
+		</div>
+		<div class='cat_row_right'>
+		<div class='cat_row_right_inner'>
+			<h1>Beer whispering</h1>
+			<p>The beer whisper includes 5 beers &agrave; 0.2l to taste and is served and commented by one of our beer experts. It costs &euro;24.50 per person. The beer whisper can be booked by arrangement for a minimum of 6 people. <br />Food can be booked in addition to the beer whisper: &aacute; la carte or as a 3-course brewery menu worth &euro;48.00.<br /><br />For more information, please call 0651-3606200 or send an email to gastro@blesius-garten.de.</p>
+			<div class='cat_bt_row'>
+				<a href=https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/kategorie_text_en_bt1_16.pdf target='_blank'>
+					<div class='cat_bt'><span>INQUIRY</span></div>
+				</a>
+			</div>
+		</div>
+		</div>
+
+	</div>
+<div class='cat_row'>
+
+		<div class='cat_row_left'>
+		<div class='callbacks_container'>
+			<ul class='rslides' id='sommeliergefluester_slider'>
+				<li><img class='arr_sld' src='https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/kategorie_bilder_src_161.jpg' alt='sommeliergefluester_0' /></li>
+			</ul>
+		</div>
+			<div class='cat_bt_row'>
+			</div>
+		</div>
+		<div class='cat_row_right'>
+		<div class='cat_row_right_inner'>
+			<h1>Sommelier talk</h1>
+			<p>Our beer sommelier Andreas Gniffke presents 6 different beer specialities &agrave; 0.2l. This is accompanied by bread and lard. The sommelier's talk can be booked by arrangement from 6 to max. 16 people and costs &euro; 30.00 per person. &nbsp;<br /><br />Of course, the sommelier's talk can also be integrated into a menu.<br /><br />For more information and reservations, please write an email to gastro@blesius-garten.de.</p>
+			<div class='cat_bt_row'>
+			</div>
+		</div>
+		</div>
+
+	</div>
+<div class='cat_row'>
+
+		<div class='cat_row_left'>
+		<div class='callbacks_container'>
+			<ul class='rslides' id='kraft_braeu_slider'>
+				<li><img class='arr_sld' src='https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/kategorie_bilder_src_33.jpg' alt='kraft_braeu_0' /></li>
+			</ul>
+		</div>
+			<div class='cat_bt_row'>
+				<a href=http://kraftbraeu.de/ target='_blank'>
+					<div class='cat_bt'><span>WEBSITE</span></div>
+				</a>
+			</div>
+		</div>
+		<div class='cat_row_right'>
+		<div class='cat_row_right_inner'>
+			<h1>Kraft Bräu</h1>
+			<p>Trier&rsquo;s first microbrewery opened at Blesius Garten in 1998. Our &ldquo;Kraft-Br&auml;u&rdquo; beer, brewed in the traditional fashion as an unfiltered beer, lives up to its name &ndash; give it a taste!&nbsp;Information about our 25th anniversary can be found on our new Kraft Br&auml;u website.</p>
+			<div class='cat_bt_row'>
+				<a href=http://kraftbraeu.de/ target='_blank'>
+					<div class='cat_bt'><span>WEBSITE</span></div>
+				</a>
+			</div>
+		</div>
+		</div>
+
+	</div>
+</div>	
+
+
+<script type="text/javascript">	
+	
+	$(document).ready(function(){
+	
+		var site_cat_arr = ["biertasting_slider","biergefluester_slider","sommeliergefluester_slider","bierprobe_slider","kraft-braeu-club_slider","kraft_braeu_slider"];	
+			
+		for (var i = 0; i < site_cat_arr.length; i++){ 
+		
+			$('#' + site_cat_arr[i]).responsiveSlides({		
+				auto: true,             			// Boolean: Animate automatically, true or false
+				speed: 3000,            			// Integer: Speed of the transition, in milliseconds
+				timeout: 6000,          			// Integer: Time between slide transitions, in milliseconds
+				pager: false,           			// Boolean: Show pager, true or false
+				nav: true,             				// Boolean: Show navigation, true or false
+				namespace: "callbacks",   			// String: Change the default namespace used
+				pause: false,           			// Boolean: Pause on hover, true or false
+			});	
+		
+		}
+	
+	});		
+	
+</script><div id="footer">
+	<div id="footer_top">
+
+		<div id="ftd">
+			<div class="footer_social">
+				<a href="https://de-de.facebook.com/blesiusgarten/" aria-label="Facebook" target="_blank">
+					<img alt="fb" src="https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/dateien_pic_6.png"/>
+				</a>
+			</div>
+			<!--
+			<div class="footer_social">
+				<a href="https://twitter.com/blesiusgarten" target="_blank">
+					<img alt="twitter" src="https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/dateien_pic_7.png"/>
+				</a>
+			</div>
+			-->
+			<div class="footer_social">
+				<a href="mailto:info@blesius-garten.de" aria-label="Send e-mail" target="_blank">
+					<img alt="gmail" src="https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/dateien_pic_10.png"/>
+				</a>
+			</div>
+			<div class="footer_social" aria-label="Google Maps">
+				<a href="https://www.google.de/maps/dir//Hotel+Blesius+Garten,+Olewiger+Stra%C3%9Fe,+Trier/@49.7400053,6.6572319,15.18z/data=!4m8!4m7!1m0!1m5!1m1!1s0x47957b80d6660455:0xae504a81b1b9bf12!2m2!1d6.6598!2d49.74349" target="_blank">
+					<img alt="maps" src="https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/dateien_pic_11.png"/>
+				</a>
+			</div>
+			<div class="footer_social">
+				<a href="tel:065136060" aria-label="Call Blesius Garten" target="_blank">
+					<img alt="phone" src="https://www.blesius-garten.de/cams/clients/blesiusgartenrel/media/dateien_pic_25.png"/>
+				</a>
+			</div>
+		</div>
+
+	</div>
+	<div id="footer_bot">
+		<div id="footer_bot_">
+			<ul class="footer_nav">
+
+				
+				<li><a href="certificates">Certificates</a></li>
+				<li><a href="../impressum">Publisher</a></li>
+				<li><a href="../datenschutz">Datenschutz</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+	<!--	hoteliers booking	-->
+	<script type="text/javascript" src="../js/hoteliers-main.js"></script>
+
+	<script type="text/javascript" src="../js/functions.js?v20250627-1"></script>
+	<script type="text/javascript" src="../js/responsiveslides.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+
+
+	
+
+<script type="text/javascript">
+  var _paq = window._paq || [];
+
+  loadMatomo();
+
+  function maOptout(){
+    document.cookie = 'BlesiusDisMa=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+  }
+
+  function gaOptout() {
+    document.cookie = 'BlesiusDisMa=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+  }
+
+  function loadMatomo() {
+    if (document.cookie.indexOf('BlesiusDisMa=true') > -1) {
+      _paq.push(['optUserOut']);
+    }
+
+    _paq.push(['disableCookies']);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://blesius-garten.de/matomo/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  }
+</script>
+
+</body>
+</html>

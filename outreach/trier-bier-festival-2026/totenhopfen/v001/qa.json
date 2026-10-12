@@ -1,0 +1,67 @@
+{
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "checked_at": "2026-09-26T09:26:06+02:00",
+  "outputs": {
+    "feed.png": {
+      "size": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    },
+    "story.png": {
+      "size": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    }
+  },
+  "approved_template_unchanged": true,
+  "copy_unchanged_from_approval": true,
+  "visual_evidence": {
+    "full_resolution": [
+      "feed.png",
+      "story.png"
+    ],
+    "phone_preview_width": 390,
+    "phone_previews": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ]
+  },
+  "visual_findings": [
+    "Full title, 2017, logo and approved hook visible without clipping.",
+    "Complete original logo and white background retained; no unrelated brand or redraw.",
+    "Proportional enlargement from supplied 400 × 400 JPEG; no invented source detail.",
+    "The longer hook fits one line through the approved renderer’s controlled text fitting and remains readable at phone size.",
+    "Typography, colours, rules and coordinates unchanged from approved template.",
+    "Compact footer is readable at inspected 390px width.",
+    "One clear modest sticker area; actual app interface check remains manual."
+  ],
+  "repeatability_method": "Two independent renders with locked inputs; decoded RGB and PNG byte hashes match for both outputs.",
+  "public_image_count": 2,
+  "package_check": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/totenhopfen/v001",
+    "warnings": [
+      "Publication is not confirmed for today"
+    ]
+  },
+  "pending": [
+    "Publication date not specified; recheck tickets on actual publication day",
+    "Native Story sticker placement and final Instagram preview"
+  ],
+  "app_database_git_mutations": "None; only this local social package updated."
+}

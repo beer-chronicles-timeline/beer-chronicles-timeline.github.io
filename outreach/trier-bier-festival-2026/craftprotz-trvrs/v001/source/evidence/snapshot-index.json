@@ -1,0 +1,47 @@
+{
+  "search": {
+    "url": "https://beer-chronicles.org/?string=Craftprotz",
+    "path": "source/evidence/search.html",
+    "sha256": "defc5ad09351d7e69650bcdb0968fb515d63efc9f60a9b7ccb031cae1e25271f"
+  },
+  "entry": {
+    "url": "https://beer-chronicles.org/events/81fceb12-7f40-4150-8373-6df87cfce465/trvrs-begins-to-brew",
+    "path": "source/evidence/entry.html",
+    "sha256": "84ac1e54de23da87627145d8722c92a61cbf45a6ab5dc80b1f8cf06f10bdd0be"
+  },
+  "tickets": {
+    "url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "path": "source/evidence/tickets.html",
+    "sha256": "9a86836de87a6ed32bf83a45cedcd1302773e85ece43bc23b6c275a115befe43"
+  },
+  "friday": {
+    "url": "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+    "path": "source/evidence/friday.html",
+    "sha256": "bb5bb3c534812cea203a2be63f1d07efd740797cfaacc3013d4b306f973e0621"
+  },
+  "saturday": {
+    "url": "https://www.ticket-regional.de/stage_1006.php?timeID=1140429",
+    "path": "source/evidence/saturday.html",
+    "sha256": "ebc4eff914e3464014ea8110037017f173d335fbe2a8c0b2692be74d3bddc893"
+  },
+  "trvrs": {
+    "url": "https://craftprotz-kreativbierbar.de/TRVRS",
+    "path": "source/evidence/trvrs.html",
+    "sha256": "3d23dd50a194708b13ee6ec0cb936c9f870f0e188e616fd77dc7d1d49bba9618"
+  },
+  "home": {
+    "url": "https://craftprotz-kreativbierbar.de/",
+    "path": "source/evidence/home.html",
+    "sha256": "3c829156c5a35e9afb7fa03a4daecf0f749a0f72318cb3088c6c4022204a7828"
+  },
+  "participant": {
+    "url": "https://kraft-braeu.de/bierfestival/craftprotz-kreativbierbar/",
+    "path": "source/evidence/participant.html",
+    "sha256": "6a72d32652e30d013e043ada518315228b480aef9de02626cb776c46f7ab5fae"
+  },
+  "festival": {
+    "url": "https://kraft-braeu.de/bierfestival/",
+    "path": "source/evidence/festival.html",
+    "sha256": "9c14b23304cd950282d1d829fb9f677f4e25e10e78255ffbc05a59a8b6787aaf"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "2018",
+  "hook_lines": [
+    "Blech.Brut is founded in Bamberg."
+  ],
+  "footer": "TRIER BEER FESTIVAL \u00b7 2\u20133 OCTOBER 2026 \u00b7 BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available \u2014 see feed caption",
+  "logo_path": "assets/original-logo-sheet.png",
+  "logo_sha256": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764",
+  "logo_crop": [
+    0,
+    0,
+    240,
+    242
+  ]
+}

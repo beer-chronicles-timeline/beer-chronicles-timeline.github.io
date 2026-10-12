@@ -1,0 +1,68 @@
+{
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "checked_at": "2026-09-27T17:36:45+02:00",
+  "outputs": {
+    "feed.png": {
+      "size": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true,
+      "transparent_logo_corner_matches_cream": true
+    },
+    "story.png": {
+      "size": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true,
+      "transparent_logo_corner_matches_cream": true
+    }
+  },
+  "approved_layout_and_font_lock_unchanged": true,
+  "renderer_change": "Original alpha transparency now preserved when compositing logo.",
+  "copy_unchanged_from_approval": true,
+  "visual_evidence": {
+    "full_resolution": [
+      "feed.png",
+      "story.png"
+    ],
+    "phone_preview_width": 390,
+    "phone_previews": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ]
+  },
+  "visual_findings": [
+    "Complete series title, 2008 date, full original logo and approved hook visible without clipping.",
+    "Supplied red, blue and cream mark preserved; transparent corners blend into template cream.",
+    "Hook fits one readable line through existing controlled fitting.",
+    "Footer and ticket note legible at inspected 390px width.",
+    "Single modest blank sticker area is clear; native interface check remains manual."
+  ],
+  "repeatability_method": "Two independent renders with locked inputs; decoded RGB and PNG byte hashes match.",
+  "public_image_count": 2,
+  "package_check": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/camba-bavaria/v001",
+    "warnings": [
+      "Publication is not confirmed for today"
+    ]
+  },
+  "pending": [
+    "Publication date not specified; recheck tickets on actual publication day.",
+    "Add native Story link sticker and inspect placement in Instagram."
+  ],
+  "app_database_git_mutations": "None; only local Camba package updated."
+}

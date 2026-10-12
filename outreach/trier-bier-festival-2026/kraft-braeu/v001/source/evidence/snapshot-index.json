@@ -1,0 +1,47 @@
+{
+  "search": {
+    "url": "https://beer-chronicles.org/?string=Kraft+Br%C3%A4u",
+    "path": "source/evidence/search.html",
+    "sha256": "defc5ad09351d7e69650bcdb0968fb515d63efc9f60a9b7ccb031cae1e25271f"
+  },
+  "entry": {
+    "url": "https://beer-chronicles.org/events/8b0ef2d2-38b7-49e6-b954-99a35bea214d/kraft-brau-opens-in-trier",
+    "path": "source/evidence/entry.html",
+    "sha256": "db8e209720209c6f81d44e1076ab5e01dcb9006836df464c409b1c45511dfc1c"
+  },
+  "tickets": {
+    "url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "path": "source/evidence/tickets.html",
+    "sha256": "4201032a3c9136a9843bc929aa790c3e314522e26ad0fce7368d49e41669953e"
+  },
+  "friday": {
+    "url": "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+    "path": "source/evidence/friday.html",
+    "sha256": "7f312f049476f317ee385852d1150e1d50f9cced4f3caa45dcce6a85aff40350"
+  },
+  "saturday": {
+    "url": "https://www.ticket-regional.de/stage_1006.php?timeID=1140429",
+    "path": "source/evidence/saturday.html",
+    "sha256": "7319b1e290df06c13790980e1dee3f52fc6f4cd35584d6c9309ff388ffb101d0"
+  },
+  "anniversary": {
+    "url": "https://kraft-braeu.de/25jahre",
+    "path": "source/evidence/anniversary.html",
+    "sha256": "eef2481746aac74914515195ed85a82e44d71060df80e2cf6e26b4f1261de99a"
+  },
+  "blesius": {
+    "url": "https://www.blesius-garten.de/en/brewery",
+    "path": "source/evidence/blesius.html",
+    "sha256": "043dcf4192f349e00f01488a5316ebde73170ea1c280058397a18b5b4fa48276"
+  },
+  "participant": {
+    "url": "https://kraft-braeu.de/bierfestival/kraft-braeu/",
+    "path": "source/evidence/participant.html",
+    "sha256": "11ec49f21147c336491f78d575d3fd8aa9c8db6ebd73a7e42f13a7956b30693a"
+  },
+  "festival": {
+    "url": "https://kraft-braeu.de/bierfestival/",
+    "path": "source/evidence/festival.html",
+    "sha256": "9b46594477dd3107094fd924c140c6ff0996058d4b54e8c069043a5c0f2b2b3d"
+  }
+}

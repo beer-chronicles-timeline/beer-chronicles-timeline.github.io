@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "subject": "Schmelzer Brauhaus",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Schmelzer Brauhaus Is Established in Schmelz",
+    "search_url": "https://beer-chronicles.org/?string=Schmelzer+Brauhaus",
+    "id": "1fd26cc6-21c0-4e40-bf60-d4cf3b58883c",
+    "display_date": "2000",
+    "date_precision": "year",
+    "event_kind": "Establishment in Schmelz",
+    "hook": "Schmelzer Brauhaus is established in Schmelz.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/1fd26cc6-21c0-4e40-bf60-d4cf3b58883c/schmelzer-brauhaus-is-established-in-schmelz",
+        "claims": [
+          "Established in 2000 in Schmelz, Saarland, by Dörr and Quinten families",
+          "Restaurant and brewery producing Erzbräu; brewhouse beside dining area and beer garden",
+          "Henrik Henne Stöppler later became brewmaster"
+        ],
+        "observed_at": "2026-09-26T09:36:48+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/schmelzer/",
+        "claims": [
+          "Henne Stöppler identified as brewmaster",
+          "Erzbräu brewed beside dining area and beer garden"
+        ],
+        "observed_at": "2026-09-26T09:36:48+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "Schmelzer Brauhaus on 2026 participant list",
+          "2–3 October 2026, Blesius Garten, Trier"
+        ],
+        "observed_at": "2026-09-26T09:36:48+02:00"
+      },
+      {
+        "location": "https://www.schmelzer-brauhaus.de/",
+        "claims": [
+          "On-site Erzbräu and restaurant identity"
+        ],
+        "observed_at": "2026-09-26T09:36:48+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "Braumeister Henne ist ein sehr guter Freund der Trierer Bierszene.",
+    "public_use": "explicit",
+    "source": "User message in this conversation",
+    "interpretation": "Friend of the Trier beer community, not an inferred personal friendship with Martin."
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.jpeg",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/schmelzer-logo-qcoql5utzyr3bcfyorlvyiveyd2h1793r63cdqofq8.jpeg",
+    "sha256": "b80b46937d7a55abf39db5e24444adf6296be5011bc6674fbd1d573c765f5adf",
+    "crop": [
+      0,
+      0,
+      400,
+      400
+    ],
+    "credit": "Schmelzer Brauhaus / Erzbräu; exact user-supplied organiser-hosted logo.",
+    "treatment": "Full 400 × 400 original, white background retained, proportional enlargement only.",
+    "crop_pixel_sha256": "2e08ce4ac25fc10c7f28f122b9884e7c083e1b8954ae1d116d6c43970d8052f4"
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-26T09:36:48+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date pages have enabled quantity selectors with options 0–8; nothing selected, reserved or purchased.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "Brewmaster Henne is a great friend to Trier’s beer community, so I’m especially pleased to feature Schmelzer Brauhaus in The Stories Behind the Trier Beer Festival 2026.\n\nEstablished in 2000 by the Dörr and Quinten families in Schmelz, Saarland, the Brauhaus combines a restaurant with a brewery making its own Erzbräu beer. With the brewhouse beside the dining area and beer garden, brewing is part of the experience on site.\n\nMeet Schmelzer Brauhaus at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore their story on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #SchmelzerBrauhaus #Erzbräu #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nSchmelzer Brauhaus\n2000\nSchmelzer Brauhaus is established in Schmelz.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and thin copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The supplied Schmelzer Brauhaus logo is a cream circle with a copper-orange border, stylised brewery vessels and the words “Erzbräu” and “SCHMELZER Brauhaus”; its white square background is retained. Below: “2000” in copper and “Schmelzer Brauhaus is established in Schmelz.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "render": {
+    "mode": "rendered",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "dd5a6ce17caaf6514d314461f038d385c4d2c371499538aeb7eb7c92d9a00304",
+        "pixel_sha256": "88d693eedb72eb1978a47cb79488a3933e241525cea5904a47781aba5bcf42bc",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2000",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Schmelzer Brauhaus is established in Schmelz.",
+            "top": 1063,
+            "height": 37.333333333333336,
+            "width": 943.6,
+            "font_size": 52.75
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "e6d111eada21042ce00ae4ed1f162ef62f3ba32246ea6c91f097aa160ef70d28",
+        "pixel_sha256": "05c89c57b4e55fde43edaf5e4866969acf582c5c7b3f0aa9f4a74164b44dc348",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2000",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Schmelzer Brauhaus is established in Schmelz.",
+            "top": 1290,
+            "height": 37.666666666666664,
+            "width": 953.9333333333334,
+            "font_size": 53.5
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "state": "rendered_and_verified",
+    "approved_template_source": "/Users/schmidt/beer-history-website/social/trier-2026/blech-brut/v001/source",
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "e5480e6fe3969fcc068e6780d48e688d8f99a0858a5a0fb3549a1eed1bf5fde4"
+    },
+    "font_approval": "Previously approved Times New Roman font files and renderer reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_approval": "Previously approved serif template, fonts and renderer reused unchanged.",
+    "new_copy_approval_required": false,
+    "approved_at": "2026-09-26T09:39:33+02:00",
+    "user_statement": "Go",
+    "visual_basis": "Previously approved template plus explicit go-ahead to render approved hook/caption with supplied logo; no new design.",
+    "locked_source_hashes": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "e5480e6fe3969fcc068e6780d48e688d8f99a0858a5a0fb3549a1eed1bf5fde4"
+    }
+  },
+  "status": "needs_review",
+  "participant_handle": {
+    "handle": null,
+    "status": "unverified_omitted",
+    "notes": "Official website had no Instagram link; search did not establish an official handle. Do not invent one."
+  },
+  "notes": [
+    "Exact user entry title and Story URL retained.",
+    "Founding belongs to Dörr and Quinten families in 2000; Henne is identified as a later brewmaster, not founder.",
+    "Organiser retains a stale edition breadcrumb/lower date block; current main 2026 header and ticket dates support the fixed dates.",
+    "No personal tasting, sponsorship, favourite beer or attendance plan added."
+  ],
+  "status_reason": "Artwork and copy complete and approved. Publication date not specified; verify tickets on actual publication day and native sticker placement in Instagram.",
+  "copy_hashes": {
+    "caption.txt": "d6b7da1015dd35a502dd58cee8390d0fb9a6faf1fe7f795cb8b360326af6bb7c",
+    "story-text.txt": "33ce650a3f5ff4af160685e4256f0a8d342c2fd5cc77e0873f39694116e2e0ab",
+    "alt-text.txt": "2466725f78016a80b0fbe6ac592711aab87c95db4ced489c19f809d35efb97f4"
+  }
+}

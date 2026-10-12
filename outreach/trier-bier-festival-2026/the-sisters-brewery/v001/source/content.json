@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "2015",
+  "hook_lines": [
+    "Two sisters give a family brewery its name."
+  ],
+  "footer": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available — see feed caption",
+  "logo_path": "assets/original-logo.jpg",
+  "logo_sha256": "8e3572f5223062b93637b3749a40494356347aa1bdcf597d300e5c5f0376e10c",
+  "logo_crop": [
+    0,
+    0,
+    400,
+    400
+  ]
+}

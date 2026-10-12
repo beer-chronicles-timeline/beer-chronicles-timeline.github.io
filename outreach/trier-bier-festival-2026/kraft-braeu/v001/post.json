@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "subject": "Kraft Bräu",
+  "entry": {
+    "title": "Kraft Bräu Opens in Trier",
+    "search_url": "https://beer-chronicles.org/?string=Kraft+Br%C3%A4u",
+    "id": "8b0ef2d2-38b7-49e6-b954-99a35bea214d",
+    "canonical_url": "https://beer-chronicles.org/events/8b0ef2d2-38b7-49e6-b954-99a35bea214d/kraft-brau-opens-in-trier",
+    "display_date": "1998",
+    "event_date": "1998-09-28",
+    "date_precision": "day",
+    "display_date_note": "The image displays the event year; the caption retains the exact opening date.",
+    "hook": "Kraft Bräu opens in Trier.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/8b0ef2d2-38b7-49e6-b954-99a35bea214d/kraft-brau-opens-in-trier",
+        "claims": [
+          "Kraft Bräu officially opened on 28 September 1998 at Blesius Garten in Trier-Olewig.",
+          "Hans-Werner Kraft and Klaus Tonkaboni established the house brewery.",
+          "The brewery launched with three unfiltered beers: pale, dark, and wheat."
+        ],
+        "observed_at": "2026-10-01T08:42:04+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/25jahre",
+        "claims": [
+          "The brewery’s own anniversary account confirms 28 September 1998, the founders, Blesius Garten location, and three unfiltered launch beers.",
+          "The official page links to instagram.com/kraft_braeu_trier."
+        ],
+        "observed_at": "2026-10-01T08:42:04+02:00"
+      },
+      {
+        "location": "https://www.blesius-garten.de/en/brewery",
+        "claims": [
+          "Blesius Garten confirms a brewery opening at the venue in 1998."
+        ],
+        "observed_at": "2026-10-01T08:42:04+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "The current festival heading gives 2–3 October 2026 at Blesius Garten, Trier.",
+          "The organiser names Kraft Bräu as the festival hosts."
+        ],
+        "observed_at": "2026-10-01T08:42:04+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/kraft-braeu/",
+        "claims": [
+          "The profile is linked from the main 2026 participant list. Its introductory anniversary paragraph still refers to 2024; no details from that paragraph are used."
+        ],
+        "observed_at": "2026-10-01T08:46:18+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "Of, course, again, good friends. And hosts of the festival.",
+    "public_use": "explicit",
+    "source": "User intake in this conversation",
+    "framing": "Friendship stated in the first person. Host role also verified on the organiser’s current festival page."
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.jpg",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/brauerei_kraftbraeu-pw7d9nkcqlg4aqr6f1grgw1sup6ycsr1pea7ilrycg.jpg",
+    "sha256": "9541f57ee4768010ccf660384de6554688a656f7f28aa925166c3bac837f47e1",
+    "crop": [
+      0,
+      0,
+      400,
+      400
+    ],
+    "dimensions": [
+      400,
+      400
+    ],
+    "background": "Original opaque black background preserved.",
+    "credit": "Kraft Bräu; supplied via its official website.",
+    "treatment": "Unchanged source bytes; whole logo resized proportionally, without background removal or redrawing."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-10-01T08:42:04+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date-specific pages show enabled Stehplatz category-1 selectors with options 0–8 and the booking action. Defaults remained at 0; public HTTP GET only, no purchase or reservation.",
+    "date_urls": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ],
+    "recheck_on_publication_day": true
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "The people behind Kraft Bräu are good friends, and they’re also the hosts of the festival that brings this series together. I’m delighted to feature the brewery’s beginnings in The Stories Behind the Trier Beer Festival 2026.\n\nOn 28 September 1998, Kraft Bräu officially opened at Blesius Garten in Trier-Olewig. Hans-Werner Kraft and Klaus Tonkaboni established the house brewery, which launched with three unfiltered beers: a pale beer, a dark beer, and a wheat beer.\n\nJoin @kraft_braeu_trier and @blesius_garten for the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier.\n\nExplore “Kraft Bräu Opens in Trier” on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #KraftBräu #Trier #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nKraft Bräu\n\n1998\nKraft Bräu opens in Trier.\n\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org\n\nNative link sticker: Explore their story\nhttps://beer-chronicles.org/?string=Kraft+Br%C3%A4u\n\nThis is an accessible transcript of the single Story. Add only the native link sticker to the artwork; do not duplicate this transcript as an overlay. Ticket details are in the feed post’s caption.",
+    "alt_text": "Cream background with dark serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026.” The original Kraft Bräu logo shows green lettering on a black square: “Kraft” in ornate letters above the spaced word “BRÄU.” Below it: “1998” and “Kraft Bräu opens in Trier.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN,” followed by “beer-chronicles.org.”",
+    "approval_status": "approved"
+  },
+  "render": {
+    "mode": "rendered",
+    "completed": true,
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "939efc34bf7f64683fd1bbfc0461825a188b17c6694881b074f81e9a311e7981",
+        "pixel_sha256": "960010841c6e52d89fbe7e6439811390f45ce85b80eddcfdeb6451470f2ce578",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "1998",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Kraft Bräu opens in Trier.",
+            "top": 1063,
+            "height": 54.666666666666664,
+            "width": 597.4010416666666,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "f5136b06c102e3f066f72ad9f14ac51f1b8b9f38f35c19d5b17bdedede28e3bc",
+        "pixel_sha256": "e0a11bf1f408b18f2d71996da9093add09f7772ceb46dc4c4650a5578ba0d38c",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "1998",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Kraft Bräu opens in Trier.",
+            "top": 1290,
+            "height": 54.666666666666664,
+            "width": 597.4010416666666,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "c03503ecfe51c24d75c70c79bdf42552d673be4a798c7d373d4b3641386bbd5d"
+    },
+    "template_source": "/Users/schmidt/beer-history-website/social/trier-2026/blech-brut/v001/source",
+    "master_source_hashes": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "content.json": "bbcd3be0c41fa009250fdc4731c711dc516b526dfc3e9070d01c43aca1178123",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a"
+    },
+    "font_approval": "Previously approved Times New Roman font files reused; hashes checked against the approved master.",
+    "template_unchanged": true,
+    "render_command": "/private/tmp/zagreb-pdf-venv/bin/python social/trier-2026/kraft-braeu/v001/source/render.py --output social/trier-2026/kraft-braeu/v001",
+    "sticker_area": [
+      270,
+      1394,
+      810,
+      1514
+    ],
+    "repeatability": {
+      "status": "passed",
+      "comparison_directory": "/private/tmp/bc-kraftbraeu-reproduction-v001",
+      "decoded_pixels_identical": true,
+      "file_bytes_identical": true
+    },
+    "output_paths": {
+      "feed.png": "/Users/schmidt/beer-history-website/social/trier-2026/kraft-braeu/v001/feed.png",
+      "story.png": "/Users/schmidt/beer-history-website/social/trier-2026/kraft-braeu/v001/story.png"
+    },
+    "qa_preview_paths": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ]
+  },
+  "approvals": {
+    "copy": true,
+    "visual": false,
+    "new_copy_approval_required": false,
+    "template_approval": "Approved Blech.Brut serif template reused unchanged, including font choice; recorded approval 2026-09-25T15:25:03+02:00.",
+    "copy_approval_request": "User explicitly approved the shown hook and full caption with “Approve and finalise”.",
+    "user_statement": "Approve and finalise",
+    "approved_hook": "1998 · Kraft Bräu opens in Trier.",
+    "approved_at_recorded": "2026-10-01T08:47:07+02:00",
+    "visual_approval_scope": "Existing serif template approved in the saved Blech.Brut master. This conversation authorises rendering the supplied Kraft Bräu logo and approved text in that template; no unseen new artwork approval is asserted.",
+    "new_template_approval_required": false,
+    "template_visual_approval": true
+  },
+  "participant_handle": {
+    "handle": "@kraft_braeu_trier",
+    "verified_at": "2026-10-01T08:42:04+02:00",
+    "source_url": "https://kraft-braeu.de/25jahre",
+    "linked_url": "https://www.instagram.com/kraft_braeu_trier/",
+    "status": "verified_official_website",
+    "also_festival_host": true
+  },
+  "story_link": {
+    "url": "https://beer-chronicles.org/?string=Kraft+Br%C3%A4u",
+    "label": "Explore their story",
+    "position": [
+      270,
+      1394,
+      810,
+      1514
+    ],
+    "native_sticker": true
+  },
+  "evidence_snapshots": {
+    "search": {
+      "url": "https://beer-chronicles.org/?string=Kraft+Br%C3%A4u",
+      "path": "source/evidence/search.html",
+      "sha256": "defc5ad09351d7e69650bcdb0968fb515d63efc9f60a9b7ccb031cae1e25271f"
+    },
+    "entry": {
+      "url": "https://beer-chronicles.org/events/8b0ef2d2-38b7-49e6-b954-99a35bea214d/kraft-brau-opens-in-trier",
+      "path": "source/evidence/entry.html",
+      "sha256": "db8e209720209c6f81d44e1076ab5e01dcb9006836df464c409b1c45511dfc1c"
+    },
+    "tickets": {
+      "url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+      "path": "source/evidence/tickets.html",
+      "sha256": "4201032a3c9136a9843bc929aa790c3e314522e26ad0fce7368d49e41669953e"
+    },
+    "friday": {
+      "url": "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "path": "source/evidence/friday.html",
+      "sha256": "7f312f049476f317ee385852d1150e1d50f9cced4f3caa45dcce6a85aff40350"
+    },
+    "saturday": {
+      "url": "https://www.ticket-regional.de/stage_1006.php?timeID=1140429",
+      "path": "source/evidence/saturday.html",
+      "sha256": "7319b1e290df06c13790980e1dee3f52fc6f4cd35584d6c9309ff388ffb101d0"
+    },
+    "anniversary": {
+      "url": "https://kraft-braeu.de/25jahre",
+      "path": "source/evidence/anniversary.html",
+      "sha256": "eef2481746aac74914515195ed85a82e44d71060df80e2cf6e26b4f1261de99a"
+    },
+    "blesius": {
+      "url": "https://www.blesius-garten.de/en/brewery",
+      "path": "source/evidence/blesius.html",
+      "sha256": "043dcf4192f349e00f01488a5316ebde73170ea1c280058397a18b5b4fa48276"
+    },
+    "participant": {
+      "url": "https://kraft-braeu.de/bierfestival/kraft-braeu/",
+      "path": "source/evidence/participant.html",
+      "sha256": "11ec49f21147c336491f78d575d3fd8aa9c8db6ebd73a7e42f13a7956b30693a"
+    },
+    "festival": {
+      "url": "https://kraft-braeu.de/bierfestival/",
+      "path": "source/evidence/festival.html",
+      "sha256": "9b46594477dd3107094fd924c140c6ff0996058d4b54e8c069043a5c0f2b2b3d"
+    }
+  },
+  "corrections": [],
+  "limitations": [
+    "The organiser retains an older lower date block; the 2026 heading and both ticket pages agree on 2–3 October.",
+    "The supplied logo is 400 × 400; proportional enlargement cannot add source detail.",
+    "Publication date is unspecified.",
+    "The participant profile retains a 2024 anniversary paragraph; it is not used for current festival claims. The main 2026 listing independently identifies Kraft Bräu as hosts."
+  ],
+  "status": "needs_review",
+  "status_reason": "Final package complete; copy approved and visual/export/repeatability checks passed. Publication date unspecified; native Instagram placement and user review of newly delivered image files remain.",
+  "prepared_at": "2026-10-01T08:46:18+02:00",
+  "completed_at": "2026-10-01T08:51:55+02:00"
+}

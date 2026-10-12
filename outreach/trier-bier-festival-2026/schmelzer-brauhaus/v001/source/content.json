@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "2000",
+  "hook_lines": [
+    "Schmelzer Brauhaus is established in Schmelz."
+  ],
+  "footer": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available — see feed caption",
+  "logo_path": "assets/original-logo.jpeg",
+  "logo_sha256": "b80b46937d7a55abf39db5e24444adf6296be5011bc6674fbd1d573c765f5adf",
+  "logo_crop": [
+    0,
+    0,
+    400,
+    400
+  ]
+}

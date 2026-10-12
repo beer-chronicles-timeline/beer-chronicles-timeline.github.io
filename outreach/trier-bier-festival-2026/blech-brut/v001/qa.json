@@ -1,0 +1,69 @@
+{
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "outputs": {
+    "feed.png": {
+      "dimensions": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "sRGB_chunk_intent": 0,
+      "pixel_sha256": "794a2b328b4e9cb6a2c8c8c945828f6e34340b3387a03832fd773feb56941675",
+      "repeat_pixel_match": true,
+      "repeat_file_match": true
+    },
+    "story.png": {
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "sRGB_chunk_intent": 0,
+      "pixel_sha256": "6b7ad6a643eb5b157c3da977a7657ee57a4e882be7bbb8900383cb828e3eb134",
+      "repeat_pixel_match": true,
+      "repeat_file_match": true
+    }
+  },
+  "visual_evidence": {
+    "full_resolution": [
+      "feed.png",
+      "story.png"
+    ],
+    "phone_width": 390,
+    "phone_previews": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ],
+    "comparisons": [
+      "source/qa/feed-comparison.png",
+      "source/qa/story-comparison.png"
+    ]
+  },
+  "visual_findings": [
+    "Full series title and corrected 2018 legible; no clipping.",
+    "Original mark intact with white background retained; no Atelier Vrai.",
+    "Feed follows reference element positions closely; regular Times New Roman differs in weight/letterforms from generated reference.",
+    "Story header/footer moved inward for interface clearance; hook and ticket note legible at phone scale.",
+    "Footer is compact and small but readable at the inspected 390px width.",
+    "One blank 540 × 120 sticker slot; no simulated UI."
+  ],
+  "reference_comparison": "Calibrated reproduction of hierarchy and proportions; not pixel-identical. Date, authentic logo, font and provisional Story safety margins necessarily differ.",
+  "repeatability_method": "Independent second invocation with same locked fonts/engine/assets; both decoded RGB and PNG file hashes identical.",
+  "pending": [
+    "Instagram native sticker and actual interface-overlay check",
+    "Recheck tickets if publication is delayed"
+  ],
+  "public_image_count": 2,
+  "app_database_git_mutations": "None. Only new social package files created.",
+  "package_check": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/blech-brut/v001",
+    "warnings": []
+  },
+  "approval_recorded_at": "2026-09-25T15:25:03+02:00"
+}

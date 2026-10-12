@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "subject": "Blech.BRUT",
+  "entry": {
+    "title": "Blech.Brut Is Founded In Bamberg",
+    "search_url": "https://beer-chronicles.org/?string=Blech.Brut",
+    "id": "7c99e0ce-21d0-4534-8e80-6a33b1a2cf12",
+    "display_date": "2018",
+    "date_precision": "year",
+    "hook": "Blech.Brut is founded in Bamberg.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/7c99e0ce-21d0-4534-8e80-6a33b1a2cf12/blech-brut-is-founded-in-bamberg",
+        "claims": [
+          "Exact title matched: Blech.Brut Is Founded In Bamberg",
+          "Year 2018, year precision; January 1 in data is not a known founding day",
+          "Benedikt Steger founded the craft-beer project in Bamberg"
+        ],
+        "observed_at": "2026-09-25T13:34:08+02:00",
+        "local_evidence": "source/evidence/entry.txt"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "2026 participant list includes Blech.Brut / Atelier Vrai",
+          "Top event heading states 2–3 October 2026 at Blesius Garten"
+        ],
+        "observed_at": "2026-09-25T13:34:08+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/blech-atelier/",
+        "claims": [
+          "Corroborates founding in Bamberg in 2018 by Benedikt Steger"
+        ],
+        "observed_at": "2026-09-25T13:34:08+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "The user is a real fan, personally considers Blech.BRUT one of Germany's best IPA/NEIPA breweries, and orders almost every new release.",
+    "public_use": "explicit",
+    "source": "/Users/schmidt/beer-history-website/.agents/skills/trier-festival-instagram/references/blech-brut-brief.md",
+    "reuse_authorization": "User explicitly requested reproduction using bundled brief."
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo-sheet.png",
+    "sha256": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764",
+    "crop": [
+      0,
+      0,
+      240,
+      242
+    ],
+    "crop_sha256": "f172f7668c4e7a4c558973589af2c4491390c0554ce506897821e4547ead9885",
+    "crop_pixel_sha256": "1fee4dea5b24dcb8e984b2bb2721a1e9ed453f9948e209992eacfe7b5a70964e",
+    "credit": "Blech.Brut; original supplied by user with campaign-use permission recorded in bundled manifest.",
+    "treatment": "Complete selected logo crop, proportional LANCZOS enlargement, white background retained; no redrawing or background removal."
+  },
+  "publication_date": "2026-09-25",
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-25T15:25:03+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date-specific ticket-selection pages display enabled Stehplatz Category 1 quantity selectors from 0 through 8 and the booking action. Quantity left at 0; no cart, reservation or purchase action performed. Read via public HTTP GET; availability may change.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ],
+    "local_evidence": [
+      "source/evidence/friday.txt",
+      "source/evidence/saturday.txt"
+    ],
+    "recheck": "On actual publication day, and immediately before posting if delayed."
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "I’m a real Blech.BRUT fan. In my opinion, they’re one of the best IPA/NEIPA breweries in Germany, and I order almost every new release. So I’m especially happy to see them in this year’s festival line-up.\n\nBlech.BRUT is up first in The Stories Behind the Trier Beer Festival 2026.\n\nFounded in Bamberg in 2018, Blech.BRUT has its own entry on the Beer Chronicles timeline.\n\nMeet Blech.BRUT at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore their story on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #BlechBrut #BeerHistory #NEIPA",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nBlech.Brut\n2018\nBlech.Brut is founded in Bamberg.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and thin copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original Blech.Brut logo is a black irregular circle with white BLECH BRUT lettering, on its retained white background. Below: “2018” in copper and “Blech.Brut is founded in Bamberg.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by the italic website “beer-chronicles.org”."
+  },
+  "render": {
+    "mode": "rendered",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "8d3b31e9e3e1b2285d1c0c35a0d468f8d5c42ddf6cc8ea500b6d9d5482cbfad1",
+        "pixel_sha256": "794a2b328b4e9cb6a2c8c8c945828f6e34340b3387a03832fd773feb56941675",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2018",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Blech.Brut is founded in Bamberg.",
+            "top": 1063,
+            "height": 54.666666666666664,
+            "width": 804.7843750000001,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "3c964e2ddfe47727e2a57f5a4eeac147873bde660bc1a366a1537e4d87dd6290",
+        "pixel_sha256": "6b7ad6a643eb5b157c3da977a7657ee57a4e882be7bbb8900383cb828e3eb134",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2018",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Blech.Brut is founded in Bamberg.",
+            "top": 1290,
+            "height": 54.666666666666664,
+            "width": 804.7843750000001,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "font_approval": "Times New Roman Regular / Italic approved by user with the complete package.",
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "content.json": "bbcd3be0c41fa009250fdc4731c711dc516b526dfc3e9070d01c43aca1178123",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a"
+    }
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "reproduction_requested": true,
+    "factual_correction_requested": true,
+    "note": "User approved the assembled package, corrected reconstruction and Times New Roman substitution.",
+    "approved_at": "2026-09-25T15:25:03+02:00",
+    "user_statement": "I approve this.",
+    "locked_source_hashes": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "content.json": "bbcd3be0c41fa009250fdc4731c711dc516b526dfc3e9070d01c43aca1178123",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a"
+    }
+  },
+  "status": "ready_to_publish",
+  "participant_handle": {
+    "handle": "@blech.brut",
+    "verified_at": "2026-09-25T13:34:08+02:00",
+    "source_url": "https://www.blechbrut.de/",
+    "linked_url": "https://www.instagram.com/blech.brut/?hl=de",
+    "use": "Optional native mention; caption keeps approved brand spelling."
+  },
+  "corrections": [
+    {
+      "from": "2019",
+      "to": "2018",
+      "reason": "Selected live entry and organiser biography agree."
+    }
+  ],
+  "conflicts": [
+    "Organiser page contains an older lower date block stating 10/11 October; its 2026 heading and both current ticket pages agree on 2/3 October. No entry/brief conflict found."
+  ],
+  "limitations": [
+    "Calibrated reproduction, not pixel-identical recovery.",
+    "Original logo crop is only 240 × 242 pixels and appears softer when enlarged.",
+    "Original opaque white logo background retained.",
+    "Story header/footer moved inward for provisional 170px interface clearance; actual Instagram UI check pending."
+  ]
+}

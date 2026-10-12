@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "2017",
+  "hook_lines": [
+    "Totenhopfen begins commercial brewing."
+  ],
+  "footer": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available — see feed caption",
+  "logo_path": "assets/original-logo.jpg",
+  "logo_sha256": "1c0dfe25cccbcfaa4b84bda04129edbb3639d088366ff54014051c3a41e4d253",
+  "logo_crop": [
+    0,
+    0,
+    400,
+    400
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "1998",
+  "hook_lines": [
+    "Kraft Bräu opens in Trier."
+  ],
+  "footer": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available — see feed caption",
+  "logo_path": "assets/original-logo.jpg",
+  "logo_sha256": "9541f57ee4768010ccf660384de6554688a656f7f28aa925166c3bac837f47e1",
+  "logo_crop": [
+    0,
+    0,
+    400,
+    400
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "presenter": "BEER CHRONICLES",
+  "series_lines": [
+    "The Stories Behind the",
+    "Trier Beer Festival 2026"
+  ],
+  "date": "2020",
+  "hook_lines": [
+    "The TRVRS story begins with barrel aging."
+  ],
+  "footer": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+  "website": "beer-chronicles.org",
+  "ticket_note": "Tickets still available — see feed caption",
+  "logo_path": "assets/original-logo.jpg",
+  "logo_sha256": "57c33dbe2a7d9ce1359ad59de54c3d7c0b315468e6847ab416d87a4a2786cf50",
+  "logo_crop": [
+    0,
+    0,
+    400,
+    400
+  ]
+}

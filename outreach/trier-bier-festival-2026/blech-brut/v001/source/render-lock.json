@@ -1,0 +1,24 @@
+{
+  "engine": {
+    "python": "3.11.11",
+    "pillow": "11.1.0",
+    "freetype": "2.12.1",
+    "supersampling": 3,
+    "layout_engine": "Pillow BASIC",
+    "resampling": "LANCZOS"
+  },
+  "fonts": [
+    {
+      "family": "Times New Roman",
+      "style": "Regular",
+      "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+      "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+    },
+    {
+      "family": "Times New Roman",
+      "style": "Italic",
+      "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+      "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "subject": "White Dog Brewery",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "White Dog Brewery Begins Commercial Contract Brewing",
+    "search_url": "https://beer-chronicles.org/?string=White+Dog",
+    "id": "d7b75096-bc6a-4df0-a2b8-81d9c4df532d",
+    "display_date": "2018",
+    "date_precision": "year",
+    "hook": "From homebrewing to commercial contract brewing.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/d7b75096-bc6a-4df0-a2b8-81d9c4df532d/white-dog-brewery-begins-commercial-contract-brewing",
+        "claims": [
+          "2018 transition from homebrewing to commercial contract brewing after two hobby years",
+          "Ricky Maertzendorff; Dordrecht; Westie and name origin",
+          "Own recipes made at partner breweries; later IPAs, smoothie sours and pastry stouts"
+        ],
+        "observed_at": "2026-09-27T16:43:55+02:00"
+      },
+      {
+        "location": "https://www.whitedogbrewery.nl/faq",
+        "claims": [
+          "Founder, Dordrecht, Westie, contract production and later beer range"
+        ],
+        "observed_at": "2026-09-27T16:43:55+02:00"
+      },
+      {
+        "location": "https://www.biernet.nl/bier/brouwerijen/nederland/zuid-holland/dordrecht/white-dog",
+        "claims": [
+          "2018 date and contract brewery classification"
+        ],
+        "observed_at": "2026-09-27T16:43:55+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "2026 participation, 2–3 October 2026, Blesius Garten"
+        ],
+        "observed_at": "2026-09-27T16:43:55+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "No private connection.",
+    "public_use": "none"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.png",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Unbenannt-6-rb86mi60bq2sxh0scbeoc9ipgqcw5mr6u1z20dn7og.png",
+    "sha256": "b3257f513b3deb7484d52f4bab0c96c8e2eef3edd279d8d7ea23b37a497891db",
+    "crop": null,
+    "credit": "White Dog Brewery; user-supplied organiser-hosted logo.",
+    "treatment": "Original 400 × 400 image, including white background, to be retained intact."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-27T16:43:55+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date pages show enabled standing-ticket selectors with quantities 0–8. No tickets selected, reserved or purchased.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "A white dog gave this Dutch brewery its name. Meet White Dog Brewery in The Stories Behind the Trier Beer Festival 2026.\n\nIn 2018, White Dog moved from homebrewing to commercial contract brewing after two years of brewing as a hobby. Based in Dordrecht and founded by Ricky Maertzendorff, it took its name from his West Highland White Terrier, Westie. White Dog developed its own recipes for production at other breweries, bringing its beers to market without a dedicated production brewery. Its later range grew to include hop-forward IPAs, fruit-heavy smoothie sours and pastry stouts.\n\nMeet @whitedog_brewery at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore their story on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #WhiteDogBrewery #DutchBeer #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nWhite Dog Brewery\n2018\nFrom homebrewing to commercial contract brewing.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original black-and-white White Dog Brewery logo fills the centre, with flowing “White dog” lettering above “BREWERY”; its white background is retained. Below: “2018” in copper and “From homebrewing to commercial contract brewing.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "participant_handle": {
+    "handle": "@whitedog_brewery",
+    "source_url": "https://www.whitedogbrewery.nl/",
+    "linked_url": "https://instagram.com/whitedog_brewery?utm_medium=copy_link",
+    "verified_at": "2026-09-27T16:43:55+02:00"
+  },
+  "render": {
+    "state": "rendered_and_verified",
+    "mode": "rendered",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "7c47d9cc49431d87a6e0275edb1ed314df1313a63c715d4be871c859a3c84499",
+        "pixel_sha256": "cdaf20a5b9f3891708d348b25a61bc81ab3df866da58ac9814ac80a0a1e33aa4",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2018",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "From homebrewing to commercial contract brewing.",
+            "top": 1063,
+            "height": 42.333333333333336,
+            "width": 936.3000000000001,
+            "font_size": 46.75
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "3b02536744428fa9f85a5ed0cb570c3b283facf97997549b81f9effbda61886d",
+        "pixel_sha256": "c3db4f3a9fc94b3b01cf48c51159fabad641c221f6f9ee9b9aa07f14b15c197f",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2018",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "From homebrewing to commercial contract brewing.",
+            "top": 1290,
+            "height": 43.0,
+            "width": 948.9666666666667,
+            "font_size": 47.5
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "approved_template_source": "social/trier-2026/totenhopfen/v001/source",
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "cb2052a242d1f2aac6d4a50509b4b39f6c243c5248055208be232806c119294b"
+    },
+    "font_approval": "Previously approved Times New Roman files reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_basis": "Existing campaign manifests record approval of the reusable serif template.",
+    "approved_at": "2026-09-27T16:49:21+02:00",
+    "user_statement": "Go",
+    "visual_basis": "User approved copy and rendering in the existing approved campaign template; no new design. Final exports inspected by assistant."
+  },
+  "status": "needs_review",
+  "status_reason": "Approved artwork and copy complete. Publication date not specified; recheck tickets on actual publication day and inspect native Instagram sticker placement.",
+  "notes": [
+    "2018 refers to the commercial contract-brewing transition, not an own-brewery opening.",
+    "No personal anecdote or attendance plan supplied or added.",
+    "Organiser page contains an obsolete lower date block; its 2026 heading and both ticket dates confirm 2–3 October 2026."
+  ],
+  "copy_hashes": {
+    "caption.txt": "7177ad0f68dfde48e200b92728630d1d6e296e2f98d04626bf19ac93be6efcf0",
+    "story-text.txt": "2e592e55942c180979de30bf8b6ade6917e8f7e961b332dfc49d07d53644e9a8",
+    "alt-text.txt": "200e9d859a8efad3ce3beade0618af7dd327e52ef15e3ebcc526ff64c2db0d1b"
+  }
+}

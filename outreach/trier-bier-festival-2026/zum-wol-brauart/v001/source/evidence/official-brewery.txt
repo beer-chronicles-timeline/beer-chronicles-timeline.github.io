@@ -1,0 +1,415 @@
+woel shop
+
+        – WØL Shop
+Weiter zum Inhalt
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+2x2 NEIPA's im Bundle!
+Menu
+Menu
+Hauptmenü
+WØL Home
+Shop
+Alle Produkte
+IPA's
+Flaschenbiere
+Bundles
+Merch
+Handel
+Unsere Story
+Kontakt
+Datenschutzerklärung
+Allgemeine Geschäftsbedingungen
+Widerrufsrecht
+Versand
+Impressum
+Einloggen
+Konto erstellen
+Facebook
+Instagram
+LinkedIn
+Email
+Hauptmenü
+Schließen (Esc)
+WØL Home
+Shop
+Alle Produkte
+IPA's
+Flaschenbiere
+Bundles
+Merch
+Handel
+Unsere Story
+Kontakt
+Datenschutzerklärung
+Allgemeine Geschäftsbedingungen
+Widerrufsrecht
+Versand
+Impressum
+Einloggen
+Konto erstellen
+Suchen
+Suchen
+Facebook
+Instagram
+LinkedIn
+Email
+WØL Home
+Shop
+Alle Produkte
+IPA's
+Flaschenbiere
+Bundles
+Merch
+Handel
+Unsere Story
+Einloggen
+Durchsuche unsere Seite
+Suchen
+Schließen (Esc)
+Einkaufswagen
+0
+Artikel
+Einkaufswagen
+0
+Artikel
+.logo-image {
+      max-width: 160px;
+    }
+document
+      .getElementById('shopify-section-sections--25157307334995__header')
+      .classList.add('has-no-height');
+#MainContent .shopify-section:first-child > section:not(.full-bleed-section),
+    #MainContent .shopify-section:first-child > data-island[role="banner"]:not(.full-bleed-section) {
+      padding-top: 6rem;
+    }
+
+    @media (min-width: 990px) {
+      #MainContent .shopify-section:first-child > section:not(.full-bleed-section),
+      #MainContent .shopify-section:first-child > data-island[role="banner"]:not(.full-bleed-section) {
+        padding-top: 6rem;
+      }
+    }
+{
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": "WØL Shop",
+    
+      
+      "logo": "https:\/\/woel.art\/cdn\/shop\/files\/woel-logo-weiss.png?v=1745039923\u0026width=2000",
+    
+    "sameAs": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "url": "https:\/\/woel.art"
+  }
+{
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "WØL Shop",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https:\/\/woel.art\/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "https:\/\/woel.art"
+    }
+#shopify-section-sections--25157307334995__breadcrumbs_KCkrE3 .breadcrumbs {font-weight: bold;} #shopify-section-sections--25157307334995__breadcrumbs_KCkrE3 .text-scheme-accent-1 {font-size: 24px;} #shopify-section-sections--25157307334995__breadcrumbs_KCkrE3 .text-scheme-accent-2 {font-size: 24px;} #shopify-section-sections--25157307334995__breadcrumbs_KCkrE3 .section-content li a {font-size: 24px;}
+const calculateHeaderHeights = () => {
+    const headerGroupHeights = [];
+
+    document
+      .querySelectorAll(
+        '.shopify-section-group-header-group:not(.has-no-height)'
+      )
+      .forEach((headerGroupSectionEl, i, list) => {
+        window.requestAnimationFrame(() => {
+          headerGroupHeights.push(
+            headerGroupSectionEl.getBoundingClientRect().height
+          );
+
+          if (i === list.length - 1) {
+            document.documentElement.style.setProperty(
+              '--header-group-height',
+              `${headerGroupHeights.reduce((subtotal, a) => subtotal + a, 0)}px`
+            );
+          }
+        });
+      });
+  };
+
+  calculateHeaderHeights();
+
+  const debouncedCalculateHeaderHeights = debounce(calculateHeaderHeights, 300);
+
+  window.addEventListener('resize', debouncedCalculateHeaderHeights);
+.sticker-on-sale-sticker-10315002610003 {
+    top: 5%;
+    left: 90%;
+    transform: rotate(-5deg) translate(-50%, -50%);
+  }
+
+  .sticker-on-sale-sticker-10315002610003 img,
+  .sticker-on-sale-sticker-10315002610003 svg,
+  .sticker-on-sale-sticker-10315002610003 .sticker-text-container {
+    width: calc(100 * 0.75px);
+
+    @media (min-width: 640px) {
+      width: 100px;
+    }
+  }
+
+  .sticker-text-on-sale {
+    padding: calc(2rem * 100 / 300);
+  }
+
+  .sticker-text-on-sale,
+  .sticker-on-sale-sticker-10315002610003 .sticker__fit-to-text  {
+    --adjusted-sticker-font-size: calc(1.563rem * 1.5);
+    font-size: calc(var(--adjusted-sticker-font-size) * 100 / 300);
+    line-height: 1;
+  }
+.sticker-sold-out-sticker-9871940780371 {
+    top: 5%;
+    left: 10%;
+    transform: rotate(5deg) translate(-50%, -50%);
+  }
+
+  .sticker-sold-out-sticker-9871940780371 img,
+  .sticker-sold-out-sticker-9871940780371 svg,
+  .sticker-sold-out-sticker-9871940780371 .sticker-text-container {
+    width: calc(100 * 0.75px);
+
+    @media (min-width: 640px) {
+      width: 100px;
+    }
+  }
+
+  .sticker-text-sold-out {
+    padding: calc(2rem * 100 / 300);
+  }
+
+  .sticker-text-sold-out,
+  .sticker-sold-out-sticker-9871940780371 .sticker__fit-to-text  {
+    --adjusted-sticker-font-size: calc(1.563rem * 1.5);
+    font-size: calc(var(--adjusted-sticker-font-size) * 100 / 300);
+    line-height: 1;
+  }
+{
+      "mediaQuery": "min",
+      "arrows": true,
+      "pagination": false,
+      "rewind": true,
+      "autoWidth": true,
+      "gap": "1.25rem",
+      "focus": "center",
+      "type": "loop",
+      "speed": 500,
+      "autoScroll": {
+        "autoStart": false,
+        "speed": 0
+      },
+      "padding": {
+        "left": "1.25rem",
+        "right": "1.25rem"
+      },
+      "breakpoints": {
+        "990": {
+          "gap": "2.5rem",
+          "padding": {
+            "left": "2.5rem",
+            "right": "2.5rem"
+          }
+        }
+      }
+    }
+#shopify-section-template--25157307040083__feature_text_with_image_tTffrY .image-container {
+      width: 100%;
+    }
+
+    @media (min-width: 990px) {
+      #shopify-section-template--25157307040083__feature_text_with_image_tTffrY .image-container {
+        width: 100%;
+      }
+    }
+@media (max-width: 989px) {
+            #shopify-section-template--25157307040083__feature_text_with_image_tTffrY .image-container {
+              margin-top: -2.5rem;
+            }
+          }
+        
+
+        
+          @media (min-width: 990px) {
+            #shopify-section-template--25157307040083__feature_text_with_image_tTffrY .image-container {
+              margin-top: -6rem;
+            }
+          }
+{
+          "mediaQuery": "min",
+          "arrows": true,
+          "pagination": false,
+          "rewind": true,
+          "autoWidth": true,
+          "gap": "2.5rem",
+          "focus": "center",
+          "type": "loop",
+          "autoScroll": {
+            "autoStart": true,
+            "speed": 1
+          },
+          "padding": {
+            "left": "1.25rem",
+            "right": "1.25rem"
+          }
+        }
+@media (min-width: 990px) {
+          #slideshow-template--25157307040083__shape_carousel_a7TzDG .splide__slide {
+            width: 30%;
+          }
+        }
+.sticker-sold-out-sticker-9871940780371 {
+    top: 5%;
+    left: 10%;
+    transform: rotate(-5deg) translate(-50%, -50%);
+  }
+
+  .sticker-sold-out-sticker-9871940780371 img,
+  .sticker-sold-out-sticker-9871940780371 svg,
+  .sticker-sold-out-sticker-9871940780371 .sticker-text-container {
+    width: calc(100 * 0.75px);
+
+    @media (min-width: 640px) {
+      width: 100px;
+    }
+  }
+
+  .sticker-text-sold-out {
+    padding: calc(2rem * 100 / 300);
+  }
+
+  .sticker-text-sold-out,
+  .sticker-sold-out-sticker-9871940780371 .sticker__fit-to-text  {
+    --adjusted-sticker-font-size: calc(1.563rem * 1.5);
+    font-size: calc(var(--adjusted-sticker-font-size) * 100 / 300);
+    line-height: 1;
+  }
+.sticker-sold-out-sticker-10140194144595 {
+    top: 5%;
+    left: 10%;
+    transform: rotate(5deg) translate(-50%, -50%);
+  }
+
+  .sticker-sold-out-sticker-10140194144595 img,
+  .sticker-sold-out-sticker-10140194144595 svg,
+  .sticker-sold-out-sticker-10140194144595 .sticker-text-container {
+    width: calc(100 * 0.75px);
+
+    @media (min-width: 640px) {
+      width: 100px;
+    }
+  }
+
+  .sticker-text-sold-out {
+    padding: calc(2rem * 100 / 300);
+  }
+
+  .sticker-text-sold-out,
+  .sticker-sold-out-sticker-10140194144595 .sticker__fit-to-text  {
+    --adjusted-sticker-font-size: calc(1.563rem * 1.5);
+    font-size: calc(var(--adjusted-sticker-font-size) * 100 / 300);
+    line-height: 1;
+  }
+#icon-row-template--25157307040083__icon_list {
+    --icon-max-width: 100px;
+  }
+  @media (min-width: 768px) {
+    #icon-row-template--25157307040083__icon_list {
+      --icon-max-width: 150.0px;
+    }
+  }
+#shopify-section-template--25157307040083__scrolling_text_with_icons {
+      --icon-thickness: 2;
+    }
+#shopify-section-template--25157307040083__featured_product {
+    --max-possible-width: min(var(--max-site-width), 100vw);
+    --column-width: calc((var(--max-possible-width) - (var(--section-x-padding) * 2)  - var(--grid-gap)*11) / 12);
+    --media-width: calc((var(--column-width) * 6) + (var(--grid-gap) * 5));
+    --media-column-width: calc((var(--media-width) - (calc(var(--grid-gap)/2)*11)) / 12);
+    --feature-media-width: calc((var(--media-width) - (var(--media-column-width)*2) - (calc(var(--grid-gap)/2)*2)));
+    --largest-media-aspect-ratio: 1.0;
+    --thumbnails-height:  calc(var(--feature-media-width) / var(--largest-media-aspect-ratio));
+  }
+const addToCartBtnEl = document.querySelector('.add-to-cart-btn');
+
+          if (addToCartBtnEl) {
+            document.documentElement.style.setProperty(
+              '--payment-button-height',
+              `${addToCartBtnEl.getBoundingClientRect().height}px`
+            );
+          }
+[]
+window.ProductModel = {
+      loadShopifyXR() {
+        Shopify.loadFeatures([
+          {
+            name: 'shopify-xr',
+            version: '1.0',
+            onLoad: this.setupShopifyXR.bind(this),
+          },
+        ]);
+      },
+
+      setupShopifyXR(errors) {
+        if (errors) return;
+
+        if (!window.ShopifyXR) {
+          document.addEventListener('shopify_xr_initialized', () =>
+            this.setupShopifyXR()
+          );
+          return;
+        }
+
+        document.querySelectorAll('[id^="ModelJson-"]').forEach((modelJSON) => {
+          window.ShopifyXR.addModels(JSON.parse(modelJSON.textContent));
+          modelJSON.remove();
+        });
+        window.ShopifyXR.setupXRElements();
+      },
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (Shopify.designMode) {
+        document
+          .querySelectorAll('[data-shopify-xr-hidden]')
+          .forEach((element) => element.classList.add('hidden'));
+      }
+      if (window.ProductModel) window.ProductModel.loadShopifyXR();
+    });
+{"@context":"http:\/\/schema.org\/","@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt#product","@type":"ProductGroup","brand":{"@type":"Brand","name":"WØL Shop"},"category":"T-Shirts","description":"Kombistark, angenehm weich und mit gutem Ökogewissen – so punktet dieses klassische Unisex Rundhals-T-Shirt.\n\nGerade geschnittenes Unisex T-Shirt mit eingesetzten Ärmeln\n1x1 Rippstrick am Kragen und Nackenband aus gleichem Material\nMit Doppelnaht-Steppnaht an Ärmelbündchen und Saum\nWeiche, anschmiegsame Stoffqualität: 180 g\/m²\nMaterial: 100% Baumwolle (aus biologischem Anbau)\nMarke: Stanley\/Stella\n","hasVariant":[{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831099731#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8006324.png?v=1757948353\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Navy \/ XS","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831099731#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831099731"},"sku":"589568442-P1265A482S1"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831132499#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8006324.png?v=1757948353\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Navy \/ S","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831132499#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831132499"},"sku":"589568442-P1265A482S2"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831165267#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8006324.png?v=1757948353\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Navy \/ M","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831165267#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831165267"},"sku":"589568442-P1265A482S3"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831198035#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8006324.png?v=1757948353\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Navy \/ L","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831198035#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831198035"},"sku":"589568442-P1265A482S4"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831230803#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8006324.png?v=1757948353\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Navy \/ XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831230803#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831230803"},"sku":"589568442-P1265A482S5"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831263571#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8006324.png?v=1757948353\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Navy \/ XXL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831263571#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831263571"},"sku":"589568442-P1265A482S6"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831296339#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8006324.png?v=1757948353\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Navy \/ 3XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831296339#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831296339"},"sku":"589568442-P1265A482S38"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831329107#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8828294.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Anthrazit \/ XS","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831329107#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831329107"},"sku":"589568442-P1265A742S1"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831361875#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8828294.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Anthrazit \/ S","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831361875#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831361875"},"sku":"589568442-P1265A742S2"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831394643#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8828294.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Anthrazit \/ M","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831394643#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831394643"},"sku":"589568442-P1265A742S3"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831427411#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8828294.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Anthrazit \/ L","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831427411#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831427411"},"sku":"589568442-P1265A742S4"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831460179#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8828294.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Anthrazit \/ XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831460179#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831460179"},"sku":"589568442-P1265A742S5"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831492947#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8828294.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Anthrazit \/ XXL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831492947#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831492947"},"sku":"589568442-P1265A742S6"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831525715#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-8828294.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Anthrazit \/ 3XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831525715#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831525715"},"sku":"589568442-P1265A742S38"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831558483#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-3679699.png?v=1757948352\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Lila Traum \/ XS","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831558483#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831558483"},"sku":"589568442-P1265A1478S1"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831591251#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-3679699.png?v=1757948352\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Lila Traum \/ S","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831591251#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831591251"},"sku":"589568442-P1265A1478S2"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831624019#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-3679699.png?v=1757948352\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Lila Traum \/ M","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831624019#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831624019"},"sku":"589568442-P1265A1478S3"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831656787#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-3679699.png?v=1757948352\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Lila Traum \/ L","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831656787#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831656787"},"sku":"589568442-P1265A1478S4"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831689555#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-3679699.png?v=1757948352\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Lila Traum \/ XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831689555#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831689555"},"sku":"589568442-P1265A1478S5"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831722323#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-3679699.png?v=1757948352\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Lila Traum \/ XXL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831722323#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831722323"},"sku":"589568442-P1265A1478S6"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831755091#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-3679699.png?v=1757948352\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Lila Traum \/ 3XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831755091#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831755091"},"sku":"589568442-P1265A1478S38"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831787859#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-9587855.png?v=1757948351\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Poolblau \/ XS","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831787859#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831787859"},"sku":"589568442-P1265A1467S1"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831820627#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-9587855.png?v=1757948351\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Poolblau \/ S","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831820627#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831820627"},"sku":"589568442-P1265A1467S2"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831853395#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-9587855.png?v=1757948351\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Poolblau \/ M","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831853395#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831853395"},"sku":"589568442-P1265A1467S3"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831886163#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-9587855.png?v=1757948351\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Poolblau \/ L","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831886163#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831886163"},"sku":"589568442-P1265A1467S4"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831918931#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-9587855.png?v=1757948351\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Poolblau \/ XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831918931#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831918931"},"sku":"589568442-P1265A1467S5"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831951699#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-9587855.png?v=1757948351\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Poolblau \/ XXL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831951699#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831951699"},"sku":"589568442-P1265A1467S6"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831984467#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-9587855.png?v=1757948351\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Poolblau \/ 3XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831984467#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883831984467"},"sku":"589568442-P1265A1467S38"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832017235#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-7782848.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Schwarz \/ XS","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832017235#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832017235"},"sku":"589568442-P1265A2S1"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832050003#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-7782848.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Schwarz \/ S","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832050003#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832050003"},"sku":"589568442-P1265A2S2"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832082771#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-7782848.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Schwarz \/ M","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832082771#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832082771"},"sku":"589568442-P1265A2S3"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832115539#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-7782848.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Schwarz \/ L","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832115539#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832115539"},"sku":"589568442-P1265A2S4"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832148307#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-7782848.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Schwarz \/ XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832148307#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832148307"},"sku":"589568442-P1265A2S5"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832181075#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-7782848.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Schwarz \/ XXL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832181075#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832181075"},"sku":"589568442-P1265A2S6"},{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832213843#variant","@type":"Product","image":"https:\/\/woel.art\/cdn\/shop\/files\/good-people-drink-good-beer-wol-monkey-bio-shirt-7782848.png?v=1757948374\u0026width=1920","name":"Good People drink Good Beer! WØL Monkey Bio SHIRT - Schwarz \/ 3XL","offers":{"@id":"\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832213843#offer","@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":"30.00","priceCurrency":"EUR","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt?variant=51883832213843"},"sku":"589568442-P1265A2S38"}],"name":"Good People drink Good Beer! WØL Monkey Bio SHIRT","productGroupID":"10140187001171","url":"https:\/\/woel.art\/products\/good-people-drink-good-beer-wol-monkey-bio-shirt"}
+.sticker__container .text-scheme-accent-1-contrast {color: #fff !important;} .sticker__width-container {width: 160px !important;}

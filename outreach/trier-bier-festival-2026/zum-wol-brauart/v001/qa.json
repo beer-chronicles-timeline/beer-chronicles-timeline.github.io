@@ -1,0 +1,54 @@
+{
+  "factual_review": "passed",
+  "visual_inspection": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "copy_review": "passed",
+  "checked_at": "2026-09-30T10:06:43+02:00",
+  "checks": {
+    "selected_title_id_year": "passed — exact selected live entry, 2021 year precision",
+    "historical_claims_and_friendship": "passed — full live entry and user input; independent agent review",
+    "series_title_dates_hosts_exact_urls": "passed",
+    "original_logo_identity": "passed — unchanged source bytes, complete image retained, fully opaque navy background",
+    "template_renderer_font_hashes": "passed — byte-identical approved renderer/layout/lock, installed font hashes verified",
+    "feed_dimensions": [
+      1080,
+      1350
+    ],
+    "story_dimensions": [
+      1080,
+      1920
+    ],
+    "opacity_and_colour_space": "passed — opaque RGB, explicit sRGB chunk, no alpha",
+    "full_resolution_review": "passed — both actual final PNGs opened at original resolution; spelling, diacritics, logo, title, date, margins, footer and contrast inspected",
+    "phone_preview_review": "passed — both actual outputs viewed at 390px width, readable and unclipped",
+    "sticker_clearance": "passed — blank reserved area x270–810 y1394–1514 clear under hook; no fake sticker or placeholder",
+    "repeatability": "passed — two renders have identical decoded pixels and identical PNG bytes",
+    "only_public_images": "passed — exactly feed.png and story.png at package root; phone previews in internal source/qa",
+    "tickets": "passed for 2026-09-30 — both days enabled quantity selectors, no selection or reservation"
+  },
+  "pending": [
+    "Actual publication date unspecified; recheck tickets on actual publication day",
+    "Inspect native Instagram interface and manually added Link sticker in app before posting"
+  ],
+  "output_hashes": {
+    "feed.png": {
+      "sha256": "3266da165ea09ee473276654b66fb16a5bbade21d83f5ebaf32bdac65a318a1e",
+      "pixel_sha256": "e020e0718699b37e2ee5833c7ac8859b101563d77b524081a43653d4e911f952"
+    },
+    "story.png": {
+      "sha256": "3655f337711b3f4ad2d29c1be593bb1fca710d54ed3034a4ffd1e3301d7c8a6f",
+      "pixel_sha256": "bf8688668da34a572e7fa46db169b057cfafdd269534590116c8d2fb461eb5ac"
+    }
+  },
+  "repeat_render_directory": "/private/tmp/zum-wol-repeat-render-v001",
+  "package_checker": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/zum-wol-brauart/v001",
+    "exit_code": 0,
+    "review_notices": [
+      "Publication is not confirmed for today"
+    ],
+    "checked_at": "2026-09-30T10:07:25+02:00"
+  }
+}

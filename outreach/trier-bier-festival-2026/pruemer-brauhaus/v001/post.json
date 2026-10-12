@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "subject": "Prümer Brauhaus",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Prümer Brauhaus Opens in Prüm",
+    "search_url": "https://beer-chronicles.org/?string=Pr%C3%BCmer+Brauhaus",
+    "id": "e2ae6534-fa48-4b5e-90ab-bba733ac3d6c",
+    "display_date": "2021",
+    "date_precision": "year",
+    "event_kind": "Brauhaus opening",
+    "hook": "A new brewpub opens in Prüm.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/e2ae6534-fa48-4b5e-90ab-bba733ac3d6c/prumer-brauhaus-opens-in-prum",
+        "claims": [
+          "Exact selected title and ID matched",
+          "2021 opening in Prüm",
+          "On-premises brewing and seasonal regional restaurant",
+          "2021 Prümer Nachkirmes benefit concerts"
+        ],
+        "observed_at": "2026-09-30T16:44:57+02:00",
+        "local_evidence": "source/evidence/entry.html"
+      },
+      {
+        "location": "https://www.wackerberg.de/tatort/media/pdf/pruem.pdf",
+        "claims": [
+          "Tourist-information guide lists a 2021 new opening at Bahnhofstraße 45b"
+        ],
+        "observed_at": "2026-09-30T16:54:35+02:00"
+      },
+      {
+        "location": "https://www.pruem.de/aktuelles/aktuelle-meldungen/2021/august/nachkirmes-jazz-initiative/",
+        "claims": [
+          "First Prümer Nachkirmes at Brauhaus in August 2021",
+          "Benefit concerts for people affected by severe weather"
+        ],
+        "observed_at": "2026-09-30T16:54:35+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "Prümer Brauhaus listed as first-time 2026 participant",
+          "2–3 October 2026 at Blesius Garten"
+        ],
+        "observed_at": "2026-09-30T16:44:57+02:00",
+        "local_evidence": "source/evidence/festival.html"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/pruemer-brauhaus/",
+        "claims": [
+          "First-time festival participation",
+          "Organiser separately says own beer brewed since 2019; copy does not present 2021 as brewing start"
+        ],
+        "observed_at": "2026-09-30T16:44:57+02:00",
+        "local_evidence": "source/evidence/participant.html"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "No personal connection.",
+    "public_use": "none",
+    "source": "User input in this conversation"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.png",
+    "source_url": "https://pruemerbrauhaus.de/wp-content/uploads/2025/03/logo_pruemer_brauhaus_web-1024x330.png",
+    "sha256": "17580aff3bbceecb9e2216cc777a12765f046a086683702be91fc69f5dfb4bdc",
+    "crop": [
+      0,
+      0,
+      1024,
+      330
+    ],
+    "credit": "Prümer Brauhaus; exact user-supplied brewery-hosted logo.",
+    "treatment": "Full original transparent 1024 × 330 RGBA image, proportionally fitted and alpha composited onto cream. No redrawing or background removal."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-30T16:44:57+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date-specific booking pages had enabled Stehplatz quantity selectors 0–8. No selection, reservation or purchase.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ],
+    "local_evidence": [
+      "source/evidence/friday.html",
+      "source/evidence/saturday.html"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "From Prüm in the Eifel to Trier: I’m featuring Prümer Brauhaus in The Stories Behind the Trier Beer Festival 2026.\n\nThe Brauhaus opened in Prüm in 2021, combining beer brewed on the premises with a restaurant centred on seasonal and regional cooking. That August, it hosted the Jazz-Initiative Eifel’s first Prümer Nachkirmes, a series of benefit concerts for people affected by severe weather. It was an early connection between the new brewpub and local cultural life.\n\nPrümer Brauhaus is joining the 12th Trier Beer Festival for the first time on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore the 2021 opening through the Beer Chronicles link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #PruemerBrauhaus #EifelBeer #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nPrümer Brauhaus logo\n2021\nA new brewpub opens in Prüm.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org\n\nLink sticker: Explore their story\nhttps://beer-chronicles.org/?string=Pr%C3%BCmer+Brauhaus",
+    "alt_text": "Warm cream editorial poster with centred charcoal serif text and fine copper rules. The heading reads “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original Prümer Brauhaus logo is a wide green, beige, black and white wordmark. Below it are “2021” and “A new brewpub opens in Prüm.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN” and “beer-chronicles.org”."
+  },
+  "render": {
+    "mode": "rendered",
+    "state": "rendered_and_verified",
+    "template_version": "trier-serif-v1.0.0-calibration with transparent wide-logo fit",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "f1e6e8b66102211e5ff765fc818ee0be97aaffc5b41e6f20f4b132bd77284c8b",
+        "pixel_sha256": "bca5561cccc378f608767b293ebb809cfe9016e07c70ba3aa5da1a2abecdaf6a",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2021",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "A new brewpub opens in Prüm.",
+            "top": 1063,
+            "height": 54.666666666666664,
+            "width": 730.2479166666667,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "d2ab66321b44a28f54b4622f352bec728c84ef126cefc6ff785afc03bbee8409",
+        "pixel_sha256": "c23cd1aaf38c5cd830a7d548e085b3b578c37e6e8458bb315b2283c66071e534",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2021",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "A new brewpub opens in Prüm.",
+            "top": 1290,
+            "height": 54.666666666666664,
+            "width": 730.2479166666667,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "approved_template_source": "/Users/schmidt/beer-history-website/social/trier-2026/blech-brut/v001/source",
+    "source_files": {
+      "render.py": "d850be2ba7044a7262db47e591a42407ce37f9cd39075991f138ba1882d5a00c",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "af42c9b7733151175535e8b2560f286db2681a91d443823698994e7134f4f29d"
+    },
+    "logo_fit": {
+      "feed": {
+        "max_width": 920,
+        "box_height": 530
+      },
+      "story": {
+        "max_width": 950,
+        "box_height": 580
+      },
+      "notes": "Original aspect ratio preserved; centred within the established logo area. Alpha pixels composited normally."
+    }
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "copy_approval": "User replied “Hook und Caption freigeben” to the full proposed hook and caption on 2026-09-30.",
+    "visual_basis": "The existing approved serif layout, colours and font lock were reused. The user authorised rendering with the supplied logo; only proportional wide-logo fitting and standard transparency compositing were applied. New final artwork has been visually inspected by the assistant.",
+    "new_template_approval_required": false
+  },
+  "status": "needs_review"
+}

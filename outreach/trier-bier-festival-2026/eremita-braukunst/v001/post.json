@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "subject": "Eremita Braukunst",
+  "workflow_stage": "files_complete",
+  "entry": {
+    "title": "Eremita Braukunst Begins Selling Beer",
+    "search_url": "https://beer-chronicles.org/?string=Eremita+Braukunst",
+    "id": "05d253b1-b069-43b7-ae8a-7d238df1a27b",
+    "display_date": "2016",
+    "date_precision": "year",
+    "hook": "Eremita Braukunst begins selling beer.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/05d253b1-b069-43b7-ae8a-7d238df1a27b/eremita-braukunst-begins-selling-beer",
+        "claims": [
+          "2014 brewing experiments; 2016 business registration and first sales with one beer; met Ola in 2017"
+        ],
+        "observed_at": "2026-09-30T08:15:44.231313+02:00"
+      },
+      {
+        "location": "https://beer-chronicles.org/events/6a0e3325-727a-4e6b-bb8d-9155e468206c/eremita-braukunst-becomes-certified-organic",
+        "claims": [
+          "Certified organic in 2022"
+        ],
+        "observed_at": "2026-09-30T08:15:44.231313+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "2026 participation; 2–3 October 2026 at Blesius Garten, Trier"
+        ],
+        "observed_at": "2026-09-30T08:15:44.231313+02:00"
+      }
+    ]
+  },
+  "secondary_entry": {
+    "title": "Eremita Braukunst Becomes Certified Organic",
+    "url": "https://beer-chronicles.org/events/6a0e3325-727a-4e6b-bb8d-9155e468206c/eremita-braukunst-becomes-certified-organic",
+    "display_date": "2022",
+    "use": "caption supporting milestone"
+  },
+  "personal_connection": {
+    "answer": "No personal connection",
+    "public_use": "none"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.png",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Unbenannt-7-rbg5llcq7qk4r0jf1hisur0auvqk87gkw718rlmxeo.png",
+    "sha256": "5490924d0ebeac2609c992a41258625f1aa5aef812ee9d67797dbe9d08e15b27",
+    "crop": null,
+    "credit": "Eremita Braukunst; user-supplied organiser-hosted logo.",
+    "treatment": "Preserve complete 400×400 logo and original white background."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-30T08:14:19.960610+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Fresh public HTML for both date pages shows enabled seatsCat_1 quantity selectors with options 0–8. No quantity selected or reservation made.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "Eremita’s commercial story began with a single beer.\n\nThis instalment of The Stories Behind the Trier Beer Festival 2026 takes us to Birenbach in Baden-Württemberg. Benjamin Wezel started brewing in 2014 after watching a television documentary about beer. In 2016, he registered a brewing business and began selling his beer: the commercial beginnings of Eremita Braukunst.\n\nHe met Carola “Ola” Seibold in 2017, and she became his partner in life and brewing. Another milestone followed in 2022, when Eremita became certified organic.\n\nMeet @eremitabraukunst at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore both milestones on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #EremitaBraukunst #CraftBeer #Birenbach",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nEremita Braukunst\n2016\nEremita Braukunst begins selling beer.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The supplied Eremita Braukunst logo has black EREMITA lettering above BRAUKUNST and two hop cones, on its original white square background. Below it: “2016” in copper and “Eremita Braukunst begins selling beer.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "participant_handle": {
+    "handle": "@eremitabraukunst",
+    "status": "verified_link",
+    "source": "https://0711kraftbierfest.de/brauereien/",
+    "evidence": "Eremita section explicitly links https://www.instagram.com/eremitabraukunst; corroborated by Untappd profile."
+  },
+  "render": {
+    "state": "rendered_and_verified",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "approved_template_source": "social/trier-2026/schwarze-rose/v001/source",
+    "mode": "rendered",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "6262af60949862f7f2409b0347d36c18e5520dcb100e97c11b33b67aedb62b0a",
+        "pixel_sha256": "51bbf9e906b0a1b918950d4df5b15f99b1af5b8a5e957fa3880e2bcbd1caa521",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2016",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Eremita Braukunst begins selling beer.",
+            "top": 1063,
+            "height": 54.666666666666664,
+            "width": 890.9145833333333,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "d2ef5a0fc768cbb19b79c2237b804866a0ff03d3e8e1c50d4333dedd74e68c81",
+        "pixel_sha256": "c439ca83c648262a4a355e5ce35ccd5772c188ca543a765158291ffdb5265b21",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2016",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Eremita Braukunst begins selling beer.",
+            "top": 1290,
+            "height": 54.666666666666664,
+            "width": 890.9145833333333,
+            "font_size": 60
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "439a6e49c5a751fa3b96cb7ab6a89c3c609629d4be655e72ffa5e197ca466baf"
+    }
+  },
+  "approvals": {
+    "copy": true,
+    "visual": false,
+    "template": true,
+    "approved_at": "2026-09-30T08:18:46.165147+02:00",
+    "user_statement": "Go",
+    "scope": "Approved displayed hook and caption and rendering in existing campaign template. Exact output images not yet reviewed by user."
+  },
+  "status": "needs_review",
+  "status_reason": "Approved copy rendered with existing template. Exact images supplied for inspection; publication day is unspecified. Recheck tickets on publication day.",
+  "copy_hashes": {
+    "caption.txt": "e3d5b2a76b91ac19a0bb39cf32a0d96a02d9a54210a9a6b3a2924fa3e7eff467",
+    "story-text.txt": "6792c2e162b59db4fc3293f478b7239818c8940905d5d85f14bc448c23b40622",
+    "alt-text.txt": "b4a59bf1807f57c64988f1e21fdd9dc7238939bc853a3724f1ec6b17b6bf9c64"
+  }
+}

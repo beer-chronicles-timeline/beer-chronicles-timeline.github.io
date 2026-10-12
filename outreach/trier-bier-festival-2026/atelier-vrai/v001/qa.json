@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-09-27T09:56:31+02:00",
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "dimensions": "passed",
+  "opacity": "passed",
+  "copy_consistency": "passed",
+  "logo_fidelity": "passed",
+  "template_integrity": "passed",
+  "checks": {
+    "visual": "Opened feed and Story actual PNGs at original resolution and at 390px preview width; checked complete title, spelling, diacritics, 2016, margins, no clipping, footer, contrast and sticker clearance.",
+    "logo": "Complete Atelier logo isolated by documented stepped crop; every retained pixel byte-identical to original before resizing; no Blech.Brut in the outputs. White background retained. Native low resolution remains visible.",
+    "repeatability": "Both render runs have identical decoded pixel hashes.",
+    "template": "render.py, layout.json and render-lock.json byte-identical to approved Blech.Brut source. Engine and font hashes checked by renderer.",
+    "colour": "Both PNGs are opaque 8-bit RGB with explicit sRGB chunk.",
+    "dimensions": {
+      "feed": [
+        1080,
+        1350
+      ],
+      "story": [
+        1080,
+        1920
+      ]
+    },
+    "sources": "Selected live event and official brewery about page were read in preparation; current festival list and both date-specific ticket selectors checked.",
+    "publication": "No publication date supplied. Recheck ticket availability on actual publication day and validate sticker in Instagram."
+  },
+  "package_check": "passed",
+  "package_check_warning": "Publication is not confirmed for today"
+}

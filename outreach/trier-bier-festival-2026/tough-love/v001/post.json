@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "subject": "Tough Love",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Tough Love Begins as a Homebrewing Project",
+    "search_url": "https://beer-chronicles.org/?string=Tough+Love",
+    "id": "95971b79-0e71-4b7c-ab20-a8f9a89ea696",
+    "display_date": "2017",
+    "date_precision": "year",
+    "hook": "A Portuguese brewing story starts at home.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/95971b79-0e71-4b7c-ab20-a8f9a89ea696/tough-love-begins-as-a-homebrewing-project",
+        "claims": [
+          "2017 homebrewing beginnings in Portugal following a trip",
+          "Courses, reading, practical experiments; early personal batches of 16–40 litres",
+          "Later commercial project led by Vítor Fontes and brewery in Esmoriz near Porto"
+        ],
+        "observed_at": "2026-09-28T15:58:32+02:00"
+      },
+      {
+        "location": "https://toughlove.pt/",
+        "claims": [
+          "Trip in 2017, return to Portugal, new friendships, brewing education and homebrewing",
+          "Early batches 16–40 litres for personal consumption"
+        ],
+        "observed_at": "2026-09-28T15:58:32+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/tough-love/",
+        "claims": [
+          "Explicit 2017 homebrewing date; later brewery in Esmoriz and Vitor Fontes"
+        ],
+        "observed_at": "2026-09-28T15:58:32+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "2026 participation; 2–3 October 2026 at Blesius Garten"
+        ],
+        "observed_at": "2026-09-28T15:58:32+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "No personal connection.",
+    "public_use": "none"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.png",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Logo--rbg599owlxosj2fv05qw5uyqh0hbb2j9v7428zwqzk.png",
+    "sha256": "8e475c1cf733d3fd8f12f02d64891a5947d516ccdb28e541b845462e96e6ea98",
+    "crop": null,
+    "credit": "Tough Love; user-supplied organiser-hosted original.",
+    "treatment": "Preserve entire 400 × 400 image, lettering, marks, aspect ratio and white background."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-28T15:58:32+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date booking pages show enabled standing-ticket selectors with quantities 0–8. No selections, reservations or purchases.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "participant_handle": {
+    "handle": null,
+    "status": "unverified",
+    "notes": "No Instagram link found on official homepage; targeted searches did not establish a verified brewery handle. Caption uses brewery name."
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "Tough Love started small: 16–40 litres at a time. Meet the Portuguese brewery in The Stories Behind the Trier Beer Festival 2026.\n\nIts story began with a trip in 2017 that sparked an interest in craft beer. Back in Portugal, exploring unfamiliar styles led to new friendships, brewing courses, reading and experiments at home. Those early batches were brewed for personal enjoyment. They laid the groundwork for the later commercial project led by Vítor Fontes, with a brewery in Esmoriz, near Porto.\n\nMeet Tough Love at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore their homebrewing beginnings on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #ToughLove #PortugueseBeer #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nTough Love\n2017\nA Portuguese brewing story starts at home.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original Tough Love logo shows ornate dark lettering, “CRAFT BEER”, two facing skulls, hop cones, leaves and decorative flourishes, on its retained white background. Below: “2017” in copper and “A Portuguese brewing story starts at home.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "render": {
+    "state": "rendered_and_verified",
+    "approved_template_source": "social/trier-2026/the-sisters-brewery/v001/source",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "mode": "rendered",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "outputs": {
+      "feed.png": {
+        "sha256": "ce7a868a1f3ae7f5bf0adfd90efa0a0b04b2f08ea3906fe6a4701ddb67fef977",
+        "pixel_sha256": "52921338d2618c842a837241d65224355f52c331ba11d3fe1f5eaf8e78e381d8",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2017",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "A Portuguese brewing story starts at home.",
+            "top": 1063,
+            "height": 52.333333333333336,
+            "width": 943.1864583333332,
+            "font_size": 57.5
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "0413778b2102b57194d711b9c525be0684d02285fcb9016739269bf71fe61b8b",
+        "pixel_sha256": "550a476f1cf4642fa0b66806fa9d8c79ec5dea42f564ebca253d4adf91e1fe55",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2017",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "A Portuguese brewing story starts at home.",
+            "top": 1290,
+            "height": 52.666666666666664,
+            "width": 955.8479166666666,
+            "font_size": 58.0
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "4a6074237e99650be54e62362c885a5096554c8ff5acf3382125af8ffdbc8f42"
+    },
+    "font_approval": "Previously approved Times New Roman files reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_basis": "Reuse previously approved campaign template unchanged.",
+    "approved_at": "2026-09-28T16:00:45+02:00",
+    "user_statement": "Go",
+    "visual_basis": "User authorized approved copy and rendering in the existing approved campaign template. Assistant inspection of final exports follows."
+  },
+  "status": "needs_review",
+  "notes": [
+    "2017 is the homebrewing milestone, not a commercial brewery opening date.",
+    "No personal anecdote supplied or invented.",
+    "Organiser subpage retains an 11th-festival breadcrumb and 2025 beer descriptions; no tap list or first-appearance claim used. Current 2026 main listing confirms participation.",
+    "Organiser lower date block is obsolete; 2026 header and both booking dates confirm October 2–3.",
+    "Final artwork rendered using approved copy, intact supplied logo and existing approved template."
+  ],
+  "status_reason": "Approved artwork and copy complete. Publication date unspecified; recheck tickets on publication day and inspect native Story sticker placement.",
+  "copy_hashes": {
+    "caption.txt": "7c5384c382790ac805af1b6518b2178991b3488087a71543e4266b6127bc8976",
+    "story-text.txt": "1fb411fbc11da87a35cb36afa0bca31e1e152d6b4b3db6f5da3a0f51ad2bdf3c",
+    "alt-text.txt": "ff33b1376eb00ce011de51d1ceddf256101b5e7701def546cc4cc9d1b96576ca"
+  }
+}

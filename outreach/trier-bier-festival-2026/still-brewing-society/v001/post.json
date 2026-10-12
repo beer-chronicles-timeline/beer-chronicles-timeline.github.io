@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "subject": "Still Brewing Society",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Still Brewing Society Appears at the Bingen Bier Festival",
+    "search_url": "https://beer-chronicles.org/?string=Still+Brewing+Society",
+    "id": "8fead782-da2c-4ffe-add3-64b3f8f28ebf",
+    "display_date": "2026",
+    "canonical_date": "August 2026",
+    "event_dates": "7–8 August 2026",
+    "event_kind": "Festival appearance, not founding",
+    "hook": "Still Brewing Society appears at the Bingen Bier Festival.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/8fead782-da2c-4ffe-add3-64b3f8f28ebf/still-brewing-society-appears-at-the-bingen-bier-festival",
+        "claims": [
+          "Festival appearance on 7–8 August 2026 in Bingen am Rhein",
+          "Andi Dietrich’s own project after Brauquadrat appearance in 2025",
+          "Around three decades of brewing experience"
+        ],
+        "observed_at": "2026-09-29T09:12:49.516069+02:00"
+      },
+      {
+        "location": "https://bingenbierfestival.de/still-brewing-society/",
+        "claims": [
+          "Dietrich, prior Brauquadrat appearance, and 30 years of brewing experience"
+        ],
+        "observed_at": "2026-09-29T09:12:49.516069+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/still-brewing-society/",
+        "claims": [
+          "2026 festival participation",
+          "Instagram profile linked as STILL.BREWING.SOCIETY"
+        ],
+        "observed_at": "2026-09-29T09:12:49.516069+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "No personal connection from my side.",
+    "public_use": "none"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo.jpeg",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Logo-Still-Brewing-rthwrypiibubpawufq2unp3eygwygf3osyhp87pm74.jpeg",
+    "sha256": "6f5e01c8c37b14bbf61d7d8044d0632fc25d14b1dd161d76c062eca2c067c6e3",
+    "crop": null,
+    "credit": "Still Brewing Society; user-supplied organiser-hosted logo.",
+    "treatment": "Full original square with charcoal background retained."
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-29T09:12:49.516069+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date pages expose enabled ticket quantity selectors with options 0–8. No selection or reservation made.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "Thirty years of brewing experience, and a project of his own: meet Still Brewing Society, the next feature in The Stories Behind the Trier Beer Festival 2026.\n\nOn 7–8 August 2026, Still Brewing Society appeared at the Bingen Bier Festival in Bingen am Rhein. The organiser introduced it as Andi Dietrich’s own project, following his appearance with Brauquadrat the previous year. Behind the new name is a brewer with around three decades of experience across different breweries.\n\nNow @still.brewing.society is on the lineup for the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore the Bingen milestone on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #StillBrewingSociety #CraftBeer #BeerHistory",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nStill Brewing Society\n2026\nStill Brewing Society appears at the Bingen Bier Festival.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original Still Brewing Society logo has irregular cream lettering on a charcoal square. Below it: “2026” in copper and “Still Brewing Society appears at the Bingen Bier Festival.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "render": {
+    "mode": "rendered",
+    "state": "rendered_and_verified",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "8656b1a631b467feff07e0d6ca920fa984f9f6e58b5945cda20f988338d62390",
+        "pixel_sha256": "ab658604b52b5b7c36d09c8822ffeec21b5222eedab0a7f2d0956ec2236144b2",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2026",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Still Brewing Society appears at the Bingen Bier Festival.",
+            "top": 1063,
+            "height": 39.666666666666664,
+            "width": 941.9666666666667,
+            "font_size": 43.5
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "b4a5b4800323e272003f7e34ba30a87a7e5a2082b5aa2745622c86b9b9b6a0b1",
+        "pixel_sha256": "acfb07d8b3782b7b48ddbe77fb93c6adc7d861c4688594141f795f0c58600d76",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2026",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Still Brewing Society appears at the Bingen Bier Festival.",
+            "top": 1290,
+            "height": 40.0,
+            "width": 957.6333333333333,
+            "font_size": 44.0
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "a83faa232e80d9c9e5949a0150a42294d6a48693d670ac9d7fcea6e1dd4b356e"
+    },
+    "font_approval": "Previously approved campaign font files reused unchanged."
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "approved_at": "2026-09-29T09:20:11.971133+02:00",
+    "user_statement": "Go",
+    "visual_basis": "User authorised rendering approved hook/caption in existing approved campaign template with supplied logo. No new template or design."
+  },
+  "status": "needs_review",
+  "participant_handle": "@still.brewing.society",
+  "copy_hashes": {
+    "caption.txt": "c1b220b046469c90a85914d6fda644f28a144b90f1c0375dd550457535e57035",
+    "story-text.txt": "5b209588199f26ff6b3fd3b34ce5b02656c90cc15cf9106fb04369ee8243bc85",
+    "alt-text.txt": "100baa64494dbd650885ade3a7eab8dc8b5a2cc06aec249b06eac8ce08d4831a"
+  },
+  "status_reason": "Files complete and checked. Publication date unspecified; ticket and native Story placement checks remain at publication."
+}

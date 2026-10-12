@@ -1,0 +1,56 @@
+{
+  "factual_review": "passed",
+  "visual_inspection": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "copy_review": "passed",
+  "checked_at": "2026-09-30T16:54:35+02:00",
+  "checks": {
+    "selected_title_id_year": "passed — exact live entry and tourism guide establish 2021 opening, year precision",
+    "historical_claims": "passed — complete entry and original municipal report read; 2019 brewing claim kept distinct from opening",
+    "festival_participation": "passed — fresh organiser HTML on 2026-09-30 lists Prümer Brauhaus as a first-time participant",
+    "series_dates_hosts_urls": "passed",
+    "original_logo_identity": "passed — unchanged source bytes, full image and aspect ratio; no crop or redraw",
+    "template_font_hashes": "passed — original layout and font lock retained; actual installed font hashes checked by renderer",
+    "feed_dimensions": [
+      1080,
+      1350
+    ],
+    "story_dimensions": [
+      1080,
+      1920
+    ],
+    "opacity_and_colour_space": "passed — opaque RGB outputs with explicit sRGB PNG chunk",
+    "full_resolution_review": "passed — both actual final PNGs opened at original resolution; text, diacritics, logo, margins, contrast and footer inspected",
+    "phone_preview_review": "passed — both actual outputs reviewed at 390 px width; text and logo legible and unclipped",
+    "sticker_clearance": "passed — one blank area x270–810 y1394–1514, clear of hook and footer; no fake sticker",
+    "repeatability": "passed — rerendered images have identical decoded pixels and PNG bytes",
+    "only_public_images": "passed — one feed and one Story at package root; phone previews only in internal source/qa",
+    "tickets": "passed for 2026-09-30 — both date-specific pages had enabled quantity selectors; no reservation"
+  },
+  "pending": [
+    "Publication date unspecified; recheck ticket status on actual publication day",
+    "Inspect native Instagram interface and manually placed Link sticker before posting",
+    "Brewery Instagram handle not verified from an official source; omitted"
+  ],
+  "output_hashes": {
+    "feed.png": {
+      "sha256": "f1e6e8b66102211e5ff765fc818ee0be97aaffc5b41e6f20f4b132bd77284c8b",
+      "pixel_sha256": "bca5561cccc378f608767b293ebb809cfe9016e07c70ba3aa5da1a2abecdaf6a"
+    },
+    "story.png": {
+      "sha256": "d2ab66321b44a28f54b4622f352bec728c84ef126cefc6ff785afc03bbee8409",
+      "pixel_sha256": "c23cd1aaf38c5cd830a7d548e085b3b578c37e6e8458bb315b2283c66071e534"
+    }
+  },
+  "repeat_render_directory": "/private/tmp/pruemer-rerender",
+  "package_checker": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/pruemer-brauhaus/v001",
+    "exit_code": 0,
+    "review_notices": [
+      "Publication is not confirmed for today"
+    ],
+    "checked_at": "2026-09-30T16:59:23+02:00"
+  }
+}

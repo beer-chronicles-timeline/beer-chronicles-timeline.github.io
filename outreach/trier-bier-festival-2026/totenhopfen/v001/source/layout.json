@@ -1,0 +1,69 @@
+{
+  "version": "trier-serif-v1.0.0-calibration",
+  "background": "#FEFCF7",
+  "ink": "#191919",
+  "copper": "#B8642B",
+  "feed": {
+    "height": 1350,
+    "header": 84,
+    "title": [
+      {
+        "y": 165,
+        "size": 86,
+        "width": 840,
+        "tracking": -3
+      },
+      {
+        "y": 253,
+        "size": 110,
+        "width": 944,
+        "tracking": -3.6
+      }
+    ],
+    "logo": {
+      "y": 403,
+      "width": 530
+    },
+    "date": 982,
+    "hook": 1063,
+    "hook_width": 944,
+    "divider": 1182,
+    "footer": 1220,
+    "signature": 1277
+  },
+  "story": {
+    "height": 1920,
+    "header": 170,
+    "title": [
+      {
+        "y": 267,
+        "size": 92,
+        "width": 894,
+        "tracking": -3
+      },
+      {
+        "y": 373,
+        "size": 111,
+        "width": 950,
+        "tracking": -3.6
+      }
+    ],
+    "logo": {
+      "y": 526,
+      "width": 580
+    },
+    "date": 1170,
+    "hook": 1290,
+    "hook_width": 958,
+    "sticker_area": [
+      270,
+      1394,
+      810,
+      1514
+    ],
+    "divider": 1550,
+    "footer": 1592,
+    "ticket": 1654,
+    "signature": 1724
+  }
+}

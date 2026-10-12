@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "subject": "Atelier VRAI",
+  "workflow_stage": "complete_awaiting_publication_day_check",
+  "entry": {
+    "title": "Atelier VRAI Is Founded",
+    "search_url": "https://beer-chronicles.org/?string=Atelier+Vrai",
+    "id": "a715dc3c-c831-4f91-878a-698f0eb56618",
+    "display_date": "2016",
+    "date_precision": "year",
+    "hook": "Atelier VRAI begins as Atelier der Braukünste.",
+    "sources": [
+      {
+        "location": "https://beer-chronicles.org/events/a715dc3c-c831-4f91-878a-698f0eb56618/atelier-vrai-is-founded",
+        "claims": [
+          "Founded in 2016 by Nico Döring as Atelier der Braukünste",
+          "Started with a nano-brewing system at Romrod Castle in Hesse"
+        ],
+        "observed_at": "2026-09-27T09:53:28+02:00"
+      },
+      {
+        "location": "https://www.atelier-vrai.com/about/",
+        "claims": [
+          "Corroborates founder, year, original name and original location"
+        ],
+        "observed_at": "2026-09-27T09:53:28+02:00"
+      },
+      {
+        "location": "https://kraft-braeu.de/bierfestival/",
+        "claims": [
+          "Atelier Vrai listed for 2026 with Blech.Brut",
+          "2–3 October 2026 at Blesius Garten, Trier"
+        ],
+        "observed_at": "2026-09-27T09:53:28+02:00"
+      }
+    ]
+  },
+  "personal_connection": {
+    "answer": "Like Blech.Brut, I love them and I am ordering almost every release. Among my NEIPA heros.",
+    "public_use": "explicit"
+  },
+  "logo": {
+    "source_path": "source/assets/original-logo-sheet.png",
+    "source_url": "https://kraft-braeu.de/wp-content/uploads/elementor/thumbs/Untitled-design-13-rbwb26wm6vpijgrsd7u3pzci2vmfujfcixthounwrk.png",
+    "sha256": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764",
+    "crop": [
+      160,
+      198,
+      345,
+      383
+    ],
+    "credit": "Atelier VRAI; user-supplied organiser-hosted logo sheet.",
+    "treatment": "Stepped crop isolates complete original Atelier mark; original white background retained. Upper-left region belonging to Blech.Brut excluded, padded white. Proportional enlargement only.",
+    "crop_provenance": "source/assets/crop-provenance.json",
+    "crop_sha256": "ce3bbf3addc666d8b050154b272249bc14c41fa37e230100e8fd60a8cd43ce67",
+    "crop_pixel_sha256": "4f41d386d3bc7857d4c23143cfd5d0b5d203264cbc37dfeb49860aae26951b86"
+  },
+  "publication_date": null,
+  "tickets": {
+    "status": "available_both_days",
+    "checked_at": "2026-09-27T09:53:28+02:00",
+    "source_url": "https://www.ticket-regional.de/events_info.php?eventID=275224",
+    "evidence": "Both date-specific public booking pages display enabled standing-ticket quantity selectors with options 0–8; default quantity remains 0. No reservation or purchase.",
+    "date_pages": [
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140426",
+      "https://www.ticket-regional.de/stage_1006.php?timeID=1140429"
+    ]
+  },
+  "copy": {
+    "series_title": "The Stories Behind the Trier Beer Festival 2026",
+    "caption": "Like Blech.Brut, Atelier VRAI are among my personal NEIPA heroes. I love their beers and order almost every new release, so I’m especially happy to see them in this year’s festival line-up.\n\nAtelier VRAI is next in The Stories Behind the Trier Beer Festival 2026.\n\nTheir story began in 2016, when Nico Döring founded Atelier der Braukünste, the company now known as Atelier VRAI. The starting point was a small nano-brewing system at Romrod Castle in Hesse.\n\nMeet Atelier VRAI at the Trier Beer Festival on 2–3 October 2026 at Blesius Garten, Trier, hosted by @kraft_braeu_trier and @blesius_garten.\n\nExplore their story on Beer Chronicles through the link in the accompanying Story.\n\nTickets are still available:\nhttps://www.ticket-regional.de/events_info.php?eventID=275224\n\n#BeerChronicles #TrierBeerFestival #AtelierVRAI #BeerHistory #NEIPA",
+    "story_text": "BEER CHRONICLES\nThe Stories Behind the Trier Beer Festival 2026\nAtelier VRAI\n2016\nAtelier VRAI begins as Atelier der Braukünste.\nTRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN\nTickets still available — see feed caption\nbeer-chronicles.org",
+    "alt_text": "Cream poster with centred charcoal serif lettering and fine copper rules. At the top: “BEER CHRONICLES” and “The Stories Behind the Trier Beer Festival 2026”. The original Atelier VRAI logo shows a small sketched bird above the words “ATELIER VRAI”, on its retained white background. Below: “2016” in copper and “Atelier VRAI begins as Atelier der Braukünste.” The footer reads “TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN”, followed by “beer-chronicles.org”."
+  },
+  "render": {
+    "mode": "rendered",
+    "state": "rendered_and_verified",
+    "template_version": "trier-serif-v1.0.0-calibration",
+    "renderer": "{\"python\": \"3.11.11\", \"pillow\": \"11.1.0\", \"freetype\": \"2.12.1\", \"supersampling\": 3, \"layout_engine\": \"Pillow BASIC\", \"resampling\": \"LANCZOS\"}",
+    "fonts": [
+      {
+        "family": "Times New Roman",
+        "style": "Regular",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "sha256": "f3b4ffff71c2a0c7227d37497683b2498fb2d0a4e8beae26f022e3ccfcaabfa3"
+      },
+      {
+        "family": "Times New Roman",
+        "style": "Italic",
+        "path": "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
+        "sha256": "7bb99c3a67697fbce15ab66d806d9a2151432ce1dab2eaba4156e1251da486c0"
+      }
+    ],
+    "reference_hashes": {
+      "assets/references/blech-brut-feed-serif.png": "b26eeb10f9867482a9078c11474271bd6c1e4fc88e42cb99eb7c1d8e14c63b2b",
+      "assets/references/blech-brut-story-serif.png": "ae1b798cc786f60ab23c7950c8e9e7b24b13bf2aec8c1d82b4cc666107c42be9",
+      "assets/originals/blech-brut-and-atelier-vrai.png": "077ee8e7ec69cce2eba9fd4d301c7795dd171f7b76b53ae9e3ed0a632096f764"
+    },
+    "outputs": {
+      "feed.png": {
+        "sha256": "8b0a4dfd737b32b83c16f167bcfc81bcc958f9d61d773b145e16276f530318ea",
+        "pixel_sha256": "afc2ee5494be05d8f9f7ed617785e05b1aeb3b184f15e6068e6539b9c415b084",
+        "dimensions": [
+          1080,
+          1350
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 84,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 165,
+            "height": 61.0,
+            "width": 729.0,
+            "font_size": 86
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 253,
+            "height": 74.0,
+            "width": 943.1427083333333,
+            "font_size": 104.75
+          },
+          {
+            "text": "2016",
+            "top": 982,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Atelier VRAI begins as Atelier der Braukünste.",
+            "top": 1063,
+            "height": 47.333333333333336,
+            "width": 938.7708333333334,
+            "font_size": 52.0
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1220,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1277,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      },
+      "story.png": {
+        "sha256": "1b450c91b0d32b589a6f77cce057e06aff0ed6e388c1eba9a72dee6958d25ed8",
+        "pixel_sha256": "d3d881211f83a1aae2cd13895603f7401ae379b985c05cb74ddd906cc0447f86",
+        "dimensions": [
+          1080,
+          1920
+        ],
+        "mode": "RGB",
+        "text_bounds": [
+          {
+            "text": "BEER CHRONICLES",
+            "top": 170,
+            "height": 20.666666666666668,
+            "width": 384.6666666666667,
+            "font_size": 30
+          },
+          {
+            "text": "The Stories Behind the",
+            "top": 267,
+            "height": 65.33333333333333,
+            "width": 784.0,
+            "font_size": 92
+          },
+          {
+            "text": "Trier Beer Festival 2026",
+            "top": 373,
+            "height": 74.66666666666667,
+            "width": 949.4760416666667,
+            "font_size": 105.5
+          },
+          {
+            "text": "2016",
+            "top": 1170,
+            "height": 41.0,
+            "width": 141.0,
+            "font_size": 60
+          },
+          {
+            "text": "Atelier VRAI begins as Atelier der Braukünste.",
+            "top": 1290,
+            "height": 48.0,
+            "width": 953.1041666666666,
+            "font_size": 52.75
+          },
+          {
+            "text": "TRIER BEER FESTIVAL · 2–3 OCTOBER 2026 · BLESIUS GARTEN",
+            "top": 1592,
+            "height": 16.0,
+            "width": 847.7114583333333,
+            "font_size": 23
+          },
+          {
+            "text": "Tickets still available — see feed caption",
+            "top": 1654,
+            "height": 31.666666666666668,
+            "width": 574.96875,
+            "font_size": 35
+          },
+          {
+            "text": "beer-chronicles.org",
+            "top": 1724,
+            "height": 26.666666666666668,
+            "width": 242.09166666666667,
+            "font_size": 29
+          }
+        ]
+      }
+    },
+    "approved_template_source": "/Users/schmidt/beer-history-website/social/trier-2026/blech-brut/v001/source",
+    "source_files": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "209476d172d776423ffc1cb5700542b55b86c59138a953121d0309f160463903",
+      "prepare-logo.py": "76133b5107d0df7f53bfb147845bb15dea6d3325849ed6309b008ef1e13b4f25"
+    }
+  },
+  "approvals": {
+    "copy": true,
+    "visual": true,
+    "template": true,
+    "template_approval": "Existing Blech.Brut post manifest records user approval of assembled template and Times New Roman on 2026-09-25.",
+    "approved_at": "2026-09-27T09:55:09+02:00",
+    "user_statement": "Approved",
+    "visual_basis": "Approval to implement reviewed hook and caption using the existing approved serif template. Final outputs verified by assistant; no new template.",
+    "locked_source_hashes": {
+      "render.py": "64abc91a1fbe3557812050507588987c61ebb0d35dbfc9cd06a7feab799fc215",
+      "layout.json": "21042e3f25a5c52e43405a33119c873e374463de76e4bd9e5863164c10d84c4d",
+      "render-lock.json": "90bee27c5c15c2db69353e9103cf8f544f8245df94fc58b57a96430f02ad829a",
+      "content.json": "209476d172d776423ffc1cb5700542b55b86c59138a953121d0309f160463903",
+      "prepare-logo.py": "76133b5107d0df7f53bfb147845bb15dea6d3325849ed6309b008ef1e13b4f25"
+    }
+  },
+  "status": "needs_review",
+  "participant_handle": {
+    "handle": null,
+    "status": "unverified; omitted"
+  },
+  "notes": [
+    "Public website and ticket pages only; no Supabase action.",
+    "Organiser lower date block retains older edition dates; 2026 heading and ticket pages agree on 2–3 October."
+  ],
+  "status_reason": "Copy approved and artwork complete using approved template. Publication date unspecified; recheck tickets on actual publication day and inspect native sticker placement.",
+  "copy_hashes": {
+    "caption.txt": "9e9e6a3f5fd3310281f844d889855f8fac562380e7d42da50259bf70736ea09e",
+    "story-text.txt": "5e0b5c9cc99303e1792cf666c447d6f0a16d7999eaf77c1bcdd2e368eee504be",
+    "alt-text.txt": "e5ecb359e9bfa7d22a32e6093005cffb049a20725cbe72c99182268409e7c0ee"
+  }
+}

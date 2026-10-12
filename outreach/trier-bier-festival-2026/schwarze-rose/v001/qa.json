@@ -1,0 +1,64 @@
+{
+  "visual_inspection": "passed",
+  "factual_review": "passed",
+  "repeatability": "passed",
+  "colour_space": "passed",
+  "checked_at": "2026-09-29T15:44:07.621275+02:00",
+  "outputs": {
+    "feed.png": {
+      "size": [
+        1080,
+        1350
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    },
+    "story.png": {
+      "size": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "opaque": true,
+      "srgb_intent": 0,
+      "repeat_pixels_identical": true,
+      "repeat_file_bytes_identical": true
+    }
+  },
+  "approved_template_unchanged": true,
+  "copy_unchanged_from_approval": true,
+  "visual_evidence": {
+    "full_resolution": [
+      "feed.png",
+      "story.png"
+    ],
+    "phone_preview_width": 390,
+    "phone_previews": [
+      "source/qa/feed-phone.png",
+      "source/qa/story-phone.png"
+    ]
+  },
+  "visual_findings": [
+    "Original complete rose mark and SCHWARZE ROSE / CRAFT BEER lettering preserved with white background. Original alpha channel is fully opaque.",
+    "Approved 2019 date and hook match source input, with no clipping.",
+    "Full series heading, logo, date and hook readable at inspected phone size.",
+    "Compact footer matches approved template.",
+    "Blank Story sticker area below hook is unobstructed."
+  ],
+  "public_image_count": 2,
+  "pending": [
+    "Recheck tickets on actual publication day if later than 29 September 2026",
+    "Add native Story link sticker and check final placement in Instagram"
+  ],
+  "app_database_git_mutations": "None; only this local social package updated.",
+  "package_check": {
+    "status": "passed",
+    "command": "python3 .agents/skills/trier-festival-instagram/scripts/check_package.py --references --output social/trier-2026/schwarze-rose/v001",
+    "warnings": [
+      "Publication is not confirmed for today"
+    ]
+  }
+}
