@@ -2,6 +2,146 @@
   "schemaVersion": 1,
   "reviews": [
     {
+      "url": "https://academic.oup.com/book/47408",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://academic.oup.com/femsyr/article/22/1/foac053/6874782",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://academic.oup.com/femsyr/article/doi/10.1093/femsyr/foad023/7142826",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://academic.oup.com/north-carolina-scholarship-online/book/42493",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://americanhistory.si.edu/collections/archival-item/sova-nmah-ac-1595-ref27",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://americanhistory.si.edu/collections/object/nmah_1297773",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://americanhistory.si.edu/collections/object/nmah_1299546",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://americanhistory.si.edu/collections/object/nmah_2033240",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://americanhistory.si.edu/collections/object/nmah_2033255",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://americanhistory.si.edu/collections/object/nmah_381",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://americanhistory.si.edu/sites/default/files/file-uploader/Fritz%20Maytag%20transcript%2028%20March%202017.pdf",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -16,6 +156,76 @@
       }
     },
     {
+      "url": "https://americanindian.si.edu/exhibitions/infinityofnations/andes/012969.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://apnews.com/ab-inbev-buys-czech-budweiser-brewer-04e7e5c3765c4b37b599326649a811a2",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://barclayperkins.blogspot.com/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "rate-limited",
+        "httpStatus": 429,
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/&q=EgQUaucpGPTGr9YGIi162dxdvNoEOZY-kCg2JQBzOcHO2ufbT2ZP-q3Kr2r4ndr2gBWwfa9GD-8IC0UyAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://barclayperkins.blogspot.com/2008/10/how-porter-faded-away.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "rate-limited",
+        "httpStatus": 429,
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2008/10/how-porter-faded-away.html&q=EgQUaucpGPbGr9YGIi0BOVE6Z7up_bJJ9rqD9Q49tINnJW0sVIFXBlfTZH8H8PUXchlLNLz0mBr4388yAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://barclayperkins.blogspot.com/2008/10/whitbreads-last-porter.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "rate-limited",
+        "httpStatus": 429,
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2008/10/whitbreads-last-porter.html&q=EgQUaucpGPjGr9YGIi3uTAl_-TZWZXUTlCh0ujLGjxzAuuCLxM3gAdd57ivxImPi-cZgxxHa5Vxn16cyAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://barclayperkins.blogspot.com/2009/03/lets-brew-ipa.html",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -24,7 +234,21 @@
       "expectedFinding": {
         "status": "rate-limited",
         "httpStatus": 429,
-        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2009/03/lets-brew-ipa.html&q=EgQw2TYUGLfzrdYGIi2REnFVHmaK5P9TtygTzbg5-SEMAPIHXn20vVE5dAAdYfsDXRLOvfGMICwFwlMyAnJSWgFD",
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2009/03/lets-brew-ipa.html&q=EgQUaucpGPnGr9YGIi1-3IVIxzf-KT3ygohWTyiiKwA48rDnPa_evpkoTwRmqnKlRB14rugAgrsoF9UyAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://barclayperkins.blogspot.com/2013/09/1815-1850-porter-supreme.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "rate-limited",
+        "httpStatus": 429,
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2013/09/1815-1850-porter-supreme.html&q=EgQUaucpGPvGr9YGIi0SU20NLjE7F2kRWiynJfcX2IdTySKv71o3VwzIMCru9A8ADQ4Yi4WXmBGqSn8yAnJSWgFD",
         "detail": null,
         "fragmentStatus": "not-applicable"
       }
@@ -44,6 +268,20 @@
       }
     },
     {
+      "url": "https://barclayperkins.blogspot.com/2019/10/lets-brew-wednesday-1940-whitbread.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "rate-limited",
+        "httpStatus": 429,
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2019/10/lets-brew-wednesday-1940-whitbread.html&q=EgQUaucpGPvGr9YGIi2wcfHpuRy8mtBk7iUC4oy0vSP8D9-S3nO1VBJcfsOKKnyJN9TuTegCCxF0EYAyAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://barclayperkins.blogspot.com/2020/08/barclay-perkins-porter-and-stout-before.html",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -53,6 +291,20 @@
         "status": "rate-limited",
         "httpStatus": 429,
         "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2020/08/barclay-perkins-porter-and-stout-before.html&q=EgQw2TYUGLzzrdYGIi0sKzqX7dblkgTVPRHhH_ykJt6i0kKaUqj-iL9cMhY56qTnLRyAHAO-C129TqQyAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://baronmag.com/2023/04/guillaume-couraud-co-proprietaire-a-la-brewskey-pub-taproom/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
         "detail": null,
         "fragmentStatus": "not-applicable"
       }
@@ -86,6 +338,76 @@
       }
     },
     {
+      "url": "https://blog.britishnewspaperarchive.co.uk/2012/10/26/great-flood-of-london-eight-people-killed-as-wave-of-beer-swept-through-londons-streets/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.britishnewspaperarchive.com/blog/great-flood-of-london-eight-people-killed-as-wave-of-beer-swept-through-londons-streets",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://blogs.oregonstate.edu/brewingarchives/2025/10/03/finding-aid-friday-teri-fahrendorf-papers-1960-2025/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://boakandbailey.com/2007/12/st-bernardus-abt-12-v-westvleteren-12/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://boakandbailey.com/2012/10/the-meaning-of-ale/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://chemistry-europe.onlinelibrary.wiley.com/doi/10.1002/cber.18970300121",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://collection.sciencemuseumgroup.org.uk/objects/co12692/brass-richardsons-saccharometer-by-j-and-e-troughton-hydrometer-saccharometer",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -114,6 +436,76 @@
       }
     },
     {
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10146863/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1002/andp.18371170517",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://onlinelibrary.wiley.com/doi/10.1002/andp.18371170517",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1002/csc2.20668",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://acsess.onlinelibrary.wiley.com/doi/10.1002/csc2.20668",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1002/j.2050-0416.1979.tb06826.x",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://onlinelibrary.wiley.com/doi/10.1002/j.2050-0416.1979.tb06826.x",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1002/jib.246",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://onlinelibrary.wiley.com/doi/10.1002/jib.246",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://doi.org/10.1002/jib.383",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -123,6 +515,76 @@
         "status": "blocked",
         "httpStatus": 403,
         "finalUrl": "https://onlinelibrary.wiley.com/doi/10.1002/jib.383",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1002/jib.466",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://onlinelibrary.wiley.com/doi/10.1002/jib.466",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1016/j.njas.2017.10.006",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.tandfonline.com/doi/full/10.1016/j.njas.2017.10.006",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1021/cen-v037n003.p048",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://pubs.acs.org/doi/10.1021/cen-v037n003.p048",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1073/pnas.0407921102",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://pnas.org/doi/full/10.1073/pnas.0407921102",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1073/pnas.1601465113",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://pnas.org/doi/10.1073/pnas.1601465113",
         "detail": null,
         "fragmentStatus": "not-applicable"
       }
@@ -142,7 +604,343 @@
       }
     },
     {
+      "url": "https://doi.org/10.1080/07341510801900409",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.tandfonline.com/doi/abs/10.1080/07341510801900409",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1080/10408347.2012.751786",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.tandfonline.com/doi/full/10.1080/10408347.2012.751786",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1086/716610",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.journals.uchicago.edu/doi/10.1086/716610",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1093/oso/9780198842460.003.0009",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://academic.oup.com/book/40545/chapter/347883244",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1094/ASBCJ-37-0105",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.tandfonline.com/doi/full/10.1094/ASBCJ-37-0105",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1098/rsnr.2015.0050",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://royalsocietypublishing.org/rsnr/article/70/2/107/48586/An-autopsic-art-drawings-of-Dr-Granville-s-mummy",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1108/eb011270",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.emerald.com/bfj/article/36/5/41-50/42635",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1111/add.14703",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://onlinelibrary.wiley.com/doi/10.1111/add.14703",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1111/j.1471-8847.2010.00298.x",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://onlinelibrary.wiley.com/doi/10.1111/j.1471-8847.2010.00298.x",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1179/tcr.2007.14.1.29",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://www.tandfonline.com/doi/full/10.1179/tcr.2007.14.1.29",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://doi.org/10.1257/jep.22.4.199",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://pubs.aeaweb.org/doi/10.1257/jep.22.4.199",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://dulist.hr/fotodrugi-dan-festivala-craft-beer-kultura-procvjetala-u-dubrovniku/414123/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://eng.baltika.ru/brands/baltika/baltika-6-porter/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://english.radio.cz/u-fleku-a-legendary-prague-pub-and-brewery-famous-its-dark-beer-8189843",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://ethw.org/ASME-Landmark:Owens_AR_Bottle_Machine",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://findingaids.loc.gov/repositories/19/resources/5047",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://fsspx.news/en/news/united-states-st-josephs-abbey-will-no-longer-produce-authentic-trappist-beer-28201",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://gallica.bnf.fr/ark:/12148/bpt6k6569011n/f79.item",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://hansard.parliament.uk/Lords/1981-11-17/debates/3820b3b9-5881-4624-aba3-edaa74ff1197/HopsMarketingBillHl",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://hansard.parliament.uk/Lords/1989-12-18/debates/8570c69f-9705-4a94-8d0b-3174cd8653ad/SupplyOfBeer%28TiedEstate%29Order1989",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://hansard.parliament.uk/commons/2002-05-08/debates/8b7113ca-4492-44f1-ae8e-4a4ec9712eba/BeerFromSmallBreweriesReducedRateOfDuty",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://hansard.parliament.uk/lords/1932-07-06/debates/2f197698-6a51-4111-a64c-e4281bca8eb4/HopsMarketingScheme1932",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://heinzhistorycenter.emuseum.com/people/6434/pittsburgh-brewing-company",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://heinzhistorycenter.emuseum.com/people/6434/pittsburgh-brewing-company/objects",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://historicengland.org.uk/images-books/publications/maltings/maltings-appendices/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
       "reviewedBy": "site owner",
@@ -170,6 +968,20 @@
       }
     },
     {
+      "url": "https://historicengland.org.uk/whats-new/research/back-issues/malt-kilns-and-malthouses/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://historyireland.com/december-31/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -184,6 +996,118 @@
       }
     },
     {
+      "url": "https://hobbybrauer.de/forum/viewtopic.php?t=13839",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://hobbybrauer.de/forum/viewtopic.php?t=17711",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://homebrewtalk.com/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://homeofcarlsberg.com/stories/the-discovery-of-the-ph-scale-happened-at-carlsberg/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://homeofcarlsberg.com/stories/the-purification-of-yeast/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://ir.tilray.com/news-releases/news-release-details/tilray-brands-acquires-brewdog-leading-global-craft-brand",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://jamanetwork.com/journals/jama/article-abstract/246007",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://journals.asm.org/doi/10.1128/AEM.00612-21",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://landedfamilies.blogspot.com/2014/03/114-allsopp-of-hindlip-hall-barons.html",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -192,7 +1116,7 @@
       "expectedFinding": {
         "status": "rate-limited",
         "httpStatus": 429,
-        "finalUrl": "https://www.google.com/sorry/index?continue=https://landedfamilies.blogspot.com/2014/03/114-allsopp-of-hindlip-hall-barons.html&q=EgQUN1Y3GJfFrtYGIi2-YbFRkUJHiM_qCxdp_b9iiS6gzdU4FAVpumBLYGs7cxWlKFcLioQVHG7BcdgyAnJSWgFD",
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://landedfamilies.blogspot.com/2014/03/114-allsopp-of-hindlip-hall-barons.html&q=EgQUaucpGOTHr9YGIi1g4KpP8BltqX_NfyCuSeo6TNkbOZF5GvQe9f2XosIhdRqczu5CWr-FAizvwpoyAnJSWgFD",
         "detail": null,
         "fragmentStatus": "not-applicable"
       }
@@ -212,6 +1136,48 @@
       }
     },
     {
+      "url": "https://milwaukeerecord.com/food-drink/remembering-the-great-milwaukee-brewery-strike-of-1953/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://news.sky.com/story/ukraine-invasion-brewer-swaps-making-craft-beer-for-molotov-cocktails-as-it-joins-the-war-effort-12554770",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://news.wttw.com/2018/07/18/big-business-craft-beer-new-book-tells-goose-island-story",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://notanotherbeerreview.blogspot.com/2012/10/oskar-blues-ten-fidy.html",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -220,7 +1186,105 @@
       "expectedFinding": {
         "status": "rate-limited",
         "httpStatus": 429,
-        "finalUrl": "https://www.google.com/sorry/index?continue=https://notanotherbeerreview.blogspot.com/2012/10/oskar-blues-ten-fidy.html&q=EgQUN1Y3GKLFrtYGIi2lOe8O3q7aN0Gc4NKT5mqQCgBJyOvEpwlqIJ4e4fUfRUnFGSdJW9ulkPylw3wyAnJSWgFD",
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://notanotherbeerreview.blogspot.com/2012/10/oskar-blues-ten-fidy.html&q=EgQUaucpGO_Hr9YGIi2m9QtDFEGH4Fol68SnfvjnvFWeJATzEqrhenOdsxh1HaLyOTq_nY7qA4rUzrgyAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://ohiomemory.ohiohistory.org/archives/5835",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/%28SICI%291097-0061%28199812%2914%3A16%3C1439%3A%3AAID-YEA339%3E3.0.CO%3B2-Z",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/j.2050-0416.1904.tb04656.x",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/j.2050-0416.1986.tb04384.x",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://onlinelibrary.wiley.com/doi/full/10.1002/1097-0061%2820000615%2916%3A8%3C755%3A%3AAID-YEA587%3E3.0.CO%3B2-4",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/j.2050-0416.1950.tb01536.x",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://penntoday.upenn.edu/news/penn-museum-archaeochemist-and-international-scholars-confirm-9000-year-history-chinese-ferment",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
         "detail": null,
         "fragmentStatus": "not-applicable"
       }
@@ -352,7 +1416,189 @@
       }
     },
     {
+      "url": "https://publications.iupac.org/ci/2010/3202/1_mfcamoes.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://publications.parliament.uk/pa/cm200405/cmselect/cmtrdind/128/12805.htm",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://publications.parliament.uk/pa/cm200809/cmselect/cmberr/26/2604.htm",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://publications.parliament.uk/pa/cm200910/cmselect/cmhealth/151/151we16.htm",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://pubs.acs.org/doi/10.1021/ed800002c",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://research-portal.uu.nl/files/64738316/1-xiaolinzangdissertation.pdf",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://research.colonialwilliamsburg.org/DigitalLibrary/view/index.cfm?doc=ResearchReports%5CRR0364.xml",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://researchbriefings.files.parliament.uk/documents/SN00162/SN00162.pdf",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://rumriotreform.mainememory.net/page/5139/display.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sahistory.org.za/archive/chapter-7-gumede-keeps-bright-fire-burning-1928-29",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sahistory.org.za/article/grey-street-complex-timeline-1800-1999",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://sahistory.org.za/article/womens-revolts-natal-1959",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sahistory.org.za/dated-event/cato-manor-riots-begin-due-beer-issue-and-looming-forced-removals",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://search.worldcat.org/title/469457678",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
       "reviewedBy": "site owner",
@@ -380,6 +1626,90 @@
       }
     },
     {
+      "url": "https://sierranevada.com/blog/our-beer/ibu-meaning",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sierranevada.com/blog/our-beer/what-is-dry-hopping",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sierranevada.com/brews/bigfoot-barleywine-style-ale",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sierranevada.com/brews/pale-ale",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sierranevada.com/brews/torpedo",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://sirismm.si.edu/EADpdfs/NMAH.AC.1595.pdf",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://static.erdinger.de/assets/downloads/presse/int/Geschichte%20des%20Unternehmens_englisch.pdf",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -390,6 +1720,20 @@
         "httpStatus": null,
         "finalUrl": null,
         "detail": "fetch failed (Hostname/IP does not match certificate's altnames: Host: static.erdinger.de. is not in the cert's altnames: DNS:*.cloudfront.net, DNS:cloudfront.net)",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://thehistorypress.co.uk/article/a-brief-history-of-milk-stout/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
         "fragmentStatus": "not-applicable"
       }
     },
@@ -422,7 +1766,315 @@
       }
     },
     {
+      "url": "https://whatson.cmog.org/exhibitions-galleries/glass-america",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://whc.unesco.org/en/list/1572/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.abbaye-de-leffe.be/fr/biere/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: www.abbaye-de-leffe.be:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.agriland.ie/farming-news/milestone-marked-in-re-emergence-of-craft-of-coopering/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.alaskanbeer.com/126398-2/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.alaskanbeer.com/2019-smoked-porter/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.alaskanbeer.com/our-story/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.anton-paar.com/us-en/products/group/density-meter/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.asbcnet.org/events/2026Meeting/About/Pages/PressRelease.aspx",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.asbcnet.org/lab/getstarted/Pages/methods.aspx",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.atelier-vrai.com/about/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.atlasobscura.com/articles/brewery-sarajevska-pivara-sarajevo-siege",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/about/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/articles/10427/class-of-2014-28-of-the-best-new-breweries-in-the-us/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/articles/14792/heavy-medal-a-brief-history-of-the-great-american-beer-fest-awards/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/articles/18065/how-world-war-i-changed-pub-culture-and-beer-itself/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/articles/5117/weyermann-maltings/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/beer/profile/25314/163550/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/beer/profile/55262/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/community/threads/im-todd-alstroem-founder-of-beeradvocate-ask-me-anything.637326/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.beeradvocate.com/ratebeer/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
       "reviewedBy": "site owner",
@@ -464,6 +2116,62 @@
       }
     },
     {
+      "url": "https://www.birrificiodelducato.it/en/beers/settembre-italian-grape-ale/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.brewbound.com/news/b-inbev-acquires-italys-birra-del-borgo/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.brewbound.com/news/perennial-artisan-ales-will-open-this-summer/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.brewbound.com/news/torpedo-how-sierra-nevada-turned-a-new-package-and-a-new-style-into-a-remarkable-weapon/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.brewersassociation.org/brewing-industry-updates/identifying-independent-beer-matters/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -478,7 +2186,91 @@
       }
     },
     {
+      "url": "https://www.brewskey.ca/pub/?lang=en",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.brewskey.ca/taproom/?lang=en",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.britannica.com/biography/Anselme-Payen",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.britannica.com/place/Burton-upon-Trent",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.britishmuseum.org/blog/sip-history-ancient-egyptian-beer",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.britishmuseum.org/collection/object/W_1989-0130-4",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.britishmuseum.org/collection/object/Y_EA40915",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
       "reviewedBy": "site owner",
@@ -534,6 +2326,62 @@
       }
     },
     {
+      "url": "https://www.carlsberg.com/en/pioneers/emil-c-hansen/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.craftbrewingbusiness.com/business-marketing/discussing-quality-control-barrel-aging-experts-innis-gunn/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.craftbrewingbusiness.com/equipment-systems/lightweight-containers-releases-one-way-keg-double-wall-bag-ball-technologies/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.craftbrewingbusiness.com/news/brewers-association-releases-2018-beer-style-guidelines-officially-adds-juicy-hazy-ale-styles/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.dib.ie/biography/guinness-arthur-a3676",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -542,6 +2390,20 @@
       "expectedFinding": {
         "status": "needs-review",
         "httpStatus": 307,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.falstaff.com/de/news/protokoll-russische-bier-bar-bereichert-berlin",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
         "finalUrl": null,
         "detail": null,
         "fragmentStatus": "not-applicable"
@@ -576,7 +2438,63 @@
       }
     },
     {
+      "url": "https://www.fullers.co.uk/blog/pubs-articles/celebrating-50-years-of-a-style-creating-beer",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.goethe.de/ins/gb/en/kul/past/eur/erb/21259209.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.hatads.org.uk/news/186/Mackeson-Stout-Women-like-it-better--its-not-bitter",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.hbs.edu/faculty/Pages/item.aspx?num=62814",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.hmdb.org/m.asp?m=157426",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
       "reviewedBy": "site owner",
@@ -604,7 +2522,49 @@
       }
     },
     {
+      "url": "https://www.hofbraeu-muenchen.de/en/beers-of-hb-muenchen/hofbraeuhaus-maibock",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.hofbraeu-muenchen.de/en/hb-tradition",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.hopbreeding.com/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.icom-italia.org/wp-content/uploads/2018/02/ICOMItalia.MuseumInternational.Articolo.StevenKotze.BonginkosiZuma.pdf",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
       "reviewedBy": "site owner",
@@ -758,6 +2718,104 @@
       }
     },
     {
+      "url": "https://www.investing.com/news/stock-market-news/budweiser-maker-strengthens-trademark-position-with-czech-buy-292686",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.krones.com/en/company/press/magazine/backstage/50-years-of-fillers-made-by-krones.php",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.ln-online.de/lokales/luebeck/neue-brauerei-auf-der-kulturwerft-gollan-fassanstich-bei-sudden-death-brewing-XKHSW64N7YBEXVNNJIVRJHS7RE.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.loc.gov/pictures/item/2017815757/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.mdpi.com/2071-1050/11/8/2333",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.mdpi.com/2071-1050/13/17/9680",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.meininger.de/bier/brauereien/bestes-kellerbier-gekuert",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.metmuseum.org/art/collection/search/544258",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -786,6 +2844,20 @@
       }
     },
     {
+      "url": "https://www.monticello.org/encyclopedia/peter-hemings",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.mt.com/us/en/home/perm-lp/product-organizations/ana/dere-regulations-and-standards.html",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -794,6 +2866,20 @@
       "expectedFinding": {
         "status": "needs-review",
         "httpStatus": 406,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.munich.travel/en/topics/convention-bureau/news-highlights-2022/munich-and-it-s-beer-a-success-story",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
         "finalUrl": null,
         "detail": null,
         "fragmentStatus": "not-applicable"
@@ -856,6 +2942,62 @@
       }
     },
     {
+      "url": "https://www.neuepresse.de/lokales/hannover/offiziell-die-gilde-gehoert-zu-den-besten-brauereien-der-welt-ZTBAZUMGSVCLLAKDO7IIM3RMLY.html",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.oregonencyclopedia.org/articles/brewing-industry-in-oregon/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.ouririshheritage.org/content/archive/people/people-general/arthur-guinness",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.pastemagazine.com/drink/lets-talk-beer-styles-pale-ale",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.physoc.org/magazine-articles/the-strange-origins-of-the-students-t-test/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -878,7 +3020,49 @@
       "expectedFinding": {
         "status": "rate-limited",
         "httpStatus": 429,
-        "finalUrl": "https://www.google.com/sorry/index?continue=https://www.piwnepodroze.pl/2020/09/tankbusters.html&q=EgQw2TYUGNb1rdYGIi2MsFT3qy2Dcp0XRKHCdt7wZmzkAQqlYoWy1kBDz_wN7YQ0DBQbwdc_k6NBcbcyAnJSWgFD",
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://www.piwnepodroze.pl/2020/09/tankbusters.html&q=EgQUaucpGLvJr9YGIi1T7UkHgNj5A0ZOtRQChFOYFJB1BskoL3evhMBZGjdnQgHg_DpMNpcD8rsP1GYyAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.pnas.org/doi/10.1073/pnas.0508673102",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.pnas.org/doi/10.1073/pnas.1105430108",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.pressandjournal.co.uk/fp/lifestyle/food-and-drink/4329042/brewdog-15-years-of-punk-ipa-articleisfree/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
         "detail": null,
         "fragmentStatus": "not-applicable"
       }
@@ -926,6 +3110,132 @@
       }
     },
     {
+      "url": "https://www.qub.ac.uk/Research/our-research/research-explore/feature/brewing-success-accounting-at-guinness/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.realbeer.com/ab-inbev-acquires-birra-del-borgo/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": "https://probrewer.com/?utm_source=realbeer.com&utm_medium=referral&utm_campaign=site_retirement",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.science.org/doi/10.1126/science.274.5287.546",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/B9780122770500500082",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0172219015000083",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.senatspressestelle.bremen.de/pressemitteilungen/landesbildstelle-teilt-mit-10288",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.si.edu/object/archives/components/sova-nmah-ac-1595-ref23",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.si.edu/object/boycott-coors%3Anmah_1817426",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.si.edu/object/coveralls%3Anmah_1854476",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.tapb.hr/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -936,6 +3246,104 @@
         "httpStatus": null,
         "finalUrl": null,
         "detail": "fetch failed (unable to verify the first certificate; if the root CA is installed locally, try running Node.js with --use-system-ca)",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.tasteatlas.com/sudden-death-brewing",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.thedrinksbusiness.com/2021/01/achel-brewery-runs-out-of-monks-to-make-its-beer/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.thedrum.com/news/new-group-forms-market-beer",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.tyrellbraukunstatelier.de/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.tyrellbraukunstatelier.de/ueber-uns/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.visitnorway.com/listings/lervig/258646/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.wineenthusiast.com/culture/spirits/ipa-beer-history-hodgson/",
+      "reviewedOn": "2026-10-11",
+      "reviewAfter": "2027-04-09",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
         "fragmentStatus": "not-applicable"
       }
     },

@@ -95,7 +95,10 @@ The note must identify the manual confirmation; it does not certify that the
 automated checker inspected the content. Every URL is still fetched on every
 run, and the original statuses, counts, and references remain in the reports.
 Only an unchanged, unexpired warning moves out of the action lists into the
-manually verified section. A new 404/410, missing fragment, changed destination
+manually verified section. Matching ignores incidental OpenSSL memory addresses
+and the changing `q` token in a Google HTTP 429 `/sorry/index` challenge only
+when its `continue` parameter still names the exact checked URL. Raw evidence
+is preserved; every other destination component is compared. A new 404/410, missing fragment, changed destination
 or warning, or expired review requires attention again. The `missing` and
 `missing-fragment` categories cannot be acknowledged. Reviews are never created or renewed by the
 workflow. `SOURCE_LINK_REVIEW_FILE` may select a different local register for

@@ -113,6 +113,18 @@ test("rejects permanent ignores, invalid dates, duplicates, malformed URLs and a
   assert.throws(() => validateReviewRegister({ schemaVersion: 1, reviews: [register().reviews[0], register().reviews[0]] }), /Duplicate/);
 });
 
+test("accepts audited root URLs with or without the slash while preserving their exact keys", () => {
+  const bare = { ...blocked, url: "https://source.example" };
+  const slash = { ...blocked, url: "https://source.example/" };
+  const reviews: ReviewRegister = { schemaVersion: 1, reviews: [register(bare).reviews[0], register(slash).reviews[0]] };
+  const assessed = applyManualReviews([bare, slash], reviews, timestamp);
+  assert.equal(assessed.reviewSummary.acknowledgedWarnings, 2);
+  assert.deepEqual(assessed.results.map((result) => result.url), [bare.url, slash.url]);
+  for (const url of [" https://source.example", "https://source.example:443", "https://SOURCE.EXAMPLE", "https://user:password@source.example"]) {
+    assert.throws(() => validateReviewRegister({ schemaVersion: 1, reviews: [{ ...register().reviews[0], url }] }));
+  }
+});
+
 test("matches independent of JSON key order and ignores only incidental OpenSSL memory addresses", () => {
   const expected = register();
   expected.reviews[0].expectedFinding = { detail: null, fragmentStatus: "not-applicable", finalUrl: null, httpStatus: 403, status: "blocked" };
@@ -122,6 +134,44 @@ test("matches independent of JSON key order and ignores only incidental OpenSSL 
   assert.equal(applyManualReviews([repeated], register(original), timestamp).reviewSummary.acknowledgedWarnings, 1);
   const different = { ...original, detail: "fetch failed (certificate has expired)" };
   assert.equal(applyManualReviews([different], register(original), timestamp).reviewSummary.changedWarnings, 1);
+});
+
+test("a changing Google 429 challenge token does not repeat a confirmed warning or alter raw evidence", () => {
+  const challenge = (token: string) => `https://www.google.com/sorry/index?continue=${encodeURIComponent(blocked.url)}&q=${token}`;
+  const original: LinkResult = { ...blocked, status: "rate-limited", httpStatus: 429, finalUrl: challenge("first-token") };
+  const repeated = { ...original, finalUrl: challenge("second-token") };
+  const reviews = register(original);
+  const savedReviews = structuredClone(reviews);
+  const assessment = applyManualReviews([repeated], reviews, timestamp);
+  assert.equal(assessment.results[0].manualReview?.state, "acknowledged");
+  assert.equal(requiresReview(assessment.results[0]), false);
+  assert.equal(assessment.results[0].finalUrl, repeated.finalUrl, "The observed destination must remain intact in the report");
+  assert.equal(makeSummary(assessment.results)["rate-limited"], 1);
+  assert.deepEqual(reviews, savedReviews);
+});
+
+test("Google challenge matching retains real destination, response, and fragment changes", () => {
+  const destination = `https://www.google.com/sorry/index?continue=${encodeURIComponent(blocked.url)}&q=first-token`;
+  const original: LinkResult = { ...blocked, status: "rate-limited", httpStatus: 429, finalUrl: destination };
+  for (const change of [
+    { finalUrl: destination.replace("www.google.com", "source.example") },
+    { finalUrl: destination.replace("https:", "http:") },
+    { finalUrl: destination.replace("/sorry/index", "/different") },
+    { finalUrl: destination.replace(encodeURIComponent(blocked.url), encodeURIComponent("https://source.example/other")) },
+    { finalUrl: destination + "&new=parameter" },
+    { finalUrl: destination + "#changed" },
+    { finalUrl: destination + "&q=second-token" },
+    { httpStatus: 403 }, { status: "missing", httpStatus: 404 },
+    { fragmentStatus: "missing" }, { detail: "Different error reason" },
+  ] as const) {
+    const result = applyManualReviews([{ ...original, ...change }], register(original), timestamp).results[0];
+    assert.equal(result.manualReview?.state, "changed");
+    assert.equal(requiresReview(result), true);
+  }
+  const incomplete = { ...original, finalUrl: "https://www.google.com/sorry/index?q=first-token" };
+  assert.equal(applyManualReviews([{ ...incomplete, finalUrl: incomplete.finalUrl.replace("first-token", "second-token") }], register(incomplete), timestamp).reviewSummary.changedWarnings, 1);
+  const ordinary: LinkResult = { ...original, status: "needs-review", httpStatus: 200 };
+  assert.equal(applyManualReviews([{ ...ordinary, finalUrl: destination.replace("first-token", "second-token") }], register(ordinary), timestamp).reviewSummary.changedWarnings, 1);
 });
 
 test("GitHub summary omits matching warnings from action lists but retains observed counts and complete evidence", () => {

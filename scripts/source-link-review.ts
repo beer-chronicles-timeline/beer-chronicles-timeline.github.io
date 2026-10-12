@@ -55,7 +55,9 @@ function date(value: unknown): number {
 function validateUrl(value: unknown): void {
   if (typeof value !== "string") throw new Error("Review URLs must be strings.");
   const url = new URL(value);
-  if (!["https:", "http:"].includes(url.protocol) || url.username || url.password || url.href !== value) {
+  // Published links can omit the root slash. Preserve their exact audit key.
+  const matchesRecordedUrl = url.href === value || (url.pathname === "/" && url.href === `${value}/`);
+  if (!["https:", "http:"].includes(url.protocol) || url.username || url.password || !matchesRecordedUrl) {
     throw new Error(`Invalid or non-canonical review URL: ${value}`);
   }
 }
@@ -95,11 +97,26 @@ export function findingForReview(result: LinkResult): ReviewFinding {
   };
 }
 
-function signature(finding: ReviewFinding): string {
+function stableDestination(finding: ReviewFinding, sourceUrl: string): string | null {
+  if (finding.status !== "rate-limited" || finding.httpStatus !== 429 || !finding.finalUrl) return finding.finalUrl;
+  const destination = new URL(finding.finalUrl);
+  if (destination.origin === "https://www.google.com" && destination.pathname === "/sorry/index" &&
+      !destination.username && !destination.password &&
+      destination.searchParams.getAll("continue").length === 1 && destination.searchParams.get("continue") === sourceUrl &&
+      destination.searchParams.getAll("q").length === 1) {
+    // This Google anti-bot token changes per request. Keep the source target
+    // and every other destination component so real changes still reappear.
+    destination.searchParams.delete("q");
+    return destination.href;
+  }
+  return finding.finalUrl;
+}
+
+function signature(finding: ReviewFinding, sourceUrl: string): string {
   // OpenSSL can put a process-specific memory address before an error code.
   // Keep the actual error reason while ignoring that incidental address.
   return JSON.stringify({
-    status: finding.status, httpStatus: finding.httpStatus, finalUrl: finding.finalUrl,
+    status: finding.status, httpStatus: finding.httpStatus, finalUrl: stableDestination(finding, sourceUrl),
     fragmentStatus: finding.fragmentStatus,
     detail: finding.detail?.replace(/[a-f\d]{12,}(?=:error:)/gi, "<runtime-address>") ?? null,
   });
@@ -124,7 +141,7 @@ export function applyManualReviews(results: LinkResult[], register: ReviewRegist
     } else if (checkedAt >= date(reviewAfter)) {
       state = "expired";
       reason = "The manual verification has expired; check this URL again.";
-    } else if (reviewableStatuses.has(result.status) && signature(findingForReview(result)) === signature(review.expectedFinding)) {
+    } else if (reviewableStatuses.has(result.status) && signature(findingForReview(result), result.url) === signature(review.expectedFinding, review.url)) {
       state = "acknowledged";
       reason = "The warning matches the finding already checked manually.";
     } else {
