@@ -4,6 +4,9 @@ import type { LinkResult, LinkStatus } from "./source-link-audit.ts";
 const reviewableStatuses = new Set<LinkStatus>([
   "needs-review", "blocked", "rate-limited", "transient-error", "network-error",
 ]);
+const accessStatuses = new Set<LinkStatus>([
+  "blocked", "rate-limited", "transient-error", "network-error",
+]);
 const maxReviewDays = 180;
 
 export type ReviewFinding = Pick<LinkResult, "status" | "httpStatus" | "finalUrl" | "detail" | "fragmentStatus">;
@@ -20,6 +23,11 @@ export type ReviewAnnotation = Omit<ManualLinkReview, "url" | "expectedFinding">
   state: "acknowledged" | "expired" | "changed" | "not-needed";
   reason: string;
 };
+export type AccessCheckAnnotation = {
+  state: "pending" | "persistent" | "immediate";
+  reason: string;
+  previousAuditGeneratedAt: string | null;
+};
 export type ReviewSummary = {
   registeredUrls: number;
   presentUrls: number;
@@ -34,11 +42,21 @@ export function isWarning(result: LinkResult): boolean {
 }
 
 export function requiresReview(result: LinkResult): boolean {
-  return isWarning(result) && !isAcknowledged(result);
+  return isWarning(result) && !isAcknowledged(result) && !isAwaitingConfirmation(result);
 }
 
 export function isAcknowledged(result: LinkResult): boolean {
-  return reviewableStatuses.has(result.status) && result.manualReview?.state === "acknowledged";
+  return reviewableStatuses.has(result.status) && result.httpStatus !== 404 && result.httpStatus !== 410 &&
+    result.manualReview?.state === "acknowledged";
+}
+
+export function isAccessFailure(finding: ReviewFinding): boolean {
+  return accessStatuses.has(finding.status) && finding.httpStatus !== 404 && finding.httpStatus !== 410 &&
+    finding.fragmentStatus !== "missing";
+}
+
+export function isAwaitingConfirmation(result: LinkResult): boolean {
+  return isAccessFailure(result) && !result.manualReview && result.accessCheck?.state === "pending";
 }
 
 function object(value: unknown): value is Record<string, unknown> {
@@ -98,7 +116,7 @@ export function findingForReview(result: LinkResult): ReviewFinding {
 }
 
 function stableDestination(finding: ReviewFinding, sourceUrl: string): string | null {
-  if (finding.status !== "rate-limited" || finding.httpStatus !== 429 || !finding.finalUrl) return finding.finalUrl;
+  if (!isAccessFailure(finding) || !finding.finalUrl) return finding.finalUrl;
   const destination = new URL(finding.finalUrl);
   if (destination.origin === "https://www.google.com" && destination.pathname === "/sorry/index" &&
       !destination.username && !destination.password &&
@@ -110,6 +128,18 @@ function stableDestination(finding: ReviewFinding, sourceUrl: string): string | 
     return destination.href;
   }
   return finding.finalUrl;
+}
+
+export function destinationChanged(current: ReviewFinding, previous: ReviewFinding, sourceUrl: string): boolean {
+  // No observed redirect during an access failure cannot establish that the
+  // destination changed. A newly observed destination is still compared.
+  const destination = stableDestination(current, sourceUrl);
+  return destination !== null && destination !== (stableDestination(previous, sourceUrl) ?? sourceUrl);
+}
+
+function sameAccessFailure(current: ReviewFinding, reviewed: ReviewFinding, sourceUrl: string): boolean {
+  return isAccessFailure(current) && isAccessFailure(reviewed) &&
+    current.fragmentStatus === reviewed.fragmentStatus && !destinationChanged(current, reviewed, sourceUrl);
 }
 
 function signature(finding: ReviewFinding, sourceUrl: string): string {
@@ -128,6 +158,11 @@ export function applyManualReviews(results: LinkResult[], register: ReviewRegist
   if (!Number.isFinite(checkedAt)) throw new Error("Invalid audit timestamp for manual review assessment.");
   const byUrl = new Map(register.reviews.map((review) => [review.url, review]));
   const annotated = results.map((result): LinkResult => {
+    // Inputs may be an offline replay of an annotated report. Only the current
+    // human register and assessment can provide acknowledgement or deferral.
+    result = { ...result };
+    delete result.manualReview;
+    delete result.accessCheck;
     const review = byUrl.get(result.url);
     if (!review) return result;
     const { reviewedOn, reviewAfter, reviewedBy, note } = review;
@@ -144,6 +179,9 @@ export function applyManualReviews(results: LinkResult[], register: ReviewRegist
     } else if (reviewableStatuses.has(result.status) && signature(findingForReview(result), result.url) === signature(review.expectedFinding, review.url)) {
       state = "acknowledged";
       reason = "The warning matches the finding already checked manually.";
+    } else if (sameAccessFailure(findingForReview(result), review.expectedFinding, result.url)) {
+      state = "acknowledged";
+      reason = "The recent manual confirmation remains valid across access-error changes; no new destination or fragment finding was observed.";
     } else {
       state = "changed";
       reason = "The status, HTTP response, destination, fragment finding, or warning reason changed; check this URL again.";

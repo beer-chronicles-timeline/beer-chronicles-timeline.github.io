@@ -29,7 +29,7 @@ function audit(results: LinkResult[]): PublishedAudit {
   };
 }
 
-test("acknowledges only the exact previously reviewed warning without rewriting raw findings or input", () => {
+test("acknowledges a reviewed warning without rewriting raw findings or input", () => {
   const raw = [structuredClone(blocked)];
   const before = structuredClone(raw);
   const reviewed = register();
@@ -62,7 +62,7 @@ test("a later 404, 410, or missing fragment always requires review", () => {
   }
 });
 
-test("changed HTTP response, redirect destination, fragment result, or warning reason returns to the queue", () => {
+test("changed content response, redirect destination, fragment result, or content warning returns to the queue", () => {
   const challenged: LinkResult = { ...blocked, status: "needs-review", httpStatus: 200, detail: "Automated-client challenge." };
   for (const change of [
     { httpStatus: 402 }, { finalUrl: "https://source.example/" },
@@ -125,7 +125,7 @@ test("accepts audited root URLs with or without the slash while preserving their
   }
 });
 
-test("matches independent of JSON key order and ignores only incidental OpenSSL memory addresses", () => {
+test("matches independent of JSON key order and retains confirmations across network-error changes", () => {
   const expected = register();
   expected.reviews[0].expectedFinding = { detail: null, fragmentStatus: "not-applicable", finalUrl: null, httpStatus: 403, status: "blocked" };
   assert.equal(applyManualReviews([blocked], expected, timestamp).reviewSummary.acknowledgedWarnings, 1);
@@ -133,7 +133,7 @@ test("matches independent of JSON key order and ignores only incidental OpenSSL 
   const repeated = { ...original, detail: "fetch failed (1234567890ABCDEF:error:0A000438:TLS internal error)" };
   assert.equal(applyManualReviews([repeated], register(original), timestamp).reviewSummary.acknowledgedWarnings, 1);
   const different = { ...original, detail: "fetch failed (certificate has expired)" };
-  assert.equal(applyManualReviews([different], register(original), timestamp).reviewSummary.changedWarnings, 1);
+  assert.equal(applyManualReviews([different], register(original), timestamp).reviewSummary.acknowledgedWarnings, 1);
 });
 
 test("a changing Google 429 challenge token does not repeat a confirmed warning or alter raw evidence", () => {
@@ -150,7 +150,7 @@ test("a changing Google 429 challenge token does not repeat a confirmed warning 
   assert.deepEqual(reviews, savedReviews);
 });
 
-test("Google challenge matching retains real destination, response, and fragment changes", () => {
+test("Google challenge matching retains substantive destination and fragment changes", () => {
   const destination = `https://www.google.com/sorry/index?continue=${encodeURIComponent(blocked.url)}&q=first-token`;
   const original: LinkResult = { ...blocked, status: "rate-limited", httpStatus: 429, finalUrl: destination };
   for (const change of [
@@ -161,8 +161,8 @@ test("Google challenge matching retains real destination, response, and fragment
     { finalUrl: destination + "&new=parameter" },
     { finalUrl: destination + "#changed" },
     { finalUrl: destination + "&q=second-token" },
-    { httpStatus: 403 }, { status: "missing", httpStatus: 404 },
-    { fragmentStatus: "missing" }, { detail: "Different error reason" },
+    { status: "missing", httpStatus: 404 },
+    { fragmentStatus: "missing" },
   ] as const) {
     const result = applyManualReviews([{ ...original, ...change }], register(original), timestamp).results[0];
     assert.equal(result.manualReview?.state, "changed");
@@ -172,22 +172,73 @@ test("Google challenge matching retains real destination, response, and fragment
   assert.equal(applyManualReviews([{ ...incomplete, finalUrl: incomplete.finalUrl.replace("first-token", "second-token") }], register(incomplete), timestamp).reviewSummary.changedWarnings, 1);
   const ordinary: LinkResult = { ...original, status: "needs-review", httpStatus: 200 };
   assert.equal(applyManualReviews([{ ...ordinary, finalUrl: destination.replace("first-token", "second-token") }], register(ordinary), timestamp).reviewSummary.changedWarnings, 1);
+  const accessChange = { ...original, status: "blocked" as const, httpStatus: 403, detail: "Different access error", finalUrl: destination.replace("first-token", "second-token") };
+  assert.equal(applyManualReviews([accessChange], register(original), timestamp).reviewSummary.acknowledgedWarnings, 1);
 });
 
 test("GitHub summary omits matching warnings from action lists but retains observed counts and complete evidence", () => {
   const reviewed = applyManualReviews([blocked, { ...blocked, url: "https://source.example/new" }], register(), timestamp);
   const report = { ...audit(reviewed.results), reviewSummary: reviewed.reviewSummary };
   const brief = makeMarkdown(report, true);
-  assert.match(brief, /Warnings requiring review: 1\. Previously manually verified matching warnings: 1/);
-  assert.match(brief, /\| blocked \| 1 \| 1 \| 2 \|/);
+  assert.match(brief, /Warnings requiring review: 1\. Previously manually verified warnings: 1/);
+  assert.match(brief, /\| blocked \| 1 \| 0 \| 1 \| 2 \|/);
   assert.ok(!brief.includes(blocked.url));
   assert.ok(brief.includes("https://source.example/new"));
   const full = makeMarkdown(report);
-  const [actions, confirmations] = full.split("## Previously manually verified matching warnings");
+  const [actions, confirmations] = full.split("## Previously manually verified warnings");
   assert.ok(!actions.includes(blocked.url));
   assert.ok(confirmations.includes(blocked.url));
   assert.match(full, /user-confirmed current state/);
   assert.equal(makeSummary(report.results).blocked, 2);
+});
+
+test("recent human confirmations cover changes among access errors but never renew themselves", () => {
+  const findings: LinkResult[] = [
+    blocked,
+    { ...blocked, status: "rate-limited", httpStatus: 429, detail: "Retry later" },
+    { ...blocked, status: "transient-error", httpStatus: 503, detail: "Temporary server failure" },
+    { ...blocked, status: "network-error", httpStatus: null, detail: "Certificate mismatch" },
+  ];
+  for (const reviewed of findings) {
+    const reviews = register(reviewed);
+    const before = structuredClone(reviews);
+    for (const current of findings) {
+      const assessment = applyManualReviews([current], reviews, timestamp);
+      assert.equal(assessment.results[0].manualReview?.state, "acknowledged");
+      assert.equal(requiresReview(assessment.results[0]), false);
+      const { manualReview, ...observed } = assessment.results[0];
+      assert.ok(manualReview);
+      assert.deepEqual(observed, current);
+      assert.equal(applyManualReviews([current], reviews, "2027-04-09T00:00:00.000Z").reviewSummary.expiredWarnings, 1);
+    }
+    assert.deepEqual(reviews, before);
+  }
+});
+
+test("unobserved redirects during failures preserve confirmation while new observed destinations require review", () => {
+  const reviewed = { ...blocked, finalUrl: "https://source.example/moved-article" };
+  const unknown = { ...blocked, status: "network-error" as const, httpStatus: null, detail: "Timeout" };
+  assert.equal(applyManualReviews([unknown], register(reviewed), timestamp).reviewSummary.acknowledgedWarnings, 1);
+  for (const current of [
+    { ...unknown, finalUrl: "https://source.example/" },
+    { ...unknown, finalUrl: "https://another.example/article" },
+    { ...unknown, fragmentStatus: "unverified" as const },
+    { ...blocked, status: "needs-review" as const, httpStatus: 200, detail: "Expected PDF has no PDF header." },
+  ]) {
+    const assessment = applyManualReviews([current], register(reviewed), timestamp);
+    assert.equal(assessment.results[0].manualReview?.state, "changed");
+    assert.equal(requiresReview(assessment.results[0]), true);
+  }
+});
+
+test("an offline replay cannot retain old acknowledgements or pending states without current authority", () => {
+  const earlier = applyManualReviews([blocked], register(), timestamp).results[0];
+  earlier.accessCheck = { state: "pending", reason: "Old fixture annotation", previousAuditGeneratedAt: null };
+  const result = applyManualReviews([earlier], { schemaVersion: 1, reviews: [] }, timestamp).results[0];
+  assert.equal(result.manualReview, undefined);
+  assert.equal(result.accessCheck, undefined);
+  assert.equal(requiresReview(result), true);
+  assert.equal(earlier.manualReview?.state, "acknowledged", "The original report must remain untouched");
 });
 
 test("committed register is valid and reads do not write or renew its reviews", async () => {

@@ -190,11 +190,17 @@ test("prevents accidental sample-only or invalid configuration and off-site inpu
 test("workflow has read-only permissions and cannot edit issues, content or the backend", async () => {
   const workflow = await readFile(new URL("../.github/workflows/source-link-audit.yml", import.meta.url), "utf8");
   assert.match(workflow, /permissions:\s*\n\s+contents: read/);
-  assert.doesNotMatch(workflow, /\b(?:issues|contents): write/);
+  assert.match(workflow, /actions: read/);
+  assert.doesNotMatch(workflow, /\b[\w-]+: write/);
   const executable = workflow.replace(/^\s*#.*$/gm, "");
   assert.doesNotMatch(executable, /actions\/github-script|secrets\.|issues\.(?:update|create)|supabase|git push|deploy\.yml/i);
   assert.match(workflow, /if: always\(\)/);
   assert.match(workflow, /if-no-files-found: error/);
+  assert.match(workflow, /SOURCE_LINK_HISTORY_FILE/);
+  const historyReader = await readFile(new URL("../scripts/restore-source-link-history.ts", import.meta.url), "utf8");
+  assert.match(historyReader, /method: "GET"/);
+  assert.match(historyReader, /run\("gh", \["run", "download"/);
+  assert.doesNotMatch(historyReader, /method: "(?:POST|PUT|PATCH|DELETE)"|supabase|git push|source-link-review-register/i);
 });
 
 test("CLI writes read-only reports and summaries, and fails incomplete audits with retained evidence", async (t) => {
@@ -206,14 +212,14 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
     const path = new URL(request.url!, origin).pathname;
     response.setHeader("Content-Type", "application/json");
     if (path === "/publication-status.json") response.end(JSON.stringify(publication));
-    else if (path === "/timeline-data.json") response.end(JSON.stringify({ events: incomplete ? [] : [{ ...event, sources: `Fixture PDF\n${origin}/fixture.pdf\n\nManually checked\n${origin}/blocked-source` }] }));
+    else if (path === "/timeline-data.json") response.end(JSON.stringify({ events: incomplete ? [] : [{ ...event, sources: `Fixture PDF\n${origin}/fixture.pdf\n\nManually checked\n${origin}/blocked-source\n\nFirst access failure\n${origin}/unregistered-source` }] }));
     else if (path === "/sitemap.xml") {
       response.setHeader("Content-Type", "application/xml");
       response.end(`<urlset><url><loc>${origin}/</loc></url><url><loc>${origin}/events/fixture/entry</loc></url></urlset>`);
     } else if (path === "/fixture.pdf") {
       response.setHeader("Content-Type", "application/pdf");
       response.end("%PDF-1.7\nfixture");
-    } else if (path === "/blocked-source") {
+    } else if (path === "/blocked-source" || path === "/unregistered-source") {
       response.statusCode = 403;
       response.end("Denied");
     } else {
@@ -227,7 +233,9 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
   assert.ok(address && typeof address !== "string");
   origin = `http://127.0.0.1:${address.port}`;
   const execute = promisify(execFile);
-  for (const brokenInput of [false, true]) {
+  let previousPath = "";
+  let previousContents = "";
+  for (const [brokenInput, useHistory] of [[false, false], [false, true], [true, true]]) {
     incomplete = brokenInput;
     const directory = await mkdtemp(join(tmpdir(), "bc-link-audit-test-"));
     const summaryPath = join(directory, "summary.md");
@@ -248,6 +256,7 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
           SOURCE_LINK_SITE_URL: origin, SOURCE_LINK_DATA_URL: `${origin}/timeline-data.json`, SOURCE_LINK_SITEMAP_URL: `${origin}/sitemap.xml`,
           SOURCE_LINK_REPORT_DIR: directory, GITHUB_STEP_SUMMARY: summaryPath,
           SOURCE_LINK_REVIEW_FILE: reviewPath,
+          SOURCE_LINK_HISTORY_FILE: useHistory ? previousPath : "",
           SOURCE_LINK_HOST_INTERVAL_MS: "0", SOURCE_LINK_RETRIES: "0", SOURCE_LINK_MAX_URLS: "0", SOURCE_LINK_MAX_PAGES: "0", SOURCE_LINK_TIMEOUT_MS: "2000",
         },
         timeout: 10_000,
@@ -263,14 +272,22 @@ test("CLI writes read-only reports and summaries, and fails incomplete audits wi
     assert.equal(report.coverage.complete, !brokenInput);
     assert.equal(report.checkedUrls, report.results.length);
     if (!brokenInput) {
-      assert.equal(report.summary.blocked, 1, "Raw HTTP status must remain visible");
-      assert.equal(report.attentionSummary.blocked, 0);
+      assert.equal(report.summary.blocked, 2, "Raw HTTP statuses must remain visible");
+      assert.equal(report.attentionSummary.blocked, useHistory ? 1 : 0);
       assert.equal(report.reviewSummary.acknowledgedWarnings, 1);
+      assert.equal(report.accessReviewSummary.awaitingConfirmation, useHistory ? 0 : 1);
+      assert.equal(report.accessReviewSummary.persistentWarnings, useHistory ? 1 : 0);
       assert.ok(report.results.some((result: { url: string; manualReview?: { state: string } }) => result.url === `${origin}/blocked-source` && result.manualReview?.state === "acknowledged"));
     }
     assert.equal(await readFile(reviewPath, "utf8"), reviewContents, "CLI must never write or renew reviews");
     assert.match(await readFile(summaryPath, "utf8"), brokenInput ? /INCOMPLETE/ : /COMPLETE/);
     assert.match(await readFile(join(directory, "source-link-report.md"), "utf8"), /read-only/);
+    if (!previousPath) {
+      previousPath = join(directory, "source-link-report.json");
+      previousContents = await readFile(previousPath, "utf8");
+    } else {
+      assert.equal(await readFile(previousPath, "utf8"), previousContents, "Prior audit reports must never be rewritten");
+    }
   }
   assert.ok(methods.length > 0);
   assert.ok(methods.every((method) => method === "GET"));

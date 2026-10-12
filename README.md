@@ -71,7 +71,8 @@ throttling, and up to two retries for temporary failures. It flags apparent
 error/login/challenge pages, missing PDF headers, and article-to-homepage
 redirects for human review. Blocked and unresolved checks stay visible in both
 the report and GitHub run summary. The results table distinguishes warnings
-requiring review from unchanged warnings already checked manually.
+requiring review, first access failures awaiting confirmation, and warnings
+covered by a recent manual confirmation.
 JavaScript-only links, client query behavior,
 form submissions, and non-HTTP schemes are not executed. Cloudflare-protected
 email placeholders are recognized as mailto links, without crawling their
@@ -94,15 +95,33 @@ reviewer, review date, expiry (at most 180 days), note, and the expected `status
 The note must identify the manual confirmation; it does not certify that the
 automated checker inspected the content. Every URL is still fetched on every
 run, and the original statuses, counts, and references remain in the reports.
-Only an unchanged, unexpired warning moves out of the action lists into the
-manually verified section. Matching ignores incidental OpenSSL memory addresses
-and the changing `q` token in a Google HTTP 429 `/sorry/index` challenge only
+An unexpired confirmation remains valid across changes between blocked,
+rate-limited, transient-error, and network-error responses when no new
+destination or fragment finding is observed. A failed request that observes
+no redirect does not establish a destination change. Content warnings still
+require the previously reviewed finding to match. Matching ignores incidental
+OpenSSL memory addresses and the changing `q` token in a Google `/sorry/index`
+access challenge only
 when its `continue` parameter still names the exact checked URL. Raw evidence
-is preserved; every other destination component is compared. A new 404/410, missing fragment, changed destination
-or warning, or expired review requires attention again. The `missing` and
+is preserved; every other observed destination component is compared. A new
+404/410, missing fragment, changed destination or content finding, or expired
+review requires attention immediately. The `missing` and
 `missing-fragment` categories cannot be acknowledged. Reviews are never created or renewed by the
 workflow. `SOURCE_LINK_REVIEW_FILE` may select a different local register for
 offline fixtures or investigations; CI uses the committed register.
+
+Unregistered access failures enter the manual-review queue only after two
+consecutive complete audits. Their first observation appears under “Awaiting
+confirmation”; every raw status, count, error detail, and reference stays in
+the report. A successful check resets the sequence. GitHub reads the immediately
+preceding completed audit's artifact, including failed runs, and never skips a
+missing or incomplete report to reuse an older failure. An unusable history
+report is explained in the summary and leaves warnings requiring review rather
+than silently deferring them. Missing targets, changed destinations or fragment
+findings, content issues, and expired confirmations bypass this waiting period.
+For local investigations, `SOURCE_LINK_HISTORY_FILE` can point to an earlier raw
+JSON report or the workflow's recovered history file. Without a supplied report,
+new access failures are first observations awaiting confirmation.
 
 ## Deployment
 
@@ -119,7 +138,8 @@ Do not push solely to test a change: verify locally first because a push to `mai
 
 The separate `.github/workflows/source-link-audit.yml` workflow runs on the
 first day of every month and can also be started manually. It has only
-`contents: read` permission, tests the audit offline, and reads the public site
+`contents: read` and `actions: read` permissions, tests the audit offline, and
+reads the public site
 without Supabase credentials. Findings appear in the run summary and in
 workflow artifacts retained for 90 days, including partial reports from failed
 audits. It does not create, update, comment on, or close GitHub issues. This

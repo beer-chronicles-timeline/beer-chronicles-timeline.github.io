@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: source-link-audit
@@ -31,11 +32,21 @@ jobs:
         run: npm ci
 
       - name: Check audit regression tests (offline)
-        run: npx tsx --test tests/sourceCitations.test.ts tests/sourceLinkAudit.test.ts tests/siteLinkAudit.test.ts tests/sourceLinkReview.test.ts
+        run: npx tsx --test tests/sourceCitations.test.ts tests/sourceLinkAudit.test.ts tests/siteLinkAudit.test.ts tests/sourceLinkReview.test.ts tests/sourceLinkHistory.test.ts
+
+      - name: Read the preceding audit report
+        timeout-minutes: 2
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_LINK_HISTORY_FILE: .cache/source-link-history.json
+        run: npx tsx scripts/restore-source-link-history.ts
 
       # Public HTTP only: no Supabase credentials, database queries, mutations,
       # source repairs, issue updates, commits, or deployments.
       - name: Audit published citations and site hyperlinks (read-only)
+        env:
+          SOURCE_LINK_HISTORY_FILE: .cache/source-link-history.json
         run: npm run check:source-links
 
       - name: Upload source-link report

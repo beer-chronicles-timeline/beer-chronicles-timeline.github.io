@@ -35,6 +35,7 @@ export type PublishedAudit = {
   coverage: AuditCoverage;
   results: LinkResult[];
   reviewSummary?: import("./source-link-review.ts").ReviewSummary;
+  accessReviewSummary?: import("./source-link-history.ts").AccessReviewSummary;
 };
 export type SiteAuditOptions = CheckerOptions & {
   siteUrl: string;
