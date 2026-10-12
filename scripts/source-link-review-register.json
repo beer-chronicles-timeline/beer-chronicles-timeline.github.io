@@ -184,6 +184,62 @@
       }
     },
     {
+      "url": "https://archive.org/details/b28115648",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "transient-error",
+        "httpStatus": 502,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://archive.org/details/degildenvanutrec01over/page/106/mode/2up",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "transient-error",
+        "httpStatus": 502,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://archive.org/stream/officialcatalogu00grea_3/officialcatalogu00grea_3_djvu.txt",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "transient-error",
+        "httpStatus": 502,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://archive.org/stream/subjectindexofmo01brituoft/subjectindexofmo01brituoft_djvu.txt",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "transient-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "The operation was aborted due to timeout",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://barclayperkins.blogspot.com/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -249,6 +305,20 @@
         "status": "rate-limited",
         "httpStatus": 429,
         "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2013/09/1815-1850-porter-supreme.html&q=EgQUaucpGPvGr9YGIi0SU20NLjE7F2kRWiynJfcX2IdTySKv71o3VwzIMCru9A8ADQ4Yi4WXmBGqSn8yAnJSWgFD",
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://barclayperkins.blogspot.com/2015/12/random-dutch-beers-part-eleven.html",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "rate-limited",
+        "httpStatus": 429,
+        "finalUrl": "https://www.google.com/sorry/index?continue=https://barclayperkins.blogspot.com/2015/12/random-dutch-beers-part-eleven.html&q=EgQ5mtmzGLLWsdYGIi0HHo41xnNYP0MJ0X2laLobujgCSkomEN1hESQbB0G8QKIuMRr9CGUU71Sdbe4yAnJSWgFD",
         "detail": null,
         "fragmentStatus": "not-applicable"
       }
@@ -334,6 +404,20 @@
         "httpStatus": null,
         "finalUrl": null,
         "detail": "fetch failed (unable to verify the first certificate; if the root CA is installed locally, try running Node.js with --use-system-ca)",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://birrificiolambrate.com/birrificio-lambrate/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Hostname/IP does not match certificate's altnames: Host: birrificiolambrate.com. is not in the cert's altnames: DNS:*.vhosting-it.com, DNS:vhosting-it.com)",
         "fragmentStatus": "not-applicable"
       }
     },
@@ -800,6 +884,20 @@
       }
     },
     {
+      "url": "https://etheses.whiterose.ac.uk/id/eprint/738/1/uk_bl_ethos_405742.pdf",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: etheses.whiterose.ac.uk:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://ethw.org/ASME-Landmark:Owens_AR_Bottle_Machine",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -838,6 +936,20 @@
         "httpStatus": 403,
         "finalUrl": null,
         "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://funkyfluid.pl/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: funkyfluid.pl:443, timeout: 10000ms))",
         "fragmentStatus": "not-applicable"
       }
     },
@@ -1066,6 +1178,62 @@
       }
     },
     {
+      "url": "https://horal.be/en/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Hostname/IP does not match certificate's altnames: Host: horal.be. is not in the cert's altnames: DNS:*.vhosting-it.com, DNS:vhosting-it.com)",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://horal.be/en/traditional-lambic-beers",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: horal.be:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://horal.be/en/traditional-lambic-beers/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Hostname/IP does not match certificate's altnames: Host: horal.be. is not in the cert's altnames: DNS:*.vhosting-it.com, DNS:vhosting-it.com)",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://horal.be/en/who-we-are/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: horal.be:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://ir.tilray.com/news-releases/news-release-details/tilray-brands-acquires-brewdog-leading-global-craft-brand",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -1192,6 +1360,20 @@
       }
     },
     {
+      "url": "https://oar.icrisat.org/992/1/RA_00221.pdf",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://ohiomemory.ohiohistory.org/archives/5835",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -1272,6 +1454,62 @@
         "httpStatus": 403,
         "finalUrl": null,
         "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://oudbeersel.com/bierhuis/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: oudbeersel.com:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://oudbeersel.com/brewery",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Hostname/IP does not match certificate's altnames: Host: oudbeersel.com. is not in the cert's altnames: DNS:*.vhosting-it.com, DNS:vhosting-it.com)",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://oudbeersel.com/brewery/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: oudbeersel.com:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://oudbeersel.com/cool_timeline/start-of-the-revival/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Hostname/IP does not match certificate's altnames: Host: oudbeersel.com. is not in the cert's altnames: DNS:*.vhosting-it.com, DNS:vhosting-it.com)",
         "fragmentStatus": "not-applicable"
       }
     },
@@ -1749,6 +1987,20 @@
         "finalUrl": null,
         "detail": "Fragment target #caseNumber=71009773&caseSearchType=US_APPLICATION&caseType=DEFAULT&searchType=statusSearch is absent from the complete returned HTML. External JavaScript may create the target; verify manually.",
         "fragmentStatus": "missing"
+      }
+    },
+    {
+      "url": "https://vanmollcraftbeer.com/interview-totenhopfen/",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: vanmollcraftbeer.com:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
       }
     },
     {
