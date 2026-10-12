@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
+import { execFile } from "node:child_process";
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
+import { promisify } from "node:util";
 import type { LinkResult } from "../scripts/source-link-audit.ts";
 import type { PublishedAudit } from "../scripts/site-link-audit.ts";
 import {
@@ -224,4 +226,22 @@ test("failed prior audits and recovery errors stay visible instead of being skip
   assert.equal(noRuns.state, "none");
   const bounded = await recoverAuditHistory({ ...reader, listRuns: async () => Array.from({ length: 100 }, (_, index) => ({ ...run(index + 20), status: "queued" })) }, currentRun);
   assert.equal(bounded.state, "unavailable");
+});
+
+test("history restore workflow command starts in the project's module mode and records unavailable context offline", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "bc-source-history-cli-test-"));
+  const path = join(directory, "cache", "history.json");
+  const env: NodeJS.ProcessEnv = { ...process.env, SOURCE_LINK_HISTORY_FILE: path };
+  delete env.GITHUB_REPOSITORY;
+  delete env.GITHUB_RUN_ID;
+  delete env.GH_TOKEN;
+  const execute = promisify(execFile);
+  const { stdout, stderr } = await execute(process.execPath, [
+    join(process.cwd(), "node_modules/tsx/dist/cli.mjs"), "scripts/restore-source-link-history.ts",
+  ], { cwd: process.cwd(), env, timeout: 10_000 });
+  assert.equal(stderr, "");
+  assert.match(stdout, /Previous audit history: unavailable/);
+  const restored = await readAuditHistory(path);
+  assert.equal(restored.state, "unavailable");
+  assert.match(restored.reason, /Missing GitHub workflow context/);
 });

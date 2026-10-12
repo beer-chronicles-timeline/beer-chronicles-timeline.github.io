@@ -1458,6 +1458,20 @@
       }
     },
     {
+      "url": "https://open.uct.ac.za/bitstream/handle/11427/17888/thesis_hum_1984_la_hausse_paul.pdf",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking of the six recurring warnings from audit run 38219593358. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: open.uct.ac.za:443, timeout: 10000ms))",
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://oudbeersel.com/bierhuis/",
       "reviewedOn": "2026-10-12",
       "reviewAfter": "2027-04-10",
@@ -3096,6 +3110,62 @@
       }
     },
     {
+      "url": "https://www.molsoncoorsblog.com/features/born-chicago-raised-milwaukee-new-look-origins-miller-lite",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking of the six recurring warnings from audit run 38219593358. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.molsoncoorsblog.com/features/creation-miller-lite",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking of the six recurring warnings from audit run 38219593358. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.molsoncoorsblog.com/features/if-youve-got-time-history-high-life-beer-jingle",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking of the six recurring warnings from audit run 38219593358. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.molsoncoorsblog.com/miller-lite-all-stars-return",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking of the six recurring warnings from audit run 38219593358. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.monticello.org/encyclopedia/peter-hemings",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -3479,6 +3549,20 @@
       "reviewAfter": "2027-04-09",
       "reviewedBy": "site owner",
       "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "blocked",
+        "httpStatus": 403,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.staropramen.com/our-story/brand-story",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking of the six recurring warnings from audit run 38219593358. User-confirmed current state; not independently verified by Codex.",
       "expectedFinding": {
         "status": "blocked",
         "httpStatus": 403,
