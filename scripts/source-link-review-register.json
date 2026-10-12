@@ -1585,14 +1585,14 @@
     },
     {
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4025477",
-      "reviewedOn": "2026-10-11",
-      "reviewAfter": "2027-04-09",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
       "reviewedBy": "site owner",
-      "note": "User confirmed this URL valid after manual checking. User-confirmed current state; not independently verified by Codex.",
+      "note": "User confirmed this URL valid after manual checking of the two review warnings from audit run 38224121410. User-confirmed current state; not independently verified by Codex.",
       "expectedFinding": {
         "status": "needs-review",
         "httpStatus": 200,
-        "finalUrl": null,
+        "finalUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4025477/",
         "detail": "Automated-client challenge or access-denied page returned with a successful HTTP status.",
         "fragmentStatus": "not-applicable"
       }
@@ -2728,6 +2728,20 @@
         "httpStatus": 403,
         "finalUrl": null,
         "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.gov.za/sites/default/files/gcis_document/202503/52263rg11809gon5976.pdf",
+      "reviewedOn": "2026-10-12",
+      "reviewAfter": "2027-04-10",
+      "reviewedBy": "site owner",
+      "note": "User confirmed this URL valid after manual checking of the two review warnings from audit run 38224121410. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "network-error",
+        "httpStatus": null,
+        "finalUrl": null,
+        "detail": "fetch failed (Connect Timeout Error (attempted address: www.gov.za:443, timeout: 10000ms))",
         "fragmentStatus": "not-applicable"
       }
     },
