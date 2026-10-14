@@ -8,16 +8,16 @@ import { getTwitterMetadata } from "@/lib/siteMetadata";
 import { CONTACT_EMAIL } from "@/lib/contact";
 
 export const metadata: Metadata = {
-  title: "Beer Tastings with History | Beer Chronicles",
+  title: "Beer Tastings with a Trier Beer Sommelier | Beer Chronicles",
   description:
-    "Discover tailored beer tastings that combine selected beers, guided sensory analysis, brewing context, and a journey through beer history.",
+    "Discover beer tastings with Martin Schmidt, a certified beer sommelier from Trier, Germany, combining sensory discovery and beer history.",
   alternates: {
     canonical: "/tastings",
   },
   openGraph: {
-    title: "Beer Tastings with History | Beer Chronicles",
+    title: "Beer Tastings with a Trier Beer Sommelier | Beer Chronicles",
     description:
-      "Discover tailored beer tastings combining sensory analysis, brewing context, and a journey through beer history.",
+      "Discover beer tastings with Martin Schmidt, a certified beer sommelier from Trier, Germany, combining sensory discovery and beer history.",
     url: "/tastings",
     siteName: "Beer Chronicles",
     type: "website",
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     ],
   },
   twitter: getTwitterMetadata(
-    "Beer Tastings with History | Beer Chronicles",
-    "Discover tailored beer tastings combining sensory analysis, brewing context, and a journey through beer history."
+    "Beer Tastings with a Trier Beer Sommelier | Beer Chronicles",
+    "Discover beer tastings with Martin Schmidt, a certified beer sommelier from Trier, Germany, combining sensory discovery and beer history."
   ),
 };
 
@@ -114,6 +114,11 @@ export default function TastingsPage() {
         </div>
 
         <div className="space-y-4 text-gray-800 leading-relaxed">
+          <p>
+            Discover beer tastings with Martin Schmidt, a certified beer
+            sommelier from Trier, Germany.
+          </p>
+
           <p>
             Beer is more than a drink. Every glass reflects ingredients,
             brewing techniques, regional traditions, technological innovation,
@@ -244,8 +249,8 @@ export default function TastingsPage() {
 
           <div className="space-y-4 text-gray-800 leading-relaxed">
             <p>
-              I am a certified beer sommelier, passionate homebrewer, and the
-              creator of Beer Chronicles.
+              I am Martin Schmidt, a certified beer sommelier and passionate
+              homebrewer from Trier, Germany, and the creator of Beer Chronicles.
             </p>
 
             <p>

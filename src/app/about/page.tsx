@@ -11,14 +11,14 @@ import { CONTACT_EMAIL } from "@/lib/contact";
 export const metadata: Metadata = {
   title: "About Beer Chronicles | Beer Chronicles",
   description:
-    "Learn about Beer Chronicles, Martin Schmidt, and how the interactive, filterable beer history timeline began.",
+    "Meet Martin Schmidt, a certified beer sommelier and homebrewer from Trier, Germany, and discover the story behind Beer Chronicles.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     title: "About Beer Chronicles | Beer Chronicles",
     description:
-      "Learn about Beer Chronicles, Martin Schmidt, and how the interactive, filterable beer history timeline began.",
+      "Meet Martin Schmidt, a certified beer sommelier and homebrewer from Trier, Germany, and discover the story behind Beer Chronicles.",
     url: "/about",
     siteName: "Beer Chronicles",
     type: "website",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: getTwitterMetadata(
     "About Beer Chronicles | Beer Chronicles",
-    "Learn about Beer Chronicles, Martin Schmidt, and how the interactive, filterable beer history timeline began."
+    "Meet Martin Schmidt, a certified beer sommelier and homebrewer from Trier, Germany, and discover the story behind Beer Chronicles."
   ),
 };
 
@@ -136,9 +136,9 @@ export default function AboutPage() {
           </div>
 
           <p>
-            My name is Martin Schmidt. I&apos;ve been a homebrewer since 2020
-            and a certified beer sommelier since 2024. Plus: I&apos;m a beer
-            history geek.
+            My name is Martin Schmidt, and I&apos;m from Trier, Germany.
+            I&apos;ve been a homebrewer since 2020 and a certified beer
+            sommelier since 2024. Plus: I&apos;m a beer history geek.
           </p>
 
           <p>

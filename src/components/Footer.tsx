@@ -64,7 +64,7 @@ export default function Footer() {
 
       <div className="mt-3">
         <p>© {currentYear} Beer Chronicles. All rights reserved.</p>
-        <p className="mt-1">Built with 🍻 by Martin Schmidt</p>
+        <p className="mt-1">Built with 🍻 by Martin Schmidt · Trier, Germany</p>
       </div>
     </footer>
   );
