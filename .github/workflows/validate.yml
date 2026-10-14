@@ -1,7 +1,9 @@
-name: Offline pull request validation
+name: Offline application validation
 
 on:
   pull_request:
+  schedule:
+    - cron: '23 4 * * 1'
 
 permissions:
   contents: read
@@ -19,9 +21,11 @@ jobs:
           node-version-file: ".nvmrc"
           cache: npm
       - run: npm ci
+      - name: Test backend helper without network access
+        run: python3 -m unittest discover -s .agents/skills/beer-entry/scripts -p 'test_*.py'
       - name: Preserve published URL history
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
         run: node scripts/check-event-path-history.mjs "$BASE_SHA"
       - run: npm run lint
       - run: npm run typecheck
@@ -32,6 +36,17 @@ jobs:
       - run: npm run test:e2e
         env:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
+      - name: Measure weekly fixture performance
+        if: github.event_name == 'schedule'
+        run: npm run measure:timeline-mobile
+      - name: Retain weekly fixture measurements
+        if: always() && github.event_name == 'schedule'
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-fixture-performance-${{ github.run_id }}
+          path: artifacts/performance
+          retention-days: 90
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

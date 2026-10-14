@@ -4,6 +4,11 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+    inputs:
+      full_checks:
+        description: Run the full browser and performance checks even for an entry publication
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -34,6 +39,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Select release checks against the published commit
+        id: checks
+        env:
+          FORCE_FULL_CHECKS: ${{ inputs.full_checks || false }}
+        run: node scripts/classify-release.mjs
+
+      - name: Test backend helper without network access
+        run: python3 -m unittest discover -s .agents/skills/beer-entry/scripts -p 'test_*.py'
+
       - name: Preserve published URL history
         env:
           BASE_SHA: ${{ github.event.before || github.sha }}
@@ -58,10 +72,12 @@ jobs:
         run: npm run check:timeline-payload
 
       - name: Install Playwright browsers
+        if: steps.checks.outputs.full_checks == 'true'
         run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Browser accessibility tests
         id: browser_tests
+        if: steps.checks.outputs.full_checks == 'true'
         env:
           PLAYWRIGHT_USE_EXISTING_BUILD: "1"
         run: npm run test:e2e
@@ -76,19 +92,21 @@ jobs:
           if-no-files-found: warn
 
       - name: Recover successful release performance history
+        if: steps.checks.outputs.full_checks == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/restore-performance-history.mjs
 
       - name: Measure mobile route performance
         id: performance
+        if: steps.checks.outputs.full_checks == 'true'
         continue-on-error: true
         env:
           PERFORMANCE_HISTORY_PATH: .cache/performance-history.json
         run: npm run measure:timeline-mobile
 
       - name: Retain release measurements
-        if: always()
+        if: always() && steps.checks.outputs.full_checks == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: performance-${{ github.sha }}-${{ github.run_attempt }}

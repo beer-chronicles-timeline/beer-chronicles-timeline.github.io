@@ -1,11 +1,23 @@
 import { readFile, stat } from "node:fs/promises";
 import { resolve } from "node:path";
+import { isDeepStrictEqual } from "node:util";
 import { getEventRouteParams, assertPublishedEventPaths } from "../src/lib/eventAliases";
 import { getEventPath, getEventUrl } from "../src/lib/eventUrls";
 import { decodeTimelineData } from "../src/lib/timelineTransport";
 import { getEventsForStoryline } from "../src/lib/eventStorylines";
 import { STORYLINES } from "../src/lib/storylines";
 import type { PublicationSnapshot } from "../src/lib/publicationSnapshot";
+import { buildMapLocations, type MapLocation } from "../src/lib/mapLocations";
+
+export function verifyMapExport(html: string, locations: readonly MapLocation[]) {
+  // Decode JSON string chunks without executing scripts or opening a browser.
+  // Next escapes ampersands and angle brackets in the embedded JSON.
+  const flight = [...html.matchAll(/self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)/g)]
+    .map(match => JSON.parse(match[1]) as string).join("");
+  for (const location of locations) {
+    if (!flight.includes(JSON.stringify(location))) throw new Error(`Map export differs from publication snapshot: ${location.id}`);
+  }
+}
 
 export async function checkPublicationExport(requireLive = false) {
   const snapshot = JSON.parse(await readFile(".cache/publication.json", "utf8")) as PublicationSnapshot;
@@ -16,6 +28,14 @@ export async function checkPublicationExport(requireLive = false) {
   const payload = decodeTimelineData(JSON.parse(await readFile("out/timeline-data.json", "utf8")));
   const ids = (events: {id: string}[]) => events.map((e) => e.id).sort().join("\n");
   if (ids(payload.events) !== ids(snapshot.events)) throw new Error("Exported timeline does not match publication snapshot");
+  const payloadById = new Map(payload.events.map(event => [event.id, event]));
+  for (const event of snapshot.events) {
+    const exported = payloadById.get(event.id)!;
+    for (const field of ["title", "description", "event_date", "historical_year", "image_url", "category", "date_precision", "sources", "tags"] as const) {
+      if (!isDeepStrictEqual(exported[field] ?? null, event[field] ?? null)) throw new Error(`Timeline content differs from publication snapshot: ${event.id}/${field}`);
+    }
+  }
+  verifyMapExport(await readFile("out/map.html", "utf8"), buildMapLocations(snapshot.events));
   const sitemap = await readFile("out/sitemap.xml", "utf8");
   if ((sitemap.match(/<loc>https:\/\/beer-chronicles\.org\/events\//g) ?? []).length !== snapshot.events.length) throw new Error("Sitemap event count differs from publication snapshot");
   const paths = new Set<string>(["/", "/map", "/histogram", "/storylines", "/submit", ...STORYLINES.map((s) => `/storylines/${s.slug}`)]);
@@ -49,6 +69,6 @@ export async function checkPublicationExport(requireLive = false) {
       if (!(await Promise.all(candidates.map(async (file) => { try { return (await stat(file)).isFile(); } catch { return false; } }))).some(Boolean)) throw new Error(`Broken internal link: ${path} -> ${target}`);
     }
   }
-  console.log(`Verified ${snapshot.events.length} events, historical aliases, Storyline links and internal export links (${snapshot.mode}).`);
+  console.log(`Verified ${snapshot.events.length} events, content/tags, map locations, historical aliases, Storyline links and internal export links (${snapshot.mode}).`);
 }
 if (process.argv[1]?.endsWith("check-publication-export.ts")) checkPublicationExport(process.argv.includes("--require-live")).catch((error) => { console.error(error); process.exitCode = 1; });

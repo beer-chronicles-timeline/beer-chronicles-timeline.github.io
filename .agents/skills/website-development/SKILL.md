@@ -47,18 +47,30 @@ Do not use it to create or revise historical entries, apply taxonomy changes, pr
 
 Run the smallest meaningful check after each coherent patch, then broader checks in proportion to risk.
 
+Use the installed Node version matching `.nvmrc` before running commands. Reuse completed checks until relevant code changes or a failure warrants another run. Check existing command approvals before requesting a sandbox override; if an essential command fails because of the sandbox, explain that observed system restriction without asking again for already authorized task work.
+
 Verified package commands are:
 
 - `npm run lint` — ESLint with Next.js core-web-vitals and TypeScript rules;
+- `npm run typecheck` — TypeScript without emitting output;
+- `npm test` — the existing Node unit tests through `tsx`;
 - `npm run build` — Next.js static build/export;
+- `npm run build:offline` — synthetic fixture build without Supabase access;
+- `npm run test:e2e` — existing browser tests, when relevant;
 - `npm run dev` — local development server when interactive browser verification is needed.
 
-The repository currently has no package-level `npm test` script. Tests exist under `tests/`; do not invent or document a test invocation without verifying it for the current repository. Do not change testing infrastructure as part of an unrelated task.
+Verify current `package.json` commands rather than inventing invocations. For focused unit tests, `node --import tsx --test tests/<relevant-file>.test.ts` avoids the `tsx` CLI's extra IPC socket. Do not change testing infrastructure as part of an unrelated task.
 
 The build reads live Supabase data and needs network/live-data availability. Do not run it as ceremony when it is irrelevant; when it is relevant but unavailable, report the limitation accurately.
 
 Use browser checks for visual, responsive, keyboard, or interaction changes when they materially verify the result. Never claim a check was run if it was not.
 
+For entry publication limited to literal map data and canonical event paths, use the existing map and URL tests locally and let CI run the broader checks. Run a local production build once if explicitly requested or needed for a specific concern; otherwise CI supplies it. Do not run a full local audit or browser suite for a data assignment. CI compares against the published commit and defaults to full checks when classification is uncertain. Weekly browser/performance checks use synthetic data and do not deploy or access Supabase.
+
+For skill/documentation or workflow changes, validate the edited files and any decision logic. A live build is unnecessary unless requested or needed to resolve a specific concern; use fixtures when export verification is warranted.
+
 ## Completion
 
 Report the implemented outcome, files changed, checks and results, and remaining risks or manual verification. Do not stage, commit, push, or deploy unless explicitly requested.
+
+Honor concrete backend and Git authorization already given for the current unit of work; do not reopen it. When publication is requested, monitor the resulting workflow and verify the expected release over public HTTP once after deployment. Report completion and stop. Repeat verification only for a new change, failure, or reported issue.
