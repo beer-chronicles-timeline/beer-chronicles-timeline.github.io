@@ -17,6 +17,14 @@ Any SQL starts as an **unexecuted proposal for human review**. After the user ex
 
 Never invent historical facts, sources, relationships, or significance. Distinguish evidence, inference, and uncertainty. If reliable evidence is insufficient, stop rather than completing the entry speculatively.
 
+## Tools and access
+
+- Do not launch, inspect, control, or automate browsers for this skill, including CUA, Safari, Chrome, or browser-based Supabase dashboard access. Do not use a browser as an authentication fallback.
+- Use web-search tools and direct HTTP requests for historical research, source inspection, and complete published timeline payloads. These do not require interactive browser control. Preserve the existing approval gate for every backend action.
+- For approved backend work, use an available Supabase connector, terminal PostgreSQL tools, or the authenticated Supabase Management API. Reuse existing CLI/API authentication if a saved database password fails; do not create login roles or change credentials or configuration outside the approved bundle.
+- On macOS, the existing Supabase CLI token may be stored in Keychain service `Supabase CLI`, account `supabase`. Decode any `go-keyring-base64:` wrapper in memory and never print or save the token. The Management API accepts SQL at `POST /v1/projects/{ref}/database/query`; use `read_only: true` for approved checks and verification, and send the exact approved saved SQL for execution without automatic mutation retries.
+- If usable authentication or terminal/API tooling is unavailable, report the concrete limitation and stop backend work. The user can refresh local authentication or execute the saved SQL manually; never request secrets in chat or switch to browser control.
+
 ## Mandatory approval before adding entries
 
 Always explicitly ask for and receive the user's approval of the finished entry or clearly identified batch before any new timeline entries are added. First complete the research, duplicate checks, entry text, dates, sources, tags, SQL proposal, and matching Beer Map preparation so the user can review a concrete package. Preparation itself does not require this editorial approval.

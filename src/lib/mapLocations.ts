@@ -418,6 +418,11 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUID shared with sql/philly-beer-week-proposal.sql.
+  // Monk's Café's 2008 event archive and the Oxford Companion to Beer establish
+  // Philadelphia as the host city. Reuse its city reference point for this
+  // distributed celebration; dormant until the reviewed event is supplied.
+  { eventId: "59bb2f61-3619-4458-8298-21c2a0262369", placeId: "philadelphia", locationRole: "Host city of the inaugural citywide beer week" },
   // Fixed UUIDs shared with sql/schwarzbier-history-proposal.sql.
   // Bad Köstritz's municipal history and Köstritzer/Bitburger establish the
   // brewery town. The 2005 judgment and contemporary reporting establish
