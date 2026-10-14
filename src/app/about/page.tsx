@@ -111,8 +111,8 @@ export default function AboutPage() {
 
       <MainContentStart />
 
-      <section className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-4">
+      <section className="max-w-3xl mx-auto w-full">
+        <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
           About Beer Chronicles
         </h1>
 
@@ -121,8 +121,7 @@ export default function AboutPage() {
             Beer Chronicles is a curated timeline of beer history, from
             prehistoric evidence of brewing to the present day. Built around
             historical sources, it brings together the events, people, styles,
-            and developments behind beer. Use tags and categories to follow
-            your interests.
+            and developments behind beer.
           </p>
 
           {/* Image with text wrapping - float right on desktop, centered on mobile */}

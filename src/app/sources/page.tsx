@@ -186,8 +186,8 @@ export default function SourcesPage() {
 
       <MainContentStart />
 
-      <section className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-4">
+      <section className="max-w-3xl mx-auto w-full">
+        <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
           Sources
         </h1>
 

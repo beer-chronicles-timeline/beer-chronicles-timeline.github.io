@@ -102,9 +102,9 @@ export default function TastingsPage() {
 
       <MainContentStart />
 
-      <section className="max-w-4xl mx-auto w-full">
+      <section className="max-w-3xl mx-auto w-full">
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-semibold font-serif text-stone-900 mb-3">
+          <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
             Beer Tastings with History
           </h1>
 
@@ -148,7 +148,7 @@ export default function TastingsPage() {
             <div>
               <dt className="text-sm font-semibold text-stone-900">Timing</dt>
               <dd className="mt-1 text-sm text-gray-700 leading-relaxed">
-                From 19:00, with an open end ;-)
+                Whatever you need, but always open end ;-)
               </dd>
             </div>
 
@@ -282,8 +282,8 @@ export default function TastingsPage() {
             </ul>
 
             <p>
-              We start at 19:00, with an open end. The number of beers and the
-              structure will be agreed upon in advance.
+              The start time is flexible, always with an open end. The number
+              of beers and the structure will be agreed upon in advance.
             </p>
           </div>
         </div>

@@ -243,7 +243,7 @@ export default function SubmitPage() {
 
       <MainContentStart />
 
-      <section className="max-w-2xl mx-auto w-full">
+      <section className="max-w-3xl mx-auto w-full">
         <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
           {isFinding
             ? challenge ? `Submit a Finding: ${challenge.title}` : "Submit a Finding"
