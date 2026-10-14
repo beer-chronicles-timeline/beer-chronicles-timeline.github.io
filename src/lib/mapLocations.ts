@@ -48,6 +48,17 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Bruges museum history proposal: sql/bruges-museum-history-proposal.sql.
+  // Settlement reference coordinates inspected 2026-10-14:
+  // https://nl.wikipedia.org/wiki/Mater,
+  // https://en.wikipedia.org/wiki/Alken,_Belgium, and /wiki/Bruges.
+  // Steenhuffel: OpenStreetMap Nominatim administrative settlement reference,
+  // relation 3963728, retrieved 2026-10-14. Historical locations are supported
+  // by the entry sources; these points do not mark exact historical premises.
+  mater: { name: "Mater, Belgium", latitude: 50.85, longitude: 3.66667, precision: "city", locationRole: "Village of the Roman family brewery origin" },
+  alken: { name: "Alken, Belgium", latitude: 50.87611, longitude: 5.30778, precision: "city", locationRole: "Town of the Cristal Pils launch" },
+  bruges: { name: "Bruges, Belgium", latitude: 51.20889, longitude: 3.22417, precision: "city", locationRole: "City of the historical brewing milestone" },
+  steenhuffel: { name: "Steenhuffel, Belgium", latitude: 50.9954209, longitude: 4.2683305, precision: "city", locationRole: "Village of Palm’s production brewery" },
   // Schwarzbier proposal: sql/schwarzbier-history-proposal.sql.
   // Settlement reference coordinates inspected 2026-10-10:
   // https://wiki.openstreetmap.org/wiki/Bad_K%C3%B6stritz and
@@ -418,6 +429,26 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs shared with sql/bruges-museum-history-proposal.sql.
+  // MGH's 1364 charter distinguishes Utrecht's tax jurisdiction from its issue
+  // at Budweis. Meulemeester dates the Bruges guild's Carmelite agreement to
+  // 1395; no disputed 1084 foundation pin is inferred. Roman's heritage record,
+  // Bavaria's historical institution, Alken's municipal history, Poland's law,
+  // KU Leuven's reporting, and Bruges's municipal accounts establish the other
+  // locations. Country/settlement scope only; absent proposal IDs make no pins.
+  { eventId: "1a1c615c-0483-4420-8f65-ed89390a57ff", placeId: "utrecht", locationRole: "City within the bishop’s jurisdiction where the hopped-beer tax applied" },
+  { eventId: "1a1c615c-0483-4420-8f65-ed89390a57ff", placeId: "ceske_budejovice", locationRole: "City where Charles IV issued the tax charter" },
+  { eventId: "9620bb7e-cb7d-4756-8323-8de80c854c4b", placeId: "bruges", locationRole: "City of the brewers’ guild and its Carmelite chapel agreement" },
+  { eventId: "db9bfcaf-a262-41ab-a1f6-a8882dd03c42", placeId: "mater", locationRole: "Village of Joos Roman’s De Clocke enterprise and brewery" },
+  { eventId: "74f7430a-34f9-4ab2-a432-c586b7d75cfe", placeId: "freising", locationRole: "City containing the Weihenstephan brewery transferred to Bavarian control" },
+  { eventId: "71eeaa4e-210c-4918-b337-ccddd72383a7", placeId: "russia", locationRole: "Country imposing the import restriction while continuing to admit porter" },
+  { eventId: "71eeaa4e-210c-4918-b337-ccddd72383a7", placeId: "burton", locationRole: "Town where Wilson and Allsopp offered ale diverted from the Russian market" },
+  { eventId: "ab633c2a-beeb-41ad-b887-c149bd584b0c", placeId: "alken", locationRole: "Town where the brewery launched Cristal Pils" },
+  { eventId: "7e0d730b-c6a5-4a14-9337-ce8212d7baba", placeId: "poland", locationRole: "Country whose nationalization law covered large breweries" },
+  { eventId: "25fdeac6-cf6f-4155-af00-c879e0461bd2", placeId: "bruges", locationRole: "City where Paul Vanneste established De Gouden Boom" },
+  { eventId: "bdbf2f49-69a9-431d-bce9-380dba8bfa03", placeId: "leuven", locationRole: "City where KU Leuven re-established its malting and brewing research center" },
+  { eventId: "8b8db0b4-7c73-4e6e-b67e-6c9e734958ca", placeId: "bruges", locationRole: "City from which De Gouden Boom’s beer production departed" },
+  { eventId: "8b8db0b4-7c73-4e6e-b67e-6c9e734958ca", placeId: "steenhuffel", locationRole: "Village to which production moved at Palm’s brewery" },
   // Fixed UUID shared with sql/philly-beer-week-proposal.sql.
   // Monk's Café's 2008 event archive and the Oxford Companion to Beer establish
   // Philadelphia as the host city. Reuse its city reference point for this
