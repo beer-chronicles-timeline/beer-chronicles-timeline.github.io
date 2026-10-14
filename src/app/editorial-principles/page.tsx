@@ -230,16 +230,6 @@ export default function EditorialPrinciplesPage() {
                 included in the final entry.
               </p>
 
-              <p>
-                The website’s development workflow may involve Codex and
-                similar agentic AI tools inspecting the repository, running
-                audits, researching issues, proposing changes, implementing
-                code under my instructions, and running tests. These tools
-                assist with the work, but they do not decide what is accepted
-                into Beer Chronicles. Every change—whether to the website or
-                its historical content—is reviewed and approved by me before it
-                becomes part of the project.
-              </p>
             </div>
           </section>
 

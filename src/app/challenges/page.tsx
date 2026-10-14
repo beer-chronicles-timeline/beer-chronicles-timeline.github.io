@@ -5,6 +5,10 @@ import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import { getTwitterMetadata } from "@/lib/siteMetadata";
+import {
+  getChallengeSubmissionPath,
+  RESEARCH_CHALLENGES,
+} from "@/lib/researchChallenges";
 
 export const metadata: Metadata = {
   title: "Open Research Challenges | Beer Chronicles",
@@ -36,27 +40,6 @@ export const metadata: Metadata = {
 };
 
 export default function ChallengesPage() {
-  const challenges = [
-    {
-      title: "Schieffer Brewery in Trier, Germany",
-      question: "When did they really stop brewing?",
-      context:
-        "The timeline needs a verifiable source for the real end date of Schieffer Brewery in Trier, Germany.",
-    },
-    {
-      title: "George Hodgson’s Birth Date",
-      question: "What is his birth date?",
-      context:
-        "The timeline needs a verifiable source for the birth date of George Hodgson, the London brewer associated with the India Pale Ale storyline.",
-    },
-    {
-      title: "George Hodgson’s Death Date",
-      question: "What is his death date?",
-      context:
-        "The timeline needs a verifiable source for the death date of George Hodgson, the London brewer associated with the India Pale Ale storyline.",
-    },
-  ];
-
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
       <header className="mb-8">
@@ -111,22 +94,22 @@ export default function ChallengesPage() {
           </p>
 
           <p>
-            If you can resolve one of these questions with reliable sources, please{" "}
-            <Link
-              href="/submit"
-              className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
-            >
-              submit your finding here
-            </Link>
-            . Every resolved open research question will be awarded with a free beer of my choice, given to the submitting person if I accept the resolving entry.
+            Useful partial findings are welcome too. If your source narrows a
+            date range or helps clarify the question, please share it using
+            the corresponding button below.
+          </p>
+
+          <p>
+            Every resolved open research question will be awarded with a free beer of my choice, given to the submitting person if I accept the resolving entry.
           </p>
         </div>
 
         <div className="mt-8 space-y-4">
-          {challenges.map((challenge, index) => (
+          {RESEARCH_CHALLENGES.map((challenge, index) => (
             <article
-              key={`${challenge.title}-${challenge.question}`}
-              className="bg-white border border-stone-200 rounded-lg p-5 shadow-sm"
+              key={challenge.id}
+              id={challenge.id}
+              className="scroll-mt-4 bg-white border border-stone-200 rounded-lg p-5 shadow-sm"
             >
               <div className="mb-1 text-xs font-medium uppercase tracking-wide text-stone-500">
                 Challenge #{index + 1}
@@ -144,12 +127,30 @@ export default function ChallengesPage() {
                 {challenge.context}
               </p>
 
+              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+                <Link
+                  href={challenge.backgroundHref}
+                  className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+                >
+                  Read the background and existing sources
+                </Link>
+
+                {challenge.storylineHref && (
+                  <Link
+                    href={challenge.storylineHref}
+                    className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+                  >
+                    India Pale Ale Storyline
+                  </Link>
+                )}
+              </div>
+
               <div className="mt-4">
                 <Link
-                  href="/submit"
+                  href={getChallengeSubmissionPath(challenge.id)}
                   className="inline-flex min-h-10 items-center rounded-md bg-stone-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
                 >
-                  Submit a Resolution
+                  Submit a Finding
                 </Link>
               </div>
             </article>

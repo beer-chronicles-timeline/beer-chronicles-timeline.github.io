@@ -20,6 +20,14 @@ Support two modes:
 
 A normal website review may evaluate visible historical reliability and sourcing presentation, but it must not become a deep audit of one historical Storyline. Route that work to `storyline-audit`.
 
+## Review tools and browser preference
+
+Default to reviewing without a browser. Use fresh, read-only HTTP retrieval of public live pages and assets, delivered HTML/CSS/JavaScript, link responses, metadata, and relevant repository source. A fresh live HTTP fetch satisfies the live-state inspection requirement; browser access is not a prerequisite.
+
+Do not open a browser or request browser/Computer Use access for routine reviews. Use a browser only when the user explicitly requests browser-based inspection. If a check cannot be completed with the available methods, report the limitation and continue the review instead of asking for browser access.
+
+Distinguish HTML and source-code evidence from verified runtime behavior. Without direct testing, label rendered layout, viewport behavior, keyboard interactions, runtime performance, and end-to-end form delivery as unverified. Do not present source inspection as complete visual or accessibility verification.
+
 ## Provenance and current state
 
 Before reviewing, attempt to inspect the newest visible live state of `https://beer-chronicles.org` rather than relying on old observations or cached outputs. Reopen relevant pages and use a cache-busting query parameter when useful, while recognizing that this cannot guarantee deployment freshness.

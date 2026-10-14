@@ -104,7 +104,7 @@ export default function AboutPage() {
             </Link>
           </p>
           <p className="text-stone-600 mt-2 tracking-wide uppercase text-sm">
-            About this page
+            About Beer Chronicles
           </p>
         </div>
       </header>
@@ -113,10 +113,18 @@ export default function AboutPage() {
 
       <section className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-4">
-          What Is This About?
+          About Beer Chronicles
         </h1>
 
         <div className="space-y-4 text-gray-800">
+          <p>
+            Beer Chronicles is a curated timeline of beer history, from
+            prehistoric evidence of brewing to the present day. Built around
+            historical sources, it brings together the events, people, styles,
+            and developments behind beer. Use tags and categories to follow
+            your interests.
+          </p>
+
           {/* Image with text wrapping - float right on desktop, centered on mobile */}
           <div className="mx-auto mb-5 w-40 md:float-right md:mx-0 md:ml-6 md:mb-4 md:w-48">
             <Image
@@ -129,29 +137,41 @@ export default function AboutPage() {
           </div>
 
           <p>
-            My name is Martin Schmidt. I am a homebrewer since 2020 and a
-            certified beer sommelier since 2024. Plus: I&apos;m a beer history
-            geek.
+            My name is Martin Schmidt. I&apos;ve been a homebrewer since 2020
+            and a certified beer sommelier since 2024. Plus: I&apos;m a beer
+            history geek.
           </p>
 
           <p>
-            This project started a few years ago with just some more or less
-            sorted notes about important events in the history of beer. I
-            collected these notes when doing my research for the next beer
-            style to be brewed or the next tasting to be planned.
+            This project started a few years ago with notes about important
+            events in beer history. I collected them while researching the
+            next beer style I wanted to brew or planning a tasting. In 2026,
+            I finally found the time to turn those notes into an interactive
+            timeline.
           </p>
 
           <p>
-            Since then I had the idea to move these notes to a beer history
-            timeline that can be filtered by tags or categories. In 2026, I
-            finally found the time to do it and - here it is!
+            You can read more about how I select sources and handle dates and
+            historical uncertainty in the{" "}
+            <Link
+              href="/editorial-principles"
+              className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
+              Editorial Principles
+            </Link>
+            .
           </p>
 
           <p>
-            Beer Chronicles follows this history from prehistoric evidence of
-            brewing to the present day. The timeline therefore includes both
-            BCE and CE dates and is not limited by the range of an ordinary
-            calendar date field.
+            My interest in beer history also shapes the{" "}
+            <Link
+              href="/tastings"
+              className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
+              beer tastings I offer
+            </Link>
+            , which combine selected beers, sensory discovery, and the stories
+            behind them.
           </p>
 
           <p>
@@ -188,6 +208,12 @@ export default function AboutPage() {
           <h2 className="text-xl font-semibold mb-6">
             Who Can Benefit from Beer Chronicles?
           </h2>
+
+          <p className="text-gray-700 mb-6 leading-relaxed">
+            Anyone curious about beer and its history is welcome. Explore for
+            enjoyment, follow the story of a favorite style, or find context
+            for a tasting, a brew, or your work.
+          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {useCases.map((useCase, index) => (

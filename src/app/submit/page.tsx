@@ -6,29 +6,19 @@ import Link from "next/link";
 import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
+import SubmissionEmailAlternative from "@/components/SubmissionEmailAlternative";
 import { useHydrated } from "@/lib/useHydrated";
 import { CONTACT_EMAIL } from "@/lib/contact";
-
-const CORRECTION_SUBMISSION_TYPE =
-  "Correction / additional source";
-
-function isCanonicalEventUrl(value: string): boolean {
-  try {
-    const url = new URL(value);
-
-    return (
-      url.origin === "https://beer-chronicles.org" &&
-      url.pathname.startsWith("/events/")
-    );
-  } catch {
-    return false;
-  }
-}
-
-type CorrectionContext = {
-  eventTitle: string;
-  eventUrl: string;
-};
+import {
+  buildSubmissionPayload,
+  CHALLENGE_SUBMISSION_TYPE,
+  getSubmissionContext,
+  getSubmissionRequirements,
+  selectSubmissionType,
+  type SubmissionContext,
+  type SubmissionType,
+} from "@/lib/submissionContext";
+import { getResearchChallenge, RESEARCH_CHALLENGES } from "@/lib/researchChallenges";
 
 type DatePrecision = "date" | "month" | "year" | "decade" | "century";
 
@@ -69,24 +59,16 @@ const DATE_FIELD_CONFIG: Record<
   },
 };
 
-function getCorrectionContext(search: string): CorrectionContext | null {
-  const searchParams = new URLSearchParams(search);
-  const eventTitle = searchParams.get("eventTitle")?.trim() ?? "";
-  const eventUrl = searchParams.get("eventUrl")?.trim() ?? "";
-
-  if (
-    searchParams.get("submissionType") !== "correction" ||
-    eventTitle === "" ||
-    !isCanonicalEventUrl(eventUrl)
-  ) {
-    return null;
-  }
-
-  return { eventTitle, eventUrl };
-}
-
 function subscribeToLocationSearch() {
   return () => {};
+}
+
+function FieldRequirement({ required }: { required: boolean }) {
+  return (
+    <span className="font-normal text-stone-500">
+      {required ? "(required)" : "(optional)"}
+    </span>
+  );
 }
 
 export default function SubmitPage() {
@@ -96,12 +78,19 @@ export default function SubmitPage() {
     () => window.location.search,
     () => ""
   );
-  const correctionContext = useMemo(
-    () => getCorrectionContext(locationSearch),
+  const initialContext = useMemo(
+    () => getSubmissionContext(locationSearch),
     [locationSearch]
   );
-  const isCorrection = correctionContext !== null;
-  const eventUrl = correctionContext?.eventUrl ?? "";
+  const [selectedContext, setSelectedContext] = useState<SubmissionContext | null>(null);
+  const submissionContext = selectedContext ?? initialContext;
+  const isCorrection = submissionContext.type === "correction";
+  const isAdditionalSource = submissionContext.type === "source";
+  const isEntryFeedback = isCorrection || isAdditionalSource;
+  const isFinding = submissionContext.type === "challenge";
+  const requirements = getSubmissionRequirements(submissionContext);
+  const challenge =
+    submissionContext.type === "challenge" ? submissionContext.challenge : null;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -112,21 +101,27 @@ export default function SubmitPage() {
     datePrecision: "" as DatePrecision | "",
     dateUncertainty: "",
     sources: "",
+    eventUrl: null as string | null,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
 
   const submittedTitle =
-    formData.title ?? correctionContext?.eventTitle ?? "";
+    formData.title ??
+    (isEntryFeedback ? submissionContext.eventTitle : challenge?.title ?? "");
+  const eventUrl =
+    formData.eventUrl ?? (isEntryFeedback ? submissionContext.eventUrl : "");
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
+    setValidationError(null);
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -135,8 +130,38 @@ export default function SubmitPage() {
     }));
   };
 
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedContext(
+      selectSubmissionType(submissionContext, e.target.value as SubmissionType)
+    );
+    setValidationError(null);
+    setSubmitStatus("idle");
+  };
+
+  const handleChallengeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedContext({
+      type: "challenge",
+      challenge: getResearchChallenge(e.target.value),
+    });
+    setValidationError(null);
+    setSubmitStatus("idle");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    let payload: ReturnType<typeof buildSubmissionPayload>;
+    try {
+      payload = buildSubmissionPayload(submissionContext, {
+        ...formData,
+        title: submittedTitle,
+        eventUrl,
+      });
+    } catch (error) {
+      setValidationError(error instanceof Error ? error.message : "Please check your submission details.");
+      return;
+    }
+
+    setValidationError(null);
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
@@ -146,25 +171,7 @@ export default function SubmitPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          title: submittedTitle,
-          description: formData.description,
-          eventDate: formData.eventDate,
-          datePrecision: formData.datePrecision,
-          dateUncertainty: formData.dateUncertainty,
-          sources: formData.sources,
-          ...(isCorrection
-            ? {
-                submissionType: CORRECTION_SUBMISSION_TYPE,
-                eventUrl,
-              }
-            : {}),
-          _subject: isCorrection
-            ? `Beer History Correction Suggestion from ${formData.name}`
-            : `New Beer History Entry Submission from ${formData.name}`,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -172,12 +179,13 @@ export default function SubmitPage() {
         setFormData({
           name: "",
           email: "",
-          title: "",
+          title: null,
           description: "",
           eventDate: "",
           datePrecision: "",
           dateUncertainty: "",
           sources: "",
+          eventUrl: null,
         });
       } else {
         setSubmitStatus("error");
@@ -235,18 +243,34 @@ export default function SubmitPage() {
 
       <MainContentStart />
 
-      <section className="max-w-2xl mx-auto">
+      <section className="max-w-2xl mx-auto w-full">
         <h1 className="text-2xl font-semibold font-serif text-stone-900 mb-2">
-          {isCorrection
-            ? "Suggest a Correction or Additional Source"
-            : "Submit a New Beer History Entry"}
+          {isFinding
+            ? challenge ? `Submit a Finding: ${challenge.title}` : "Submit a Finding"
+            : isAdditionalSource
+              ? "Suggest an Additional Source"
+              : isCorrection
+                ? "Suggest a Correction"
+                : "Submit a New Beer History Entry"}
         </h1>
 
         <p className="text-gray-600 mb-4">
-          {isCorrection ? (
+          {isFinding ? (
             <>
-              Spotted something that should be corrected or have an
-              additional source to suggest? Share the details below and
+              Share what you have found and the sources that support it.
+              Useful partial findings are welcome too; I&apos;ll review your
+              evidence even if the question is not fully resolved.
+            </>
+          ) : isAdditionalSource ? (
+            <>
+              Have another source for an existing entry? Identify the entry
+              below, share the reference, and explain what it supports or
+              clarifies. I&apos;ll review your suggestion.
+            </>
+          ) : isCorrection ? (
+            <>
+              Spotted something that should be corrected in an existing
+              entry? Share the details below and
               I&apos;ll review them.
             </>
           ) : (
@@ -258,17 +282,90 @@ export default function SubmitPage() {
           )}
         </p>
 
-        {isCorrection && (
+        <SubmissionEmailAlternative />
+
+        <p className="mb-4 text-sm text-stone-600">
+          Fields marked &quot;required&quot; must be completed.
+        </p>
+
+        <div className="mb-6 space-y-5">
+          <div>
+            <label
+              htmlFor="submissionType"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Submission Type <FieldRequirement required />
+            </label>
+            <select
+              id="submissionType"
+              name="submissionType"
+              form="contribution-form"
+              required
+              disabled={!isReady || isSubmitting}
+              value={submissionContext.type}
+              onChange={handleTypeChange}
+              className="w-full min-w-0 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+            >
+              <option value="entry">New entry</option>
+              <option value="correction">Correction</option>
+              <option value="source">Additional source</option>
+              <option value="challenge">Research challenge finding</option>
+            </select>
+          </div>
+
+          {isFinding && (
+            <div>
+              <label
+                htmlFor="challengeId"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Research Challenge <FieldRequirement required />
+              </label>
+              <select
+                id="challengeId"
+                name="challengeId"
+                form="contribution-form"
+                required
+                disabled={!isReady || isSubmitting}
+                value={challenge?.id ?? ""}
+                onChange={handleChallengeChange}
+                className="w-full min-w-0 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+              >
+                <option value="">Choose an open research question</option>
+                {RESEARCH_CHALLENGES.map((item) => (
+                  <option key={item.id} value={item.id}>{item.title}</option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
+
+        {challenge && (
           <div className="mb-6 rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm leading-relaxed text-stone-700">
             <p>
               <span className="font-medium">Submission type:</span>{" "}
-              {CORRECTION_SUBMISSION_TYPE}
+              {CHALLENGE_SUBMISSION_TYPE}
             </p>
 
-            <p className="mt-2 break-words">
-              <span className="font-medium">Event:</span> {eventUrl}
+            <p className="mt-2 font-medium">{challenge.question}</p>
+            <p className="mt-2">{challenge.context}</p>
+
+            <p className="mt-2">
+              <Link
+                href={`/challenges#${challenge.id}`}
+                className="underline hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+              >
+                View this challenge and its research starting points
+              </Link>
             </p>
           </div>
+        )}
+
+        {isEntryFeedback && (
+          <p className="mb-6 text-sm leading-relaxed text-stone-700">
+            Identify the existing entry with its title below. You can also add
+            its link.
+          </p>
         )}
 
         <div className="mb-6 rounded-lg border border-stone-200 bg-stone-100 px-4 py-3 text-sm leading-relaxed text-stone-700">
@@ -279,10 +376,9 @@ export default function SubmitPage() {
           </p>
 
           <p className="mt-2">
-            Entries may also be dated only to a month, year, decade, or
-            century. Prehistoric and BCE proposals are welcome. Choose the
-            precision supported by the evidence and explain any uncertainty in
-            the dedicated date note.
+            {!requirements.date
+              ? "Date information is optional. If your contribution supports a date, choose the precision supported by the evidence. Explain any date range, conflicting evidence, or other uncertainty in the dedicated note."
+              : "Entries may also be dated only to a month, year, decade, or century. Prehistoric and BCE proposals are welcome. Choose the precision supported by the evidence and explain any uncertainty in the dedicated date note."}
           </p>
 
           <p className="mt-2">
@@ -297,20 +393,26 @@ export default function SubmitPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} aria-busy={!isReady}>
-          <fieldset disabled={!isReady} className="min-w-0 space-y-5">
+        <form id="contribution-form" onSubmit={handleSubmit} aria-busy={!isReady || isSubmitting}>
+          <fieldset disabled={!isReady || isSubmitting} className="min-w-0 space-y-5">
+            {validationError && (
+              <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-800">
+                {validationError}
+              </p>
+            )}
             {/* Name Field */}
             <div>
               <label
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Your Name
+                Your Name <FieldRequirement required />
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
+                autoComplete="name"
                 required
                 aria-describedby="submission-privacy-notice"
                 value={formData.name}
@@ -326,12 +428,13 @@ export default function SubmitPage() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Your Email
+                Your Email <FieldRequirement required />
               </label>
               <input
                 type="email"
                 id="email"
                 name="email"
+                autoComplete="email"
                 required
                 aria-describedby="submission-privacy-notice"
                 value={formData.email}
@@ -341,13 +444,41 @@ export default function SubmitPage() {
               />
             </div>
 
+            {isEntryFeedback && (
+              <div>
+                <label
+                  htmlFor="eventUrl"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Entry Link <FieldRequirement required={false} />
+                </label>
+                <input
+                  id="eventUrl"
+                  name="eventUrl"
+                  type="url"
+                  value={eventUrl}
+                  onChange={handleChange}
+                  aria-describedby="event-url-help"
+                  placeholder="https://beer-chronicles.org/events/..."
+                  pattern="https://beer-chronicles[.]org/events/.+"
+                  title="Use a Beer Chronicles entry URL."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                />
+                <p id="event-url-help" className="mt-1 text-xs text-stone-500">
+                  Paste the Beer Chronicles entry URL if you have it, or
+                  identify the entry in the title below.
+                </p>
+              </div>
+            )}
+
             {/* Title Field */}
             <div>
               <label
                 htmlFor="title"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Title
+                {isEntryFeedback ? "Entry Title" : "Title"}{" "}
+                <FieldRequirement required />
               </label>
               <input
                 type="text"
@@ -357,7 +488,13 @@ export default function SubmitPage() {
                 value={submittedTitle}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-                placeholder="e.g., Reinheitsgebot enacted in Bavaria"
+                placeholder={
+                  isEntryFeedback
+                    ? "Title of the Beer Chronicles entry"
+                    : isFinding
+                      ? "A short title for your finding"
+                      : "e.g., Reinheitsgebot enacted in Bavaria"
+                }
               />
             </div>
 
@@ -367,7 +504,8 @@ export default function SubmitPage() {
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Description
+                {isFinding ? "Your Finding" : isAdditionalSource ? "How This Source Helps" : "Description"}{" "}
+                <FieldRequirement required />
               </label>
               <textarea
                 id="description"
@@ -377,7 +515,15 @@ export default function SubmitPage() {
                 value={formData.description}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-                placeholder="Describe the event, its significance, and any relevant details..."
+                placeholder={
+                  isFinding
+                    ? "Explain what your source establishes, how it relates to the question, and what remains uncertain."
+                    : isAdditionalSource
+                      ? "Explain which part of the entry this source supports or clarifies."
+                      : isCorrection
+                        ? "Describe the issue and the correction you suggest."
+                        : "Describe the event, its significance, and any relevant details..."
+                }
               />
             </div>
 
@@ -387,20 +533,24 @@ export default function SubmitPage() {
                 htmlFor="datePrecision"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Date Precision
+                Date Precision <FieldRequirement required={requirements.date} />
               </label>
               <select
                 id="datePrecision"
                 name="datePrecision"
-                required={!isCorrection}
+                required={requirements.date}
                 value={formData.datePrecision}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
               >
                 <option value="">
-                  {isCorrection
-                    ? "Not part of this correction"
-                    : "Choose the supported precision"}
+                  {isFinding
+                    ? "No date established yet"
+                    : isCorrection
+                      ? "Not part of this correction"
+                      : isAdditionalSource
+                        ? "No date information to add"
+                        : "Choose the supported precision"}
                 </option>
                 <option value="date">Full date (year-month-day)</option>
                 <option value="month">Month (e.g., October 1990)</option>
@@ -417,13 +567,14 @@ export default function SubmitPage() {
                   htmlFor="eventDate"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  {DATE_FIELD_CONFIG[formData.datePrecision].label}
+                  {DATE_FIELD_CONFIG[formData.datePrecision].label}{" "}
+                  <FieldRequirement required={requirements.date} />
                 </label>
                 <input
                   type="text"
                   id="eventDate"
                   name="eventDate"
-                  required={!isCorrection}
+                  required={requirements.date}
                   value={formData.eventDate}
                   onChange={handleChange}
                   placeholder={
@@ -444,8 +595,10 @@ export default function SubmitPage() {
                 htmlFor="dateUncertainty"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Date uncertainty or explanation{" "}
-                <span className="font-normal text-stone-500">(optional)</span>
+                {!requirements.date
+                  ? "Uncertainty or explanation"
+                  : "Date uncertainty or explanation"}{" "}
+                <FieldRequirement required={false} />
               </label>
               <textarea
                 id="dateUncertainty"
@@ -454,7 +607,11 @@ export default function SubmitPage() {
                 value={formData.dateUncertainty}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-                placeholder="Explain an approximate date, conflicting sources, or the supported date range."
+                placeholder={
+                  !requirements.date
+                    ? "Explain any conflicting evidence, uncertainty about what the source establishes, or the supported date range."
+                    : "Explain an approximate date, conflicting sources, or the supported date range."
+                }
               />
             </div>
 
@@ -464,26 +621,31 @@ export default function SubmitPage() {
                 htmlFor="sources"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Sources
+                {isFinding ? "Supporting Sources" : "Sources"}{" "}
+                <FieldRequirement required={requirements.sources} />
               </label>
               <textarea
                 id="sources"
                 name="sources"
-                required={!isCorrection}
+                required={requirements.sources}
                 rows={3}
                 value={formData.sources}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent"
                 placeholder={
-                  isCorrection
-                    ? "Relevant URLs or references, if available (one per line)"
-                    : "URLs or references that support this entry (one per line)"
+                  isFinding
+                    ? "URLs or archival references supporting your finding (one per line)"
+                    : isCorrection
+                      ? "Relevant URLs or references, if available (one per line)"
+                      : isAdditionalSource
+                        ? "URLs or references for the additional sources (one per line)"
+                        : "URLs or references that support this entry (one per line)"
                 }
               />
 
               {isCorrection && (
                 <p className="mt-1 text-xs text-stone-500">
-                  Optional. Reliable sources are encouraged when they are
+                  Reliable sources are encouraged when they are
                   relevant to the suggested change.
                 </p>
               )}
@@ -535,9 +697,11 @@ export default function SubmitPage() {
               >
                 {isSubmitting
                   ? "Sending..."
-                  : isCorrection
-                    ? "Send Suggestion"
-                    : "Send Entry"}
+                  : isFinding
+                    ? "Send Finding"
+                    : isEntryFeedback
+                      ? "Send Suggestion"
+                      : "Send Entry"}
               </button>
             </div>
 
@@ -550,9 +714,11 @@ export default function SubmitPage() {
                 className="p-4 bg-green-50 border border-green-200 rounded-lg"
               >
                 <p className="text-green-800">
-                  {isCorrection
-                    ? "Thank you! Your suggestion has been submitted. I’ll review it and get back to you within a few days."
-                    : "Thank you! Your entry has been submitted. I’ll review it and get back to you within a few days."}
+                  {isFinding
+                    ? "Thank you! Your finding has been submitted. I’ll review it and get back to you within a few days."
+                    : isEntryFeedback
+                      ? "Thank you! Your suggestion has been submitted. I’ll review it and get back to you within a few days."
+                      : "Thank you! Your entry has been submitted. I’ll review it and get back to you within a few days."}
                 </p>
               </div>
             )}

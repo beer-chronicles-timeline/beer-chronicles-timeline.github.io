@@ -37,6 +37,8 @@ export const metadata: Metadata = {
 };
 
 export default function TastingsPage() {
+  const tastingRequestHref = `mailto:${CONTACT_EMAIL}?subject=Beer%20tasting%20request`;
+
   const tastingElements = [
     "appearance, aroma, flavor, mouthfeel, and finish",
     "malt, hops, yeast, fermentation, water, and other ingredients",
@@ -132,6 +134,38 @@ export default function TastingsPage() {
             be adapted to the occasion, the interests of the group, and the
             participants&apos; level of experience.
           </p>
+        </div>
+
+        <div className="mt-6 space-y-5">
+          <dl className="grid grid-cols-1 gap-5 rounded-lg border border-stone-200 bg-white p-5 shadow-sm sm:grid-cols-3">
+            <div>
+              <dt className="text-sm font-semibold text-stone-900">Languages</dt>
+              <dd className="mt-1 text-sm text-gray-700 leading-relaxed">
+                English or German
+              </dd>
+            </div>
+
+            <div>
+              <dt className="text-sm font-semibold text-stone-900">Timing</dt>
+              <dd className="mt-1 text-sm text-gray-700 leading-relaxed">
+                From 19:00, with an open end ;-)
+              </dd>
+            </div>
+
+            <div>
+              <dt className="text-sm font-semibold text-stone-900">Group Size</dt>
+              <dd className="mt-1 text-sm text-gray-700 leading-relaxed">
+                From a few people to company events with up to 150 participants
+              </dd>
+            </div>
+          </dl>
+
+          <a
+            href={tastingRequestHref}
+            className="inline-flex rounded-md bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+          >
+            Request a Tasting
+          </a>
         </div>
 
         <div className="mt-12 pt-6 border-t border-stone-200">
@@ -248,8 +282,8 @@ export default function TastingsPage() {
             </ul>
 
             <p>
-              The precise duration, number of beers, and structure will be
-              agreed upon in advance.
+              We start at 19:00, with an open end. The number of beers and the
+              structure will be agreed upon in advance.
             </p>
           </div>
         </div>
@@ -261,18 +295,20 @@ export default function TastingsPage() {
 
           <div className="space-y-4 text-gray-800 leading-relaxed">
             <p>
-              Tell me a little about your group, the preferred location, the
-              approximate number of participants, and the kind of experience
-              you are looking for.
+              Tell me a little about your group, the preferred date and
+              location, the approximate number of participants, whether you
+              prefer English or German, and the kind of experience you are
+              looking for.
             </p>
 
             <p>
-              Together, we can create a tasting that combines excellent beer,
-              sensory discovery, and a journey through beer history.
+              Email me to discuss the details and pricing for your tasting.
+              Together, we can create an experience that combines excellent
+              beer, sensory discovery, and a journey through beer history.
             </p>
 
             <a
-              href={`mailto:${CONTACT_EMAIL}?subject=Beer%20tasting%20request`}
+              href={tastingRequestHref}
               className="inline-flex rounded-md bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
             >
               Request a Tasting
