@@ -429,6 +429,19 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed draft UUIDs: sql/waldi-hofbraeuhaus-uiltje-hoppy-road-research.json.
+  // Lieber Waldi's history and the October 13, 2020 Kölner Stadt-Anzeiger
+  // report establish its Cologne origin; its rented Hürth brewhouse is a
+  // separate location. Hofbräu's history establishes Munich's Alten Hof for
+  // the 1589 founding, preceding the later Platzl brewery. Royal Swinkels and
+  // contemporary reporting establish Haarlem for Uiltje's contract-brewing
+  // origins. Hoppy Road's founder interview and Maxéville's municipal magazine
+  // establish Maxéville for production in May 2017. City references only;
+  // absent proposal IDs produce no markers.
+  { eventId: "48a4bae7-fdd5-496f-8f73-5dd437c5eb40", placeId: "cologne", locationRole: "City where Lieber Waldi originated; commercial brewing used rented facilities in nearby Hürth" },
+  { eventId: "77c516d8-db89-4076-b070-4bd550efb9a0", placeId: "munich", locationRole: "City of the Hofbräuhaus founding commission and original Alten Hof brewery" },
+  { eventId: "3580f245-9944-402b-9c4d-a8f7da6ea1c6", placeId: "haarlem", locationRole: "City where Uiltje began as a contract-brewing venture" },
+  { eventId: "65aa97a8-5cd6-4195-a300-025471f1090a", placeId: "maxeville", locationRole: "Town where Hoppy Road began commercial production in May 2017" },
   // Fixed UUIDs shared with sql/bruges-museum-history-proposal.sql.
   // MGH's 1364 charter distinguishes Utrecht's tax jurisdiction from its issue
   // at Budweis. Meulemeester dates the Bruges guild's Carmelite agreement to
