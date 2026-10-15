@@ -48,6 +48,12 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // KOMPAAN commercial-launch proposal: sql/kompaan-first-commercial-beer-proposal.sql.
+  // OpenStreetMap Nominatim city relation 192737, retrieved 2026-10-15:
+  // https://nominatim.openstreetmap.org/search?q=The%20Hague%2C%20Netherlands&format=jsonv2&limit=3
+  // City reference only. The 2016 AD-based account identifies the first sales
+  // at De Paas in The Hague; no earliest production-site coordinate is claimed.
+  the_hague: { name: "The Hague, Netherlands", latitude: 52.0799838, longitude: 4.3113461, precision: "city", locationRole: "City of KOMPAAN's commercial launch" },
   // Bruges museum history proposal: sql/bruges-museum-history-proposal.sql.
   // Settlement reference coordinates inspected 2026-10-14:
   // https://nl.wikipedia.org/wiki/Mater,
@@ -429,6 +435,10 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUID: sql/kompaan-first-commercial-beer-proposal.sql. First sales in
+  // The Hague are distinct from rented production elsewhere and the later
+  // Binckhorst premises. Dormant while the proposed event is absent.
+  { eventId: "2f72ca0d-43ea-4e5e-910a-66531148987f", placeId: "the_hague", locationRole: "City where KOMPAAN's first commercial beer went on sale" },
   // Fixed draft UUIDs: sql/waldi-hofbraeuhaus-uiltje-hoppy-road-research.json.
   // Lieber Waldi's history and the October 13, 2020 Kölner Stadt-Anzeiger
   // report establish its Cologne origin; its rented Hürth brewhouse is a
