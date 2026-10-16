@@ -435,6 +435,17 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Food-pairing proposal: sql/food-pairing-proposal.sql. Ogilvy's agency
+  // history establishes New York for the campaign; Louisiana's 2003 library
+  // list records New York as the Ecco publication city. Jackson's article
+  // appeared in a US newspaper; no writing-site pin is inferred. The study's
+  // Italy marker represents its beer market and cuisine, not an unverified
+  // testing venue. Reuse existing city/country reference points. Absent
+  // proposal UUIDs produce no markers.
+  { eventId: "abffe352-cc6c-4be1-919f-b3b0d27d0dd7", placeId: "new_york_city", locationRole: "City of the agency office responsible for the Guinness pairing campaign" },
+  { eventId: "3bf14f06-4d24-4a73-a89e-41730dff1785", placeId: "united_states", locationRole: "Country where the Thanksgiving pairing article was published" },
+  { eventId: "94741194-c1cb-4034-8574-125826635e2a", placeId: "new_york_city", locationRole: "Publication city of Ecco’s original edition of The Brewmaster’s Table" },
+  { eventId: "8a3db2c3-0047-402e-a9e1-ff3d71a8cce8", placeId: "italy", locationRole: "Country of the beer market and cuisine examined in the pairing study" },
   // Fixed UUID: sql/kompaan-first-commercial-beer-proposal.sql. First sales in
   // The Hague are distinct from rented production elsewhere and the later
   // Binckhorst premises. Dormant while the proposed event is absent.
