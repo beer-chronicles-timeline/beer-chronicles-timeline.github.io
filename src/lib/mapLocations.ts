@@ -48,6 +48,12 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Blackwatch IPA proposal: sql/blackwatch-ipa-proposal.sql. Curtin's 2010
+  // report establishes Burlington as the city of the first brew. OpenStreetMap
+  // Nominatim city relation 199071, retrieved 2026-10-17:
+  // https://nominatim.openstreetmap.org/search?q=Burlington%2C%20Vermont%2C%20USA&format=jsonv2&limit=3
+  // City reference point; this does not mark the historical brewery premises.
+  burlington_vermont: { name: "Burlington, Vermont, USA", latitude: 44.4761601, longitude: -73.2129060, precision: "city", locationRole: "City where Blackwatch IPA was first brewed" },
   // KOMPAAN commercial-launch proposal: sql/kompaan-first-commercial-beer-proposal.sql.
   // OpenStreetMap Nominatim city relation 192737, retrieved 2026-10-15:
   // https://nominatim.openstreetmap.org/search?q=The%20Hague%2C%20Netherlands&format=jsonv2&limit=3
@@ -435,6 +441,9 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUID: sql/blackwatch-ipa-proposal.sql. Dormant until the approved
+  // Blackwatch entry is present in the supplied timeline data.
+  { eventId: "5bc5d51c-2022-4303-90fb-2fc5e9b3cfbd", placeId: "burlington_vermont" },
   // Food-pairing proposal: sql/food-pairing-proposal.sql. Ogilvy's agency
   // history establishes New York for the campaign; Louisiana's 2003 library
   // list records New York as the Ecco publication city. Jackson's article
