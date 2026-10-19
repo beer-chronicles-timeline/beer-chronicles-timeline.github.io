@@ -44,6 +44,7 @@ test("application/configuration changes, missing map data and invalid registries
 
 test("comparison includes earlier unpublished application changes, not only the latest push", async () => {
   const cwd = await mkdtemp(join(tmpdir(), "beer-release-classification-"));
+  const options = { cwd, event: "push", forceFull: false };
   const git = (...args: string[]) => execFileSync("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
   try {
     git("init", "-q");
@@ -59,18 +60,29 @@ test("comparison includes earlier unpublished application changes, not only the 
     const application = git("rev-parse", "HEAD");
     await writeFile(join(cwd, "src/lib/mapLocations.ts"), changedMap);
     git("add", "."); git("commit", "-qm", "Entry assignment");
-    assert.equal((await classifyRepository({ cwd, fetchPublication: async () => ({ mode: "live", commit: published }) })).fullChecks, true);
-    assert.equal((await classifyRepository({ cwd, fetchPublication: async () => ({ mode: "live", commit: application }) })).fullChecks, false);
-    assert.equal((await classifyRepository({ cwd, fetchPublication: async () => ({ mode: "live", commit: git("rev-parse", "HEAD") }) })).fullChecks, false);
-    assert.equal((await classifyRepository({ cwd, fetchPublication: async () => ({ mode: "live", commit: "a".repeat(40) }) })).fullChecks, true);
+    assert.equal((await classifyRepository({ ...options, fetchPublication: async () => ({ mode: "live", commit: published }) })).fullChecks, true);
+    assert.equal((await classifyRepository({ ...options, fetchPublication: async () => ({ mode: "live", commit: application }) })).fullChecks, false);
+    assert.equal((await classifyRepository({ ...options, fetchPublication: async () => ({ mode: "live", commit: git("rev-parse", "HEAD") }) })).fullChecks, false);
+    assert.equal((await classifyRepository({ ...options, fetchPublication: async () => ({ mode: "live", commit: "a".repeat(40) }) })).fullChecks, true);
     await writeFile(join(cwd, "src/lib/mapLocations.ts"), changedMap + "\n// Uncommitted work\n");
-    assert.equal((await classifyRepository({ cwd, fetchPublication: async () => ({ mode: "live", commit: git("rev-parse", "HEAD") }) })).fullChecks, true);
+    assert.equal((await classifyRepository({ ...options, fetchPublication: async () => ({ mode: "live", commit: git("rev-parse", "HEAD") }) })).fullChecks, true);
   } finally { await rm(cwd, { recursive: true, force: true }); }
 });
 
-test("unavailable publication and an explicit full-check request are conservative", async () => {
-  assert.equal((await classifyRepository({ fetchPublication: async () => { throw new Error("offline"); } })).fullChecks, true);
-  let fetched = false;
-  assert.equal((await classifyRepository({ forceFull: true, fetchPublication: async () => { fetched = true; throw new Error("must not fetch"); } })).fullChecks, true);
-  assert.equal(fetched, false);
+test("unavailable publication falls back to full checks", async () => {
+  const cwd = await mkdtemp(join(tmpdir(), "beer-release-classification-"));
+  try {
+    execFileSync("git", ["init", "-q"], { cwd, stdio: "pipe" });
+    let fetched = false;
+    assert.equal((await classifyRepository({ cwd, event: "push", forceFull: false, fetchPublication: async () => { fetched = true; throw new Error("offline"); } })).fullChecks, true);
+    assert.equal(fetched, true);
+  } finally { await rm(cwd, { recursive: true, force: true }); }
+});
+
+test("scheduled validation and explicit full-check requests skip publication lookup", async () => {
+  for (const options of [{ event: "schedule", forceFull: false }, { event: "push", forceFull: true }]) {
+    let fetched = false;
+    assert.equal((await classifyRepository({ ...options, fetchPublication: async () => { fetched = true; throw new Error("must not fetch"); } })).fullChecks, true);
+    assert.equal(fetched, false);
+  }
 });
