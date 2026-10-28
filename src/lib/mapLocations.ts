@@ -48,6 +48,13 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Piggy launch proposal: sql/piggy-brewing-research.json. The May 2016
+  // BODACC notice and December 2017 Les Tablettes Lorraines report establish
+  // Châtel-Saint-Germain as the original business base. Settlement reference
+  // coordinates: https://en.wikipedia.org/wiki/Ch%C3%A2tel-Saint-Germain,
+  // inspected 2026-10-28. This does not mark a production brewery or the later
+  // Liverdun premises, which opened in January 2019.
+  chatel_saint_germain: { name: "Châtel-Saint-Germain, France", latitude: 49.1244, longitude: 6.0803, precision: "city", locationRole: "Original base of The Piggy Brewing Company's May 2016 launch" },
   // Blackwatch IPA proposal: sql/blackwatch-ipa-proposal.sql. Curtin's 2010
   // report establishes Burlington as the city of the first brew. OpenStreetMap
   // Nominatim city relation 199071, retrieved 2026-10-17:
@@ -441,6 +448,9 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed proposal UUID; no marker is produced while the event is absent.
+  // The launch town is distinct from the later production brewery in Liverdun.
+  { eventId: "fac13a75-bf17-49e8-b4a2-4f8bbdafe68a", placeId: "chatel_saint_germain" },
   // Fixed UUID: sql/blackwatch-ipa-proposal.sql. Dormant until the approved
   // Blackwatch entry is present in the supplied timeline data.
   { eventId: "5bc5d51c-2022-4303-90fb-2fc5e9b3cfbd", placeId: "burlington_vermont" },
