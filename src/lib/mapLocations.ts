@@ -48,6 +48,17 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Halloween history proposal: sql/halloween-beer-history-proposal.sql.
+  // Naso's original February 1771 manuscript identifies Buckingham County;
+  // Buffalo Bill's producer history and Smithsonian locate Owens in Hayward;
+  // the 2006 trade report and later interviews identify the Wychwood brewery
+  // press-briefing context at Witney. Reference coordinates, inspected
+  // 2026-10-28: https://en.wikipedia.org/wiki/Buckingham_County,_Virginia,
+  // /wiki/Hayward,_California, and /wiki/Witney. County/city scope only;
+  // these do not reconstruct exact historical homes or brewery premises.
+  buckingham_county_virginia: { name: "Buckingham County, Virginia, USA", latitude: 37.57, longitude: -78.53, precision: "region", locationRole: "County identified on Naso’s February 1771 pumpkin-ale manuscript" },
+  hayward: { name: "Hayward, California, USA", latitude: 37.66882, longitude: -122.080796, precision: "city", locationRole: "City where Bill Owens developed Buffalo Bill’s pumpkin ale" },
+  witney: { name: "Witney, England", latitude: 51.78, longitude: -1.49, precision: "city", locationRole: "Town of the brewery where Hobgoblin’s Halloween promotion was presented to the press" },
   // Piggy launch proposal: sql/piggy-brewing-research.json. The May 2016
   // BODACC notice and December 2017 Les Tablettes Lorraines report establish
   // Châtel-Saint-Germain as the original business base. Settlement reference
@@ -448,6 +459,12 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs: sql/halloween-beer-history-proposal.sql. The colonial
+  // manuscript, modern pumpkin-ale revival, and Halloween promotion are
+  // distinct milestones. Absent proposal events produce no markers.
+  { eventId: "74b4896b-a84a-4b5b-a6ef-503848729eb9", placeId: "buckingham_county_virginia" },
+  { eventId: "efd27956-bd68-4166-be4d-95a0a5edd90c", placeId: "hayward" },
+  { eventId: "8969ac5d-8ebc-4865-87b0-7ba6181750b3", placeId: "witney" },
   // Fixed proposal UUID; no marker is produced while the event is absent.
   // The launch town is distinct from the later production brewery in Liverdun.
   { eventId: "fac13a75-bf17-49e8-b4a2-4f8bbdafe68a", placeId: "chatel_saint_germain" },
