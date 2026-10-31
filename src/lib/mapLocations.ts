@@ -48,6 +48,17 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Bière de Garde history: sql/biere-de-garde-history-research.json.
+  // Evans's account locates the documented aged-beer tradition at Lille;
+  // the Duyck and Ricour histories establish Jenlain and Saint-Sylvestre-Cappel.
+  // French government commune centres, retrieved 2026-10-31:
+  // https://geo.api.gouv.fr/communes/59350?fields=nom,centre
+  // https://geo.api.gouv.fr/communes/59323?fields=nom,centre
+  // https://geo.api.gouv.fr/communes/59546?fields=nom,centre
+  // City references only; no historical brewery-building position is implied.
+  lille: { name: "Lille, France", latitude: 50.6311, longitude: 3.0468, precision: "city", locationRole: "City whose aged bière de garde tradition and changing consumption Evans documented" },
+  jenlain: { name: "Jenlain, France", latitude: 50.3068, longitude: 3.6312, precision: "city", locationRole: "Village where Félix Duyck established his farm-brewery" },
+  saint_sylvestre_cappel: { name: "Saint-Sylvestre-Cappel, France", latitude: 50.7768, longitude: 2.55, precision: "city", locationRole: "Village of the Ricour brewery where 3 Monts Blonde was introduced" },
   // Halloween history proposal: sql/halloween-beer-history-proposal.sql.
   // Naso's original February 1771 manuscript identifies Buckingham County;
   // Buffalo Bill's producer history and Smithsonian locate Owens in Hayward;
@@ -459,6 +470,13 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs: sql/biere-de-garde-history-proposal.sql. Lille is the subject
+  // of Evans's account, not an inferred publication venue. The 2017 provision
+  // uses France's country scope. Absent proposal events produce no markers.
+  { eventId: "ccdb2fd3-9cf4-4fdd-b879-c383b6bc564b", placeId: "lille" },
+  { eventId: "f09eaac3-2f5a-4df7-ab5e-bdeadd823a63", placeId: "jenlain" },
+  { eventId: "87912592-2454-4e88-bae9-1531df6220a9", placeId: "saint_sylvestre_cappel" },
+  { eventId: "c271db1a-d672-432f-b15b-aaf28a574f75", placeId: "france", locationRole: "National jurisdiction of the bière de garde labeling provision" },
   // Fixed UUIDs: sql/halloween-beer-history-proposal.sql. The colonial
   // manuscript, modern pumpkin-ale revival, and Halloween promotion are
   // distinct milestones. Absent proposal events produce no markers.
