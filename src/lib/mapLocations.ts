@@ -48,6 +48,14 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Saison history: sql/saison-history-research.json. The brewery histories
+  // and founder interviews establish Blaugies (Dour), Soy (Érezée), and Kansas
+  // City, Missouri for these milestones. OpenStreetMap Nominatim administrative
+  // reference points, retrieved 2026-10-31: relations 20016623, 13071650, 141008.
+  // Settlement scope only; these do not identify exact historical brewhouses.
+  blaugies: { name: "Blaugies (Dour), Belgium", latitude: 50.3662081, longitude: 3.8249096, precision: "city", locationRole: "Village where the Carlier-Pourtois family began brewing at Brasserie de Blaugies" },
+  soy_belgium: { name: "Soy (Érezée), Belgium", latitude: 50.2855770, longitude: 5.5100929, precision: "city", locationRole: "Village where Dany Prignon and his father founded Brasserie Fantôme" },
+  kansas_city_missouri: { name: "Kansas City, Missouri, USA", latitude: 39.1001050, longitude: -94.5781416, precision: "city", locationRole: "City of Boulevard Brewing Company’s Tank 7 release" },
   // Bière de Garde history: sql/biere-de-garde-history-research.json.
   // Evans's account locates the documented aged-beer tradition at Lille;
   // the Duyck and Ricour histories establish Jenlain and Saint-Sylvestre-Cappel.
@@ -470,6 +478,13 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs: sql/saison-history-proposal.sql. These are the first brew at
+  // Blaugies, the Fantôme founding, and Tank 7's commercial release. The existing
+  // Tokyo and Noctem entries retain their existing assignments. Absent proposed
+  // events produce no markers.
+  { eventId: "2fa7cec4-6eda-452f-9096-6ed69069af59", placeId: "blaugies" },
+  { eventId: "c01e55f7-b875-4490-90ea-739b36bb13f7", placeId: "soy_belgium" },
+  { eventId: "8c13f767-50b4-4410-896e-2e5d7ebb84e2", placeId: "kansas_city_missouri" },
   // Fixed UUIDs: sql/biere-de-garde-history-proposal.sql. Lille is the subject
   // of Evans's account, not an inferred publication venue. The 2017 provision
   // uses France's country scope. Absent proposal events produce no markers.
