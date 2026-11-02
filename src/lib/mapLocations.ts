@@ -48,6 +48,12 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Luppolo di Mare registration: sql/luppolo-di-mare-research.json. The
+  // company listing and official legal details establish Rosignano Marittimo.
+  // Municipality reference coordinates, inspected 2026-11-02:
+  // https://en.wikipedia.org/wiki/Rosignano_Marittimo. City scope only;
+  // this does not identify exact 2017 premises or a brewing installation.
+  rosignano_marittimo: { name: "Rosignano Marittimo, Italy", latitude: 43.4, longitude: 10.467, precision: "city", locationRole: "Municipality where Luppolo di Mare was registered as an agricultural business" },
   // Saison history: sql/saison-history-research.json. The brewery histories
   // and founder interviews establish Blaugies (Dour), Soy (Érezée), and Kansas
   // City, Missouri for these milestones. OpenStreetMap Nominatim administrative
@@ -478,6 +484,10 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUID: sql/luppolo-di-mare-proposal.sql. The 2017 agricultural
+  // business registration precedes the 2020 brewing start. No marker is
+  // produced while the proposed event is absent from the supplied timeline.
+  { eventId: "41d55a6d-992a-4675-979b-4bad9e45a537", placeId: "rosignano_marittimo" },
   // Fixed UUIDs: sql/saison-history-proposal.sql. These are the first brew at
   // Blaugies, the Fantôme founding, and Tank 7's commercial release. The existing
   // Tokyo and Noctem entries retain their existing assignments. Absent proposed
