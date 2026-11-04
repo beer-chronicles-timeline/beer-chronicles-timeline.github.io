@@ -48,6 +48,24 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Christmas-calendar breweries: sql/xmas-breweries-entries.json and
+  // sql/xmas-breweries-implementation.json. Producer histories and owner
+  // interviews establish the named settlements. OpenStreetMap Nominatim
+  // municipal/village reference points retrieved 2026-11-04; lookup URLs
+  // and OSM IDs are recorded in the implementation file. These are area
+  // references, not reconstructed historical brewery premises.
+  tartu: { name: "Tartu, Estonia", latitude: 58.3779528, longitude: 26.7290023, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  oss: { name: "Oss, Netherlands", latitude: 51.7696387, longitude: 5.5253912, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  huizingen: { name: "Huizingen, Belgium", latitude: 50.7481095, longitude: 4.276727, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  anzegem: { name: "Anzegem, Belgium", latitude: 50.8325437, longitude: 3.478405, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  melle_belgium: { name: "Melle, Belgium", latitude: 51.00303, longitude: 3.7988833, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  reckendorf: { name: "Reckendorf, Germany", latitude: 50.0196966, longitude: 10.8280457, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  merkendorf_memmelsdorf: { name: "Merkendorf (Memmelsdorf), Germany", latitude: 49.9593688, longitude: 10.9560008, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  burgkunstadt: { name: "Burgkunstadt, Germany", latitude: 50.1428821, longitude: 11.2515508, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  huppendorf: { name: "Huppendorf (Königsfeld), Germany", latitude: 49.9334389, longitude: 11.1496685, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  botany_sydney: { name: "Botany, Sydney, Australia", latitude: -33.947829, longitude: 151.1990644, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  morris_plains: { name: "Morris Plains, New Jersey, USA", latitude: 40.8221007, longitude: -74.4811234, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
+  uberlandia: { name: "Uberlândia, Minas Gerais, Brazil", latitude: -18.9188041, longitude: -48.2767837, precision: "city", locationRole: "Settlement or municipality of the documented brewing milestone" },
   // Oud Bruin: sql/oud-bruin-history-research.json. The brewery histories
   // establish Bellegem and Oudenaarde; Van de Woestijne's 1906 article names
   // Oudenaarde's breweries and their drinking community in Ghent. OpenStreetMap
@@ -504,6 +522,32 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs: sql/xmas-breweries-proposal.sql (publication pending).
+  // The 2011 Verzet project and Menno Olivier use country scope; Timber
+  // uses its project home base. Captain Brew marks the brewery home city,
+  // not the competition venue. Other points locate documented settlements.
+  // Every assignment overrides its role. Absent proposed events add no markers.
+  { eventId: "e9542f6d-52c8-43e3-aeaa-7e79b16250b4", placeId: "bruges", locationRole: "City where Leon Maes acquired the existing brewery" },
+  { eventId: "26821bd5-9ad2-4a81-9622-8a661c7ac8f0", placeId: "bruges", locationRole: "City traversed by the brewery-to-bottling-plant beer pipeline" },
+  { eventId: "795ced10-e7f2-45fe-864b-6efbe06e1b5c", placeId: "tartu", locationRole: "City where Pühaste opened its own brewery" },
+  { eventId: "68744a89-45f2-4edf-9df0-e9b77868397c", placeId: "spain", locationRole: "Country of the new beer project; initial brewing premises are not established" },
+  { eventId: "d56d6582-d8e2-46a9-baeb-797cef4eab69", placeId: "new_york_city", locationRole: "Project home base; this does not identify the first commercial brewing installation" },
+  { eventId: "843d8402-ec11-4674-8b33-dbe5f5782661", placeId: "oss", locationRole: "City where the first large commercial batch was brewed at Maaslandbrouwerij" },
+  { eventId: "5a19ec68-182f-4eaa-a303-e574240874aa", placeId: "oss", locationRole: "City where Muifel began brewing on its own equipment" },
+  { eventId: "f1c36243-6671-4360-8d62-d1265aa6ef7a", placeId: "chicago", locationRole: "City where Revolution opened its Milwaukee Avenue brewpub" },
+  { eventId: "3033279d-9098-4fe1-b2c7-f63bf7fe3a4f", placeId: "chicago", locationRole: "City where Revolution opened its Kedzie Avenue production brewery" },
+  { eventId: "fbbb9209-9f7a-4d99-9ef8-ea89a0f51012", placeId: "huizingen", locationRole: "Village of the farm where Boerenerf established lambic maturation and blending" },
+  { eventId: "f5272d23-d57a-4a72-ae31-3261d9bc4e73", placeId: "belgium", locationRole: "Country of the hands-on brewing project before its own Anzegem facility opened" },
+  { eventId: "dba04823-2fb0-430c-a531-ee31c38c72ff", placeId: "anzegem", locationRole: "Town where ’t Verzet began operating its own brewery" },
+  { eventId: "83e4eeb6-8591-4319-b143-091117c68fff", placeId: "melle_belgium", locationRole: "Town where Leon Huyghe acquired the existing brewery" },
+  { eventId: "caef868d-1daa-4545-bf12-64d344e34752", placeId: "melle_belgium", locationRole: "Town where Delirium Tremens was first brewed at Huyghe" },
+  { eventId: "be050728-4b0e-45d3-8dd0-a2ec79895c58", placeId: "reckendorf", locationRole: "Town where Georg Dirauf leased the brewery and inn" },
+  { eventId: "c15c65c1-820c-4c8e-af88-fbd7d7e5917c", placeId: "merkendorf_memmelsdorf", locationRole: "Village where the Hummel family acquired its brewing property" },
+  { eventId: "af2f914c-b820-4224-a980-9c52a066badf", placeId: "burgkunstadt", locationRole: "Town whose communal brewhouse supported the Günther brothers’ first brewing" },
+  { eventId: "2de0e495-738a-413b-80d7-002af1f2ede9", placeId: "huppendorf", locationRole: "Village where the Grasser family took over brewing around 1750" },
+  { eventId: "b6d67169-9c79-46ce-975c-f8ada550ca6d", placeId: "botany_sydney", locationRole: "Sydney suburb where One Drop opened its brewery and taproom" },
+  { eventId: "82b83b9d-ceba-4409-829a-ad2fccd15735", placeId: "morris_plains", locationRole: "Town where Autodidact opened its brewery and taproom" },
+  { eventId: "7008aa66-f868-45ac-a945-84aad5a928fb", placeId: "uberlandia", locationRole: "Home city of the medal-winning brewery; not the competition venue" },
   // Fixed UUIDs: sql/oud-bruin-history-proposal.sql. The 1906 article's subject
   // and drinking community have distinct roles. The remaining milestones use
   // the documented brewery village/city. Absent proposed events add no markers.
