@@ -48,6 +48,16 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Scotch Ale / Wee Heavy: sql/scotch-ale-history-research.json. Donnachie's
+  // account establishes Edinburgh and London for Younger's trade; the original
+  // Lancet report identifies Fowler's Prestonpans beer at London's exhibition.
+  // Traquair's history and HES GDL00378 identify Traquair House near Innerleithen.
+  // Settlement references inspected 2026-11-04: Wikipedia /wiki/Edinburgh,
+  // /wiki/Prestonpans and /wiki/Traquair. These do not locate historical brewing
+  // rooms, sales premises or exhibition stands. Traquair is a locality reference.
+  edinburgh: { name: "Edinburgh, Scotland", latitude: 55.95333, longitude: -3.18917, precision: "city", locationRole: "Brewing city of William Younger’s ale shipped to London" },
+  prestonpans: { name: "Prestonpans, Scotland", latitude: 55.9597, longitude: -2.961, precision: "city", locationRole: "Town where Fowler brewed the Twelve Guinea Ale examined in the report" },
+  traquair: { name: "Traquair, Scottish Borders, Scotland", latitude: 55.600, longitude: -3.067, precision: "city", locationRole: "Locality reference for Traquair House, where the historic brewhouse resumed production" },
   // Luppolo di Mare registration: sql/luppolo-di-mare-research.json. The
   // company listing and official legal details establish Rosignano Marittimo.
   // Municipality reference coordinates, inspected 2026-11-02:
@@ -484,6 +494,16 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs: sql/scotch-ale-history-proposal.sql. Sales/brewing origin and
+  // exhibition/brewery town have distinct roles. Gordon uses Belgium's country
+  // scope for registration and market; Traquair uses a settlement reference.
+  // The proposed events produce no markers until present in the supplied data.
+  { eventId: "6ccb136a-a192-4267-a699-d14e23cdbe2d", placeId: "london", locationRole: "City where William Younger’s Edinburgh ale was advertised and sold" },
+  { eventId: "6ccb136a-a192-4267-a699-d14e23cdbe2d", placeId: "edinburgh", locationRole: "Brewing city of William Younger’s ale shipped to London" },
+  { eventId: "66e2dae4-2d9f-48d7-88b0-0eaad3566e22", placeId: "prestonpans", locationRole: "Town where Fowler brewed the Twelve Guinea Ale examined in the report" },
+  { eventId: "66e2dae4-2d9f-48d7-88b0-0eaad3566e22", placeId: "london", locationRole: "City of the Great International Exhibition whose beers The Lancet examined" },
+  { eventId: "9eba1c83-21e3-4052-9f66-44677c26dd2b", placeId: "belgium", locationRole: "Country of the Gordon brand’s registration and intended beer market" },
+  { eventId: "713ac201-fb3d-4e45-a668-5467493a750b", placeId: "traquair" },
   // Fixed UUID: sql/luppolo-di-mare-proposal.sql. The 2017 agricultural
   // business registration precedes the 2020 brewing start. No marker is
   // produced while the proposed event is absent from the supplied timeline.
