@@ -48,6 +48,16 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Oud Bruin: sql/oud-bruin-history-research.json. The brewery histories
+  // establish Bellegem and Oudenaarde; Van de Woestijne's 1906 article names
+  // Oudenaarde's breweries and their drinking community in Ghent. OpenStreetMap
+  // Nominatim reference points, retrieved 2026-11-04: Bellegem village node
+  // 710887201, Oudenaarde municipality relation 416207, Gent relation 897671.
+  // Settlement scope only; these do not mark exact breweries or the article's
+  // writing/publication venue. Full lookup URLs are in the implementation file.
+  bellegem: { name: "Bellegem, Belgium", latitude: 50.7777862, longitude: 3.2799523, precision: "city", locationRole: "Village where Ouden Tripel was first brewed" },
+  oudenaarde: { name: "Oudenaarde, Belgium", latitude: 50.8433705, longitude: 3.6041443, precision: "city", locationRole: "City of the Oudenaarde brown-beer tradition" },
+  ghent: { name: "Ghent, Belgium", latitude: 51.0538286, longitude: 3.7250121, precision: "city", locationRole: "City of the drinking community described in the article" },
   // Scotch Ale / Wee Heavy: sql/scotch-ale-history-research.json. Donnachie's
   // account establishes Edinburgh and London for Younger's trade; the original
   // Lancet report identifies Fowler's Prestonpans beer at London's exhibition.
@@ -494,6 +504,15 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs: sql/oud-bruin-history-proposal.sql. The 1906 article's subject
+  // and drinking community have distinct roles. The remaining milestones use
+  // the documented brewery village/city. Absent proposed events add no markers.
+  { eventId: "3aefdbac-0149-469d-b11b-0fa8cddde461", placeId: "bellegem" },
+  { eventId: "966ea77b-0629-440b-8dff-4582e1e3324b", placeId: "oudenaarde", locationRole: "City whose beer and breweries are described in the article" },
+  { eventId: "966ea77b-0629-440b-8dff-4582e1e3324b", placeId: "ghent" },
+  { eventId: "8cddd968-852d-4abb-98c9-c9b6bc124eea", placeId: "oudenaarde", locationRole: "City of the Liefmans brewery and the Goudenband name change" },
+  { eventId: "24620ca7-3397-4321-bf5f-8036f83b74d1", placeId: "oudenaarde", locationRole: "City where Merckx assumed leadership of Liefmans" },
+  { eventId: "f20a4c4b-ddc5-4a29-a799-d39b0e351cee", placeId: "oudenaarde", locationRole: "City of the acquired Liefmans brewery operations" },
   // Fixed UUIDs: sql/scotch-ale-history-proposal.sql. Sales/brewing origin and
   // exhibition/brewery town have distinct roles. Gordon uses Belgium's country
   // scope for registration and market; Traquair uses a settlement reference.
