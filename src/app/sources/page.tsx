@@ -337,7 +337,15 @@ export default function SourcesPage() {
         {/* Thank You Section */}
         <div className="mt-12 pt-6 border-t border-stone-200">
           <p className="text-gray-600 text-sm leading-relaxed">
-            Special thanks to Davide Cappannari, Jorge Leão da Silva,{" "}
+            Special thanks to{" "}
+            <a
+              href="https://luppolodimare.it"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2"
+            >
+              Davide Cappannari
+            </a>, Jorge Leão da Silva,{" "}
             <a
               href="https://www.instagram.com/bierblogtrier/"
               target="_blank"
