@@ -48,6 +48,14 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Style additions: sql/style-gap-extension-review.txt and implementation.json.
+  paso_robles: { name: "Paso Robles, California, United States", latitude: 35.6262618, longitude: -120.6901319, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
+  berkel_enschot: { name: "Berkel-Enschot, Netherlands", latitude: 51.5854521, longitude: 5.1422542, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
+  forchheim: { name: "Forchheim, Germany", latitude: 49.7122951, longitude: 11.0664285, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
+  schierling: { name: "Schierling, Germany", latitude: 48.8374635, longitude: 12.1379497, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
+  arnhem: { name: "Arnhem, Netherlands", latitude: 51.984257, longitude: 5.9108573, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
+  bend: { name: "Bend, Oregon, United States", latitude: 44.0581728, longitude: -121.3153096, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
+  santa_rosa: { name: "Santa Rosa, California, United States", latitude: 38.4404925, longitude: -122.7141049, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
   // Christmas-calendar breweries: sql/xmas-breweries-entries.json and
   // sql/xmas-breweries-implementation.json. Producer histories and owner
   // interviews establish the named settlements. OpenStreetMap Nominatim
@@ -522,6 +530,21 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs match sql/style-gap-extension-proposal.sql.
+  { eventId: "7782bc1a-cb22-4904-a1f5-01dc33466d18", placeId: "grand_rapids", locationRole: "Home city of Founders' Backwoods Bastard" },
+  { eventId: "43923ad5-806b-40e6-9121-da5a02630c91", placeId: "paso_robles", locationRole: "City named in the bottled-release announcement" },
+  { eventId: "c9434c23-8130-4319-9020-ca7b43b2b27d", placeId: "chimay", locationRole: "Municipality of Scourmont Abbey and Chimay's brewery" },
+  { eventId: "8c2aa929-5950-45d9-9921-2e48e2446cd1", placeId: "berkel_enschot", locationRole: "Locality of Koningshoeven Abbey and its brewery" },
+  { eventId: "b48e8ec7-0aa9-46db-ab5a-eb8fda89b035", placeId: "forchheim", locationRole: "Town of Annafest and the Kellerwald cellar district" },
+  { eventId: "b3a776a3-8ba8-41ea-b149-7c49c0357f5c", placeId: "forchheim", locationRole: "Franconian Kellerbier tradition illustrated in the guidelines" },
+  { eventId: "b3a776a3-8ba8-41ea-b149-7c49c0357f5c", placeId: "munich", locationRole: "Munich Helles tradition underlying pale Kellerbier" },
+  { eventId: "656943d1-1132-4355-878f-be03bf3040af", placeId: "schierling", locationRole: "Brewery town of the Schierlinger Roggen revival" },
+  { eventId: "ed129bae-8194-406c-a334-bc0520e3f22a", placeId: "arnhem", locationRole: "City of the national award ceremony" },
+  { eventId: "ed129bae-8194-406c-a334-bc0520e3f22a", placeId: "oss", locationRole: "Home city of the winning brewery" },
+  { eventId: "081061b8-39e6-4dc8-91fa-b5a1eeea7555", placeId: "bend", locationRole: "Home city of Deschutes and Black Butte Porter" },
+  { eventId: "2e22a596-52e6-4a50-8e78-e745fc133e6c", placeId: "einbeck", locationRole: "Town where Einbecker began bottling Bock" },
+  { eventId: "362cdbc5-b1f8-4895-a49d-58a5fd28c099", placeId: "santa_rosa", locationRole: "City of Russian River's original brewpub-era Younger releases" },
+  { eventId: "c28465d4-2b1a-41b2-bba7-104115262ceb", placeId: "fraserburgh", locationRole: "Contemporaneous home town of BrewDog" },
   // Fixed UUIDs: sql/xmas-breweries-proposal.sql (publication pending).
   // The 2011 Verzet project and Menno Olivier use country scope; Timber
   // uses its project home base. Captain Brew marks the brewery home city,
