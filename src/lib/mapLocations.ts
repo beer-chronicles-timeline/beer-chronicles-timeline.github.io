@@ -1346,6 +1346,10 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "28e573d1-cc5f-4a4b-a8c7-f3eb5c32e5c2", placeId: "berlin" },
   { eventId: "ab79b574-6844-4d0e-a1f6-5ad50520bc67", placeId: "berlin" },
   { eventId: "5b1fddba-8460-42a7-91d1-72a7cc551b67", placeId: "berlin" },
+  // Lemke opening proposal: sql/lemke-opening-entry.json. The brewery history
+  // and BeerVisits establish Berlin; reuse the city reference, not an exact pin.
+  // This assignment produces no marker until the approved event is published.
+  { eventId: "8064fd39-5f7a-4b81-9247-5e99bd6b06f2", placeId: "berlin", locationRole: "City where Brauhaus Lemke opened near Hackescher Markt" },
   // Editorial gap proposals: fixed UUIDs shared with sql/beer-history-gaps-proposal.sql.
   // Assignments only produce markers once the human-reviewed events exist.
   { eventId: "68a21222-c9dc-4217-a588-44e6cc1c5976", placeId: "gothenburg", locationRole: "City of the documented local porter production" },
