@@ -17,6 +17,15 @@ export type ConnectedEvent = {
 // connections from shared titles, tags, dates, or locations.
 const REVIEWED_EVENT_CONNECTIONS: readonly ReviewedEventConnection[] = [
   {
+    // Approved Cosmic Day proposal: the brewery's founding and its later
+    // single-hop release event are distinct milestones of the same brewery.
+    earlierEventId: "d94fbc2f-8337-42ae-a55a-f61e7598a151",
+    laterEventId: "728a4a34-3b29-4011-90ad-3c0cb5bc6f17",
+    earlierLabel: "Brewery behind Cosmic Day",
+    laterLabel: "Cosmic Day and the Cosmic Series",
+    sourceUrl: "https://www.biereacademy.com/cosmic-days/",
+  },
+  {
     // Approved Union pair: continuity of premises, not uninterrupted operation
     // or corporate identity. The source is also cited by both published entries.
     earlierEventId: "052dddfe-48d9-4d9c-874c-6cced052d10e",

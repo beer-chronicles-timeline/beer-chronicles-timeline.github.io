@@ -48,6 +48,12 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Cosmic Day: sql/les-intenables-cosmic-day-entry.json. Quaff's 2022 review
+  // and the brewery history establish Rosheim as the organizing brewery's base.
+  // French government municipality centre, retrieved 2026-11-10:
+  // https://geo.api.gouv.fr/communes/67411?fields=nom,centre
+  // Municipality reference only; partner bars hosted the multi-venue release.
+  rosheim: { name: "Rosheim, France", latitude: 48.4873, longitude: 7.4167, precision: "city", locationRole: "Municipality of the brewery organizing the multi-venue Cosmic Day release" },
   // Style additions: sql/style-gap-extension-review.txt and implementation.json.
   paso_robles: { name: "Paso Robles, California, United States", latitude: 35.6262618, longitude: -120.6901319, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
   berkel_enschot: { name: "Berkel-Enschot, Netherlands", latitude: 51.5854521, longitude: 5.1422542, precision: "city", locationRole: "Settlement of the documented beer-history milestone" },
@@ -1063,6 +1069,9 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "959de442-726a-4aa1-a2d4-0d7c52234698", placeId: "sundbyberg" },
   { eventId: "b639f7c7-1677-4ee6-82b3-797588ca76ed", placeId: "bayreuth" },
   { eventId: "d94fbc2f-8337-42ae-a55a-f61e7598a151", placeId: "mundolsheim" },
+  // Fixed UUID shared with sql/les-intenables-cosmic-day-proposal.sql.
+  // No marker is produced until the reviewed Cosmic Day entry is present.
+  { eventId: "728a4a34-3b29-4011-90ad-3c0cb5bc6f17", placeId: "rosheim" },
   { eventId: "45d269b9-83fc-474a-853e-e25d90d58572", placeId: "connecticut" },
   { eventId: "9bd15f3e-955d-4f9b-b4e7-c3f657fdc597", placeId: "luxembourg" },
   { eventId: "635fe944-0200-4ee1-b9ac-10b9013b3419", placeId: "gundelfingen" },
