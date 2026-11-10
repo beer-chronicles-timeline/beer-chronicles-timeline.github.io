@@ -48,6 +48,18 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // British Brown Ale proposal: sql/british-brown-ale-research.json.
+  // Historical sources establish the settlements and distinct location roles.
+  // OSM Nominatim locality references retrieved 2026-11-10: relation 142282;
+  // nodes 20959520, 20913294, 33079336, 29343409; relation 4826426.
+  // York, Sunderland and Stockport use settlement nodes, not wider districts.
+  // These mark localities, not exact historical brewery or pub buildings.
+  newcastle_upon_tyne: { name: "Newcastle upon Tyne, England", latitude: 54.9738474, longitude: -1.6131572, precision: "city", locationRole: "Settlement of the documented British Brown Ale milestone" },
+  sunderland: { name: "Sunderland, England", latitude: 54.9058512, longitude: -1.3828727, precision: "city", locationRole: "Settlement of the documented British Brown Ale milestone" },
+  york: { name: "York, England", latitude: 53.9590555, longitude: -1.0815361, precision: "city", locationRole: "Settlement of the documented British Brown Ale milestone" },
+  stockport: { name: "Stockport, England", latitude: 53.407901, longitude: -2.160243, precision: "city", locationRole: "Settlement of the documented British Brown Ale milestone" },
+  houghton_le_spring: { name: "Houghton-le-Spring, England", latitude: 54.8406536, longitude: -1.4699279, precision: "city", locationRole: "Settlement of the documented British Brown Ale milestone" },
+  tadcaster: { name: "Tadcaster, England", latitude: 53.8852975, longitude: -1.2595975, precision: "city", locationRole: "Settlement of the documented British Brown Ale milestone" },
   // Three-style history proposal: sql/munich-dunkel-irish-red-sahti-research.json.
   // The entry sources establish brewery towns, test markets, and Turku's
   // dissertation examination. OpenStreetMap Nominatim locality references,
@@ -551,6 +563,17 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs match sql/british-brown-ale-proposal.sql.
+  // Roles distinguish cask launch, contract production, protected place and market.
+  // Absent proposed events produce no markers. Existing Hobgoblin remains in Witney.
+  { eventId: "38989cd1-5864-4784-8285-f16763b9e1b6", placeId: "newcastle_upon_tyne", locationRole: "City where Newcastle Brown Ale was developed and introduced" },
+  { eventId: "a034971c-24fe-40a9-8fb6-ecdc015a011b", placeId: "sunderland", locationRole: "City of Vaux’s documented strengthening and renaming of Maxim Ale" },
+  { eventId: "e66bea3a-2a68-4501-9114-3720dc3a4b91", placeId: "york", locationRole: "City of Riggwelter’s documented cask launch at The Maltings" },
+  { eventId: "7282cf52-3fad-44a3-a982-fe2a4b2d4dd6", placeId: "stockport", locationRole: "City of the revived Double Maxim brand’s initial contract brewer" },
+  { eventId: "6f4bbe31-d337-474b-bca3-7e10c1fd7369", placeId: "newcastle_upon_tyne", locationRole: "City named in the geographical indication whose cancellation was approved" },
+  { eventId: "e0537ca6-d91b-4646-bf7a-d2e30ee57e34", placeId: "houghton_le_spring", locationRole: "Town where the new Double Maxim brewery opened in 2007" },
+  { eventId: "368ba32d-f899-4e80-ad0a-2344d8a62a0c", placeId: "tadcaster", locationRole: "Home brewery of the Nut Brown Ale exported in cans" },
+  { eventId: "368ba32d-f899-4e80-ad0a-2344d8a62a0c", placeId: "united_states", locationRole: "National market for the documented 2018 can introduction" },
   // Fixed UUIDs match sql/munich-dunkel-irish-red-sahti-proposal.sql.
   // Proposed events produce no markers while absent from the supplied timeline.
   // Roles distinguish production, test markets, export destination, examination,
