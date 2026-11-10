@@ -48,6 +48,21 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Three-style history proposal: sql/munich-dunkel-irish-red-sahti-research.json.
+  // The entry sources establish brewery towns, test markets, and Turku's
+  // dissertation examination. OpenStreetMap Nominatim locality references,
+  // retrieved 2026-11-10: relations 539953, 5361973, 129814, 113141,
+  // 112224, 112336, 14587154, and 399906, respectively. Full lookup URLs
+  // and source records are in the matching implementation JSON. These mark
+  // settlements, not reconstructed historical brewery or university buildings.
+  aying: { name: "Aying, Bavaria, Germany", latitude: 47.9699535, longitude: 11.7787690, precision: "city", locationRole: "Village of the documented Ayinger brewing milestone" },
+  kilkenny: { name: "Kilkenny, Ireland", latitude: 52.6506255, longitude: -7.2514438, precision: "city", locationRole: "Brewing city of the documented Smithwick's milestone" },
+  wichita: { name: "Wichita, Kansas, United States", latitude: 37.6922361, longitude: -97.3375448, precision: "city", locationRole: "Documented May 1981 test market for George Killian's Irish Red" },
+  colorado_springs: { name: "Colorado Springs, Colorado, United States", latitude: 38.8339578, longitude: -104.8253480, precision: "city", locationRole: "Documented May 1981 test market for George Killian's Irish Red" },
+  santa_barbara: { name: "Santa Barbara, California, United States", latitude: 34.4221319, longitude: -119.7026670, precision: "city", locationRole: "Documented May 1981 test market for George Killian's Irish Red" },
+  monterey: { name: "Monterey, California, United States", latitude: 36.6002560, longitude: -121.8946388, precision: "city", locationRole: "Documented May 1981 test market for George Killian's Irish Red" },
+  carlow: { name: "Carlow, Ireland", latitude: 52.8408344, longitude: -6.9261131, precision: "city", locationRole: "Town of Carlow Brewing Company's original Goods Store brewery" },
+  turku: { name: "Turku (Åbo), Finland", latitude: 60.4515932, longitude: 22.2669991, precision: "city", locationRole: "University city of the 1780 brewing dissertation" },
   // Cosmic Day: sql/les-intenables-cosmic-day-entry.json. Quaff's 2022 review
   // and the brewery history establish Rosheim as the organizing brewery's base.
   // French government municipality centre, retrieved 2026-11-10:
@@ -536,6 +551,26 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs match sql/munich-dunkel-irish-red-sahti-proposal.sql.
+  // Proposed events produce no markers while absent from the supplied timeline.
+  // Roles distinguish production, test markets, export destination, examination,
+  // and the award-winning producer's home from the shipboard award ceremony.
+  { eventId: "59426792-2511-4709-8f5c-f3eaddf0a7ff", placeId: "munich", locationRole: "City of Spaten's documented development of modern Munich Dunkel" },
+  { eventId: "580b9eae-f3fd-43a9-b65b-683c4f6f5409", placeId: "aying", locationRole: "Brewery municipality of the anniversary Dunkel release" },
+  { eventId: "06d1d023-92e1-45d0-95d8-cbc295d39f7b", placeId: "kilkenny", locationRole: "City of the Smithwick brewing business's historical origins" },
+  { eventId: "a5114f18-a52f-430b-84d2-451c90cff4f0", placeId: "kilkenny", locationRole: "Brewing city of the modern Smithwick's keg-ale launch" },
+  { eventId: "20cbfb1a-ee61-408d-aad3-4ea41adae3ef", placeId: "golden", locationRole: "Production brewery explicitly identified in the contemporary report" },
+  { eventId: "20cbfb1a-ee61-408d-aad3-4ea41adae3ef", placeId: "wichita", locationRole: "Documented May 1981 test market" },
+  { eventId: "20cbfb1a-ee61-408d-aad3-4ea41adae3ef", placeId: "colorado_springs", locationRole: "Documented May 1981 test market" },
+  { eventId: "20cbfb1a-ee61-408d-aad3-4ea41adae3ef", placeId: "santa_barbara", locationRole: "Documented May 1981 test market" },
+  { eventId: "20cbfb1a-ee61-408d-aad3-4ea41adae3ef", placeId: "monterey", locationRole: "Documented May 1981 test market" },
+  { eventId: "a7075126-5385-4f4e-a9e5-4150bd2e362a", placeId: "germany", locationRole: "Destination market of the documented 1987 introduction" },
+  { eventId: "a7075126-5385-4f4e-a9e5-4150bd2e362a", placeId: "kilkenny", locationRole: "Brewing town of the exported Irish ale" },
+  { eventId: "5e584fe6-9890-45b1-96f8-ff34b82e4ba3", placeId: "carlow", locationRole: "Town of the original Goods Store brewery and first brewing" },
+  { eventId: "ccd832d6-e3d0-4f6d-acb8-f80c51c30a26", placeId: "turku", locationRole: "University city of the dissertation's public examination and publication" },
+  { eventId: "7279ed4f-7c47-4696-9678-907bc8167ccc", placeId: "lammi", locationRole: "Locality of Lammin Sahti's first official serving at the Pellavamarkkinat fair" },
+  { eventId: "4f5b676f-dd05-44d1-9057-c32400571194", placeId: "lammi", locationRole: "Locality of the first national Sahti-brewing championship" },
+  { eventId: "24b5eb70-eb19-45a9-a67a-b414427b7151", placeId: "lammi", locationRole: "Home locality of the award-winning Sahti producer; the award ceremony took place aboard Viking Grace" },
   // Fixed UUIDs match sql/style-gap-extension-proposal.sql.
   { eventId: "7782bc1a-cb22-4904-a1f5-01dc33466d18", placeId: "grand_rapids", locationRole: "Home city of Founders' Backwoods Bastard" },
   { eventId: "43923ad5-806b-40e6-9121-da5a02630c91", placeId: "paso_robles", locationRole: "City named in the bottled-release announcement" },
@@ -1006,7 +1041,7 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "d6542415-9143-4270-b89b-281e05e94638", placeId: "baltimore" },
   { eventId: "06b7682a-72c2-4b38-82cc-cedbb86a8082", placeId: "london" },
   { eventId: "cc970674-58e4-49db-beb3-b1a51bdd744d", placeId: "beersel" },
-  { eventId: "23d29e97-7ec7-4f99-8887-b74c97287354", placeId: "bavaria" },
+  { eventId: "23d29e97-7ec7-4f99-8887-b74c97287354", placeId: "aying", locationRole: "Village where Johann Liebhard first served his brewery's beer" },
   { eventId: "4d811f75-c1f9-4355-b7ad-0cc42d1e2a73", placeId: "bamberg" },
   { eventId: "8314e97f-a370-4f26-b732-c7be8994187a", placeId: "england" },
   { eventId: "7a57d3ad-8288-45b1-9ed1-c716f3c29792", placeId: "munich" },
