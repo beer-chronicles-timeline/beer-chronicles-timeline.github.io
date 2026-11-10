@@ -1585,14 +1585,14 @@
     },
     {
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4025477",
-      "reviewedOn": "2026-10-12",
-      "reviewAfter": "2027-04-10",
+      "reviewedOn": "2026-11-10",
+      "reviewAfter": "2027-05-09",
       "reviewedBy": "site owner",
-      "note": "User confirmed this URL valid after manual checking of the two review warnings from audit run 38224121410. User-confirmed current state; not independently verified by Codex.",
+      "note": "Site owner confirmed all six content warnings from the 2026-11-09 audit were acceptable. User-confirmed current state; not independently verified by Codex.",
       "expectedFinding": {
         "status": "needs-review",
         "httpStatus": 200,
-        "finalUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4025477/",
+        "finalUrl": null,
         "detail": "Automated-client challenge or access-denied page returned with a successful HTTP status.",
         "fragmentStatus": "not-applicable"
       }
@@ -1986,6 +1986,20 @@
         "httpStatus": 403,
         "finalUrl": null,
         "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://theses.ncl.ac.uk/jspui/bitstream/10443/199/1/bennison92.pdf",
+      "reviewedOn": "2026-11-10",
+      "reviewAfter": "2027-05-09",
+      "reviewedBy": "site owner",
+      "note": "Site owner confirmed all six content warnings from the 2026-11-09 audit were acceptable. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "needs-review",
+        "httpStatus": 202,
+        "finalUrl": "https://outputs.ncl.ac.uk/Theses",
+        "detail": "Expected PDF but the response has no PDF header.",
         "fragmentStatus": "not-applicable"
       }
     },
@@ -2396,6 +2410,20 @@
       }
     },
     {
+      "url": "https://www.bodacc.fr/telechargements/COMMERCIALES/PDF/A/BODACC-A_20160098_0001_p000.pdf#page=65",
+      "reviewedOn": "2026-11-10",
+      "reviewAfter": "2027-05-09",
+      "reviewedBy": "site owner",
+      "note": "Site owner confirmed all six content warnings from the 2026-11-09 audit were acceptable. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "needs-review",
+        "httpStatus": 200,
+        "finalUrl": null,
+        "detail": "Fragment could not be verified (non-HTML response, truncated body, unsupported entity, or access barrier).",
+        "fragmentStatus": "unverified"
+      }
+    },
+    {
       "url": "https://www.brewbound.com/news/b-inbev-acquires-italys-birra-del-borgo/",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -2550,6 +2578,20 @@
       }
     },
     {
+      "url": "https://www.buffalobillsbrewery.com/americas-original-pumpkin-ale/",
+      "reviewedOn": "2026-11-10",
+      "reviewAfter": "2027-05-09",
+      "reviewedBy": "site owner",
+      "note": "Site owner confirmed all six content warnings from the 2026-11-09 audit were acceptable. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "needs-review",
+        "httpStatus": 307,
+        "finalUrl": null,
+        "detail": null,
+        "fragmentStatus": "not-applicable"
+      }
+    },
+    {
       "url": "https://www.bundeskartellamt.de/SharedDocs/Publikation/DE/Taetigkeitsberichte/Bundeskartellamt%20-%20T%C3%A4tigkeitsbericht%201986.pdf",
       "reviewedOn": "2026-10-11",
       "reviewAfter": "2027-04-09",
@@ -2659,6 +2701,20 @@
         "finalUrl": null,
         "detail": null,
         "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.dmgh.de/mgh_const_14_1/index.htm#page/392/mode/1up",
+      "reviewedOn": "2026-11-10",
+      "reviewAfter": "2027-05-09",
+      "reviewedBy": "site owner",
+      "note": "Site owner confirmed all six content warnings from the 2026-11-09 audit were acceptable. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "needs-review",
+        "httpStatus": 200,
+        "finalUrl": null,
+        "detail": "Fragment target #page/392/mode/1up is absent from the complete returned HTML. External JavaScript may create the target; verify manually.",
+        "fragmentStatus": "missing"
       }
     },
     {
@@ -3023,6 +3079,20 @@
         "finalUrl": null,
         "detail": null,
         "fragmentStatus": "not-applicable"
+      }
+    },
+    {
+      "url": "https://www.liverdun.fr/data/doc-358/20181231/959_1.pdf#page=4",
+      "reviewedOn": "2026-11-10",
+      "reviewAfter": "2027-05-09",
+      "reviewedBy": "site owner",
+      "note": "Site owner confirmed all six content warnings from the 2026-11-09 audit were acceptable. User-confirmed current state; not independently verified by Codex.",
+      "expectedFinding": {
+        "status": "needs-review",
+        "httpStatus": 200,
+        "finalUrl": null,
+        "detail": "Fragment could not be verified (non-HTML response, truncated body, unsupported entity, or access barrier).",
+        "fragmentStatus": "unverified"
       }
     },
     {
