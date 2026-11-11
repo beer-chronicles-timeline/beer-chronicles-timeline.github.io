@@ -48,6 +48,13 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Historical notes proposal: sql/historical-notes-coverage-research.json.
+  // The medieval ordinances locate the Nuremberg milestone; CAMRA locates
+  // Penrhos Court in Lyonshall. OSM Nominatim locality references retrieved
+  // 2026-11-10: relations 62780 and 6192934. These locate the city/parish,
+  // not an exact medieval cellar or historical brewery building.
+  nuremberg: { name: "Nuremberg (Nürnberg), Germany", latitude: 49.4538720, longitude: 11.0772980, precision: "city", locationRole: "City whose medieval brewing ordinances distinguished cold beer from warm beer" },
+  lyonshall: { name: "Lyonshall, Herefordshire, England", latitude: 52.1999644, longitude: -2.9796914, precision: "city", locationRole: "Parish containing Penrhos Court, where the porter was brewed; locality reference" },
   // British Brown Ale proposal: sql/british-brown-ale-research.json.
   // Historical sources establish the settlements and distinct location roles.
   // OSM Nominatim locality references retrieved 2026-11-10: relation 142282;
@@ -563,6 +570,9 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed proposal UUIDs; absent events produce no markers.
+  { eventId: "d21db5cc-04f8-4c80-883a-818a65cc1c12", placeId: "nuremberg" },
+  { eventId: "09da8420-d19e-4ccc-bd4c-8ce8db0f342d", placeId: "lyonshall" },
   // Fixed UUIDs match sql/british-brown-ale-proposal.sql.
   // Roles distinguish cask launch, contract production, protected place and market.
   // Absent proposed events produce no markers. Existing Hobgoblin remains in Witney.
@@ -1081,7 +1091,7 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "f38bc8c6-fd68-4c37-9392-59939f2617c1", placeId: "pilsen" },
   { eventId: "99e6098b-56e6-4860-bd99-5b7ca37d8aa7", placeId: "pilsen" },
   { eventId: "af510a97-61aa-44c3-96c9-8bd7f9079694", placeId: "dusseldorf" },
-  { eventId: "31b34ecf-c7bd-4a3e-8290-b0637021e7e8", placeId: "vienna" },
+  { eventId: "31b34ecf-c7bd-4a3e-8290-b0637021e7e8", placeId: "schwechat", locationRole: "Municipality of the Klein-Schwechat brewery taken over by Dreher" },
   { eventId: "8baf91f4-44ab-4778-89a9-f02686655b31", placeId: "linz" },
   { eventId: "4a2d8c73-5b7e-48f9-9f84-4f0b4a5d2d3c", placeId: "new_south_wales" },
   { eventId: "a6f65ad7-9c42-4c8e-a5bd-bdd515926974", placeId: "leuven" },
@@ -1399,7 +1409,9 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "e31756ef-7544-4f09-9634-7e9dd617bf62", placeId: "belgium" },
   { eventId: "e31756ef-7544-4f09-9634-7e9dd617bf62", placeId: "pajottenland" },
   { eventId: "2de4cb9a-3d70-4f44-bf4d-e0a77af36e3a", placeId: "adamstown" },
-  { eventId: "b9a15e3a-56b5-43e6-b5f3-7cbf2c4255ad", placeId: "schwechat" },
+  // The cited Cooling Post history locates construction at Maschinenfabrik
+  // Augsburg and installation in Trieste, not the Dreher brewery in Schwechat.
+  { eventId: "b9a15e3a-56b5-43e6-b5f3-7cbf2c4255ad", placeId: "augsburg", locationRole: "City where Linde’s 1876 ammonia refrigeration prototype was built" },
   { eventId: "51cfd1be-6bb3-4187-8004-6de627ded7fc", placeId: "lower_yangzi" },
   { eventId: "2f4c9537-d65e-431a-8247-1d139519bf3c", placeId: "boernicke" },
   { eventId: "e2eec07c-37b5-4a69-af4e-314acba829d6", placeId: "timmendorfer_strand" },
