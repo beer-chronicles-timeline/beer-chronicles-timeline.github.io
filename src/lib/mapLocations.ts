@@ -48,6 +48,11 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Sahti recognition: sql/sahti-international-recognition-research.json.
+  // Kraft Roku's 2023 schedule and results place the final gala in Kraków.
+  // OSM Nominatim administrative relation 2768921, retrieved 2026-11-11.
+  // Municipal area reference, not an exact gala venue or brewery location.
+  krakow: { name: "Kraków, Poland", latitude: 50.0469432, longitude: 19.9971534, precision: "city", locationRole: "City hosting the Kraft Roku 2023 final gala" },
   // Historical notes proposal: sql/historical-notes-coverage-research.json.
   // The medieval ordinances locate the Nuremberg milestone; CAMRA locates
   // Penrhos Court in Lyonshall. OSM Nominatim locality references retrieved
@@ -570,6 +575,11 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Sahti recognition: fixed UUID shared with the reviewed SQL proposal.
+  // Dormant until the reviewed event is present in the supplied timeline.
+  { eventId: "d0f31b0b-6d8d-4dc9-af6a-09e76bdf5657", placeId: "krakow", locationRole: "City hosting the Kraft Roku 2023 final gala, where the award was announced" },
+  // bf52c507-a0e0-464e-aa2f-633e045b8ef2: the BJCP release sources establish
+  // no physical publication location; no map pin is assigned.
   // Fixed proposal UUIDs; absent events produce no markers.
   { eventId: "d21db5cc-04f8-4c80-883a-818a65cc1c12", placeId: "nuremberg" },
   { eventId: "09da8420-d19e-4ccc-bd4c-8ce8db0f342d", placeId: "lyonshall" },
