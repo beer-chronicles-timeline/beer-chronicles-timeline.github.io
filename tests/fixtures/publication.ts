@@ -27,7 +27,8 @@ export function createPublicationFixture(count = 750): PublicationRows {
   });
   const eventTags = events.flatMap((event, index) => {
     const featured = STORYLINES.filter((s) => s.featuredEventId === event.id).flatMap((s) => [...s.tagNames, ...(s.requiredTagNames ?? [])]);
-    return tags.filter((tag, tagIndex) => featured.includes(tag.name) || tagIndex === index % tags.length)
+    // Keep one long Storyline available for date-navigation browser coverage.
+    return tags.filter((tag, tagIndex) => featured.includes(tag.name) || tagIndex === index % tags.length || (tag.name === "Modern Craft Beer" && index % 5 === 0))
       .map((tag) => ({ event_id: event.id, tag_id: tag.id }));
   });
   return { events, tags, eventTags };

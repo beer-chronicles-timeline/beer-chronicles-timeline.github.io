@@ -9,6 +9,7 @@ import StorylineStructuredData from "@/components/StorylineStructuredData";
 import { formatEventDate } from "@/components/timelineUtils";
 import { getEventPath } from "@/lib/eventUrls";
 import { getStorylinePageData } from "@/lib/storylinePageData";
+import { getStorylineDateSections } from "@/lib/storylineSections";
 import {
   getOpenGraphImageMetadata,
   getTwitterMetadata,
@@ -73,6 +74,12 @@ export default async function StorylinePage({
   }
 
   const { storyline, events } = pageData;
+  const dateSections = getStorylineDateSections(events);
+  const hasDateNavigation = dateSections.length > 1;
+  const milestoneSections = hasDateNavigation
+    ? dateSections
+    : [{ id: "milestones-all", label: "", startIndex: 0, events }];
+  const MilestoneHeading = hasDateNavigation ? "h4" : "h3";
 
   return (
     <main className="flex min-h-screen flex-col bg-stone-50 p-4 md:p-10">
@@ -164,27 +171,73 @@ export default async function StorylinePage({
             </p>
           </div>
 
+          {hasDateNavigation && (
+            <nav
+              id="date-ranges"
+              aria-label="Storyline date ranges"
+              tabIndex={-1}
+              className="mt-6 scroll-mt-6 rounded-xl border border-stone-200 bg-white p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500"
+            >
+              <p className="text-sm font-semibold text-stone-700">Browse by date</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {dateSections.map((section) => (
+                  <a
+                    key={section.id}
+                    href={`#${section.id}`}
+                    className="inline-flex min-h-10 max-w-full flex-wrap items-center gap-x-2 rounded-full border border-stone-300 bg-stone-50 px-3 py-2 text-sm text-stone-700 transition hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                  >
+                    <span>{section.label}</span>
+                    <span className="text-xs text-stone-500">
+                      ({section.events.length} milestones)
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </nav>
+          )}
+
           {events.length > 0 ? (
-            <ol className="mt-6 space-y-4">
-              {events.map((event) => (
-                <li
-                  key={event.id}
-                  className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm"
-                >
-                  <p className="text-sm text-stone-500">
-                    {formatEventDate(event)}
-                  </p>
-                  <h3 className="mt-1 font-serif text-xl font-semibold leading-tight text-stone-900">
-                    <Link
-                      href={getEventPath(event.id, event.title)}
-                      className="underline decoration-transparent underline-offset-2 transition hover:decoration-stone-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
-                    >
-                      {event.title}
-                    </Link>
+            milestoneSections.map((section) => (
+              <div key={section.id} className={hasDateNavigation ? "mt-8" : undefined}>
+                {hasDateNavigation && (
+                  <h3
+                    id={section.id}
+                    tabIndex={-1}
+                    className="scroll-mt-6 font-serif text-xl font-semibold text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                  >
+                    {section.label}
                   </h3>
-                </li>
-              ))}
-            </ol>
+                )}
+                <ol start={section.startIndex + 1} className="mt-6 space-y-4">
+                  {section.events.map((event) => (
+                    <li
+                      key={event.id}
+                      className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm"
+                    >
+                      <p className="text-sm text-stone-500">
+                        {formatEventDate(event)}
+                      </p>
+                      <MilestoneHeading className="mt-1 font-serif text-xl font-semibold leading-tight text-stone-900">
+                        <Link
+                          href={getEventPath(event.id, event.title)}
+                          className="underline decoration-transparent underline-offset-2 transition hover:decoration-stone-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                        >
+                          {event.title}
+                        </Link>
+                      </MilestoneHeading>
+                    </li>
+                  ))}
+                </ol>
+                {hasDateNavigation && (
+                  <a
+                    href="#date-ranges"
+                    className="mt-3 inline-flex min-h-10 items-center text-sm text-stone-600 underline underline-offset-2 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                  >
+                    Back to date ranges <span aria-hidden="true" className="ml-1">↑</span>
+                  </a>
+                )}
+              </div>
+            ))
           ) : (
             <p className="mt-6 rounded-xl border border-stone-200 bg-white p-5 text-sm text-stone-600">
               No published milestones are currently available for this Storyline.

@@ -4,6 +4,7 @@
 import { useState, useEffect, useId, useRef, useMemo } from "react";
 import YearRangeSlider from "./YearRangeSlider";
 import type { Tag } from "@/lib/types";
+import { normalizeSearchText } from "@/lib/searchText";
 import type { TagFilterMode } from "./timelineFiltering";
 
 const CATEGORIES = [
@@ -59,6 +60,7 @@ export function TimelineFilters({
   maxYear,
 }: TimelineFiltersProps) {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
+  const [tagSearchQuery, setTagSearchQuery] = useState("");
   const tagDropdownId = useId();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const tagButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -98,6 +100,12 @@ export function TimelineFilters({
 
     return [...selectedHiddenTags, ...allTags];
   }, [allTags, urlTags, selectedTagIds]);
+
+  const tagSearchTokens = normalizeSearchText(tagSearchQuery).split(/\s+/).filter(Boolean);
+  const matchingTags = dropdownTags.filter((tag) => {
+    const name = normalizeSearchText(tag.name);
+    return tagSearchTokens.every((token) => name.includes(token));
+  });
 
   useEffect(() => {
     if (!isTagDropdownOpen) {
@@ -184,9 +192,10 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
           <button
             ref={tagButtonRef}
             type="button"
-            onClick={() =>
-              setIsTagDropdownOpen((open) => !open)
-            }
+            onClick={() => {
+              setTagSearchQuery("");
+              setIsTagDropdownOpen((open) => !open);
+            }}
             aria-expanded={isTagDropdownOpen}
             aria-controls={tagDropdownId}
             className="inline-flex min-h-10 items-center gap-2 rounded-full border bg-white px-3 py-1 text-sm transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
@@ -209,14 +218,34 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
               id={tagDropdownId}
               className="absolute right-0 mt-2 w-56 rounded-lg bg-white shadow-lg border z-20"
             >
+              <div className="border-b px-3 py-2">
+                <label htmlFor={`${tagDropdownId}-search`} className="sr-only">
+                  Search tags
+                </label>
+                <input
+                  id={`${tagDropdownId}-search`}
+                  type="search"
+                  value={tagSearchQuery}
+                  onChange={(event) => setTagSearchQuery(event.target.value)}
+                  placeholder="Search tags…"
+                  className="h-10 w-full rounded-md border border-gray-300 px-3 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 md:text-sm"
+                />
+                <p role="status" className="mt-1 text-xs text-gray-600">
+                  {tagSearchTokens.length > 0
+                    ? `${matchingTags.length} matching ${matchingTags.length === 1 ? "tag" : "tags"}`
+                    : ""}
+                </p>
+              </div>
               <div className="max-h-64 overflow-auto py-2">
-                {dropdownTags.length === 0 && (
+                {matchingTags.length === 0 && (
                   <div className="px-3 py-2 text-xs text-gray-500">
-                    No tags available
+                    {dropdownTags.length === 0
+                      ? "No tags available"
+                      : "No tags match your search."}
                   </div>
                 )}
 
-                {dropdownTags.map((tag) => {
+                {matchingTags.map((tag) => {
                   const checked = selectedTagIds.includes(tag.id);
                   const count = tagCounts?.get(tag.id) || 0;
 
