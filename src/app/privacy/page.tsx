@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/beer-chronicles-social.png",
-        width: 1731,
-        height: 909,
+        url: "/images/beer-chronicles-social.jpg",
+        width: 1200,
+        height: 630,
         alt: "Beer Chronicles — A Timeline of Beer History",
       },
     ],

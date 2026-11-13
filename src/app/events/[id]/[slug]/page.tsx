@@ -35,7 +35,7 @@ import { getReadingRouteStops } from "@/lib/readingRoute";
 
 const BASE_URL = "https://beer-chronicles.org";
 const DEFAULT_SOCIAL_IMAGE =
-  "/images/beer-chronicles-social.png";
+  "/images/beer-chronicles-social.jpg";
 
 type EventPageProps = {
   params: Promise<{

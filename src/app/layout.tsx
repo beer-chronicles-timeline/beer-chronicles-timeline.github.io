@@ -37,7 +37,7 @@ export const metadata: Metadata = {
       "Beer Chronicles | Interactive Beer History Timeline",
     description:
       "Explore beer history from prehistoric brewing to the present through a curated interactive timeline and connected storylines.",
-    images: ["/images/beer-chronicles-social.png"],
+    images: ["/images/beer-chronicles-social.jpg"],
   },
 };
 
