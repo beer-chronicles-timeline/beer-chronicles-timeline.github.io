@@ -236,9 +236,11 @@ ${isActive ? "bg-gray-200 text-gray-900" : "hover:bg-gray-100"}`}
                         <span>{tag.name}</span>
                       </div>
 
-                      <span className="text-xs text-gray-600">
-                        {count}
-                      </span>
+                      {tagCounts && (
+                        <span className="text-xs text-gray-600">
+                          {count}
+                        </span>
+                      )}
                     </label>
                   );
                 })}

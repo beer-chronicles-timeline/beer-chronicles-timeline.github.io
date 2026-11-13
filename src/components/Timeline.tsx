@@ -125,9 +125,7 @@ export default function Timeline({
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const copyFeedbackTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const [selectedEventIndex, setSelectedEventIndex] = useState<
-    number | null
-  >(null);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [randomEvent, setRandomEvent] =
     useState<TimelineEvent | null>(null);
   const [completeEvents, setCompleteEvents] = useState<TimelineEvent[] | null>(
@@ -194,7 +192,7 @@ export default function Timeline({
 
   useEffect(() => {
     void loadCompleteEvents().catch(() => {
-      // Permanent event links remain available if optional detail preloading fails.
+      // Preview links remain available if loading the full timeline fails.
     });
   }, [loadCompleteEvents]);
 
@@ -391,10 +389,16 @@ export default function Timeline({
 
   const totalEvents = totalEventCount;
   const showingCount = filteredEvents.length;
-  const isSearchIncomplete = searchQuery.trim() !== "" && !completeEvents;
-  const searchStatusMessage = completeEventsStatus === "error"
-    ? "Full-text search is unavailable. Results only cover titles and short summaries."
-    : "Loading full-text search. Results may be incomplete.";
+  const isCollectionIncomplete = !completeEvents && events.length < totalEvents;
+  const areResultsIncomplete =
+    isCollectionIncomplete || (!completeEvents && searchQuery.trim() !== "");
+  const loadingStatusMessage = isCollectionIncomplete
+    ? completeEventsStatus === "error"
+      ? `The full timeline could not load. Only ${events.length} of ${totalEvents} events are available; filter results may be incomplete.`
+      : "Loading the full timeline. Results may be incomplete."
+    : completeEventsStatus === "error"
+      ? "Full-text search is unavailable. Results only cover titles and short summaries."
+      : "Loading full-text search. Results may be incomplete.";
 
   useEffect(() => {
     if (!hasInitializedResultsAnnouncementRef.current) {
@@ -404,14 +408,16 @@ export default function Timeline({
 
     const timeoutId = window.setTimeout(() => {
       setResultsAnnouncement(
-        isSearchIncomplete ? searchStatusMessage : showingCount === 0
-          ? "No events match your filters."
-          : `Showing ${showingCount} of ${totalEvents} events.`
+        areResultsIncomplete
+          ? `Found ${showingCount} matching events so far. Results are incomplete.`
+          : showingCount === 0
+            ? "No events match your filters."
+            : `Showing ${showingCount} of ${totalEvents} events.`
       );
     }, RESULTS_ANNOUNCEMENT_DEBOUNCE_MS);
 
     return () => window.clearTimeout(timeoutId);
-  }, [renderWindowKey, showingCount, totalEvents, isSearchIncomplete, searchStatusMessage]);
+  }, [renderWindowKey, showingCount, totalEvents, areResultsIncomplete]);
 
   const hasActiveFilters =
     activeStoryline !== undefined ||
@@ -425,10 +431,11 @@ export default function Timeline({
     () => new Map(completeEvents?.map((event) => [event.id, event]) ?? []),
     [completeEvents]
   );
-  const selectedEvent =
-    selectedEventIndex !== null
-      ? completeEventById.get(filteredEvents[selectedEventIndex].id) ?? null
-      : null;
+  const selectedEvent = selectedEventId
+    ? completeEventById.get(selectedEventId) ?? null
+    : null;
+  const selectedEventIndex = selectedEventId === null ? -1
+    : filteredEvents.findIndex((event) => event.id === selectedEventId);
 
   const modalEvent = randomEvent ?? selectedEvent;
   const isRandomDiscovery = randomEvent !== null;
@@ -439,26 +446,26 @@ export default function Timeline({
     ? getConnectedEvents(modalEvent, completeEvents ?? [])
     : [];
 
-  const handleOpenModal = async (index: number) => {
+  const handleOpenModal = async (event: TimelineEvent) => {
     setRandomEvent(null);
     try {
       await loadCompleteEvents();
-      setSelectedEventIndex(index);
+      setSelectedEventId(event.id);
     } catch {
       window.location.assign(getEventPath(
-        filteredEvents[index].id,
-        filteredEvents[index].title
+        event.id,
+        event.title
       ));
     }
   };
 
   const handleOpenRelatedEvent = (event: TimelineEvent) => {
     setRandomEvent(event);
-    setSelectedEventIndex(null);
+    setSelectedEventId(null);
   };
 
   const handleCloseModal = () => {
-    setSelectedEventIndex(null);
+    setSelectedEventId(null);
     setRandomEvent(null);
   };
 
@@ -477,31 +484,30 @@ export default function Timeline({
       return;
     }
 
-    setSelectedEventIndex((currentIndex) => {
-      if (
-        currentIndex !== null &&
-        currentIndex < filteredEvents.length - 1
-      ) {
-        return currentIndex + 1;
-      }
-
-      return currentIndex;
+    setSelectedEventId((currentId) => {
+      const currentIndex = filteredEvents.findIndex(
+        (event) => event.id === currentId
+      );
+      return currentIndex >= 0 && currentIndex < filteredEvents.length - 1
+        ? filteredEvents[currentIndex + 1].id
+        : currentId;
     });
-  }, [randomEvent, filteredEvents.length]);
+  }, [randomEvent, filteredEvents]);
 
   const handlePrevEvent = useCallback(() => {
     if (randomEvent) {
       return;
     }
 
-    setSelectedEventIndex((currentIndex) => {
-      if (currentIndex !== null && currentIndex > 0) {
-        return currentIndex - 1;
-      }
-
-      return currentIndex;
+    setSelectedEventId((currentId) => {
+      const currentIndex = filteredEvents.findIndex(
+        (event) => event.id === currentId
+      );
+      return currentIndex > 0
+        ? filteredEvents[currentIndex - 1].id
+        : currentId;
     });
-  }, [randomEvent]);
+  }, [randomEvent, filteredEvents]);
 
   const handleRandomEvent = () => {
     if (timelineEvents.length === 0 || isRollingRandom) {
@@ -523,7 +529,7 @@ export default function Timeline({
         Math.random() * discoveryEvents.length
       );
 
-      setSelectedEventIndex(null);
+      setSelectedEventId(null);
       setRandomEvent(discoveryEvents[randomIndex]);
       setIsRollingRandom(false);
     }, 350);
@@ -631,7 +637,7 @@ export default function Timeline({
             setSelectedTagIds={setSelectedTagIds}
             tagFilterMode={tagFilterMode}
             setTagFilterMode={setTagFilterMode}
-            tagCounts={tagCounts}
+            tagCounts={isCollectionIncomplete ? undefined : tagCounts}
             minYear={minYear}
             maxYear={maxYear}
           />
@@ -639,9 +645,11 @@ export default function Timeline({
           <div className="mt-3 flex flex-col items-center justify-center gap-2 border-t border-stone-200 pt-3 md:flex-row md:gap-3">
             <div className="flex w-full justify-center md:w-auto">
               <div className="whitespace-nowrap rounded-full bg-stone-100 px-4 py-1 text-sm text-stone-700">
-                {hasActiveFilters ? (
+                {hasActiveFilters || areResultsIncomplete ? (
                   <>
-                    {isSearchIncomplete ? "Found so far" : "Showing"}{" "}
+                    {areResultsIncomplete
+                      ? hasActiveFilters ? "Found so far" : "Loaded"
+                      : "Showing"}{" "}
                     <span className="font-semibold">
                       {showingCount}
                     </span>{" "}
@@ -722,16 +730,16 @@ export default function Timeline({
         </fieldset>
       </section>
 
-      {(isSearchIncomplete || completeEventsStatus === "error") && (
-        <div className="my-4 rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
-          <p role="status">{searchStatusMessage}</p>
+      {((areResultsIncomplete && (hasActiveFilters || isOldestFirst)) || completeEventsStatus === "error") && (
+        <div className="timeline-interactive-control my-4 rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
+          <p role="status">{loadingStatusMessage}</p>
           {completeEventsStatus === "error" && (
             <button
               type="button"
               onClick={() => { void loadCompleteEvents().catch(() => {}); }}
               className="mt-2 min-h-11 rounded-full border border-stone-400 bg-white px-4 font-medium hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
             >
-              Retry full-text search
+              {isCollectionIncomplete ? "Retry loading timeline" : "Retry full-text search"}
             </button>
           )}
         </div>
@@ -740,14 +748,16 @@ export default function Timeline({
       {filteredEvents.length === 0 ? (
         <div className="py-16 text-center">
           <p className="text-lg text-stone-600">
-            {isSearchIncomplete
-              ? "No matches in the loaded summaries."
+            {areResultsIncomplete
+              ? "No matches in the loaded entries."
               : "No events match your filters."}
           </p>
 
           <p className="mt-2 text-sm text-stone-600">
-            {isSearchIncomplete
-              ? "Full entry text must load before the search is complete."
+            {areResultsIncomplete
+              ? isCollectionIncomplete
+                ? "The full timeline must load before these results are complete."
+                : "Full entry text must load before the search is complete."
               : "Try adjusting the category, year range, tags, or search term."}
           </p>
         </div>
@@ -778,7 +788,7 @@ export default function Timeline({
                       <EventCard
                         event={event}
                         onClick={() =>
-                          handleOpenModal(index)
+                          handleOpenModal(event)
                         }
                       />
                     )}
@@ -801,7 +811,7 @@ export default function Timeline({
                       <EventCard
                         event={event}
                         onClick={() =>
-                          handleOpenModal(index)
+                          handleOpenModal(event)
                         }
                       />
                     )}
@@ -843,13 +853,12 @@ export default function Timeline({
           onPrev={handlePrevEvent}
           hasNext={
             !isRandomDiscovery &&
-            selectedEventIndex !== null &&
+            selectedEventIndex >= 0 &&
             selectedEventIndex <
               filteredEvents.length - 1
           }
           hasPrev={
             !isRandomDiscovery &&
-            selectedEventIndex !== null &&
             selectedEventIndex > 0
           }
           isRandomDiscovery={isRandomDiscovery}
