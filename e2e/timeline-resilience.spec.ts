@@ -34,7 +34,7 @@ test("timeline remains interactive while complete details preload", async ({ pag
     releaseRequest = resolve;
   });
 
-  await page.route("**/timeline-data.json*", async (route) => {
+  await page.route("**/timeline-index.json*", async (route) => {
     await requestCanFinish;
     await route.continue();
   });
@@ -50,7 +50,7 @@ test("timeline remains interactive while complete details preload", async ({ pag
 });
 
 test("a failed optional detail request follows the permanent event link", async ({ page }) => {
-  await page.route("**/timeline-data.json*", (route) =>
+  await page.route("**/timeline-index.json*", (route) =>
     route.fulfill({ status: 503, body: "Unavailable" })
   );
   await page.goto("/");
@@ -64,7 +64,7 @@ test("a failed optional detail request follows the permanent event link", async 
 
 for (const initiallyFails of [false, true]) {
   test(`full-text search reports ${initiallyFails ? "failure and recovers on retry" : "loading before body-only matches arrive"}`, async ({ page, request }) => {
-    const response = await request.get("/timeline-data.json");
+    const response = await request.get("/timeline-index.json");
     const data = await response.json();
     const marker = "BC_BODY_ONLY_TEST_TOKEN";
     const title = data.events[0].title;
@@ -72,7 +72,7 @@ for (const initiallyFails of [false, true]) {
     let releaseRequest: () => void = () => {};
     const ready = new Promise<void>((resolve) => { releaseRequest = resolve; });
     let requests = 0;
-    await page.route("**/timeline-data.json*", async (route) => {
+    await page.route("**/timeline-index.json*", async (route) => {
       requests++;
       if (initiallyFails && requests === 1) {
         await route.fulfill({ status: 503, body: "Unavailable" });
@@ -106,7 +106,7 @@ for (const query of ["to=1700", "category=Science", "tags=Broyhan", "storyline=e
   test(`${query} results stay provisional until the full timeline loads`, async ({ page }) => {
     let release = () => {};
     const ready = new Promise<void>((resolve) => { release = resolve; });
-    await page.route("**/timeline-data.json*", async (route) => {
+    await page.route("**/timeline-index.json*", async (route) => {
       await ready;
       await route.continue();
     });
@@ -131,7 +131,7 @@ for (const query of ["to=1700", "category=Science", "tags=Broyhan", "storyline=e
 
 test("@journey incomplete date results recover after a failed timeline request", async ({ page }) => {
   let requests = 0;
-  await page.route("**/timeline-data.json*", async (route) => {
+  await page.route("**/timeline-index.json*", async (route) => {
     if (++requests === 1) await route.fulfill({ status: 503, body: "Unavailable" });
     else await route.continue();
   });
@@ -149,7 +149,7 @@ test("@journey incomplete date results recover after a failed timeline request",
 test("tag counts appear only after the full collection loads", async ({ page }) => {
   let release = () => {};
   const ready = new Promise<void>((resolve) => { release = resolve; });
-  await page.route("**/timeline-data.json*", async (route) => {
+  await page.route("**/timeline-index.json*", async (route) => {
     await ready;
     await route.continue();
   });
@@ -165,7 +165,7 @@ test("tag counts appear only after the full collection loads", async ({ page }) 
 test("@journey a clicked preview keeps its identity when loading changes the order", async ({ page }) => {
   let release = () => {};
   const ready = new Promise<void>((resolve) => { release = resolve; });
-  await page.route("**/timeline-data.json*", async (route) => {
+  await page.route("**/timeline-index.json*", async (route) => {
     await ready;
     await route.continue();
   });

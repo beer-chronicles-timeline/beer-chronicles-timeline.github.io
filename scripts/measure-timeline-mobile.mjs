@@ -10,7 +10,7 @@ const count = Number(process.env.TIMELINE_PERFORMANCE_RUNS ?? 3);
 if (!Number.isInteger(count) || count < 1 || count > 10) throw new Error("TIMELINE_PERFORMANCE_RUNS must be 1-10");
 const network = { latency: 150, downloadThroughput: 1_600_000 / 8, uploadThroughput: 750_000 / 8 };
 const directory = process.env.PERFORMANCE_OUTPUT_DIR ?? "artifacts/performance";
-await access("out/timeline-data.json");
+await access("out/timeline-index.json");
 await mkdir(directory, { recursive: true });
 const publication = JSON.parse(await readFile("out/publication-status.json", "utf8"));
 const cases = [
@@ -90,17 +90,21 @@ try {
         }
       });
       const started = Date.now();
-      const details = scenario.name === "timeline" ? page.waitForResponse((r) => new URL(r.url()).pathname === "/timeline-data.json") : null;
+      const details = scenario.name === "timeline" ? page.waitForResponse((r) => new URL(r.url()).pathname === "/timeline-index.json") : null;
       await page.goto(baseURL + scenario.path, { waitUntil: "domcontentloaded" });
       await page.getByRole("heading", { level: 1 }).waitFor();
       if (scenario.name === "timeline") await page.locator("[data-timeline-ready=true]").waitFor();
       if (scenario.name === "map") await page.waitForFunction(() => document.querySelector('.maplibregl-canvas') || document.body.textContent.includes("Interactive map unavailable"));
       if (scenario.name === "map") await page.locator(".maplibregl-marker").first().waitFor();
       const readyMs = Date.now() - started;
+      let timelineReadyMs = 0;
       if (details) {
         const response = await details;
         if (!response.ok()) throw new Error("Timeline details failed to load");
         await response.finished();
+        await page.getByRole("region", { name: "Timeline exploration controls" })
+          .getByText(`${publication.eventCount} events in total`, { exact: true }).waitFor();
+        timelineReadyMs = Date.now() - started;
       }
       // Fixed observation window: enough for fonts, hydration and initial map work.
       await page.waitForTimeout(2000);
@@ -118,8 +122,8 @@ try {
           requestCount: resources.length + 1,
           approximateBlockingMs: data.tasks.reduce((sum, value) => sum + Math.max(0, value - 50), 0),
           longestTaskMs: Math.max(0, ...data.tasks),
-          timelineRequestMs: resources.find((r) => r.name.includes("/timeline-data.json"))?.duration ?? 0,
-          timelineEncodedBytes: resources.find((r) => r.name.includes("/timeline-data.json"))?.encodedBodySize ?? 0,
+          timelineRequestMs: resources.find((r) => r.name.includes("/timeline-index.json"))?.duration ?? 0,
+          timelineEncodedBytes: resources.find((r) => r.name.includes("/timeline-index.json"))?.encodedBodySize ?? 0,
           scripts: scripts.map((r) => ({ path: new URL(r.name).pathname, encodedBytes: r.encodedBodySize, decodedBytes: r.decodedBodySize })),
           mapRenderer: document.querySelector('.maplibregl-canvas') ? "canvas" : "unavailable-or-not-applicable",
         };
@@ -147,7 +151,7 @@ try {
       const { scripts, mapRenderer, ...metrics } = load;
       const { unsupported, shifts, ...interactionMetrics } = interaction;
       const cls = calculateCls(shifts);
-      runs.push({ metrics: { ...metrics, ...interactionMetrics, cls, readyMs }, scripts, mapRenderer, unsupported, errors, failures });
+      runs.push({ metrics: { ...metrics, ...interactionMetrics, cls, readyMs, timelineReadyMs }, scripts, mapRenderer, unsupported, errors, failures });
       await context.close();
       if (unsupported.length || errors.length || failures.length || load.lcpMs <= 0 || (scenario.name === "map" && mapRenderer !== "canvas")) throw new Error(`${scenario.name}: incomplete measurement; inspect recorded diagnostics`);
       console.log(`${scenario.name} ${i + 1}/${count}: LCP ${Math.round(load.lcpMs)}ms, CLS ${cls.toFixed(3)}, JS ${(load.jsEncodedBytes / 1024).toFixed(1)}KiB, sampled event max ${interaction.interactionMaxMs}ms`);
@@ -189,8 +193,8 @@ const warnings = report.comparison.changes.filter((change) => change.warning);
 const lines = [
   "# Mobile performance diagnostics", "", report.notes, "",
   `Commit: ${report.commit}${report.workingTreeDirty ? " (working tree changes)" : ""}; ${report.eventCount} events; ${report.publicationMode} publication; ${count} runs per route.`,
-  "", "| Route | LCP ms | CLS | JS gzip KiB | Ready ms | Sampled event max ms | Requests |", "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
-  ...report.routes.filter((r) => Object.keys(r.metrics).length).map(({ name, metrics: m }) => `| ${name} | ${Math.round(m.lcpMs)} | ${m.cls.toFixed(3)} | ${(m.jsEncodedBytes / 1024).toFixed(1)} | ${Math.round(m.readyMs)} | ${m.interactionMaxMs} | ${m.requestCount} |`),
+  "", "| Route | LCP ms | CLS | JS gzip KiB | Ready ms | All entries ms | Sampled event max ms | Requests |", "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+  ...report.routes.filter((r) => Object.keys(r.metrics).length).map(({ name, metrics: m }) => `| ${name} | ${Math.round(m.lcpMs)} | ${m.cls.toFixed(3)} | ${(m.jsEncodedBytes / 1024).toFixed(1)} | ${Math.round(m.readyMs)} | ${name === "timeline" ? Math.round(m.timelineReadyMs) : "—"} | ${m.interactionMaxMs} | ${m.requestCount} |`),
   "", report.comparison.reason, "", ...(historySelection ? [historySelection.reason, ...historySelection.notes.map((note) => `- History: ${note}`), ""] : []), ...warnings.map((w) => `- Review ${w.route} ${w.metric}: ${w.before.toFixed(2)} -> ${w.after.toFixed(2)}`),
   ...report.errors.map((error) => `- Measurement error: ${error}`), "",
 ];

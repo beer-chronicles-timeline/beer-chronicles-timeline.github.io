@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import type { HomeTimelineData } from "@/lib/homeTimelineData";
-import { decodeTimelineData } from "@/lib/timelineTransport";
+import { loadTimelineIndex } from "@/lib/timelineLoading";
 import Timeline from "./Timeline";
 
 type TimelineDataLoaderProps = {
@@ -19,35 +19,23 @@ export default function TimelineDataLoader({
   const [requestAttempt, setRequestAttempt] = useState(0);
 
   useEffect(() => {
-    const abortController = new AbortController();
+    let active = true;
 
     async function loadTimelineData() {
       try {
-        const response = await fetch("/timeline-data.json", {
-          signal: abortController.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error("Timeline request failed");
-        }
-
-        const data = decodeTimelineData(await response.json());
-
+        const data = await loadTimelineIndex();
+        if (!active) return;
         setTimelineData(data);
         setHasError(false);
-      } catch (error) {
-        if (error instanceof Error && error.name === "AbortError") {
-          return;
-        }
-
-        setHasError(true);
+      } catch {
+        if (active) setHasError(true);
       }
     }
 
     void loadTimelineData();
 
     return () => {
-      abortController.abort();
+      active = false;
     };
   }, [requestAttempt]);
 

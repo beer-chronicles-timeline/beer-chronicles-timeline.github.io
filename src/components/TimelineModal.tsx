@@ -12,6 +12,7 @@ import RelatedEvents from "./RelatedEvents";
 import ConnectedHistory from "./ConnectedHistory";
 import type { ConnectedEvent } from "@/lib/eventConnections";
 import { prefersReducedMotion } from "@/lib/motionPreferences";
+import { useEventSources } from "@/lib/useEventSources";
 
 type TimelineModalProps = {
   event: TimelineEvent;
@@ -25,6 +26,7 @@ type TimelineModalProps = {
   hasNext: boolean;
   hasPrev: boolean;
   isRandomDiscovery?: boolean;
+  sourceRevision?: string;
 };
 
 export default function TimelineModal({
@@ -39,7 +41,9 @@ export default function TimelineModal({
   hasNext,
   hasPrev,
   isRandomDiscovery = false,
+  sourceRevision,
 }: TimelineModalProps) {
+  const sources = useEventSources(event.id, event.sources ?? null, sourceRevision);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const modalContentRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -235,7 +239,10 @@ export default function TimelineModal({
           )}
 
           <EventDetailContent
-            event={event}
+            event={{ ...event, sources: sources.sources }}
+            sourcesLoading={sources.status === "loading"}
+            sourcesError={sources.status === "error"}
+            onRetrySources={sources.retry}
             showPermanentLink
             titleAs="h2"
             titleId="timeline-modal-title"

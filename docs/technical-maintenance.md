@@ -33,7 +33,10 @@ histogram range selection, map place selection/zoom, and opening the event-page
 menu. `interactionMaxMs` is the maximum recorded Event Timing duration for those
 samples, **not field INP**; zero means no event above the 16 ms collection floor.
 `readyMs` is the route's tested readiness condition, not completion of every
-asset. Encoded JS sizes are response bodies, not complete wire sizes or the
+asset. `timelineReadyMs` additionally waits for the full searchable collection,
+including completion of the preloaded `/timeline-index.json` response. Citations
+are requested only when a modal opens, so they are excluded from startup bytes.
+Encoded JS sizes are response bodies, not complete wire sizes or the
 worker's complete memory/rendering cost. Approximate blocking time covers the
 load observation window and is not a Lighthouse score.
 
@@ -85,6 +88,19 @@ of the same commit.
 
 
 ## Capacity and scale
+
+The existing raw and gzip ceilings apply to `/timeline-index.json`, the browser's
+initial searchable data. Full descriptions remain in this index. Citation text
+is exported unchanged in per-entry, content-addressed JSON files and requested
+when an entry opens in a modal. Responses are cached for subsequent visits and
+checked against the expected entry and revision. A failed request leaves the
+entry readable with a retry and its permanent-page link.
+
+`/timeline-data.json` remains the complete public download for source audits,
+saved-publication fixtures and existing clients. Permanent entry pages retain
+their server-rendered citations. Neither is fetched by the new timeline at
+startup. The index and every citation response are validated against the same
+publication snapshot before export can pass.
 
 Below 100 estimated additional entries, review the payload contract before the
 next large content batch. Forecasts assume current average bytes per event;

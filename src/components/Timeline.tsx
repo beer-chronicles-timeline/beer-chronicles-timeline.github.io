@@ -25,7 +25,7 @@ import {
 import { copyText } from "@/lib/copyText";
 import { getEventPath } from "@/lib/eventUrls";
 import type { TimelineEvent, Tag } from "@/lib/types";
-import { decodeTimelineData } from "@/lib/timelineTransport";
+import { loadTimelineIndex } from "@/lib/timelineLoading";
 import { getStorylineBySlug, getStorylineHref } from "@/lib/storylines";
 import { getConnectedEvents } from "@/lib/eventConnections";
 
@@ -131,6 +131,7 @@ export default function Timeline({
   const [completeEvents, setCompleteEvents] = useState<TimelineEvent[] | null>(
     null
   );
+  const [sourceRevisions, setSourceRevisions] = useState<Record<string, string>>({});
   const completeEventsPromiseRef = useRef<Promise<TimelineEvent[]> | null>(null);
   const [completeEventsStatus, setCompleteEventsStatus] = useState<
     "loading" | "ready" | "error"
@@ -169,14 +170,11 @@ export default function Timeline({
   const loadCompleteEvents = useCallback(() => {
     if (!completeEventsPromiseRef.current) {
       setCompleteEventsStatus("loading");
-      completeEventsPromiseRef.current = fetch("/timeline-data.json")
-        .then((response) => {
-          if (!response.ok) throw new Error("Timeline detail request failed");
-          return response.json();
-        })
+      completeEventsPromiseRef.current = loadTimelineIndex()
         .then((data) => {
-          const { events } = decodeTimelineData(data);
+          const { events, sourceRevisions } = data;
           setCompleteEvents(events);
+          setSourceRevisions(sourceRevisions ?? {});
           setCompleteEventsStatus("ready");
           return events;
         })
@@ -844,6 +842,7 @@ export default function Timeline({
       {modalEvent && (
         <TimelineModal
           event={modalEvent}
+          sourceRevision={sourceRevisions[modalEvent.id]}
           relatedEvents={relatedEvents}
           connectedEvents={connectedEvents}
           onOpenRelatedEvent={handleOpenRelatedEvent}

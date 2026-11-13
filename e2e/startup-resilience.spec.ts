@@ -104,12 +104,13 @@ test("@journey timeline waits for initial URL restoration before accepting edits
       },
     });
   });
-  const detailsRequested = page.waitForRequest("**/timeline-data.json*");
+  const detailsRequested = page.waitForRequest("**/timeline-index.json*");
   await page.goto("/?from=1700&to=1900");
-  // The detail request starts in a mount effect, so hydration has happened;
-  // initial URL restoration is still held behind the animation-frame gate.
+  // The preload can start before hydration. Wait for the rendered controls too;
+  // initial URL restoration remains held behind the animation-frame gate.
   await detailsRequested;
   const controls = page.getByRole("region", { name: "Timeline exploration controls" });
+  await expect(controls).toBeVisible();
   const input = page.locator("#startYearInput");
   await expect(controls).toHaveAttribute("data-timeline-ready", "false");
   await expect(input).toBeDisabled();

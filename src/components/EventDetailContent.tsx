@@ -22,6 +22,9 @@ type EventDetailContentProps = {
   showPermanentLink?: boolean;
   titleAs?: "h1" | "h2";
   titleId?: string;
+  sourcesLoading?: boolean;
+  sourcesError?: boolean;
+  onRetrySources?: () => void;
 };
 
 export default function EventDetailContent({
@@ -29,6 +32,9 @@ export default function EventDetailContent({
   showPermanentLink = false,
   titleAs = "h1",
   titleId,
+  sourcesLoading = false,
+  sourcesError = false,
+  onRetrySources,
 }: EventDetailContentProps) {
   const sourceCitations = parseSourceCitations(event.sources);
 
@@ -151,7 +157,7 @@ export default function EventDetailContent({
             : "contents"
         }
       >
-        {sourceCitations.length > 0 && (
+        {(sourceCitations.length > 0 || sourcesLoading || sourcesError) && (
           <section
             aria-labelledby={`event-sources-${event.id}`}
             className={
@@ -167,10 +173,33 @@ export default function EventDetailContent({
               Sources
             </SectionHeading>
 
-            <p className="mt-1 text-xs leading-5 text-stone-500">
-              These sources support the dating and historical claims in
-              this entry.
-            </p>
+            {sourcesLoading && (
+              <p role="status" className="mt-3 text-sm leading-6 text-stone-600">
+                Loading sources…
+              </p>
+            )}
+            {sourcesError && (
+              <div className="mt-3">
+                <p role="alert" className="text-sm leading-6 text-stone-600">
+                  We couldn&apos;t load these sources. You can open the full entry
+                  below to read them, or try again.
+                </p>
+                <button
+                  type="button"
+                  onClick={onRetrySources}
+                  className="mt-3 min-h-11 rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                >
+                  Retry loading sources
+                </button>
+              </div>
+            )}
+
+            {sourceCitations.length > 0 && (
+              <p className="mt-1 text-xs leading-5 text-stone-500">
+                These sources support the dating and historical claims in
+                this entry.
+              </p>
+            )}
 
             <ul className="mt-3 space-y-2.5 text-sm leading-6 text-stone-700">
               {sourceCitations.map((citation, index) => (
@@ -207,7 +236,7 @@ export default function EventDetailContent({
         <div
           className={
             isPermanentPage
-              ? sourceCitations.length > 0
+              ? sourceCitations.length > 0 || sourcesLoading || sourcesError
                 ? "mt-4"
                 : ""
               : "mt-6 border-t border-stone-200 pt-5"

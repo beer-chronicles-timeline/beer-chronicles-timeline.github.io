@@ -8,6 +8,8 @@ import { getEventsForStoryline } from "../src/lib/eventStorylines";
 import { STORYLINES } from "../src/lib/storylines";
 import type { PublicationSnapshot } from "../src/lib/publicationSnapshot";
 import { buildMapLocations, type MapLocation } from "../src/lib/mapLocations";
+import { encodeEventSources } from "../src/lib/eventSources";
+import { decodeEventSources, getEventSourcesPath } from "../src/lib/sourceTransport";
 
 export function verifyMapExport(html: string, locations: readonly MapLocation[]) {
   // Decode JSON string chunks without executing scripts or opening a browser.
@@ -34,6 +36,26 @@ export async function checkPublicationExport(requireLive = false) {
     for (const field of ["title", "description", "event_date", "historical_year", "image_url", "category", "date_precision", "sources", "tags"] as const) {
       if (!isDeepStrictEqual(exported[field] ?? null, event[field] ?? null)) throw new Error(`Timeline content differs from publication snapshot: ${event.id}/${field}`);
     }
+  }
+  const index = decodeTimelineData(JSON.parse(await readFile("out/timeline-index.json", "utf8")));
+  if (ids(index.events) !== ids(snapshot.events)) throw new Error("Timeline index differs from publication snapshot");
+  const indexedById = new Map(index.events.map((event) => [event.id, event]));
+  for (const event of snapshot.events) {
+    const indexed = indexedById.get(event.id)!;
+    for (const field of ["title", "description", "event_date", "historical_year", "image_url", "category", "date_precision", "tags"] as const) {
+      if (!isDeepStrictEqual(indexed[field] ?? null, event[field] ?? null)) throw new Error(`Timeline index content differs: ${event.id}/${field}`);
+    }
+    const expected = encodeEventSources(event);
+    const revision = index.sourceRevisions?.[event.id];
+    if (indexed.sources !== null || revision !== expected.revision) throw new Error(`Invalid citation reference: ${event.id}`);
+    const path = getEventSourcesPath(event.id, revision);
+    const sources = decodeEventSources(JSON.parse(await readFile(`out${path}`, "utf8")), event.id, revision);
+    if (sources.sources !== (event.sources ?? null)) throw new Error(`Exported citations differ: ${event.id}`);
+  }
+  const homepage = await readFile("out/index.html", "utf8");
+  const preloadPosition = homepage.indexOf('id="timeline-index-preload"');
+  if (preloadPosition < 0 || preloadPosition > homepage.indexOf('aria-label="Timeline exploration controls"')) {
+    throw new Error("Missing early timeline index request");
   }
   verifyMapExport(await readFile("out/map.html", "utf8"), buildMapLocations(snapshot.events));
   const sitemap = await readFile("out/sitemap.xml", "utf8");
@@ -69,6 +91,6 @@ export async function checkPublicationExport(requireLive = false) {
       if (!(await Promise.all(candidates.map(async (file) => { try { return (await stat(file)).isFile(); } catch { return false; } }))).some(Boolean)) throw new Error(`Broken internal link: ${path} -> ${target}`);
     }
   }
-  console.log(`Verified ${snapshot.events.length} events, content/tags, map locations, historical aliases, Storyline links and internal export links (${snapshot.mode}).`);
+  console.log(`Verified ${snapshot.events.length} events, searchable index, citations, content/tags, map locations, historical aliases, Storyline links and internal export links (${snapshot.mode}).`);
 }
 if (process.argv[1]?.endsWith("check-publication-export.ts")) checkPublicationExport(process.argv.includes("--require-live")).catch((error) => { console.error(error); process.exitCode = 1; });

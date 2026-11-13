@@ -60,6 +60,13 @@ build step.
 gzip-equivalent sizes, and compressed bytes per event. It fails when the
 generated payload exceeds its regression budgets.
 
+The browser preloads `/timeline-index.json`, which includes full searchable
+descriptions and references to citations. Modals request their entry's citations
+on opening, cache them, and offer retry/permanent-page access if loading fails.
+Permanent entry pages include citations directly. `/timeline-data.json` remains
+the full public download used by source audits and publication fixtures. The
+unchanged startup-size budgets apply to the smaller browser index.
+
 `npm run check:source-links` audits citation URLs from the published timeline
 and hyperlinks in published HTML. It seeds the crawl from the public sitemap,
 follows internal pages, and checks internal/external destinations and fragment

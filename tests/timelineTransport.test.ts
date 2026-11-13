@@ -3,6 +3,7 @@ import test from "node:test";
 import { encodeTimelineData, decodeTimelineData } from "../src/lib/timelineTransport.ts";
 import { filterTimelineEvents } from "../src/components/timelineFiltering.ts";
 import type { HomeTimelineData } from "../src/lib/homeTimelineData.ts";
+import { getEventSourceRevisions } from "../src/lib/eventSources.ts";
 
 const data: HomeTimelineData = {
   events: [{
@@ -43,4 +44,29 @@ test("invalid tag references fail instead of silently losing membership", () => 
   const compact = encodeTimelineData(data);
   compact.events[0].tags = [999];
   assert.throws(() => decodeTimelineData(compact), /Invalid timeline tag/);
+});
+
+test("the searchable index retains full text and dates while replacing citations with revisions", () => {
+  const revisions = getEventSourceRevisions(data.events);
+  const encoded = encodeTimelineData(data, revisions);
+  assert.equal(encoded.version, 2);
+  assert.equal(encoded.events[0].sourceRevision, revisions.fixture);
+  assert.ok(!("sources" in encoded.events[0]));
+  const decoded = decodeTimelineData(JSON.parse(JSON.stringify(encoded)));
+  assert.deepEqual(decoded.sourceRevisions, revisions);
+  assert.deepEqual(decoded.events[0], { ...data.events[0], created_at: null, sources: null });
+  assert.equal(filterTimelineEvents({
+    events: decoded.events, activeCategory: null, startYear: -1, endYear: 2026,
+    selectedTagIds: [], isOldestFirst: true, searchQuery: "Unterhefe",
+  }).length, 1);
+});
+
+test("the index fails on missing citation references or accidentally embedded citations", () => {
+  assert.throws(() => encodeTimelineData(data, {}), /Missing source revision/);
+  const encoded = encodeTimelineData(data, getEventSourceRevisions(data.events));
+  encoded.events[0].sources = data.events[0].sources!;
+  assert.throws(() => decodeTimelineData(encoded), /Invalid source reference/);
+  delete encoded.events[0].sources;
+  delete encoded.events[0].sourceRevision;
+  assert.throws(() => decodeTimelineData(encoded), /Invalid source reference/);
 });

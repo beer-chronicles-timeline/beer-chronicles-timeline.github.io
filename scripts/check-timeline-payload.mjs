@@ -2,12 +2,11 @@ import { appendFile, readFile, mkdir, writeFile } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
 import { capacityForecast } from "./performance-report.mts";
 
-const TIMELINE_PATH = new URL("../out/timeline-data.json", import.meta.url);
+const TIMELINE_PATH = new URL("../out/timeline-index.json", import.meta.url);
 const HOMEPAGE_PATH = new URL("../out/index.html", import.meta.url);
-// Compact transport measured on the 590-entry September 2026 snapshot:
-// ~893 KiB raw / ~317 KiB gzip, retaining full descriptions and sources.
-// Keep the existing ceilings: approximately 125 similarly sized entries
-// of headroom; report a growth forecast so this can be revisited in time.
+// Apply the unchanged browser-download ceilings to the eager, searchable index.
+// Citations load per entry; timeline-data.json remains the full public download
+// for source auditing and existing clients, without being fetched at startup.
 const MAX_RAW_BYTES = 1_150 * 1024;
 const MAX_GZIP_BYTES = 384 * 1024;
 const MAX_HOMEPAGE_GZIP_BYTES = 320 * 1024;
@@ -29,7 +28,7 @@ const forecast = capacityForecast(eventCount, rawBytes, gzipBytes, MAX_RAW_BYTES
 const { estimatedAdditionalEvents } = forecast;
 await mkdir("artifacts/performance", { recursive: true });
 await writeFile("artifacts/performance/capacity.json", JSON.stringify({
-  generatedAt: new Date().toISOString(), eventCount, rawBytes, gzipBytes,
+  generatedAt: new Date().toISOString(), payloadPath: "/timeline-index.json", eventCount, rawBytes, gzipBytes,
   homepageGzipBytes, limits: { rawBytes: MAX_RAW_BYTES, gzipBytes: MAX_GZIP_BYTES, homepageGzipBytes: MAX_HOMEPAGE_GZIP_BYTES },
   ...forecast,
   method: "Linear projection from current average event bytes; not compressed synthetic datasets or a fixed event limit.",

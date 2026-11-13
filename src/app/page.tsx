@@ -10,6 +10,7 @@ import ReadingRouteCard from "@/components/ReadingRouteCard";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import { createHomeTimelineIndex } from "@/lib/homeTimelineData";
 import type { TimelineEvent } from "@/lib/types";
+import { TIMELINE_INDEX_BOOTSTRAP } from "@/lib/timelineLoading";
 
 const TIMELINE_PREVIEW_COUNT = 6;
 
@@ -40,6 +41,7 @@ export default async function Home() {
       {/* React hoists this to <head>, preserving the root slash that Next's
           metadata resolver strips. All timeline query states share this URL. */}
       <link rel="canonical" href="https://beer-chronicles.org/" />
+      <script id="timeline-index-preload" dangerouslySetInnerHTML={{ __html: TIMELINE_INDEX_BOOTSTRAP }} />
       <HomepageStructuredData previewEvents={previewEvents} />
 
       <h1 className="sr-only">

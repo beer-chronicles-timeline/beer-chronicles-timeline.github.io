@@ -12,6 +12,7 @@ export async function preparePublication(args: string[]) {
   if (args.includes("--public-fixture")) {
     const path = args[args.indexOf("--public-fixture") + 1];
     const data = decodeTimelineData(JSON.parse(await readFile(path, "utf8")));
+    if (data.sourceRevisions) throw new Error("Publication fixtures require the full timeline-data.json download, including citations.");
     rows = { events: data.events, tags: data.tags, eventTags: data.events.flatMap((event) => (event.tags ?? []).map((tag) => ({ event_id: event.id, tag_id: tag.id }))) };
   } else if (fixture) {
     const value = args[args.indexOf("--fixture") + 1];
