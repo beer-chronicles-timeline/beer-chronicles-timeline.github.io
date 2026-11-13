@@ -5,6 +5,7 @@ import { getEventStaticParamSources } from "@/lib/eventPageData";
 import { getEventUrl } from "@/lib/eventUrls";
 import { getEventSitemapLastModified } from "@/lib/eventMetadata";
 import { getStorylineSitemapUrls } from "@/lib/storylines";
+import { READING_ROUTE_HREF } from "@/lib/readingRoute";
 
 export const dynamic = "force-static";
 
@@ -19,6 +20,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${BASE_URL}/storylines`,
+    },
+    {
+      url: `${BASE_URL}${READING_ROUTE_HREF}`,
     },
     {
       url: `${BASE_URL}/map`,

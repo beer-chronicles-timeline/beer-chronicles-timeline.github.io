@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import HomepageStructuredData from "@/components/HomepageStructuredData";
 import MainContentStart from "@/components/MainContentStart";
+import ReadingRouteCard from "@/components/ReadingRouteCard";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import { createHomeTimelineIndex } from "@/lib/homeTimelineData";
 import type { TimelineEvent } from "@/lib/types";
@@ -93,6 +94,8 @@ export default async function Home() {
       </header>
 
       <MainContentStart />
+
+      <ReadingRouteCard />
 
       <section
         aria-labelledby="storylines-promo-heading"

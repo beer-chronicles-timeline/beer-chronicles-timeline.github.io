@@ -5,6 +5,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import MainContentStart from "@/components/MainContentStart";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import ReadingRouteCard from "@/components/ReadingRouteCard";
 import {
   formatEventDate,
 } from "@/components/timelineUtils";
@@ -225,6 +226,10 @@ export default async function StorylinesPage() {
             Every storyline continues to grow as new,
             source-supported connections emerge.
           </p>
+        </div>
+
+        <div className="mt-8">
+          <ReadingRouteCard />
         </div>
 
         <nav

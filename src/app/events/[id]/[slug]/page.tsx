@@ -1,6 +1,7 @@
 // app/events/[id]/[slug]/page.tsx
 
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import EventDetailContent from "@/components/EventDetailContent";
@@ -29,6 +30,8 @@ import {
 
 import { getEventRouteParams, isKnownEventSlug } from "@/lib/eventAliases";
 import EventAliasRedirect from "@/components/EventAliasRedirect";
+import ReadingRouteNavigation from "@/components/ReadingRouteNavigation";
+import { getReadingRouteStops } from "@/lib/readingRoute";
 
 const BASE_URL = "https://beer-chronicles.org";
 const DEFAULT_SOCIAL_IMAGE =
@@ -151,6 +154,9 @@ export default async function EventPage({
   }
 
   const relatedEvents = getRelatedEvents(event, events);
+  const routeStops = getReadingRouteStops(events);
+  const routeLinks = routeStops.map(({ id, title, href }) => ({ id, title, href }));
+  const isRouteStop = routeLinks.some((stop) => stop.id === event.id);
   const connectedEvents = getConnectedEvents(event, events);
   const socialImage = event.image_url ?? DEFAULT_SOCIAL_IMAGE;
   const absoluteSocialImageUrl = new URL(
@@ -212,12 +218,23 @@ export default async function EventPage({
       <MainContentStart />
 
       <div className="mx-auto w-full max-w-3xl">
+        {isRouteStop && (
+          <Suspense fallback={null}>
+            <ReadingRouteNavigation eventId={event.id} stops={routeLinks} />
+          </Suspense>
+        )}
         <article className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">
           <EventDetailContent event={event} titleAs="h1" />
 
           <ConnectedHistory connections={connectedEvents} />
           <RelatedEventLinks relatedEvents={relatedEvents} />
         </article>
+
+        {isRouteStop && (
+          <Suspense fallback={null}>
+            <ReadingRouteNavigation eventId={event.id} stops={routeLinks} />
+          </Suspense>
+        )}
 
         <div className="mt-6 flex justify-center">
           <Link

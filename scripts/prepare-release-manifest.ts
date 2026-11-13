@@ -3,12 +3,13 @@ import { getEventRouteParams } from "../src/lib/eventAliases";
 import { getEventPath, getEventUrl } from "../src/lib/eventUrls";
 import type { PublicationSnapshot } from "../src/lib/publicationSnapshot";
 import { pageIdentity, PUBLIC_ORIGIN } from "./release-verification.mjs";
+import { READING_ROUTE_HREF } from "../src/lib/readingRoute";
 
 export async function prepareReleaseManifest() {
   const snapshot: PublicationSnapshot = JSON.parse(await readFile(".cache/publication.json", "utf8"));
   const publication = JSON.parse(await readFile("out/publication-status.json", "utf8"));
   const routes = new Map<string, { path: string; canonical: string; continueTo?: string }>();
-  for (const path of ["/", "/map", "/histogram", "/storylines", "/submit"]) {
+  for (const path of ["/", "/map", "/histogram", "/storylines", "/submit", READING_ROUTE_HREF]) {
     routes.set(path, { path, canonical: PUBLIC_ORIGIN + path });
   }
   const events = new Map(snapshot.events.map((event) => [event.id, event]));
