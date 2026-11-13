@@ -92,8 +92,8 @@ export default function EventCard({ event, onClick }: EventCardProps) {
 
       <Link
         href={getEventPath(event.id, event.title)}
-        onClick={(clickEvent) => {
-          clickEvent.preventDefault();
+        onNavigate={(navigationEvent) => {
+          navigationEvent.preventDefault();
           onClick();
         }}
         onKeyDown={(keyboardEvent) => {

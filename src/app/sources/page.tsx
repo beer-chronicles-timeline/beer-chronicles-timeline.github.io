@@ -88,7 +88,7 @@ export default function SourcesPage() {
       title: "Jan Brücklmeier: Bier verstehen",
       description:
         "An excellent book that explains the world of beer from the basics to the finest nuances. The historical chapters in particular were a valuable source for this project.",
-      imageUrl: "/images/bier-verstehen.png",
+      imageUrl: "/images/bier-verstehen.webp",
       link: "https://www.amazon.de/dp/3818613451?social_share=cm_sw_r_ffobk_cp_ud_dp_J14JVTKGM33QWZ8XPZ6G&bestFormat=true&linkCode=ll2&tag=beerchronicle-21&linkId=55a682dfcd4f6e2b69b83c7b6785b329&ref_=as_li_ss_tl",
       affiliate: true,
     },
