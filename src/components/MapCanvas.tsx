@@ -1,15 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  Map,
-  NavigationControl,
-  AttributionControl,
-  Marker,
-  setWorkerUrl,
-  type Map as MapLibreMap,
-} from "maplibre-gl";
-import { version as mapLibreVersion } from "maplibre-gl/package.json";
+import type { Map as MapLibreMap, Marker } from "maplibre-gl";
+import { loadMapLibre, type MapLibreEngine } from "@/lib/mapLibreLoader";
 import type { MapPlaceGroup } from "@/lib/mapPlaceGroups";
 import styles from "./MapExplorer.module.css";
 
@@ -73,6 +66,7 @@ export default function MapCanvas({
 }: MapCanvasProps) {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
+  const engineRef = useRef<MapLibreEngine | null>(null);
   const markersRef = useRef<Marker[]>([]);
   const [mapReady, setMapReady] = useState(false);
   const [mapUnavailable, setMapUnavailable] = useState(false);
@@ -80,50 +74,54 @@ export default function MapCanvas({
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
-    // v6 uses a separate module worker with a shared module dependency.
-    // Both are copied from the locked package before dev/build for static hosting.
-    setWorkerUrl(`/maplibre/${mapLibreVersion}/maplibre-gl-worker.mjs`);
-    let map: MapLibreMap;
-    try {
-      map = new Map({
-        container: mapContainerRef.current,
-        center: [8, 28],
-        zoom: 1.15,
-        minZoom: 1,
-        maxZoom: 12,
-        attributionControl: false,
-        style: "https://tiles.openfreemap.org/styles/positron",
-      });
-    } catch {
-      // v6 requires WebGL2. Keep search and the server-rendered place index
-      // available when the browser cannot initialize the map renderer.
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- Reflect the result of initializing an external renderer; this cannot run during render.
-      setMapUnavailable(true);
-      return;
-    }
-
-    map.addControl(
-      new NavigationControl({ showCompass: false }),
-      "top-right"
-    );
-    map.addControl(
-      new AttributionControl({ compact: true }),
-      "bottom-right"
-    );
-    mapRef.current = map;
-    setMapReady(true);
+    let active = true;
+    void loadMapLibre().then((engine) => {
+      if (!active || !mapContainerRef.current) return;
+      let map: MapLibreMap;
+      try {
+        map = new engine.Map({
+          container: mapContainerRef.current,
+          center: [8, 28],
+          zoom: 1.15,
+          minZoom: 1,
+          maxZoom: 12,
+          attributionControl: false,
+          style: "https://tiles.openfreemap.org/styles/positron",
+        });
+      } catch {
+        // Keep search and the place index usable without a working renderer.
+        setMapUnavailable(true);
+        return;
+      }
+      map.addControl(
+        new engine.NavigationControl({ showCompass: false }),
+        "top-right"
+      );
+      map.addControl(
+        new engine.AttributionControl({ compact: true }),
+        "bottom-right"
+      );
+      engineRef.current = engine;
+      mapRef.current = map;
+      setMapReady(true);
+    }).catch(() => {
+      if (active) setMapUnavailable(true);
+    });
 
     return () => {
+      active = false;
       markersRef.current.forEach((marker) => marker.remove());
       markersRef.current = [];
-      map.remove();
+      mapRef.current?.remove();
       mapRef.current = null;
+      engineRef.current = null;
     };
   }, []);
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !mapReady) return;
+    const engine = engineRef.current;
+    if (!map || !mapReady || !engine) return;
 
     const renderMarkers = () => {
       markersRef.current.forEach((marker) => marker.remove());
@@ -163,7 +161,7 @@ export default function MapCanvas({
             onSelectPlace(markerGroup.placeGroups[0].placeId);
           });
 
-          return new Marker({ element: button })
+          return new engine.Marker({ element: button })
             .setLngLat([markerGroup.longitude, markerGroup.latitude])
             .addTo(map);
         }
@@ -199,6 +197,11 @@ export default function MapCanvas({
         className={styles.mapCanvas}
         aria-label="World map of Beer Chronicles entries"
       />
+      {!mapReady && !mapUnavailable && (
+        <div className={styles.mapLoading} role="status">
+          Loading interactive map…
+        </div>
+      )}
       {mapUnavailable && (
         <p className={`${styles.mapLoading} px-6 text-center`} role="status">
           Interactive map unavailable. Use place search or browse the reviewed

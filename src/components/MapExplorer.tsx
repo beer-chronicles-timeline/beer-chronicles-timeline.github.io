@@ -4,8 +4,9 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { FormEvent, useCallback, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useHydrated } from "@/lib/useHydrated";
+import { loadMapLibre } from "@/lib/mapLibreLoader";
 import type { MapLocation } from "@/lib/mapLocations";
 import {
   buildMapPlaceGroups,
@@ -46,6 +47,13 @@ export default function MapExplorer({ locations }: MapExplorerProps) {
   // Static HTML must not accept edits before React can handle them. Map
   // rendering is independent: search becomes usable as soon as we hydrate.
   const isReady = useHydrated();
+  useEffect(() => {
+    if (isReady) {
+      // Begin after search is usable, while the small canvas component loads.
+      // MapCanvas owns the loading and failure states for this shared request.
+      void loadMapLibre().catch(() => {});
+    }
+  }, [isReady]);
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
   const [period, setPeriod] = useState<PeriodFilter>("all");
   const [category, setCategory] = useState("all");

@@ -37,7 +37,9 @@ asset. `timelineReadyMs` additionally waits for the full searchable collection,
 including completion of the preloaded `/timeline-index.json` response. Citations
 are requested only when a modal opens, so they are excluded from startup bytes.
 Encoded JS sizes are response bodies, not complete wire sizes or the
-worker's complete memory/rendering cost. Approximate blocking time covers the
+worker's complete memory/rendering cost. Cached module bodies can appear more
+than once in Resource Timing, so compare actual transferred bytes separately
+when evaluating shared modules. Approximate blocking time covers the
 load observation window and is not a Lighthouse score.
 
 The deploy workflow recovers retained measurement artifacts from earlier fully
@@ -124,6 +126,20 @@ Synthetic fixtures are structural stress tests; their short repeated text is
 not a realistic bandwidth forecast. A saved public payload can be used for a
 more representative local test without querying the backend. Never deploy a
 fixture export; the live-publication gate rejects it.
+
+## Map startup
+
+The map loads MapLibre's official ESM engine, shared dependency and module worker
+from `/maplibre/<locked-version>/`. The preparation script copies all three from
+the installed package before development and builds. Keeping these files together
+lets the page and worker reuse the same shared dependency.
+
+Loading starts after the map controls hydrate and shares one promise with the
+canvas component. A module preload starts the shared dependency alongside the
+engine. Failed loading leaves place search and the server-rendered index usable.
+For transfer comparisons, use production-equivalent cache headers: the standard
+diagnostic server disables caching and its encoded-body totals do not measure
+the savings from reuse between the page and worker.
 
 ## Monthly owner review
 
