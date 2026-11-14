@@ -13,6 +13,7 @@ import RelatedEventLinks from "@/components/RelatedEventLinks";
 import ConnectedHistory from "@/components/ConnectedHistory";
 import { getConnectedEvents } from "@/lib/eventConnections";
 import { getEventDocumentTitle } from "@/lib/eventMetadata";
+import { getOpenGraphImageMetadata } from "@/lib/siteMetadata";
 import ScrollToTop from "@/components/ScrollToTop";
 import {
   getRelatedEvents,
@@ -101,14 +102,9 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "Beer Chronicles",
       type: "article",
-      images: [
-        {
-          url: socialImage,
-          alt: event.image_url
-            ? event.title
-            : "Beer Chronicles — A Timeline of Beer History",
-        },
-      ],
+      images: event.image_url
+        ? [{ url: event.image_url, alt: event.title }]
+        : getOpenGraphImageMetadata().images,
     },
     twitter: {
       card: "summary_large_image",
