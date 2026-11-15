@@ -53,7 +53,7 @@ test("skip link moves focus past the repeated site header", async ({
     .toBe(true);
 });
 
-test("timeline announces one debounced filtered result update", async ({
+test("timeline announces the settled filtered result count", async ({
   page,
 }) => {
   await page.goto("/");
@@ -64,10 +64,15 @@ test("timeline announces one debounced filtered result update", async ({
   const resultsStatus = controls.getByRole("status");
 
   await expect(controls.getByRole("button", { name: "Laws" })).toBeVisible();
-  await expect(resultsStatus).toBeEmpty();
+  // Completing the initial collection can already announce its total. Wait for
+  // it before checking that a filter announces the new, visible result count.
+  await expect(page.getByText("Loading the full timeline. Results may be incomplete.", { exact: true })).toHaveCount(0);
   await controls.getByRole("button", { name: "Laws" }).click();
+  const filteredCount = controls.getByText(/^Showing \d+ of \d+ events$/);
+  await expect(filteredCount).toBeVisible();
+  const expectedAnnouncement = (await filteredCount.innerText()).replace(/\s+/g, " ").trim() + ".";
   await expect(resultsStatus).toHaveText(
-    /Showing \d+ of \d+ events\./,
+    expectedAnnouncement,
     { timeout: 2_000 }
   );
 });
