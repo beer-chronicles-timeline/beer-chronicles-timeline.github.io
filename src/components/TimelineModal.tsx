@@ -169,7 +169,15 @@ export default function TimelineModal({
   const handleContentClickCapture = (
     mouseEvent: ReactMouseEvent<HTMLDivElement>
   ) => {
-    if (!onOpenFilterLink) {
+    if (
+      !onOpenFilterLink ||
+      mouseEvent.defaultPrevented ||
+      mouseEvent.button !== 0 ||
+      mouseEvent.ctrlKey ||
+      mouseEvent.metaKey ||
+      mouseEvent.shiftKey ||
+      mouseEvent.altKey
+    ) {
       return;
     }
 
@@ -198,6 +206,13 @@ export default function TimelineModal({
 
     mouseEvent.preventDefault();
     onOpenFilterLink(href);
+  };
+
+  const handleOpenRelatedEvent = (relatedEvent: TimelineEvent) => {
+    // The activated suggestion disappears when it becomes the current entry.
+    // Keep focus on a control that survives both related and connected changes.
+    closeButtonRef.current?.focus({ preventScroll: true });
+    onOpenRelatedEvent(relatedEvent);
   };
 
   return (
@@ -251,16 +266,11 @@ export default function TimelineModal({
 
         <ConnectedHistory
           connections={connectedEvents}
-          onOpenEvent={(connectedEvent) => {
-            // The selected card is replaced when navigating to its counterpart.
-            // Keep keyboard focus in the dialog on a control that survives.
-            closeButtonRef.current?.focus({ preventScroll: true });
-            onOpenRelatedEvent(connectedEvent);
-          }}
+          onOpenEvent={handleOpenRelatedEvent}
         />
         <RelatedEvents
           relatedEvents={relatedEvents}
-          onOpenRelatedEvent={onOpenRelatedEvent}
+          onOpenRelatedEvent={handleOpenRelatedEvent}
         />
 
         {!isRandomDiscovery && (
