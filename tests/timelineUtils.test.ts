@@ -18,6 +18,7 @@ function createEvent({
   eventDate = null,
   historicalYear = null,
   datePrecision = "year",
+  description = null,
   category = null,
   tags = [],
 }: {
@@ -25,13 +26,14 @@ function createEvent({
   eventDate?: string | null;
   historicalYear?: number | null;
   datePrecision?: DatePrecision | null;
+  description?: string | null;
   category?: string | null;
   tags?: TimelineEvent["tags"];
 }): TimelineEvent {
   return {
     id,
     title: id,
-    description: null,
+    description,
     event_date: eventDate,
     historical_year: historicalYear,
     image_url: null,
@@ -114,9 +116,9 @@ test("formats historical-year decade boundaries without year zero", () => {
 
 test("formats historical-year century boundaries", () => {
   const cases = [
-    [-11000, "c. 11,000 BCE"],
-    [-10901, "c. 11,000 BCE"],
-    [-10900, "c. 10,900 BCE"],
+    [-11000, "ca. 11,000 BCE"],
+    [-10901, "ca. 11,000 BCE"],
+    [-10900, "ca. 10,900 BCE"],
     [-9900, "99th century BCE"],
     [-100, "1st century BCE"],
     [-1, "1st century BCE"],
@@ -149,7 +151,56 @@ test("formats date-backed very ancient centuries as approximate years", () => {
     datePrecision: "century",
   });
 
-  assert.equal(formatEventDate(event), "c. 11,000 BCE");
+  assert.equal(formatEventDate(event), "ca. 11,000 BCE");
+});
+
+test("reviewed date labels preserve the stated uncertainty without changing chronology", () => {
+  const cases = [
+    {
+      id: "9d9bd659-d8bd-4990-950c-c4d83352e542",
+      eventDate: "1158-01-01",
+      description: "Between about 1151 and 1158, Hildegard compiled Physica.",
+      label: "ca. 1151–1158",
+      year: 1158,
+    },
+    {
+      id: "7b9ed8c2-2db7-4ad8-a067-9cc37d748e4b",
+      eventDate: "1799-01-01 BC",
+      description: "Around 1800 BCE, scribes copied the Hymn to Ninkasi.",
+      label: "ca. 1800 BCE",
+      year: -1800,
+    },
+  ];
+  for (const { label, year, ...properties } of cases) {
+    const event = createEvent(properties);
+    const before = structuredClone(event);
+    const sortValue = getEventChronologicalSortValue(event);
+    assert.equal(formatEventDate(event), label);
+    assert.equal(getEventTimelineYear(event), year);
+    assert.equal(getEventChronologicalSortValue(event), sortValue);
+    assert.deepEqual(event, before);
+  }
+});
+
+test("reviewed labels cannot override revised dates, precision or entry text", () => {
+  const event = createEvent({
+    id: "9d9bd659-d8bd-4990-950c-c4d83352e542",
+    eventDate: "1158-01-01",
+    description: "Between about 1151 and 1158, Hildegard compiled Physica.",
+  });
+  assert.equal(formatEventDate({ ...event, event_date: "1160-01-01" }), "1160");
+  assert.equal(formatEventDate({ ...event, date_precision: "date" }), "January 1, 1158");
+  assert.equal(formatEventDate({ ...event, description: "Revised entry text." }), "1158");
+  assert.equal(formatEventDate({ ...event, description: null }), "1158");
+});
+
+test("date qualifications are not inferred for unreviewed entries", () => {
+  const event = createEvent({
+    id: "unreviewed-entry",
+    eventDate: "1800-01-01",
+    description: "Around 1800, a synthetic test event occurred.",
+  });
+  assert.equal(formatEventDate(event), "1800");
 });
 
 test("safely handles historical years with date or month precision", () => {

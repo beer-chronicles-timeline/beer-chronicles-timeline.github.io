@@ -57,3 +57,47 @@ test("the card, overview and reading controls fit a narrow phone @mobile", async
   await page.goto("/storylines");
   await expect(card.getByRole("link", { name: "Start reading" })).toBeVisible();
 });
+
+test("reviewed approximate dates agree on cards and entry dialogs @journey", async ({ page, request }) => {
+  const data = await (await request.get("/timeline-index.json")).json();
+  const reviewedDates = [
+    {
+      id: "9d9bd659-d8bd-4990-950c-c4d83352e542",
+      event_date: "1158-01-01",
+      description: "Between about 1151 and 1158, Hildegard compiled Physica.",
+      label: "ca. 1151–1158",
+    },
+    {
+      id: "7b9ed8c2-2db7-4ad8-a067-9cc37d748e4b",
+      event_date: "1799-01-01 BC",
+      description: "Around 1800 BCE, scribes copied the Hymn to Ninkasi.",
+      label: "ca. 1800 BCE",
+    },
+  ];
+  // Exercise the reviewed presentation in both synthetic and live builds.
+  // All substitutions remain in this test's local HTTP response.
+  data.events = reviewedDates.map(({ id, event_date, description }) => {
+    const original = data.events.find((event: { id: string }) => event.id === id);
+    expect(original).toBeDefined();
+    return { ...original, event_date, description, historical_year: null, date_precision: "year" };
+  });
+  await page.route("**/timeline-index.json*", (route) => route.fulfill({ json: data }));
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto("/");
+  const cards = page.getByRole("list", { name: "Beer history timeline" }).getByRole("listitem");
+  await expect(cards).toHaveCount(2);
+
+  for (const { id, label } of reviewedDates) {
+    const title = data.events.find((event: { id: string }) => event.id === id).title;
+    const link = page.getByRole("link", { name: `Open event: ${title}`, exact: true });
+    await expect(cards.filter({ has: link }).getByText(label, { exact: true })).toBeVisible();
+    await link.click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog.getByText(label, { exact: true })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    if (id === reviewedDates[0].id) {
+      await page.screenshot({ path: test.info().outputPath("reviewed-date-labels.png") });
+    }
+    await dialog.getByRole("button", { name: "Close", exact: true }).click();
+  }
+});

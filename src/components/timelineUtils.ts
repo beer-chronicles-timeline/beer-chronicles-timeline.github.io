@@ -1,6 +1,7 @@
 // components/timelineUtils.ts
 import type { TimelineEvent } from "@/lib/types";
 import { getConnectedEvents } from "@/lib/eventConnections";
+import { APPROXIMATE_DATE_PREFIX, getReviewedEventDateLabel } from "@/lib/eventDateDisplay";
 
 export const urlRegex = /\b(https?:\/\/[^\s)]+|www\.[^\s)]+)\b/gi;
 
@@ -132,7 +133,7 @@ function formatCenturyLabel(
       "en-US"
     );
 
-    return `c. ${approximateYear} BCE`;
+    return `${APPROXIMATE_DATE_PREFIX} ${approximateYear} BCE`;
   }
 
   const centuryLabel = `${formatOrdinal(centuryNumber)} century`;
@@ -234,6 +235,9 @@ export function compareEventsChronologicallyDescending(
 }
 
 export function formatEventDate(event: TimelineEvent): string {
+  const reviewedLabel = getReviewedEventDateLabel(event, getEventTimelineYear(event));
+  if (reviewedLabel) return reviewedLabel;
+
   if (
     event.historical_year !== null &&
     event.historical_year !== 0
