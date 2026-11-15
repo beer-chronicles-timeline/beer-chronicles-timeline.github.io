@@ -63,12 +63,9 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
   const plotWidth = Math.max(1, width - left - right);
   const rangeStart = yearCoordinate(from);
   const span = yearCoordinate(to) - rangeStart + 1;
-  const x = (coordinate: number) => left + (coordinate - rangeStart) / span * plotWidth;
   const y = (count: number) => bottom - count / ceiling * (bottom - top);
   const active = selectedIndex === null ? null : bins[Math.min(selectedIndex, bins.length - 1)];
   const binValid = /^\d+$/.test(binDraft) && Number.isSafeInteger(Number(binDraft)) && Number(binDraft) > 0;
-  const labelCount = width < 500 ? 3 : 6;
-  const labelIndices = [...new Set(Array.from({ length: labelCount }, (_, index) => Math.round(index * (bins.length - 1) / (labelCount - 1))))];
 
   function changeFrom(value: number) { setFrom(value); setSelectedIndex(null); }
   function changeTo(value: number) { setTo(value); setSelectedIndex(null); }
@@ -78,6 +75,37 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
     const coordinate = rangeStart + Math.max(0, Math.min(1, (clientX - bounds.left - left) / plotWidth)) * span;
     const index = bins.findIndex((bin) => yearCoordinate(bin.to) + 1 > coordinate);
     setSelectedIndex(index < 0 ? bins.length - 1 : index);
+  }
+
+  function renderChart(chartWidth: number, suffix = "") {
+    const plotWidth = Math.max(1, chartWidth - left - right);
+    const x = (coordinate: number) => left + (coordinate - rangeStart) / span * plotWidth;
+    const labelCount = chartWidth < 500 ? 3 : 6;
+    const labelIndices = [...new Set(Array.from({ length: labelCount }, (_, index) => Math.round(index * (bins.length - 1) / (labelCount - 1))))];
+
+    return (
+      <svg width="100%" height="356" viewBox={`0 0 ${chartWidth} 356`} role="img" aria-labelledby={`histogram-chart-title${suffix} histogram-chart-description${suffix}`} onPointerMove={(event) => {
+        const previous = pointerPosition.current;
+        if (event.pointerType === "mouse" && (!previous || previous.x !== event.clientX || previous.y !== event.clientY)) selectAt(event.clientX);
+      }} onClick={(event) => selectAt(event.clientX)}>
+        <title id={`histogram-chart-title${suffix}`}>{`Timeline entry counts, ${histogramRangeLabel(from, to)}`}</title>
+        <desc id={`histogram-chart-description${suffix}`}>Time is on the horizontal axis. Number of entries is on the vertical axis, starting at zero. Exact counts are also available in the table below.</desc>
+        <text x="0" y="14" fontSize="12" fill="#57534e">Number of entries</text>
+        {ticks.map((tick) => <g key={tick}>
+          <line x1={left} x2={chartWidth - right} y1={y(tick)} y2={y(tick)} stroke="#e7e5e4" />
+          <text x={left - 10} y={y(tick) + 4} textAnchor="end" fontSize="12" fill="#57534e">{tick}</text>
+        </g>)}
+        {bins.map((bin) => {
+          const barX = x(yearCoordinate(bin.from));
+          const barWidth = x(yearCoordinate(bin.to) + 1) - barX;
+          return <rect key={bin.from} x={barX} y={y(bin.count)} width={barWidth} height={bottom - y(bin.count)} fill={active === bin ? "#a16207" : "#57534e"} stroke="#ffffff" strokeWidth={barWidth > 3 ? 0.7 : 0} />;
+        })}
+        {active && <rect x={x(yearCoordinate(active.from))} y={top} width={x(yearCoordinate(active.to) + 1) - x(yearCoordinate(active.from))} height={bottom - top} fill="#a16207" fillOpacity="0.08" stroke="#a16207" strokeWidth="1" />}
+        <line x1={left} x2={chartWidth - right} y1={bottom} y2={bottom} stroke="#78716c" />
+        {labelIndices.map((index, position) => <text key={index} x={position === labelIndices.length - 1 && bins.length > 1 ? chartWidth - right : x(yearCoordinate(bins[index].from))} y={bottom + 23} textAnchor={position === 0 ? "start" : position === labelIndices.length - 1 ? "end" : "middle"} fontSize="12" fill="#57534e">{histogramYearLabel(position === labelIndices.length - 1 && bins.length > 1 ? to : bins[index].from)}</text>)}
+        <text x={left + plotWidth / 2} y="346" textAnchor="middle" fontSize="12" fill="#57534e">Year</text>
+      </svg>
+    );
   }
 
   return (
@@ -148,27 +176,13 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
             setSelectedIndex((index) => event.key === "Home" ? 0 : event.key === "End" ? bins.length - 1 : Math.max(0, Math.min(bins.length - 1, (index ?? (event.key === "ArrowRight" ? -1 : bins.length)) + (event.key === "ArrowRight" ? 1 : -1))));
           }}
         >
-          <svg width="100%" height="356" viewBox={`0 0 ${width} 356`} role="img" aria-labelledby="histogram-chart-title histogram-chart-description" onPointerMove={(event) => {
-            const previous = pointerPosition.current;
-            if (event.pointerType === "mouse" && (!previous || previous.x !== event.clientX || previous.y !== event.clientY)) selectAt(event.clientX);
-          }} onClick={(event) => selectAt(event.clientX)}>
-            <title id="histogram-chart-title">{`Timeline entry counts, ${histogramRangeLabel(from, to)}`}</title>
-            <desc id="histogram-chart-description">Time is on the horizontal axis. Number of entries is on the vertical axis, starting at zero. Exact counts are also available in the table below.</desc>
-            <text x="0" y="14" fontSize="12" fill="#57534e">Number of entries</text>
-            {ticks.map((tick) => <g key={tick}>
-              <line x1={left} x2={width - right} y1={y(tick)} y2={y(tick)} stroke="#e7e5e4" />
-              <text x={left - 10} y={y(tick) + 4} textAnchor="end" fontSize="12" fill="#57534e">{tick}</text>
-            </g>)}
-            {bins.map((bin) => {
-              const barX = x(yearCoordinate(bin.from));
-              const barWidth = x(yearCoordinate(bin.to) + 1) - barX;
-              return <rect key={bin.from} x={barX} y={y(bin.count)} width={barWidth} height={bottom - y(bin.count)} fill={active === bin ? "#a16207" : "#57534e"} stroke="#ffffff" strokeWidth={barWidth > 3 ? 0.7 : 0} />;
-            })}
-            {active && <rect x={x(yearCoordinate(active.from))} y={top} width={x(yearCoordinate(active.to) + 1) - x(yearCoordinate(active.from))} height={bottom - top} fill="#a16207" fillOpacity="0.08" stroke="#a16207" strokeWidth="1" />}
-            <line x1={left} x2={width - right} y1={bottom} y2={bottom} stroke="#78716c" />
-            {labelIndices.map((index, position) => <text key={index} x={position === labelIndices.length - 1 && bins.length > 1 ? width - right : x(yearCoordinate(bins[index].from))} y={bottom + 23} textAnchor={position === 0 ? "start" : position === labelIndices.length - 1 ? "end" : "middle"} fontSize="12" fill="#57534e">{histogramYearLabel(position === labelIndices.length - 1 && bins.length > 1 ? to : bins[index].from)}</text>)}
-            <text x={left + plotWidth / 2} y="346" textAnchor="middle" fontSize="12" fill="#57534e">Year</text>
-          </svg>
+          {isReady ? renderChart(width) : (
+            <>
+              <div className="sm:hidden">{renderChart(256, "-small")}</div>
+              <div className="hidden sm:block lg:hidden">{renderChart(576, "-medium")}</div>
+              <div className="hidden lg:block">{renderChart(900, "-large")}</div>
+            </>
+          )}
         </div>
         <div id="histogram-selection" role="status" className="mt-2 min-h-11 rounded-md bg-stone-100 px-3 py-3 text-sm text-stone-800">
           {active ? <><strong>{histogramRangeLabel(active.from, active.to)}</strong><span className="mx-2">·</span>{active.count} {active.count === 1 ? "entry" : "entries"}</> : total === 0 ? "No entries in this date range." : "Select a bin to see its exact range and entry count."}

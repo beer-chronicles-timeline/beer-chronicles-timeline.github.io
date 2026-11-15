@@ -103,7 +103,7 @@ jobs:
         continue-on-error: true
         env:
           PERFORMANCE_HISTORY_PATH: .cache/performance-history.json
-        run: npm run measure:timeline-mobile
+        run: npm run measure:release-mobile
 
       - name: Retain release measurements
         if: always() && steps.checks.outputs.full_checks == 'true'

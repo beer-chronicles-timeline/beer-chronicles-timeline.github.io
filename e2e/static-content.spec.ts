@@ -53,5 +53,15 @@ test.describe("Static content without JavaScript", () => {
     await page.setViewportSize({ width: 320, height: 800 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.screenshot({ path: test.info().outputPath("histogram-static-table.png"), fullPage: true });
+    for (const width of [320, 390, 768, 1280]) {
+      await page.setViewportSize({ width, height: 800 });
+      const chart = page.getByRole("img", { name: /^Timeline entry counts/ });
+      await expect(chart).toHaveCount(1);
+      const axisLabel = await chart.locator("text").filter({ hasText: "Number of entries" }).boundingBox();
+      expect(axisLabel!.height).toBeGreaterThan(10);
+      const barHeight = await chart.locator("rect").evaluateAll((bars) => Math.max(...bars.map((bar) => bar.getBoundingClientRect().height)));
+      expect(barHeight).toBeGreaterThan(150);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    }
   });
 });

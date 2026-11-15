@@ -1,9 +1,16 @@
+import { isControlledPerformancePair } from "./performance-reference.mjs";
+
 export type MetricSet = Record<string, number>;
 export type PerformanceReport = {
   schemaVersion: number;
   profileKey: string;
   commit: string;
   publicationMode: string;
+  eventCount?: number;
+  errors?: string[];
+  comparisonContext?: {
+    kind: string; role: string; runId: string; currentCommit: string; referenceCommit: string; snapshotHash: string;
+  };
   routes: { name: string; metrics: MetricSet }[];
 };
 
@@ -41,7 +48,10 @@ const thresholds: Record<string, { relative: number; absolute: number }> = {
 export function comparePerformance(current: PerformanceReport, baseline: PerformanceReport | null) {
   if (!baseline) return { comparable: false, reason: "No previous baseline", changes: [] };
   if (current.commit === baseline.commit) return { comparable: false, reason: "Same commit; refusing a self-comparison", changes: [] };
-  if (current.schemaVersion !== baseline.schemaVersion || current.profileKey !== baseline.profileKey || current.publicationMode !== baseline.publicationMode) {
+  const controlled = isControlledPerformancePair(current, baseline);
+  if (current.schemaVersion !== baseline.schemaVersion || current.profileKey !== baseline.profileKey ||
+      (baseline.comparisonContext?.role === "reference" && !controlled) ||
+      (current.publicationMode !== baseline.publicationMode && !controlled)) {
     return { comparable: false, reason: "Different schema, browser/host/profile or publication mode", changes: [] };
   }
   const changes = current.routes.flatMap((route) => {
@@ -54,7 +64,9 @@ export function comparePerformance(current: PerformanceReport, baseline: Perform
       return [{ route: route.name, metric, before, after, delta, warning: delta > Math.max(threshold.absolute, before * threshold.relative) }];
     });
   });
-  return { comparable: true, reason: `Compared with ${baseline.commit}`, changes };
+  return { comparable: true, reason: controlled
+    ? `Same-run code comparison with ${baseline.commit}: identical dataset, browser, hardware and measurement harness.`
+    : `Compared with ${baseline.commit}`, changes };
 }
 
 export function capacityForecast(eventCount: number, rawBytes: number, gzipBytes: number, rawLimit: number, gzipLimit: number) {

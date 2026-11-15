@@ -1,18 +1,30 @@
 import { selectPerformanceBaseline } from "./performance-history.mjs";
-import { appendFile, access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import { spawn, execFileSync } from "node:child_process";
 import { cpus } from "node:os";
 import { chromium } from "@playwright/test";
 import { median, calculateCls, comparePerformance } from "./performance-report.mts";
+import { savePerformanceReport } from "./performance-output.mjs";
+import { assertMeasurementContext } from "./performance-reference.mjs";
+import { resolve, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const count = Number(process.env.TIMELINE_PERFORMANCE_RUNS ?? 3);
 if (!Number.isInteger(count) || count < 1 || count > 10) throw new Error("TIMELINE_PERFORMANCE_RUNS must be 1-10");
 const network = { latency: 150, downloadThroughput: 1_600_000 / 8, uploadThroughput: 750_000 / 8 };
 const directory = process.env.PERFORMANCE_OUTPUT_DIR ?? "artifacts/performance";
-await access("out/timeline-index.json");
+const sourceDirectory = resolve(process.env.PERFORMANCE_SOURCE_DIR ?? ".");
+const exportDirectory = resolve(process.env.PERFORMANCE_EXPORT_DIR ?? join(sourceDirectory, "out"));
+await access(join(exportDirectory, "timeline-index.json"));
 await mkdir(directory, { recursive: true });
-const publication = JSON.parse(await readFile("out/publication-status.json", "utf8"));
+const publication = JSON.parse(await readFile(join(exportDirectory, "publication-status.json"), "utf8"));
+const commit = execFileSync("git", ["-C", sourceDirectory, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+const comparisonContext = process.env.PERFORMANCE_COMPARISON_CONTEXT_PATH
+  ? JSON.parse(await readFile(process.env.PERFORMANCE_COMPARISON_CONTEXT_PATH, "utf8")) : null;
+if (comparisonContext) {
+  assertMeasurementContext(comparisonContext, JSON.parse(await readFile(join(sourceDirectory, ".cache/publication.json"), "utf8")), publication, commit);
+}
 const cases = [
   { name: "timeline", path: "/" },
   { name: "map", path: "/map" },
@@ -28,14 +40,15 @@ const port = await new Promise((resolve, reject) => {
   });
 });
 const baseURL = `http://127.0.0.1:${port}`;
-const server = spawn(process.execPath, ["scripts/serve-export.mjs", String(port)], { stdio: "ignore", env: { ...process.env, PERFORMANCE_GZIP: "1" } });
+const server = spawn(process.execPath, [fileURLToPath(new URL("./serve-export.mjs", import.meta.url)), String(port)], { stdio: "ignore", env: { ...process.env, STATIC_EXPORT_DIR: exportDirectory, PERFORMANCE_GZIP: "1" } });
 let browser;
 const report = {
   schemaVersion: 1, generatedAt: new Date().toISOString(),
-  commit: process.env.GITHUB_SHA ?? execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
-  workingTreeDirty: Boolean(execFileSync("git", ["status", "--porcelain"], { encoding: "utf8" }).trim()),
+  commit,
+  workingTreeDirty: Boolean(execFileSync("git", ["-C", sourceDirectory, "status", "--porcelain"], { encoding: "utf8" }).trim()),
   publicationMode: publication.mode, eventCount: publication.eventCount,
-  profile: { runsPerRoute: count, observationWindowMs: 2000, nodeVersion: process.version, cpuModel: cpus()[0]?.model, logicalCpus: cpus().length, viewport: "390x844", dpr: 2, network, cpuSlowdown: 4, compression: "gzip", basemap: "synthetic background; no remote tiles", externalRequests: "blocked", platform: process.platform, arch: process.arch },
+  ...(comparisonContext ? { comparisonContext } : {}),
+  profile: { runsPerRoute: count, observationWindowMs: 2000, nodeVersion: process.version, cpuModel: cpus()[0]?.model, logicalCpus: cpus().length, viewport: "390x844", dpr: 2, network, cpuSlowdown: 4, compression: "gzip", basemap: "synthetic background; no remote tiles", externalRequests: "blocked", platform: process.platform, arch: process.arch, bundler: process.env.PERFORMANCE_BUNDLER ?? "turbopack" },
   profileKey: "", routes: [], errors: [],
   notes: "Diagnostic lab medians, not field CWV/INP. Interaction maximum covers only sampled events >=16ms; zero means none recorded above that threshold. Map excludes remote tile cost. Blocking time is an approximation over the observed load window.",
 };
@@ -189,18 +202,4 @@ if (!baselinePath && process.env.PERFORMANCE_HISTORY_PATH) {
 report.baselineHistory = historySelection && { source: historySelection.source, reason: historySelection.reason, notes: historySelection.notes };
 report.comparison = comparePerformance(report, baseline);
 if (historySelection && !baseline) report.comparison.reason = historySelection.reason;
-const warnings = report.comparison.changes.filter((change) => change.warning);
-const lines = [
-  "# Mobile performance diagnostics", "", report.notes, "",
-  `Commit: ${report.commit}${report.workingTreeDirty ? " (working tree changes)" : ""}; ${report.eventCount} events; ${report.publicationMode} publication; ${count} runs per route.`,
-  "", "| Route | LCP ms | CLS | JS gzip KiB | Ready ms | All entries ms | Sampled event max ms | Requests |", "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
-  ...report.routes.filter((r) => Object.keys(r.metrics).length).map(({ name, metrics: m }) => `| ${name} | ${Math.round(m.lcpMs)} | ${m.cls.toFixed(3)} | ${(m.jsEncodedBytes / 1024).toFixed(1)} | ${Math.round(m.readyMs)} | ${name === "timeline" ? Math.round(m.timelineReadyMs) : "—"} | ${m.interactionMaxMs} | ${m.requestCount} |`),
-  "", report.comparison.reason, "", ...(historySelection ? [historySelection.reason, ...historySelection.notes.map((note) => `- History: ${note}`), ""] : []), ...warnings.map((w) => `- Review ${w.route} ${w.metric}: ${w.before.toFixed(2)} -> ${w.after.toFixed(2)}`),
-  ...report.errors.map((error) => `- Measurement error: ${error}`), "",
-];
-await writeFile(`${directory}/performance.json`, JSON.stringify(report, null, 2) + "\n");
-await writeFile(`${directory}/performance.md`, lines.join("\n"));
-if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, lines.join("\n"));
-console.log(report.comparison.reason);
-for (const warning of warnings) console.warn(`Review ${warning.route} ${warning.metric}: ${warning.before} -> ${warning.after}`);
-if (report.errors.length) console.error(report.errors.join("\n"));
+await savePerformanceReport(report, directory, process.env.PERFORMANCE_SKIP_SUMMARY === "1" ? null : undefined);

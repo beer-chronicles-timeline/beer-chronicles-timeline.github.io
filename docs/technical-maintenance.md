@@ -59,6 +59,27 @@ an explicit local report; PERFORMANCE_HISTORY_PATH selects the recovered history
 JSON; PERFORMANCE_OUTPUT_DIR changes the report destination. Same-commit
 comparisons are rejected. Reports from dirty working trees are labelled.
 
+Release CI uses `npm run measure:release-mobile`. When no historical report
+matches the runner, it rebuilds the previous published commit in an isolated
+temporary worktree using the current validated dataset. It never prepares that
+reference from Supabase. Both exports are measured sequentially with the current
+measurement harness, browser, hardware, network and CPU profile. The reference
+remains a fixture; only the candidate's live export is eligible for deployment.
+
+The controlled comparison records both commits, a run identity and a SHA-256
+fingerprint of all events, tags and event-tag rows. Each measurement validates
+its actual snapshot and export identity. A fixture reference is accepted only
+for that verified pair; ordinary fixture/live and hardware mismatches remain
+incompatible. The result compares code against the same dataset, rather than
+claiming to reproduce the earlier publication's content. Reference measurements
+are retained under `artifacts/performance/reference/` in the release artifact.
+
+For local offline smoke checks, `PERFORMANCE_REFERENCE_COMMIT` can select a
+distinct ancestor and `PERFORMANCE_BUNDLER=webpack` must match a Webpack candidate
+export. `PERFORMANCE_SOURCE_DIR` and `PERFORMANCE_EXPORT_DIR` select the source
+and export for the shared harness. Use one run only for smoke checks. Normal CI
+retains three samples and all original timing and capacity thresholds.
+
 Timing warnings remain advisory. Review increases beyond both 20% and 300 ms
 for LCP/readiness; 20% and 32 ms for sampled event duration; 20% and 50 ms for
 approximate blocking; 10% and 16 KiB for compressed JS; 10% and 64 KiB for decoded

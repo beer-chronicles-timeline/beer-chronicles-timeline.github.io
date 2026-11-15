@@ -11,6 +11,7 @@
     "check:source-links": "tsx scripts/check-source-links.ts",
     "check:timeline-payload": "node scripts/check-timeline-payload.mjs",
     "measure:timeline-mobile": "node scripts/measure-timeline-mobile.mjs",
+    "measure:release-mobile": "node scripts/measure-release-mobile.mjs",
     "start": "next start",
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts",

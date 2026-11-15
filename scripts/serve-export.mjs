@@ -3,7 +3,7 @@ import { readFile, stat } from "node:fs/promises";
 import { resolve, extname, sep } from "node:path";
 import { gzipSync } from "node:zlib";
 
-const root = resolve("out");
+const root = resolve(process.env.STATIC_EXPORT_DIR ?? "out");
 const mime = { ".html": "text/html", ".txt": "text/plain", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json", ".xml": "application/xml", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".woff2": "font/woff2", ".wasm": "application/wasm" };
 createServer(async (request, response) => {
   try {

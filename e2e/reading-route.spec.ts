@@ -62,6 +62,18 @@ test("reviewed approximate dates agree on cards and entry dialogs @journey", asy
   const data = await (await request.get("/timeline-index.json")).json();
   const reviewedDates = [
     {
+      id: "2b7e5d25-f9d4-4e55-8bb4-6ab9bf83fa22",
+      event_date: "2005-01-01",
+      description: "Around 2005, the reviewed entry places the development of BIAB.",
+      label: "ca. 2005",
+    },
+    {
+      id: "2e2ea2c0-6cc8-4b49-85db-a29643e01fc7",
+      event_date: "0439-01-01 BC",
+      description: "Around 440 BCE, the reviewed entry places Herodotus's account.",
+      label: "ca. 440 BCE",
+    },
+    {
       id: "9d9bd659-d8bd-4990-950c-c4d83352e542",
       event_date: "1158-01-01",
       description: "Between about 1151 and 1158, Hildegard compiled Physica.",
@@ -85,7 +97,7 @@ test("reviewed approximate dates agree on cards and entry dialogs @journey", asy
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto("/");
   const cards = page.getByRole("list", { name: "Beer history timeline" }).getByRole("listitem");
-  await expect(cards).toHaveCount(2);
+  await expect(cards).toHaveCount(reviewedDates.length);
 
   for (const { id, label } of reviewedDates) {
     const title = data.events.find((event: { id: string }) => event.id === id).title;
