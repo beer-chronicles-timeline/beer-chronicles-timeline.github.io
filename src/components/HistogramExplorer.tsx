@@ -26,7 +26,6 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
   const binSize = automatic ? automaticHistogramBinSize(from, to) : customBinSize;
   const binDraft = customBinDraft ?? String(binSize);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [showTable, setShowTable] = useState(false);
   const [width, setWidth] = useState(900);
   const chartRef = useRef<HTMLDivElement>(null);
   const pointerPosition = useRef<{ x: number; y: number } | null>(null);
@@ -179,13 +178,13 @@ export default function HistogramExplorer({ years, currentYear, undatedCount }: 
 
       <p className="mt-4 text-sm leading-6 text-stone-600">Each entry is counted once at the year used on the timeline, including entries dated approximately. The first and last bins are clipped to your selected range. There is no year zero. These counts describe the coverage of Beer Chronicles.</p>
       {undatedCount > 0 && <p className="mt-2 text-sm text-stone-600">{undatedCount} {undatedCount === 1 ? "entry has" : "entries have"} no usable timeline year and {undatedCount === 1 ? "is" : "are"} excluded.</p>}
-      <details inert={!isReady} className="mt-5 rounded-lg border border-stone-200 bg-white" onToggle={(event) => setShowTable(event.currentTarget.open)}>
+      <details className="mt-5 rounded-lg border border-stone-200 bg-white">
         <summary className="cursor-pointer rounded-lg px-4 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">Entry counts as a table</summary>
-        {showTable && <div tabIndex={0} className="max-h-80 overflow-auto px-4 pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"><table className="w-full text-left text-sm">
+        <div tabIndex={0} className="max-h-80 overflow-auto px-4 pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"><table className="w-full text-left text-sm">
           <caption className="sr-only">Entry counts by year range</caption>
           <thead className="sticky top-0 bg-white"><tr><th scope="col" className="py-2">Years</th><th scope="col" className="py-2 text-right">Entries</th></tr></thead>
           <tbody>{bins.map((bin) => <tr key={bin.from} className="border-t border-stone-100"><th scope="row" className="py-2 font-normal">{histogramRangeLabel(bin.from, bin.to)}</th><td className="py-2 text-right tabular-nums">{bin.count}</td></tr>)}</tbody>
-        </table></div>}
+        </table></div>
       </details>
     </section>
   );

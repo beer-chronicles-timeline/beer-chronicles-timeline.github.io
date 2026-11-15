@@ -62,7 +62,8 @@ for (const path of ["/", "/map", "/histogram", "/submit", correctionPath]) {
         if (path === "/histogram") {
           await expect(page.locator("#histogram-bin-size")).toBeDisabled();
           await expect(page.getByRole("group", { name: /^Histogram:/ })).toBeDisabled();
-          await expect(page.locator("details")).toHaveAttribute("inert", "");
+          await page.getByText("Entry counts as a table", { exact: true }).click();
+          await expect(page.getByRole("table")).toBeVisible();
         }
         releaseScripts();
         const committedYear = path === "/histogram" ? "1900" : "1800";
@@ -70,6 +71,10 @@ for (const path of ["/", "/map", "/histogram", "/submit", correctionPath]) {
         await input.press("Enter");
         const start = page.getByRole("slider", { name: "Start year", exact: true });
         await expect(start).toHaveAttribute("aria-valuetext", `${committedYear} CE`);
+        if (path === "/histogram") {
+          await expect(page.getByRole("table")).toBeVisible();
+          await expect(page.getByRole("rowheader").first()).toHaveText(/^1900–/);
+        }
         await input.fill(`${committedYear}junk`);
         await page.getByRole("textbox", { name: "End year", exact: true }).focus();
         await expect(input).toHaveAttribute("aria-invalid", "true");

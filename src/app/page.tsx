@@ -9,32 +9,14 @@ import MainContentStart from "@/components/MainContentStart";
 import ReadingRouteCard from "@/components/ReadingRouteCard";
 import { getHomeTimelineData } from "@/lib/homeTimelineData";
 import { createHomeTimelineIndex } from "@/lib/homeTimelineData";
-import type { TimelineEvent } from "@/lib/types";
 import { TIMELINE_INDEX_BOOTSTRAP } from "@/lib/timelineLoading";
 
-const TIMELINE_PREVIEW_COUNT = 6;
-
-function getTimelinePreviewEvents(
-  events: TimelineEvent[]
-): TimelineEvent[] {
-  if (events.length <= TIMELINE_PREVIEW_COUNT) {
-    return events;
-  }
-
-  return Array.from({ length: TIMELINE_PREVIEW_COUNT }, (_, index) => {
-    const eventIndex = Math.round(
-      (index * (events.length - 1)) / (TIMELINE_PREVIEW_COUNT - 1)
-    );
-
-    return events[eventIndex];
-  });
-}
+const TIMELINE_PREVIEW_COUNT = 60;
 
 export default async function Home() {
   const timelineData = await getHomeTimelineData();
   const timelineIndex = createHomeTimelineIndex(timelineData);
-  const { events } = timelineData;
-  const previewEvents = getTimelinePreviewEvents(events);
+  const previewEvents = timelineIndex.events.slice(0, TIMELINE_PREVIEW_COUNT);
 
   return (
     <main className="min-h-screen bg-stone-50 p-4 md:p-10 flex flex-col">
@@ -128,7 +110,7 @@ export default async function Home() {
       </section>
 
       <Timeline
-        events={timelineIndex.events.slice(0, 60)}
+        events={previewEvents}
         totalEventCount={timelineIndex.events.length}
         allTags={timelineIndex.visibleTags}
         urlTags={timelineIndex.tags}
