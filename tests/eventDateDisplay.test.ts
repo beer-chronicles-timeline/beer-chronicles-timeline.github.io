@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { formatEventDate, getEventChronologicalSortValue, getEventTimelineYear } from "../src/components/timelineUtils.ts";
+import { getReviewedEventDateLabel } from "../src/lib/eventDateDisplay.ts";
 import type { TimelineEvent } from "../src/lib/types.ts";
 
 // The twenty additional labels reviewed against the published text on 2026-11-15.
@@ -38,5 +39,61 @@ test("all twenty reviewed year labels retain their uncertainty and chronology", 
     assert.equal(getEventTimelineYear(event), getEventTimelineYear(unqualified), id);
     assert.equal(getEventChronologicalSortValue(event), getEventChronologicalSortValue(unqualified), id);
     assert.equal(formatEventDate({ ...event, description: "Revised wording." }), formatEventDate(unqualified), id);
+  }
+});
+
+const reviewedPeriods = [
+  {
+    id: "51cfd1be-6bb3-4187-8004-6de627ded7fc",
+    historical_year: -8000, event_date: null, date_precision: "century",
+    description: "Between approximately 8000 and 7000 BCE, people at Shangshan",
+    expected: "ca. 8000–7000 BCE", year: -8000,
+  },
+  {
+    id: "e466350c-db9b-4c1d-9e9e-8016c7377998",
+    historical_year: -3200, event_date: null, date_precision: "century",
+    description: "Between approximately 3400 and 2900 BCE, people at Mijiaya",
+    expected: "ca. 3400–2900 BCE", year: -3200,
+  },
+  {
+    id: "a4459550-4d30-4523-bc90-c4f67d9d1865",
+    historical_year: 750, event_date: null, date_precision: "century",
+    description: "During the Late Classic period, approximately 600–900 CE, vessels",
+    expected: "ca. 600–900 CE", year: 750,
+  },
+  {
+    id: "a4f60659-4ef1-47ee-b4db-96684c848acb",
+    historical_year: null, event_date: "1400-01-01", date_precision: "year",
+    description: "During the fourteenth century, beer became an important commodity",
+    expected: "14th century", year: 1400,
+  },
+] as const;
+
+test("reviewed periods display their full range while preserving chronology anchors", () => {
+  for (const { expected, year, ...period } of reviewedPeriods) {
+    const event: TimelineEvent = {
+      ...period, title: period.id, image_url: null, created_at: null, sources: null,
+    };
+    assert.equal(formatEventDate(event), expected, event.id);
+    assert.equal(formatEventDate({ ...event, description: `\n ${event.description}` }), expected, event.id);
+    assert.equal(getEventTimelineYear(event), year, event.id);
+    assert.equal(getEventChronologicalSortValue(event), year * 10_000 + 101, event.id);
+  }
+});
+
+test("reviewed period labels expire when their identity, date, precision or opening changes", () => {
+  for (const period of reviewedPeriods) {
+    const event: TimelineEvent = {
+      ...period, title: period.id, image_url: null, created_at: null, sources: null,
+    };
+    for (const changed of [
+      { ...event, id: "another-entry" },
+      { ...event, description: "Revised dating." },
+      { ...event, description: null },
+      { ...event, date_precision: "date" as const },
+    ]) {
+      assert.equal(getReviewedEventDateLabel(changed, period.year), undefined, event.id);
+    }
+    assert.equal(getReviewedEventDateLabel(event, period.year + 1), undefined, event.id);
   }
 });

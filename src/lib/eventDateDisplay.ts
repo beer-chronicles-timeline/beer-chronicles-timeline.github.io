@@ -1,8 +1,8 @@
-import type { TimelineEvent } from "./types";
+import type { DatePrecision, TimelineEvent } from "./types";
 
 export const APPROXIMATE_DATE_PREFIX = "ca.";
 
-type ReviewedApproximateDate = {
+type ReviewedEventDate = {
   eventId: string;
   timelineYear: number;
   descriptionPrefix: string;
@@ -13,7 +13,7 @@ type ReviewedApproximateDate = {
 // The numeric date remains the sorting/filtering anchor. Require the reviewed
 // precision, year and opening text so later editorial changes cannot silently
 // retain an outdated qualification. Do not infer new labels from prose.
-const REVIEWED_APPROXIMATE_DATES: readonly ReviewedApproximateDate[] = [
+const REVIEWED_APPROXIMATE_DATES: readonly ReviewedEventDate[] = [
   {
     eventId: "2b7e5d25-f9d4-4e55-8bb4-6ab9bf83fa22",
     timelineYear: 2005,
@@ -148,10 +148,52 @@ const REVIEWED_APPROXIMATE_DATES: readonly ReviewedApproximateDate[] = [
   },
 ];
 
+// These entries describe periods broader than their stored precision. Keep the
+// reviewed range separate from the numeric year used to order and filter them.
+const REVIEWED_PERIOD_DATES: readonly (ReviewedEventDate & {
+  datePrecision: DatePrecision;
+})[] = [
+  {
+    eventId: "51cfd1be-6bb3-4187-8004-6de627ded7fc",
+    timelineYear: -8000,
+    datePrecision: "century",
+    descriptionPrefix: "Between approximately 8000 and 7000 BCE,",
+    label: "ca. 8000–7000 BCE",
+  },
+  {
+    eventId: "e466350c-db9b-4c1d-9e9e-8016c7377998",
+    timelineYear: -3200,
+    datePrecision: "century",
+    descriptionPrefix: "Between approximately 3400 and 2900 BCE,",
+    label: "ca. 3400–2900 BCE",
+  },
+  {
+    eventId: "a4459550-4d30-4523-bc90-c4f67d9d1865",
+    timelineYear: 750,
+    datePrecision: "century",
+    descriptionPrefix: "During the Late Classic period, approximately 600–900 CE,",
+    label: "ca. 600–900 CE",
+  },
+  {
+    eventId: "a4f60659-4ef1-47ee-b4db-96684c848acb",
+    timelineYear: 1400,
+    datePrecision: "year",
+    descriptionPrefix: "During the fourteenth century,",
+    label: "14th century",
+  },
+];
+
 export function getReviewedEventDateLabel(
   event: Pick<TimelineEvent, "id" | "description" | "date_precision">,
   timelineYear: number | null
 ): string | undefined {
+  const period = REVIEWED_PERIOD_DATES.find(
+    (date) => date.eventId === event.id && date.timelineYear === timelineYear &&
+      date.datePrecision === event.date_precision &&
+      event.description?.trimStart().startsWith(date.descriptionPrefix)
+  );
+  if (period) return period.label;
+
   if (event.date_precision !== "year") return undefined;
 
   const reviewed = REVIEWED_APPROXIMATE_DATES.find(
