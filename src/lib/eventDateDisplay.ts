@@ -148,11 +148,18 @@ const REVIEWED_APPROXIMATE_DATES: readonly ReviewedEventDate[] = [
   },
 ];
 
-// These entries describe periods broader than their stored precision. Keep the
-// reviewed range separate from the numeric year used to order and filter them.
+// Keep reviewed period ranges and uncertain decades separate from the numeric
+// year used to order and filter them.
 const REVIEWED_PERIOD_DATES: readonly (ReviewedEventDate & {
   datePrecision: DatePrecision;
 })[] = [
+  {
+    eventId: "62fd544d-9240-4e6b-8787-7aa72be3b5b6",
+    timelineYear: 990,
+    datePrecision: "decade",
+    descriptionPrefix: "Probably in the 990s,",
+    label: "Probably the 990s",
+  },
   {
     eventId: "51cfd1be-6bb3-4187-8004-6de627ded7fc",
     timelineYear: -8000,

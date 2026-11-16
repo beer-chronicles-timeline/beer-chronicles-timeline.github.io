@@ -48,6 +48,15 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Belgian Beer World entries: sql/belgian-beer-world-entry-proposals.json.
+  // OSM Nominatim administrative references retrieved 2026-11-16:
+  // Tournai 2162970, Poperinge 1561101, Aachen 62564, Magdeburg 62481.
+  // The municipal building survey locates the Brewers' House at Grand-Place 10.
+  tournai: { name: "Tournai, Belgium", latitude: 50.6056458, longitude: 3.3878179, precision: "city", locationRole: "City of Meura's manufacturing business at the commercial introduction" },
+  poperinge: { name: "Poperinge, Belgium", latitude: 50.8556646, longitude: 2.7264961, precision: "city", locationRole: "Place whose hop-drying installation Scot described" },
+  aachen: { name: "Aachen, Germany", latitude: 50.7763510, longitude: 6.0838620, precision: "city", locationRole: "City of the reform council" },
+  magdeburg: { name: "Magdeburg, Germany", latitude: 52.1314783, longitude: 11.6400789, precision: "city", locationRole: "City whose brewers' yeast-supply rights were recorded" },
+  brussels_brewers_house: { name: "Brewers' House, Grand-Place 10, Brussels, Belgium", latitude: 50.84627, longitude: 4.35255, precision: "exact", locationRole: "Site of the reconstructed brewers' guildhall" },
   // Sahti recognition: sql/sahti-international-recognition-research.json.
   // Kraft Roku's 2023 schedule and results place the final gala in Kraków.
   // OSM Nominatim administrative relation 2768921, retrieved 2026-11-11.
@@ -575,6 +584,23 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUIDs match the twelve reviewed Belgian Beer World entries.
+  // Historical location roles are specified per entry; absent events add no markers.
+  { eventId: "a0b329c0-557c-44e5-b4ea-9fdce7abe360", placeId: "tournai" },
+  { eventId: "94b1e116-a530-468e-a1ff-4f523fd14c2a", placeId: "london", locationRole: "Place of publication" },
+  { eventId: "94b1e116-a530-468e-a1ff-4f523fd14c2a", placeId: "poperinge" },
+  { eventId: "ec074672-a70d-4854-80c1-ba8677f864b2", placeId: "brussels_brewers_house" },
+  { eventId: "1a2b4ae8-edf0-4c45-84fc-e0ea6499e494", placeId: "brussels", locationRole: "City whose central river and brewing neighborhoods were redeveloped" },
+  { eventId: "8ac7bef9-049c-4dce-88b2-64da661f0b06", placeId: "hamont_achel", locationRole: "Municipality containing the Achelse Kluis; city reference, not a reconstructed exact 1917 equipment location" },
+  { eventId: "9ac696ab-aa9b-4578-92bc-5fa821e02fb4", placeId: "brussels", locationRole: "Documented application to the Brussels brewers' guild; the legislation covered a wider annexed territory" },
+  { eventId: "a470afca-90e3-461e-98a6-1e679f638c3d", placeId: "roeselare", locationRole: "Brewing family's business and political base" },
+  { eventId: "a470afca-90e3-461e-98a6-1e679f638c3d", placeId: "brussels", locationRole: "Pierre Rodenbach's volunteer activity and the National Congress" },
+  { eventId: "8d070d98-6a48-4b75-a637-f0727ecb2423", placeId: "aachen" },
+  { eventId: "62fd544d-9240-4e6b-8787-7aa72be3b5b6", placeId: "england", locationRole: "Cultural and geographical setting of the English monastic teaching text; no exact composition site asserted" },
+  { eventId: "c12d0cc4-1813-417f-87f1-9e4059657dcf", placeId: "magdeburg" },
+  { eventId: "4decce8d-eccb-49dd-af5c-2f3e5291fed3", placeId: "nuremberg", locationRole: "Place of the 1543 publication; not the realm of a real ancient beer king" },
+  { eventId: "b05bed74-14b1-42dc-a442-6213d2166414", placeId: "leuven", locationRole: "Documented research affiliation of the study's lead authors; the study was an international collaboration" },
+  { eventId: "b05bed74-14b1-42dc-a442-6213d2166414", placeId: "ghent", locationRole: "Documented research affiliation of co-lead author Steven Maere and colleagues; not the geographic origin of all sampled yeast" },
   // Sahti recognition: fixed UUID shared with the reviewed SQL proposal.
   // Dormant until the reviewed event is present in the supplied timeline.
   { eventId: "d0f31b0b-6d8d-4dc9-af6a-09e76bdf5657", placeId: "krakow", locationRole: "City hosting the Kraft Roku 2023 final gala, where the award was announced" },
