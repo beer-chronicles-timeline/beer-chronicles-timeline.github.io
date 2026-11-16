@@ -2,6 +2,7 @@ import { test, expect } from "./fixtures";
 import { decodeTimelineData } from "../src/lib/timelineTransport";
 import { getEventSourcesPath } from "../src/lib/sourceTransport";
 import { getEventPath } from "../src/lib/eventUrls";
+import { normalizeSourceUrl, parseSourceCitations } from "../src/lib/sourceCitations";
 
 test("the browser preloads the searchable index before scripts and does not request citations @journey", async ({ page }) => {
   let release = () => {};
@@ -103,9 +104,20 @@ test("late citations from a previous entry cannot replace the current entry's so
     const current = data.events.find((event) => getEventPath(event.id, event.title) === href)!;
     const sourcePath = getEventSourcesPath(current.id, data.sourceRevisions![current.id]);
     expect(sourcePath).not.toBe(heldPath);
-    const expected = await (await request.get(sourcePath)).json();
+    const expected = parseSourceCitations((await (await request.get(sourcePath)).json()).sources);
+    const lateResponse = page.waitForResponse((response) => new URL(response.url()).pathname === heldPath);
     release();
-    await expect(dialog.locator(`section[aria-labelledby="event-sources-${current.id}"]`)).toContainText(expected.sources.split("\n")[0]);
+    await (await lateResponse).finished();
+    const sources = dialog.locator(`section[aria-labelledby="event-sources-${current.id}"]`);
+    await expect(sources.locator("li > p")).toHaveText(
+      expected.filter((citation) => citation.text.length > 0).map((citation) => citation.text.join(" "))
+    );
+    const urls = expected.flatMap((citation) => citation.urls.map(normalizeSourceUrl));
+    const links = sources.getByRole("link");
+    await expect(links).toHaveCount(urls.length);
+    for (const [index, url] of urls.entries()) {
+      await expect(links.nth(index)).toHaveAttribute("href", url);
+    }
     const previous = data.events.find((event) => getEventSourcesPath(event.id, data.sourceRevisions![event.id]) === heldPath)!;
     await expect(dialog.locator(`section[aria-labelledby="event-sources-${previous.id}"]`)).toHaveCount(0);
   } finally { release(); }
