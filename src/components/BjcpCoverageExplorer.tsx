@@ -15,14 +15,13 @@ export default function BjcpCoverageExplorer({ categories }: Props) {
   const filtered = useMemo(() => filterBjcpCoverage(categories, query, coverage), [categories, query, coverage]);
   const visible = filtered.reduce((count, category) => count + category.styles.length, 0);
   const summary: [string, number][] = [
-    ["Styles and categories", totals.profiles],
-    ["With related entries", totals.covered],
-    ["Distinct related entries", totals.entries],
+    ["BJCP styles listed", totals.profiles],
+    ["Styles covered by at least one entry", totals.covered],
   ];
 
   return (
     <section aria-label="BJCP style coverage" className="mt-8">
-      <dl className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {summary.map(([label, value]) => (
           <div key={label} className="rounded-xl border border-stone-200 bg-white px-5 py-4">
             <dt className="text-sm text-stone-600">{label}</dt>
