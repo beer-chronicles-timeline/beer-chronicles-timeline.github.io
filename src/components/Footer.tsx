@@ -25,6 +25,10 @@ export default function Footer() {
           Beer Map
         </Link>
 
+        <Link href="/bjcp-coverage" className={linkClassName}>
+          BJCP Coverage
+        </Link>
+
         <Link href="/histogram" className={linkClassName}>
           Histogram
         </Link>

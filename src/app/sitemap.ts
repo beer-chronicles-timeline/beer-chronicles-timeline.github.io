@@ -28,6 +28,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${BASE_URL}/map`,
     },
     {
+      url: `${BASE_URL}/bjcp-coverage`,
+    },
+    {
       url: `${BASE_URL}/histogram`,
     },
     {

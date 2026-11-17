@@ -60,7 +60,7 @@ export async function checkPublicationExport(requireLive = false) {
   verifyMapExport(await readFile("out/map.html", "utf8"), buildMapLocations(snapshot.events));
   const sitemap = await readFile("out/sitemap.xml", "utf8");
   if ((sitemap.match(/<loc>https:\/\/beer-chronicles\.org\/events\//g) ?? []).length !== snapshot.events.length) throw new Error("Sitemap event count differs from publication snapshot");
-  const paths = new Set<string>(["/", "/map", "/histogram", "/storylines", "/submit", ...STORYLINES.map((s) => `/storylines/${s.slug}`)]);
+  const paths = new Set<string>(["/", "/map", "/bjcp-coverage", "/histogram", "/storylines", "/submit", ...STORYLINES.map((s) => `/storylines/${s.slug}`)]);
   const eventById = new Map(snapshot.events.map((e) => [e.id, e]));
   for (const { id, slug } of getEventRouteParams(snapshot.events)) {
     const path = `/events/${id}/${slug}`;
