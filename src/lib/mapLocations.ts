@@ -48,6 +48,12 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Australian Sparkling Ale entries: sql/australian-sparkling-ale-research.json.
+  // Historical sources locate the milestones in Norwood and Regency Park,
+  // both within Adelaide. OSM Nominatim city relation 11381689, retrieved
+  // 2026-11-17, represents metropolitan Adelaide, not Adelaide City Council
+  // or an exact historical home, brewery building, or modern headquarters.
+  adelaide: { name: "Adelaide, South Australia, Australia", latitude: -34.9281805, longitude: 138.5999312, precision: "city", locationRole: "City of the documented Coopers brewing milestone" },
   // Belgian Beer World entries: sql/belgian-beer-world-entry-proposals.json.
   // OSM Nominatim administrative references retrieved 2026-11-16:
   // Tournai 2162970, Poperinge 1561101, Aachen 62564, Magdeburg 62481.
@@ -584,6 +590,11 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed entry UUIDs; absent events produce no markers.
+  { eventId: "93c60dbe-9122-4f8f-bfb3-53c4058618f6", placeId: "adelaide", locationRole: "City whose Norwood suburb was the site of Thomas Cooper’s first brewing business" },
+  { eventId: "dea0efae-87a6-4cb4-97e1-b2b351a359d3", placeId: "adelaide", locationRole: "City whose Regency Park suburb hosted the official opening of Coopers’ new brewery" },
+  // 978a3841-d37c-4edc-b4fa-5ec07d1e41c4: the online BJCP guidelines release
+  // has no supported physical publication location; no map pin is assigned.
   // Fixed UUIDs match the twelve reviewed Belgian Beer World entries.
   // Historical location roles are specified per entry; absent events add no markers.
   { eventId: "a0b329c0-557c-44e5-b4ea-9fdce7abe360", placeId: "tournai" },
