@@ -1486,6 +1486,12 @@ const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
   { eventId: "4dd99583-d78b-452f-995f-b9a71c1bf2a1", placeId: "united_states", locationRole: "Country of Meilgaard’s Stroh Brewery affiliation in the published paper" },
   { eventId: "4dd99583-d78b-452f-995f-b9a71c1bf2a1", placeId: "united_kingdom", locationRole: "Country of Dalgliesh and Clapperton’s Brewing Research Foundation affiliation" },
   { eventId: "895f440c-8e6d-4bbc-acb8-0891be88f35c", placeId: "brazil", locationRole: "Country of the Brahma–Antarctica combination" },
+  // Weihenstephan proposals: sql/weihenstephan-three-entries.json. The cited
+  // institutional and brewery sources establish Freising; reuse its city
+  // reference for the college and brewery. No marker appears until publication.
+  { eventId: "5f745223-1f28-4a4d-ae48-f6b2034a5bc7", placeId: "freising", locationRole: "City containing Weihenstephan’s brewing college incorporated into TH Munich" },
+  { eventId: "cb322b2a-757e-49c7-9db2-e7fa9737d468", placeId: "freising", locationRole: "City containing the Weihenstephan brewery that introduced the alcohol-free wheat beer" },
+  { eventId: "fbb1bd3b-1b49-4297-907e-0e9e03a4b3f1", placeId: "freising", locationRole: "City containing the Weihenstephan brewery that first brewed the anniversary Kellerbier" },
 ];
 
 export function buildMapLocations(
