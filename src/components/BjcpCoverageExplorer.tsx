@@ -15,12 +15,12 @@ export default function BjcpCoverageExplorer({ categories }: Props) {
   const filtered = useMemo(() => filterBjcpCoverage(categories, query, coverage), [categories, query, coverage]);
   const visible = filtered.reduce((count, category) => count + category.styles.length, 0);
   const summary: [string, number][] = [
-    ["BJCP styles listed", totals.profiles],
-    ["Styles covered by at least one entry", totals.covered],
+    ["BJCP styles and categories listed", totals.profiles],
+    ["Styles and categories covered by at least one entry", totals.covered],
   ];
 
   return (
-    <section aria-label="BJCP style coverage" className="mt-8">
+    <section aria-label="BJCP style and category coverage" className="mt-8">
       <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {summary.map(([label, value]) => (
           <div key={label} className="rounded-xl border border-stone-200 bg-white px-5 py-4">
@@ -30,20 +30,20 @@ export default function BjcpCoverageExplorer({ categories }: Props) {
         ))}
       </dl>
       <p className="mt-4 text-sm leading-6 text-stone-600">
-        Counts use style tags. Each entry is counted once per style and may appear under several styles.
+        Counts use style tags. Each entry is counted once per style or category and may appear in several rows.
       </p>
 
       <fieldset disabled={!ready} className="mt-6 grid gap-4 rounded-xl border border-stone-200 bg-white p-4 sm:grid-cols-[minmax(0,1fr)_auto] md:p-5">
-        <legend className="sr-only">Find styles</legend>
+        <legend className="sr-only">Find styles and categories</legend>
         <div>
-          <label htmlFor="bjcp-style-search" className="block text-sm font-medium text-stone-700">Find a style</label>
+          <label htmlFor="bjcp-style-search" className="block text-sm font-medium text-stone-700">Find a style or category</label>
           <input id="bjcp-style-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Style name, BJCP code, or category" className="mt-2 h-11 w-full appearance-none rounded-lg border border-stone-300 bg-white px-3 py-2 text-base text-stone-900 placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500" />
         </div>
         <div className="sm:w-48">
           <label htmlFor="bjcp-coverage-filter" className="block text-sm font-medium text-stone-700">Coverage</label>
           <div className="relative mt-2">
             <select id="bjcp-coverage-filter" value={coverage} onChange={event => setCoverage(event.target.value as typeof coverage)} className="h-11 w-full appearance-none rounded-lg border border-stone-300 bg-white py-2 pl-3 pr-10 text-base text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">
-              <option value="all">All styles</option>
+              <option value="all">All</option>
               <option value="covered">With entries</option>
               <option value="uncovered">Without entries</option>
             </select>
@@ -55,7 +55,7 @@ export default function BjcpCoverageExplorer({ categories }: Props) {
 
       {filtered.length === 0 ? (
         <div className="mt-5 rounded-xl border border-stone-200 bg-white p-6">
-          <p className="text-stone-700">No styles match these filters.</p>
+          <p className="text-stone-700">No styles or categories match these filters.</p>
           <button type="button" onClick={() => { setQuery(""); setCoverage("all"); }} className="mt-3 min-h-11 rounded-full border border-stone-300 px-4 text-sm font-medium text-stone-800 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">Clear filters</button>
         </div>
       ) : filtered.map(category => (
@@ -74,7 +74,7 @@ export default function BjcpCoverageExplorer({ categories }: Props) {
                 </summary>
                 <div className="border-t border-stone-200 px-4 pb-4 pt-3 sm:pl-16">
                   <a href={style.url} target="_blank" rel="noopener noreferrer" className="rounded-sm text-xs font-medium text-stone-600 underline underline-offset-2 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-500">BJCP 2021 description<span className="sr-only"> for {style.name} (opens in a new tab)</span></a>
-                  {style.entries.length === 0 ? <p className="mt-3 text-sm leading-6 text-stone-600">No entries are tagged for this style yet.</p> : (
+                  {style.entries.length === 0 ? <p className="mt-3 text-sm leading-6 text-stone-600">No entries are tagged for this style or category yet.</p> : (
                     <div tabIndex={0} role="region" aria-label={`Entries related to ${style.name}`} className="mt-3 max-h-96 overflow-auto rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500">
                       <table className="w-full text-left text-sm">
                         <caption className="sr-only">Beer Chronicles entries related to {style.name}, newest first</caption>

@@ -66,10 +66,13 @@ export function getBjcpCoverageTotals(categories: readonly BjcpCoverageCategory[
 
 export function filterBjcpCoverage(categories: readonly BjcpCoverageCategory[], query: string, coverage: "all" | "covered" | "uncovered") {
   const needle = tagKey(query);
+  const isCodeQuery = /^(?:\d+[a-z]|x\d+)$/.test(needle);
   return categories.map(category => ({
     ...category,
     styles: category.styles.filter(style => {
-      const matchesQuery = tagKey(`${style.code} ${style.name} ${category.name} ${style.tagNames.join(" ")}`).includes(needle);
+      const matchesQuery = isCodeQuery
+        ? tagKey(style.code) === needle
+        : tagKey(`${style.code} ${style.name} ${category.name} ${style.tagNames.join(" ")}`).includes(needle);
       return matchesQuery && (coverage === "all" || (coverage === "covered" ? style.entries.length > 0 : style.entries.length === 0));
     }),
   })).filter(category => category.styles.length > 0);

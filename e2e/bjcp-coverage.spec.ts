@@ -6,6 +6,8 @@ test("@journey BJCP navigation, style counts, filters, and expandable entry tabl
   page.on("pageerror", error => errors.push(error.message));
   await page.goto("/bjcp-coverage");
   await expect(page.getByRole("heading", { level: 1, name: "BJCP Coverage" })).toBeVisible();
+  await expect(page.getByText("BJCP styles and categories listed", { exact: true })).toBeVisible();
+  await expect(page.getByText("Styles and categories covered by at least one entry", { exact: true })).toBeVisible();
   await expect(page.locator("details")).toHaveCount(128);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://beer-chronicles.org/bjcp-coverage");
 
@@ -17,7 +19,13 @@ test("@journey BJCP navigation, style counts, filters, and expandable entry tabl
   await page.screenshot({ path: test.info().outputPath("bjcp-coverage-navigation.png") });
   await page.keyboard.press("Escape");
 
-  const search = page.getByRole("searchbox", { name: "Find a style" });
+  const search = page.getByRole("searchbox", { name: "Find a style or category" });
+  await search.fill("1A");
+  await expect(page.locator("details")).toHaveCount(1);
+  await expect(page.locator("summary")).toContainText("American Light Lager");
+  await search.fill("1B");
+  await expect(page.locator("details")).toHaveCount(1);
+  await expect(page.locator("summary")).toContainText("American Lager");
   await search.fill("12B");
   await expect(page.locator("details")).toHaveCount(1);
   await expect(page.locator("summary")).toContainText("Australian Sparkling Ale");
@@ -25,7 +33,7 @@ test("@journey BJCP navigation, style counts, filters, and expandable entry tabl
   await expect(page.locator("details")).toHaveCount(1);
   await expect(page.locator("summary")).toContainText("Kölsch");
   await search.fill("there is no style with this name");
-  await expect(page.getByText("No styles match these filters.")).toBeVisible();
+  await expect(page.getByText("No styles or categories match these filters.")).toBeVisible();
   await page.getByRole("button", { name: "Clear filters" }).click();
   await expect(page.locator("details")).toHaveCount(128);
 
@@ -35,7 +43,7 @@ test("@journey BJCP navigation, style counts, filters, and expandable entry tabl
   await zero.locator("summary").focus();
   await page.keyboard.press("Enter");
   await expect(zero).toHaveAttribute("open", "");
-  await expect(zero.getByText("No entries are tagged for this style yet.")).toBeVisible();
+  await expect(zero.getByText("No entries are tagged for this style or category yet.")).toBeVisible();
   await filter.selectOption("covered");
 
   const count = await page.locator("details").count();

@@ -59,6 +59,32 @@ test("zero-count styles remain visible and filtering can expose the gaps", () =>
   assert.equal(filterBjcpCoverage(coverage, "kolsch", "all")[0].styles[0].name, "Kölsch");
 });
 
+test("complete BJCP codes match exactly, regardless of case or surrounding spaces", () => {
+  const coverage = buildBjcpCoverage([]);
+  for (const [query, id] of [
+    ["1A", "american-light-lager"],
+    ["1B", "american-lager"],
+    ["3A", "czech-pale-lager"],
+    ["5B", "kolsch"],
+    [" 5b ", "kolsch"],
+    [" x3 ", "italian-grape-ale"],
+  ]) {
+    assert.deepEqual(filterBjcpCoverage(coverage, query, "all").flatMap(category => category.styles).map(style => style.id), [id], query);
+  }
+  assert.equal(filterBjcpCoverage(coverage, "99A", "all").length, 0);
+});
+
+test("exact code searches retain named variants and respect the coverage filter", () => {
+  const coverage = buildBjcpCoverage([event("black", ["Black IPA"]), event("bitter", ["Ordinary Bitter"])]);
+  const variants = filterBjcpCoverage(coverage, " 21b ", "all").flatMap(category => category.styles);
+  assert.equal(variants.length, 8);
+  assert.ok(variants.every(style => style.code === "21B"));
+  assert.deepEqual(filterBjcpCoverage(coverage, "21B", "covered").flatMap(category => category.styles).map(style => style.id), ["specialty-ipa", "specialty-ipa-black-ipa"]);
+  assert.equal(filterBjcpCoverage(coverage, "21B", "uncovered").flatMap(category => category.styles).length, 6);
+  assert.equal(filterBjcpCoverage(coverage, "1A", "covered").length, 0);
+  assert.deepEqual(filterBjcpCoverage(coverage, "1A", "uncovered").flatMap(category => category.styles).map(style => style.id), ["american-light-lager"]);
+});
+
 test("entry lists preserve exact canonical links and historical date labels in newest-first order", () => {
   const entries = [event("old", ["Sahti"], { event_date: "1780-04-05", date_precision: "date" }), event("new", ["Sahti"], { title: "A New Release", event_date: "2023-12-13", date_precision: "date" })];
   const listed = row(entries, "historical-beer-sahti").entries;
