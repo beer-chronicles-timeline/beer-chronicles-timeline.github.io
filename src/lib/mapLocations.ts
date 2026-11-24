@@ -48,6 +48,11 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Bögli Bräu proposal: sql/bogli-brau-research.json. The brewery directories
+  // locate the founding-year record in Neukirch (Egnach), Thurgau. OSM
+  // Nominatim village node 260276855, retrieved 2026-11-24, provides a locality
+  // reference, not an exact historical home or brewery-building position.
+  neukirch_egnach: { name: "Neukirch (Egnach), Thurgau, Switzerland", latitude: 47.5286538, longitude: 9.3699757, precision: "city", locationRole: "Documented village of Bögli Bräu; locality reference" },
   // Australian Sparkling Ale entries: sql/australian-sparkling-ale-research.json.
   // Historical sources locate the milestones in Norwood and Regency Park,
   // both within Adelaide. OSM Nominatim city relation 11381689, retrieved
@@ -590,6 +595,8 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Fixed UUID matches sql/bogli-brau-proposal.sql; absent events add no marker.
+  { eventId: "fd1eddca-7ea0-4144-bf9b-8fac0386ef2f", placeId: "neukirch_egnach" },
   // Fixed entry UUIDs; absent events produce no markers.
   { eventId: "93c60dbe-9122-4f8f-bfb3-53c4058618f6", placeId: "adelaide", locationRole: "City whose Norwood suburb was the site of Thomas Cooper’s first brewing business" },
   { eventId: "dea0efae-87a6-4cb4-97e1-b2b351a359d3", placeId: "adelaide", locationRole: "City whose Regency Park suburb hosted the official opening of Coopers’ new brewery" },
