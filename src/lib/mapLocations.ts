@@ -48,6 +48,13 @@ type MapLocationAssignment = {
  * area; they do not assert an exact site.
  */
 const MAP_PLACES = {
+  // Eisbock history proposal: sql/eisbock-history-draft.json and research.json.
+  // The Niagara Falls Public Library's historical brewery image and the 2011
+  // dapd interview establish the brewing cities. OSM Nominatim administrative
+  // relations 2388057 and 1015096, retrieved 2026-11-27, provide city references,
+  // not exact historical brewery positions or the nearby Niagara waterfalls.
+  niagara_falls_ontario: { name: "Niagara Falls, Ontario, Canada", latitude: 43.1065603, longitude: -79.0639039, precision: "city", locationRole: "City of the documented Niagara Falls Brewing Company milestone" },
+  gunzenhausen: { name: "Gunzenhausen, Germany", latitude: 49.1161362, longitude: 10.7406852, precision: "city", locationRole: "Municipality containing Schorschbräu's Oberasbach brewing location" },
   // Bögli Bräu proposal: sql/bogli-brau-research.json. The brewery directories
   // locate the founding-year record in Neukirch (Egnach), Thurgau. OSM
   // Nominatim village node 260276855, retrieved 2026-11-24, provides a locality
@@ -595,6 +602,12 @@ const MAP_PLACES = {
  * are deliberately excluded.
  */
 const MAP_LOCATION_ASSIGNMENTS: readonly MapLocationAssignment[] = [
+  // Eisbock history: fixed UUIDs match the entry draft and SQL proposal.
+  // Glauber's title page locates publication in Amsterdam; no laboratory site
+  // is inferred. Absent proposed events produce no markers.
+  { eventId: "c7734c0a-6898-46c5-8e7a-87672a288dfb", placeId: "amsterdam", locationRole: "City of the 1660 publication describing beer concentration by freezing" },
+  { eventId: "c0a5f0d2-1371-400b-ab61-7d6f2bf763d4", placeId: "niagara_falls_ontario", locationRole: "City of Niagara Falls Brewing Company's Eisbock production; locality reference" },
+  { eventId: "282922dd-3128-42be-8579-290a6f18ed33", placeId: "gunzenhausen", locationRole: "Municipality whose Oberasbach district housed Schorschbräu's brewing operation" },
   // Fixed UUID matches sql/bogli-brau-proposal.sql; absent events add no marker.
   { eventId: "fd1eddca-7ea0-4144-bf9b-8fac0386ef2f", placeId: "neukirch_egnach" },
   // Fixed entry UUIDs; absent events produce no markers.
