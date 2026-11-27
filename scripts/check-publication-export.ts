@@ -10,6 +10,8 @@ import type { PublicationSnapshot } from "../src/lib/publicationSnapshot";
 import { buildMapLocations, type MapLocation } from "../src/lib/mapLocations";
 import { encodeEventSources } from "../src/lib/eventSources";
 import { decodeEventSources, getEventSourcesPath } from "../src/lib/sourceTransport";
+import { getEventSitemapLastModified } from "../src/lib/eventMetadata";
+import type { TimelineEvent } from "../src/lib/types";
 
 export function verifyMapExport(html: string, locations: readonly MapLocation[]) {
   // Decode JSON string chunks without executing scripts or opening a browser.
@@ -18,6 +20,24 @@ export function verifyMapExport(html: string, locations: readonly MapLocation[])
     .map(match => JSON.parse(match[1]) as string).join("");
   for (const location of locations) {
     if (!flight.includes(JSON.stringify(location))) throw new Error(`Map export differs from publication snapshot: ${location.id}`);
+  }
+}
+
+export function verifySitemapExport(sitemap: string, events: readonly TimelineEvent[]) {
+  const expectedDates = new Map(events.map((event) => [getEventUrl(event.id, event.title), getEventSitemapLastModified(event)]));
+  const seen = new Set<string>();
+  for (const [, entry] of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+    const url = entry.match(/<loc>([^<]+)<\/loc>/)?.[1];
+    if (!url || seen.has(url)) throw new Error(`Missing or duplicate sitemap URL: ${url}`);
+    seen.add(url);
+    const dates = [...entry.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map((match) => match[1]);
+    const expected = expectedDates.get(url);
+    if (dates.length !== (expected ? 1 : 0) || (expected && dates[0] !== expected)) {
+      throw new Error(`Sitemap lastmod differs from verified modification date: ${url}`);
+    }
+  }
+  for (const url of expectedDates.keys()) {
+    if (!seen.has(url)) throw new Error(`Missing sitemap entry: ${url}`);
   }
 }
 
@@ -59,6 +79,7 @@ export async function checkPublicationExport(requireLive = false) {
   }
   verifyMapExport(await readFile("out/map.html", "utf8"), buildMapLocations(snapshot.events));
   const sitemap = await readFile("out/sitemap.xml", "utf8");
+  verifySitemapExport(sitemap, snapshot.events);
   if ((sitemap.match(/<loc>https:\/\/beer-chronicles\.org\/events\//g) ?? []).length !== snapshot.events.length) throw new Error("Sitemap event count differs from publication snapshot");
   const paths = new Set<string>(["/", "/map", "/bjcp-coverage", "/histogram", "/storylines", "/submit", ...STORYLINES.map((s) => `/storylines/${s.slug}`)]);
   const eventById = new Map(snapshot.events.map((e) => [e.id, e]));
